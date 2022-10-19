@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.LeaveActivity">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:id="@+id/rltoolbar"
+        android:background="@color/skyblue"
+        android:layout_height="60dp">
+
+        <TextView
+            android:id="@+id/tvHeader"
+            style="@style/header"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/bold"
+            android:text="Leave Form"
+            android:textColor="@color/white"
+            android:textSize="20dp" />
+
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="35dp"
+            android:layout_toLeftOf="@id/tvHeader"
+            android:backgroundTint="@color/white"
+            android:src="@drawable/ic_baseline_arrow_left_24"
+            app:tint="@color/white" />
+
+
+        <ImageView
+            android:id="@+id/ivMore"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:visibility="gone"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="35dp"
+            android:layout_toRightOf="@id/tvHeader"
+            android:backgroundTint="@color/white"
+            android:src="@drawable/detail"
+            app:tint="@color/white" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_below="@id/rltoolbar"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="Date          :"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="20dp"
+            android:fontFamily="@font/bold"
+            android:id="@+id/tvDateTag"
+            android:textSize="25dp"
+            android:textColor="@color/black"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:layout_width="200dp"
+            android:text="  12/10/2022"
+            android:layout_marginTop="30dp"
+            android:layout_toRightOf="@id/tvDateTag"
+            android:layout_marginLeft="20dp"
+            android:fontFamily="@font/semibold"
+            android:textSize="25dp"
+            android:id="@+id/tvDate"
+            android:gravity="center"
+            android:background="@drawable/size"
+            android:backgroundTint="#D4E2E2"
+            android:layout_height="40dp"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="Reason     :"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="20dp"
+            android:fontFamily="@font/bold"
+            android:id="@+id/tvReasonTag"
+            android:textSize="25dp"
+            android:layout_below="@id/tvDate"
+            android:textColor="@color/black"
+            android:layout_height="wrap_content"/>
+
+        <Spinner
+            android:layout_width="200dp"
+
+            android:layout_marginTop="30dp"
+            android:layout_toRightOf="@id/tvReasonTag"
+            android:layout_marginLeft="20dp"
+            android:layout_below="@id/tvDate"
+            android:fontFamily="@font/semibold"
+            android:textSize="25dp"
+            android:id="@+id/spReson"
+            android:background="@drawable/size"
+            android:backgroundTint="#D4E2E2"
+            android:layout_height="40dp"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="Leave Type  :"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="20dp"
+            android:fontFamily="@font/bold"
+            android:id="@+id/tvLeaveTypeTag"
+            android:textSize="20dp"
+            android:layout_below="@id/spReson"
+            android:textColor="@color/black"
+            android:layout_height="wrap_content"/>
+
+        <Spinner
+            android:layout_width="200dp"
+            android:layout_marginTop="30dp"
+            android:layout_toRightOf="@id/tvLeaveTypeTag"
+            android:layout_marginLeft="20dp"
+            android:layout_below="@id/spReson"
+            android:fontFamily="@font/semibold"
+            android:textSize="25dp"
+            android:id="@+id/tvLeaveType"
+            android:background="@drawable/size"
+            android:backgroundTint="#D4E2E2"
+            android:layout_height="40dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="Day   :"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="20dp"
+            android:fontFamily="@font/bold"
+            android:id="@+id/tvDayTag"
+            android:textSize="20dp"
+            android:layout_below="@id/tvLeaveType"
+            android:textColor="@color/black"
+            android:layout_height="wrap_content"/>
+
+        <Spinner
+            android:layout_width="200dp"
+            android:layout_marginTop="30dp"
+            android:layout_toRightOf="@id/tvLeaveTypeTag"
+            android:layout_marginLeft="20dp"
+            android:layout_below="@id/tvLeaveType"
+            android:fontFamily="@font/semibold"
+            android:textSize="25dp"
+            android:id="@+id/tvDayType"
+            android:background="@drawable/size"
+            android:backgroundTint="#D4E2E2"
+            android:layout_height="40dp"/>
+
+
+        <TextView
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_below="@id/tvDayType"
+            android:layout_marginTop="30dp"
+            android:textColor="@color/white"
+            android:textSize="25dp"
+            android:fontFamily="@font/extrabold"
+            android:text="Submit"
+            android:gravity="center"
+            android:background="@drawable/size"
+            android:layout_centerHorizontal="true"/>
+
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

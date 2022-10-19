@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/skyblue"
+    tools:context=".LoginActivity">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:id="@+id/ivLog"
+        android:layout_height="wrap_content"
+        android:src="@drawable/cis_logo_login"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        app:tint="@color/white" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="350dp"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="19dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="10dp"
+        android:layout_below="@id/ivLog"
+        android:layout_height="450dp">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/logo_top"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_centerHorizontal="true"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:viewBindingIgnore="true" />
+
+        <TextView
+            android:id="@+id/tvForget"
+            style="@style/textInput"
+            android:visibility="gone"
+            android:layout_below="@id/login_btn"
+            android:fontFamily="@font/semibold"
+            android:text="Forgot Password?"
+            android:textAlignment="center"
+            android:textColor="#943535"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/login_btn" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/login_btn"
+            style="@style/textInput"
+            android:layout_height="70dp"
+            android:layout_below="@+id/pass"
+            android:backgroundTint="@color/skyblue"
+            android:fontFamily="@font/bold"
+            android:text="LOGIN"
+            android:layout_centerHorizontal="true"
+            android:layout_width="150dp"
+            android:textColor="#FFF"
+            app:layout_constraintTop_toBottomOf="@id/pass" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/uname"
+            style="@style/textInput"
+            android:padding="10dp"
+            android:layout_below="@id/imageView"
+            app:endIconMode="clear_text"
+            app:errorEnabled="true"
+            app:layout_constraintTop_toBottomOf="@id/imageView"
+            app:startIconDrawable="@drawable/ic_baseline_person_24">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/bold"
+                android:hint="Employee ID"
+                android:text="E367" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/pass"
+            style="@style/textInput"
+            android:padding="10dp"
+            android:layout_below="@id/uname"
+            app:endIconMode="password_toggle"
+            app:errorEnabled="true"
+            app:layout_constraintTop_toBottomOf="@id/uname"
+            app:startIconDrawable="@drawable/ic_baseline_lock_24">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edPass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/bold"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:text="3iS$sYs" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+
+
+
+</RelativeLayout>

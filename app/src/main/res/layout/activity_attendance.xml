@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:id="@+id/rltoolbar"
+        android:background="@color/skyblue"
+        android:layout_height="50dp">
+
+        <TextView
+            style="@style/header"
+            android:id="@+id/tvHeader"
+            android:textSize="20dp"
+            android:layout_width="250dp"
+            android:fontFamily="@font/bold"
+            android:textColor="@color/white"
+            android:layout_centerInParent="true"
+            android:layout_height="wrap_content"
+            android:text="Today Attendance"/>
+
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="35dp"
+            android:layout_toLeftOf="@id/tvHeader"
+            android:backgroundTint="@color/white"
+            android:src="@drawable/ic_baseline_arrow_left_24"
+            app:tint="@color/white" />
+
+
+    </RelativeLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_below="@id/rltoolbar"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RadioGroup
+            android:id="@+id/rbGroup"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <RadioButton
+                android:id="@+id/rbLocal"
+
+                android:fontFamily="@font/semibold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Local" />
+
+            <RadioButton
+                android:id="@+id/rbOutstation"
+                android:fontFamily="@font/semibold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Out Station" />
+
+            <RadioButton
+                android:id="@+id/rbExstation"
+                android:fontFamily="@font/semibold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ex Station" />
+
+            <RadioButton
+                android:id="@+id/rbRegular"
+                android:fontFamily="@font/semibold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Office Regular Work" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/placeLayout"
+                android:visibility="gone"
+                android:fontFamily="@font/semibold"
+                android:layout_width="match_parent"
+                app:errorEnabled="true"
+                android:layout_height="match_parent">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edtPlace"
+                    android:fontFamily="@font/semibold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Place" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <RadioButton
+                android:id="@+id/rbTraining"
+                android:fontFamily="@font/semibold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Training" />
+
+            <RadioButton
+                android:id="@+id/rbMeeting"
+                android:fontFamily="@font/semibold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Meeting" />
+        </RadioGroup>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSubmit"
+            android:fontFamily="@font/bold"
+            android:backgroundTint="@color/skyblue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Submit"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Note: "
+            android:layout_marginBottom="5dp"
+            android:textStyle="bold"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#FF0000"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="@font/extralight"
+            android:layout_marginBottom="5dp"
+            android:text="&#8226; Attendance entered before 11am will be considered full working day."/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#FF0000"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="@font/extralight"
+            android:layout_marginBottom="5dp"
+            android:text="&#8226; Attendance entered between 11.01am to 1.00pm will be considered as 1/2 day leave."/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#FF0000"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="@font/extralight"
+            android:layout_marginBottom="5dp"
+            android:text="&#8226; Attendance entered after 1.00pm will be considered as full day leave."/>
+
+    </LinearLayout>
+
+</RelativeLayout>

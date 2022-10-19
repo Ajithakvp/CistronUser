@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.DashboardActivity">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/skyblue"
+        android:id="@+id/rlhead"
+        android:layout_height="55dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:id="@+id/ivName"
+            android:layout_height="wrap_content"
+            android:src="@drawable/logo_top"
+            android:layout_centerInParent="true"
+            />
+
+        <ImageView
+            android:id="@+id/ivLogout"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="70dp"
+            android:layout_toRightOf="@id/ivName"
+            android:src="@drawable/logout"
+            app:tint="@color/white" />
+
+
+        <ImageView
+            android:id="@+id/ivprofile"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="70dp"
+            android:layout_toStartOf="@id/ivName"
+            android:src="@drawable/headerprofile"
+            app:tint="@color/white" />
+
+
+
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:id="@+id/rlProfile"
+        android:layout_marginTop="30dp"
+        android:padding="10dp"
+        android:background="@drawable/cardview"
+        android:layout_below="@id/rlhead"
+        android:layout_height="60dp">
+
+        <TextView
+            android:layout_width="330dp"
+            android:id="@+id/tvProfilename"
+            android:textSize="20dp"
+            android:layout_toRightOf="@id/ivprofilename"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/semibold"
+            android:layout_marginLeft="6dp"
+            android:textColor="@color/white"
+           android:text="Cistron System private ltd"
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:id="@+id/ivprofilename"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_baseline_person_24"
+            app:tint="@color/white" />
+
+
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_below="@id/rlProfile"
+        android:layout_marginTop="60dp"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/cardview"
+        android:backgroundTint="#D4E2E2"
+        android:layout_marginRight="20dp"
+        android:layout_height="450dp">
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="150dp"
+            app:cardCornerRadius="20dp"
+            android:backgroundTint="@color/skyblue"
+            android:id="@+id/cvAttendance"
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="26dp"
+            android:layout_height="150dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:src="@drawable/attend1"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                app:tint="@color/white" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/white"
+                android:fontFamily="@font/bold"
+               android:layout_marginTop="45dp"
+                android:text="Attendance"/>
+
+
+
+        </androidx.cardview.widget.CardView>
+
+
+
+
+<!--        Expenses-->
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="150dp"
+            app:cardCornerRadius="20dp"
+            android:id="@+id/cvExpense"
+            android:layout_toRightOf="@id/cvAttendance"
+            android:layout_marginTop="40dp"
+            android:layout_centerHorizontal="true"
+            android:backgroundTint="@color/skyblue"
+            android:layout_marginLeft="40dp"
+            android:layout_height="150dp">
+
+            <ImageView
+                android:layout_width="45dp"
+                android:src="@drawable/expense1"
+                android:layout_gravity="center"
+                android:layout_height="50dp"
+                app:tint="@color/white" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/bold"
+                android:textColor="@color/white"
+                android:layout_marginTop="45dp"
+                android:text="Expenses"/>
+
+
+
+        </androidx.cardview.widget.CardView>
+
+
+
+
+
+<!--        Leave-->
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="150dp"
+            app:cardCornerRadius="20dp"
+            android:id="@+id/cvLeave"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/cvAttendance"
+            android:backgroundTint="@color/skyblue"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_height="150dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:src="@drawable/leave"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                app:tint="@color/white" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/bold"
+                android:textColor="@color/white"
+                android:layout_marginTop="45dp"
+                android:text="Leave Application"/>
+
+
+
+        </androidx.cardview.widget.CardView>
+
+
+
+
+
+
+
+
+
+<!--        <View-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:id="@+id/viewcenter"-->
+<!--            android:background="@color/white"-->
+<!--            android:layout_centerInParent="true"-->
+<!--            android:layout_height="0.9dp"/>-->
+
+<!--        <View-->
+<!--            android:layout_width="0.9dp"-->
+<!--            android:id="@+id/viewhorcenter"-->
+<!--            android:background="@color/white"-->
+<!--            android:layout_centerHorizontal="true"-->
+<!--            android:layout_height="230dp"/>-->
+
+
+    </RelativeLayout>
+
+</RelativeLayout>
