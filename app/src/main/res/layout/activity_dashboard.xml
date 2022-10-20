@@ -34,14 +34,16 @@
             app:tint="@color/white" />
 
 
-        <ImageView
+        <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/ivprofile"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_centerInParent="true"
             android:layout_marginRight="70dp"
             android:layout_toStartOf="@id/ivName"
-            android:src="@drawable/headerprofile"
+            app:lottie_rawRes="@raw/person"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
             app:tint="@color/white" />
 
 
@@ -71,12 +73,14 @@
            android:text="Cistron System private ltd"
             android:layout_height="wrap_content"/>
 
-        <ImageView
+        <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/ivprofilename"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_centerVertical="true"
-            android:src="@drawable/ic_baseline_person_24"
+           app:lottie_rawRes="@raw/person2"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
             app:tint="@color/white" />
 
 

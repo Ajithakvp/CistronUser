@@ -28,7 +28,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 public class DashboardActivity extends Activity {
 
-    ImageView ivprofile, ivLogout, ivBack;
+    ImageView  ivBack;
     RelativeLayout rlProfile;
     CardView cvAttendance, cvExpense, cvLeave;
 
@@ -37,7 +37,7 @@ public class DashboardActivity extends Activity {
 
 
     
-    LottieAnimationView lottieAnimationView;
+    LottieAnimationView lottieAnimationView,ivprofile;
     //Gps
 
     private Activity activity;
@@ -67,6 +67,8 @@ public class DashboardActivity extends Activity {
             public void onClick(View view) {
                 AlertDialog.Builder builder=new AlertDialog.Builder(DashboardActivity.this);
                 builder.setMessage("Do you want to LogOut");
+                builder.setTitle("Log Out!");
+                builder.setIcon(R.drawable.logout);
                 builder.setCancelable(false);
                 builder.setPositiveButton("yes",(new DialogInterface.OnClickListener() {
                     @Override

@@ -28,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
 
     Button login_btn;
     TextInputEditText edName,edPass;
-    Context context;
+
 
 
     @Override
@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
 
         newtork();
 
-        Boolean ischeck = false;
+
 
         EnableGPSIfPossible();
 
@@ -82,6 +82,7 @@ public class LoginActivity extends AppCompatActivity {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Yout GPS seems to be disabled, do you want to enable it?")
                 .setIcon(R.drawable.ic_baseline_location_on_24)
+                .setTitle(" Check Your GPS Services   ")
                 .setCancelable(false)
 
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
