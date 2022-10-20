@@ -22,6 +22,8 @@
             android:layout_height="wrap_content"
             android:text="Profile"/>
 
+
+
         <ImageView
             android:id="@+id/ivBack"
             android:layout_width="40dp"
@@ -265,6 +267,9 @@
             android:layout_marginTop="20dp"
             android:fontFamily="@font/semibold"
             android:layout_height="wrap_content"/>
+
+
+
 
 
     </RelativeLayout>

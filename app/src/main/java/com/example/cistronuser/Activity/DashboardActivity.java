@@ -7,6 +7,7 @@ import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,6 +21,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.cistronuser.Common.GpsListener;
 import com.example.cistronuser.R;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -34,6 +36,8 @@ public class DashboardActivity extends Activity {
     TextView tvName, tvEmpId, tvDesignation, tvBranch, tvTeamLeader, tvMobile, tvEmail, tvDob, tvDoj;
 
 
+    
+    LottieAnimationView lottieAnimationView;
     //Gps
 
     private Activity activity;
@@ -50,17 +54,34 @@ public class DashboardActivity extends Activity {
         cvExpense = findViewById(R.id.cvExpense);
         cvAttendance = findViewById(R.id.cvAttendance);
         rlProfile = findViewById(R.id.rlProfile);
-        ivLogout = findViewById(R.id.ivLogout);
+        lottieAnimationView = findViewById(R.id.ivLogout);
         ivprofile = findViewById(R.id.ivprofile);
 
 
 
 
 
-        ivLogout.setOnClickListener(new View.OnClickListener() {
+        lottieAnimationView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                AlertDialog.Builder builder=new AlertDialog.Builder(DashboardActivity.this);
+                builder.setMessage("Do you want to LogOut");
+                builder.setCancelable(false);
+                builder.setPositiveButton("yes",(new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                    }
+                }));
+                builder.setNegativeButton("No",(new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                }));
+AlertDialog alertDialog=builder.create();
+alertDialog.show();
+
             }
         });
 

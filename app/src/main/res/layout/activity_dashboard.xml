@@ -21,14 +21,16 @@
             android:layout_centerInParent="true"
             />
 
-        <ImageView
+        <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/ivLogout"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_centerInParent="true"
             android:layout_marginLeft="70dp"
             android:layout_toRightOf="@id/ivName"
-            android:src="@drawable/logout"
+           app:lottie_rawRes="@raw/logout"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
             app:tint="@color/white" />
 
 
@@ -102,12 +104,14 @@
             android:layout_marginLeft="26dp"
             android:layout_height="150dp">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:src="@drawable/attend1"
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_below="@+id/tvDoj"
                 android:layout_gravity="center"
-                android:layout_height="wrap_content"
-                app:tint="@color/white" />
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/attendancegif"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -137,10 +141,12 @@
             android:layout_marginLeft="40dp"
             android:layout_height="150dp">
 
-            <ImageView
+            <com.airbnb.lottie.LottieAnimationView
                 android:layout_width="45dp"
-                android:src="@drawable/expense1"
                 android:layout_gravity="center"
+                app:lottie_rawRes="@raw/expense"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
                 android:layout_height="50dp"
                 app:tint="@color/white" />
             <TextView
@@ -174,10 +180,12 @@
             android:layout_marginLeft="20dp"
             android:layout_height="150dp">
 
-            <ImageView
+            <com.airbnb.lottie.LottieAnimationView
                 android:layout_width="wrap_content"
-                android:src="@drawable/leave"
+               app:lottie_rawRes="@raw/leave"
                 android:layout_gravity="center"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
                 android:layout_height="wrap_content"
                 app:tint="@color/white" />
             <TextView
