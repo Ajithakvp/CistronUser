@@ -101,7 +101,7 @@
             android:backgroundTint="@color/skyblue"
             android:id="@+id/cvAttendance"
             android:layout_marginTop="40dp"
-            android:layout_marginLeft="26dp"
+            android:layout_marginLeft="15dp"
             android:layout_height="150dp">
 
             <com.airbnb.lottie.LottieAnimationView

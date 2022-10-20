@@ -1,51 +1,34 @@
 package com.example.cistronuser;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentSender;
-import android.content.pm.ActivityInfo;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
+import android.icu.util.Output;
 import android.location.LocationManager;
-import android.location.LocationRequest;
 import android.net.ConnectivityManager;
 import android.net.NetworkCapabilities;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cistronuser.Activity.DashboardActivity;
-import com.google.android.gms.common.api.ResolvableApiException;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.LocationSettingsRequest;
-import com.google.android.gms.location.LocationSettingsResponse;
-import com.google.android.gms.location.SettingsClient;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 
-import java.text.BreakIterator;
+import java.io.FileInputStream;
+import java.io.InputStream;
 
 public class LoginActivity extends AppCompatActivity {
 
 
     Button login_btn;
     TextInputEditText edName,edPass;
-
+    Context context;
 
 
     @Override
@@ -60,25 +43,63 @@ public class LoginActivity extends AppCompatActivity {
 
         newtork();
 
-        Gps();
+        Boolean ischeck = false;
+
+        EnableGPSIfPossible();
+
+
+
 
         login_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
                 CallLogin();
+
+                if (edName.getText().toString().trim().length()==0){
+                    edName.setError("Enter the Name");
+                    edName.requestFocus();
+                }
+
+                else if (edPass.getText().toString().trim().length()==0){
+                    edPass.setError("Enter the Password");
+                    edPass.requestFocus();
+                }
             }
         });
 
     }
 
-
-
-    private void Gps() {
-
-
-
-
+    private void EnableGPSIfPossible() {
+        final LocationManager manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
+        if ( !manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
+            buildAlertMessageNoGps();
+        }
     }
+
+    private  void buildAlertMessageNoGps() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Yout GPS seems to be disabled, do you want to enable it?")
+                .setIcon(R.drawable.ic_baseline_location_on_24)
+                .setCancelable(false)
+
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                        Toast.makeText(LoginActivity.this, "GPS Enabled", Toast.LENGTH_SHORT).show();
+
+                        startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                        dialog.cancel();
+                    }
+                });
+        final AlertDialog alert = builder.create();
+        alert.show();
+    }
+
 
 
 

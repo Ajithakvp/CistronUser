@@ -61,6 +61,7 @@ public class DashboardActivity extends Activity {
 
 
 
+
         lottieAnimationView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
