@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+    <androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:cardCornerRadius="20dp"
+        android:layout_margin="10dp"
+        app:cardElevation="20dp"
+        android:layout_height="400dp" android:layout_width="300dp">
+
+    <RelativeLayout
+        android:layout_width="300dp"
+        android:layout_gravity="center"
+        android:layout_height="400dp">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="200dp"
+            android:id="@+id/ivMore"
+            android:layout_centerInParent="true"
+            app:lottie_rawRes="@raw/network"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            android:layout_height="200dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ivMore"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/bold"
+            android:text="Internet Failed"
+            android:textColor="#F91A0C"
+            android:textSize="20dp" />
+
+
+
+    </RelativeLayout>
+
+
+
+    </androidx.cardview.widget.CardView>

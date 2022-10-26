@@ -1,9 +1,420 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activity.ExpensesActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <RelativeLayout
+        android:id="@+id/rltoolbar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/skyblue">
+
+        <TextView
+            android:id="@+id/tvHeader"
+            style="@style/header"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/bold"
+            android:text="Expenses"
+            android:textColor="@color/white"
+            android:textSize="20dp" />
+
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="35dp"
+            android:layout_toLeftOf="@id/tvHeader"
+            android:backgroundTint="@color/white"
+            android:src="@drawable/ic_baseline_arrow_left_24"
+            app:tint="@color/white" />
+
+
+        <ImageView
+            android:id="@+id/ivMore"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="35dp"
+            android:layout_toRightOf="@id/tvHeader"
+            android:backgroundTint="@color/white"
+            android:src="@drawable/ic_baseline_post_add_24"
+            android:visibility="gone"
+            app:tint="@color/white" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rltoolbar">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/tvDateTag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/bold"
+                    android:gravity="center"
+                    android:text="Date                :"
+                    android:textColor="@color/black"
+                    android:textSize="20dp" />
+
+
+                <TextView
+                    android:id="@+id/tvDate"
+                    android:layout_width="200dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/tvDateTag"
+                    android:background="@drawable/size"
+                    android:backgroundTint="#D4E2E2"
+                    android:fontFamily="@font/semibold"
+                    android:gravity="center"
+                    android:textSize="15dp" />
+
+
+                <TextView
+                    android:id="@+id/tvWorkshopTag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_below="@id/tvDate"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/bold"
+                    android:gravity="center"
+                    android:text="Work Report :"
+                    android:textColor="@color/black"
+                    android:textSize="20dp" />
+
+
+                <EditText
+                    android:id="@+id/edWorkReport"
+                    android:layout_width="200dp"
+                    android:layout_height="40dp"
+                    android:layout_below="@id/tvDate"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/tvWorkshopTag"
+                    android:background="@drawable/size"
+                    android:backgroundTint="#D4E2E2"
+                    android:fontFamily="@font/semibold"
+                    android:gravity="center"
+                    android:textSize="15dp" />
+
+                <View
+                    android:id="@+id/View1"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.9dp"
+                    android:layout_below="@id/edWorkReport"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/black" />
+
+                <TextView
+                    android:id="@+id/tvConveyanceTag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_below="@id/View1"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/bold"
+                    android:gravity="center"
+                    android:text="Conveyance :"
+                    android:textColor="@color/black"
+                    android:textSize="20dp" />
+
+
+                <EditText
+                    android:id="@+id/edConveyance"
+                    android:layout_width="200dp"
+                    android:layout_height="40dp"
+                    android:layout_below="@id/View1"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/tvConveyanceTag"
+                    android:background="@drawable/size"
+                    android:backgroundTint="#D4E2E2"
+                    android:fontFamily="@font/semibold"
+                    android:gravity="center"
+                    android:textSize="15dp" />
+
+                <RelativeLayout
+                    android:id="@+id/rlUpload"
+                    android:layout_width="400dp"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/edConveyance"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/size"
+                    android:backgroundTint="#D4E2E2">
+
+                    <TextView
+                        android:id="@+id/tvConveyanceDoc"
+                        android:layout_width="300dp"
+                        android:layout_height="40dp"
+                        android:fontFamily="@font/semibold"
+                        android:gravity="center"
+                        android:hint="Document Uplod"
+                        android:textSize="15dp" />
+
+                    <ImageView
+                        android:id="@+id/ivdoc"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_centerInParent="true"
+                        android:layout_marginRight="35dp"
+                        android:layout_toRightOf="@id/tvConveyanceDoc"
+                        android:backgroundTint="@color/white"
+                        android:src="@drawable/ic_baseline_upload_24" />
+
+                </RelativeLayout>
+
+                <View
+                    android:id="@+id/View2"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.9dp"
+                    android:layout_below="@id/rlUpload"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/black" />
+
+
+                <TextView
+                    android:id="@+id/tvTicketTag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_below="@id/View2"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/bold"
+                    android:gravity="center"
+                    android:text="Ticket :"
+                    android:textColor="@color/black"
+                    android:textSize="20dp" />
+
+
+                <EditText
+                    android:id="@+id/tvTicket"
+                    android:layout_width="200dp"
+                    android:layout_height="40dp"
+                    android:layout_below="@id/View2"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/tvTicketTag"
+                    android:background="@drawable/size"
+                    android:backgroundTint="#D4E2E2"
+                    android:fontFamily="@font/semibold"
+                    android:gravity="center"
+                    android:textSize="15dp" />
+
+                <RelativeLayout
+                    android:id="@+id/rlUploadTicket"
+                    android:layout_width="400dp"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/tvTicket"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/size"
+                    android:backgroundTint="#D4E2E2">
+
+                    <TextView
+                        android:id="@+id/tvTicketDoc"
+                        android:layout_width="300dp"
+                        android:layout_height="40dp"
+                        android:fontFamily="@font/semibold"
+                        android:gravity="center"
+                        android:hint="Document Uplod"
+                        android:textSize="15dp" />
+
+                    <ImageView
+                        android:id="@+id/ivTicketDoc"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_centerInParent="true"
+                        android:layout_marginRight="35dp"
+                        android:layout_toRightOf="@id/tvTicketDoc"
+                        android:backgroundTint="@color/white"
+                        android:src="@drawable/ic_baseline_upload_24" />
+
+                </RelativeLayout>
+
+
+                <View
+                    android:id="@+id/View3"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.9dp"
+                    android:layout_below="@id/rlUploadTicket"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/black" />
+
+
+                <TextView
+                    android:id="@+id/tvLodgingTag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_below="@id/View3"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/bold"
+                    android:gravity="center"
+                    android:text="Lodging :"
+                    android:textColor="@color/black"
+                    android:textSize="20dp" />
+
+
+                <EditText
+                    android:id="@+id/tvLodging"
+                    android:layout_width="200dp"
+                    android:layout_height="40dp"
+                    android:layout_below="@id/View3"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/tvLodgingTag"
+                    android:background="@drawable/size"
+                    android:backgroundTint="#D4E2E2"
+                    android:fontFamily="@font/semibold"
+                    android:gravity="center"
+                    android:textSize="15dp" />
+
+                <RelativeLayout
+                    android:id="@+id/rlUploadLodging"
+                    android:layout_width="400dp"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/tvLodging"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/size"
+                    android:backgroundTint="#D4E2E2">
+
+                    <TextView
+                        android:id="@+id/tvLodgingDoc"
+                        android:layout_width="300dp"
+                        android:layout_height="40dp"
+                        android:fontFamily="@font/semibold"
+                        android:gravity="center"
+                        android:hint="Document Uplod"
+                        android:textSize="15dp" />
+
+                    <ImageView
+                        android:id="@+id/ivLodgingDoc"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_centerInParent="true"
+                        android:layout_marginRight="35dp"
+                        android:layout_toRightOf="@id/tvLodgingDoc"
+                        android:backgroundTint="@color/white"
+                        android:src="@drawable/ic_baseline_upload_24" />
+
+                </RelativeLayout>
+
+
+                <View
+                    android:id="@+id/View4"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.9dp"
+                    android:layout_below="@id/rlUploadLodging"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/black" />
+
+
+                <TextView
+                    android:id="@+id/tvOtherTag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_below="@id/View4"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/bold"
+                    android:gravity="center"
+                    android:text="Others :"
+                    android:textColor="@color/black"
+                    android:textSize="20dp" />
+
+
+                <EditText
+                    android:id="@+id/edOther"
+                    android:layout_width="200dp"
+                    android:layout_height="40dp"
+                    android:layout_below="@id/View4"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/tvOtherTag"
+                    android:background="@drawable/size"
+                    android:backgroundTint="#D4E2E2"
+                    android:fontFamily="@font/semibold"
+                    android:gravity="center"
+                    android:textSize="15dp" />
+
+                <RelativeLayout
+                    android:id="@+id/rlUploadother"
+                    android:layout_width="400dp"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/edOther"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/size"
+                    android:backgroundTint="#D4E2E2">
+
+                    <TextView
+                        android:id="@+id/tvOtherDoc"
+                        android:layout_width="300dp"
+                        android:layout_height="40dp"
+                        android:fontFamily="@font/semibold"
+                        android:gravity="center"
+                        android:hint="Document Uplod"
+                        android:textSize="15dp" />
+
+                    <ImageView
+                        android:id="@+id/ivotherDoc"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_centerInParent="true"
+                        android:layout_marginRight="35dp"
+                        android:layout_toRightOf="@id/tvOtherDoc"
+                        android:backgroundTint="@color/white"
+                        android:src="@drawable/ic_baseline_upload_24" />
+
+                </RelativeLayout>
+
+
+                <TextView
+                    android:id="@+id/tvSubmit"
+                    android:layout_width="150dp"
+                    android:layout_height="60dp"
+                    android:layout_below="@id/rlUploadother"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/size"
+                    android:fontFamily="@font/bold"
+                    android:gravity="center"
+                    android:text="Submit"
+                    android:textColor="@color/white"
+                    android:textSize="25dp" />
+
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
+
+</RelativeLayout>

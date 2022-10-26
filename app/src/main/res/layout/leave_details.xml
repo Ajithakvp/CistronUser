@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="10dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="10dp">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvDateTag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bold"
+                android:text="Date :"
+                android:textColor="#0AA6F9"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/tvDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="5dp"
+                android:layout_toRightOf="@id/tvDateTag"
+                android:fontFamily="@font/semibold"
+                android:text="31/10/2021"
+                android:textColor="#F92E0A"
+                android:textSize="17dp" />
+
+
+            <TextView
+                android:id="@+id/tvDayTag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="5dp"
+                android:layout_toRightOf="@id/tvDate"
+                android:fontFamily="@font/bold"
+                android:text="Day :"
+                android:textColor="#0AA6F9"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/tvDay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="5dp"
+                android:layout_toRightOf="@id/tvDayTag"
+                android:fontFamily="@font/semibold"
+                android:text="Wednesday"
+                android:textColor="#F92E0A"
+                android:textSize="17dp" />
+
+
+            <TextView
+                android:id="@+id/tvLeaveTypeTag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvDate"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bold"
+                android:text="Leave Type :"
+                android:textColor="#0AA6F9"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/tvLeaveType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvDate"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_toRightOf="@id/tvLeaveTypeTag"
+                android:fontFamily="@font/semibold"
+                android:text="Privilege Leave"
+                android:textColor="@color/black"
+                android:textSize="17dp" />
+
+
+            <TextView
+                android:id="@+id/tvReasonTag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvLeaveType"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bold"
+                android:text="Reason :"
+                android:textColor="#0AA6F9"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/tvReason"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvLeaveType"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_toRightOf="@id/tvReasonTag"
+                android:fontFamily="@font/semibold"
+                android:text="Personal Emergency"
+                android:textColor="@color/black"
+                android:textSize="17dp" />
+
+
+            <TextView
+                android:id="@+id/tvfulldayTag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvReason"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bold"
+                android:text="FD/HD :"
+                android:textColor="#0AA6F9"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/tvfullday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvReason"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_toRightOf="@id/tvfulldayTag"
+                android:fontFamily="@font/semibold"
+                android:text="Half Day"
+                android:textColor="@color/black"
+                android:textSize="17dp" />
+
+
+            <TextView
+                android:id="@+id/tvStatusTag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvfullday"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bold"
+                android:text="Status :"
+                android:textColor="#0AA6F9"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/tvStatusApproved"
+                android:layout_width="150dp"
+                android:layout_height="30dp"
+                android:layout_below="@id/tvfullday"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_toRightOf="@id/tvStatusTag"
+                android:background="@drawable/cardview"
+                android:fontFamily="@font/semibold"
+                android:gravity="center"
+                android:text="Approved"
+                android:textColor="@color/white"
+                android:textSize="17dp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tvStatusPending"
+                android:layout_width="150dp"
+                android:layout_height="30dp"
+                android:layout_below="@id/tvfullday"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_toRightOf="@id/tvStatusTag"
+                android:background="@drawable/cardview"
+                android:backgroundTint="#FFC300"
+                android:fontFamily="@font/semibold"
+                android:gravity="center"
+                android:text="Pending"
+                android:textColor="@color/white"
+                android:textSize="17dp"
+                android:visibility="gone" />
+
+
+            <TextView
+                android:id="@+id/tvStatusDelate"
+                android:layout_width="150dp"
+                android:layout_height="30dp"
+                android:layout_below="@id/tvfullday"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_toRightOf="@id/tvStatusTag"
+                android:background="@drawable/cardview"
+                android:backgroundTint="#FC5609"
+                android:fontFamily="@font/semibold"
+                android:gravity="center"
+                android:text="Deleted"
+                android:textColor="@color/white"
+                android:textSize="17dp"
+                android:visibility="gone" />
+
+
+            <TextView
+                android:id="@+id/tvStatusRejected"
+                android:layout_width="150dp"
+                android:layout_height="30dp"
+                android:layout_below="@id/tvfullday"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_toRightOf="@id/tvStatusTag"
+                android:background="@drawable/cardview"
+                android:backgroundTint="#F91A0C"
+                android:fontFamily="@font/semibold"
+                android:gravity="center"
+                android:text="Rejected"
+                android:textColor="@color/white"
+                android:textSize="17dp"
+                android:visibility="visible" />
+
+
+        </RelativeLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

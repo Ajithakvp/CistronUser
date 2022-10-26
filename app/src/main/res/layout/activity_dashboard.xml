@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     tools:context=".Activity.DashboardActivity">
 
 
@@ -87,26 +87,28 @@
     </RelativeLayout>
 
 
-
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:layout_width="380dp"
+        android:layout_height="450dp"
         android:layout_below="@id/rlProfile"
-        android:layout_marginTop="60dp"
+        android:layout_centerInParent="true"
         android:layout_marginLeft="20dp"
-        android:background="@drawable/cardview"
-        android:backgroundTint="#D4E2E2"
+        android:layout_marginTop="60dp"
         android:layout_marginRight="20dp"
-        android:layout_height="450dp">
+        android:background="@drawable/cardview"
+        android:backgroundTint="#D4E2E2">
 
 
         <androidx.cardview.widget.CardView
-            android:layout_width="150dp"
-            app:cardCornerRadius="20dp"
-            android:backgroundTint="@color/skyblue"
             android:id="@+id/cvAttendance"
-            android:layout_marginTop="40dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_alignParentStart="true"
             android:layout_marginLeft="15dp"
-            android:layout_height="150dp">
+            android:layout_marginTop="40dp"
+            android:layout_marginRight="40dp"
+            android:backgroundTint="@color/skyblue"
+            app:cardCornerRadius="20dp">
 
             <com.airbnb.lottie.LottieAnimationView
                 android:layout_width="40dp"
@@ -115,117 +117,105 @@
                 android:layout_gravity="center"
                 app:lottie_autoPlay="true"
                 app:lottie_loop="true"
-                app:lottie_rawRes="@raw/attendancegif"/>
+                app:lottie_rawRes="@raw/attendancegif" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textColor="@color/white"
+                android:layout_marginTop="45dp"
                 android:fontFamily="@font/bold"
-               android:layout_marginTop="45dp"
-                android:text="Attendance"/>
-
+                android:text="Attendance"
+                android:textColor="@color/white" />
 
 
         </androidx.cardview.widget.CardView>
 
 
-
-
-<!--        Expenses-->
+        <!--        Expenses-->
 
         <androidx.cardview.widget.CardView
-            android:layout_width="150dp"
-            app:cardCornerRadius="20dp"
             android:id="@+id/cvExpense"
-            android:layout_toRightOf="@id/cvAttendance"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+
             android:layout_marginTop="40dp"
-            android:layout_centerHorizontal="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="15dp"
+            android:layout_toRightOf="@id/cvAttendance"
             android:backgroundTint="@color/skyblue"
-            android:layout_marginLeft="40dp"
-            android:layout_height="150dp">
+            app:cardCornerRadius="20dp">
 
             <com.airbnb.lottie.LottieAnimationView
                 android:layout_width="45dp"
+                android:layout_height="50dp"
                 android:layout_gravity="center"
-                app:lottie_rawRes="@raw/expense"
                 app:lottie_autoPlay="true"
                 app:lottie_loop="true"
-                android:layout_height="50dp"
-                app:tint="@color/white" />
+                app:lottie_rawRes="@raw/expense" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:fontFamily="@font/bold"
-                android:textColor="@color/white"
                 android:layout_marginTop="45dp"
-                android:text="Expenses"/>
-
+                android:fontFamily="@font/bold"
+                android:text="Expenses"
+                android:textColor="@color/white" />
 
 
         </androidx.cardview.widget.CardView>
 
 
-
-
-
-<!--        Leave-->
+        <!--        Leave-->
 
 
         <androidx.cardview.widget.CardView
-            android:layout_width="150dp"
-            app:cardCornerRadius="20dp"
             android:id="@+id/cvLeave"
-            android:layout_centerHorizontal="true"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:layout_below="@id/cvAttendance"
-            android:backgroundTint="@color/skyblue"
-            android:layout_marginTop="30dp"
+            android:layout_centerHorizontal="true"
             android:layout_marginLeft="20dp"
-            android:layout_height="150dp">
+            android:layout_marginTop="30dp"
+            android:backgroundTint="@color/skyblue"
+            app:cardCornerRadius="20dp">
 
             <com.airbnb.lottie.LottieAnimationView
                 android:layout_width="wrap_content"
-               app:lottie_rawRes="@raw/leave"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 app:lottie_autoPlay="true"
                 app:lottie_loop="true"
-                android:layout_height="wrap_content"
+                app:lottie_rawRes="@raw/leave"
                 app:tint="@color/white" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:fontFamily="@font/bold"
-                android:textColor="@color/white"
                 android:layout_marginTop="45dp"
-                android:text="Leave Application"/>
-
+                android:fontFamily="@font/bold"
+                android:text="Leave Application"
+                android:textColor="@color/white" />
 
 
         </androidx.cardview.widget.CardView>
 
 
+        <!--        <View-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:id="@+id/viewcenter"-->
+        <!--            android:background="@color/white"-->
+        <!--            android:layout_centerInParent="true"-->
+        <!--            android:layout_height="0.9dp"/>-->
 
-
-
-
-
-
-
-<!--        <View-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:id="@+id/viewcenter"-->
-<!--            android:background="@color/white"-->
-<!--            android:layout_centerInParent="true"-->
-<!--            android:layout_height="0.9dp"/>-->
-
-<!--        <View-->
-<!--            android:layout_width="0.9dp"-->
-<!--            android:id="@+id/viewhorcenter"-->
-<!--            android:background="@color/white"-->
-<!--            android:layout_centerHorizontal="true"-->
-<!--            android:layout_height="230dp"/>-->
+        <!--        <View-->
+        <!--            android:layout_width="0.9dp"-->
+        <!--            android:id="@+id/viewhorcenter"-->
+        <!--            android:background="@color/white"-->
+        <!--            android:layout_centerHorizontal="true"-->
+        <!--            android:layout_height="230dp"/>-->
 
 
     </RelativeLayout>
