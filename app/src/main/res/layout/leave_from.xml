@@ -58,12 +58,12 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:text="Date          :"
+            android:text="Date               :"
             android:layout_marginTop="30dp"
             android:layout_marginLeft="20dp"
             android:fontFamily="@font/bold"
             android:id="@+id/tvDateTag"
-            android:textSize="25dp"
+            android:textSize="20dp"
             android:textColor="@color/black"
             android:layout_height="wrap_content"/>
 
@@ -84,12 +84,12 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:text="Reason     :"
+            android:text="Reason          :"
             android:layout_marginTop="30dp"
             android:layout_marginLeft="20dp"
             android:fontFamily="@font/bold"
             android:id="@+id/tvReasonTag"
-            android:textSize="25dp"
+            android:textSize="20dp"
             android:layout_below="@id/tvDate"
             android:textColor="@color/black"
             android:layout_height="wrap_content"/>
@@ -136,7 +136,7 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:text="Day   :"
+            android:text="Day                 :"
             android:layout_marginTop="30dp"
             android:layout_marginLeft="20dp"
             android:fontFamily="@font/bold"
