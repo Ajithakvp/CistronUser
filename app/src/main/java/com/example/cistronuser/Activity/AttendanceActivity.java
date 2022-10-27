@@ -4,7 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.IntentFilter;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,11 +16,17 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.example.cistronuser.Common.ConnectionRecevier;
 import com.example.cistronuser.R;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 public class AttendanceActivity extends Activity {
+
+
+    //Internet
+
+    BroadcastReceiver broadcastReceiver;
 
     ImageView ivBack;
     TextInputLayout placeLayout;
@@ -43,6 +52,11 @@ public class AttendanceActivity extends Activity {
         btnSubmit=findViewById(R.id.btnSubmit);
         placeLayout=findViewById(R.id.placeLayout);
         rbGroup=findViewById(R.id.rbGroup);
+
+
+        //internet
+        broadcastReceiver = new ConnectionRecevier();
+        registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 
 
         ivBack.setOnClickListener(new View.OnClickListener() {
@@ -161,6 +175,22 @@ public class AttendanceActivity extends Activity {
 
 
 
+    }
+
+    protected void unregBroadcast() {
+        try {
+            unregisterReceiver(broadcastReceiver);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+
+
+        super.onDestroy();
+        unregBroadcast();
     }
 
 

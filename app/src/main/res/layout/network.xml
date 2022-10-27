@@ -1,43 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-    <androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-        app:cardCornerRadius="20dp"
-        android:layout_margin="10dp"
-        app:cardElevation="20dp"
-        android:layout_height="400dp" android:layout_width="300dp">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:background="@drawable/cardview"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="20dp">
 
-    <RelativeLayout
-        android:layout_width="300dp"
-        android:layout_gravity="center"
-        android:layout_height="400dp">
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_centerHorizontal="true"
+        app:cardElevation="30dp"
+        app:cardCornerRadius="10dp"
+        android:layout_height="wrap_content">
 
-        <com.airbnb.lottie.LottieAnimationView
-            android:layout_width="200dp"
-            android:id="@+id/ivMore"
-            android:layout_centerInParent="true"
-            app:lottie_rawRes="@raw/network"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true"
-            android:layout_height="200dp"/>
-
-        <TextView
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/ivMore"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/bold"
-            android:text="Internet Failed"
-            android:textColor="#F91A0C"
-            android:textSize="20dp" />
+            android:layout_height="wrap_content">
 
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="200dp"
+                android:id="@+id/ivnet"
+                android:layout_centerHorizontal="true"
+                android:layout_height="150dp"
+                app:lottie_rawRes="@raw/network"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvnet"
+                android:textSize="25dp"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/Radio"
+                android:fontFamily="@font/bold"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/ivnet"
+                android:text="No Network Connection"/>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvnet"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="105dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/semibold"
+                android:text="Mobile data is disbled.Enable mobile data or connect your phone to wifi to use the application."
+                android:textColor="@color/black"
+                android:textSize="13dp" />
 
-    </RelativeLayout>
-
-
-
+        </RelativeLayout>
     </androidx.cardview.widget.CardView>
+
+
+</RelativeLayout>

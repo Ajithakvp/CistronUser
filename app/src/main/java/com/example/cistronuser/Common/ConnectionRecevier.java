@@ -26,8 +26,13 @@ public class ConnectionRecevier extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
 
         if (isConnected(context)) {
-
-            Toast.makeText(context, "Internet Connected", Toast.LENGTH_SHORT).show();
+//            AlertDialog.Builder builder=new AlertDialog.Builder(context);
+//
+//            View view=LayoutInflater.from(context).inflate(R.layout.network,null);
+//            builder.setView(view);
+//            AlertDialog alertDialog=builder.create();
+//            alertDialog.show();
+           Toast.makeText(context, "Internet Connected", Toast.LENGTH_SHORT).show();
         } else {
 
             AlertDialog.Builder builder=new AlertDialog.Builder(context);

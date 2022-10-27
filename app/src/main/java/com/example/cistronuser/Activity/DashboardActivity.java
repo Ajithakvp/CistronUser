@@ -8,12 +8,15 @@ import androidx.core.app.ActivityCompat;
 import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -22,11 +25,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.example.cistronuser.Common.ConnectionRecevier;
 import com.example.cistronuser.Common.GpsListener;
+import com.example.cistronuser.Common.PreferenceManager;
+import com.example.cistronuser.LoginActivity;
 import com.example.cistronuser.R;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 public class DashboardActivity extends Activity {
+
+
+    //Internet
+
+    BroadcastReceiver broadcastReceiver;
 
     ImageView  ivBack;
     RelativeLayout rlProfile;
@@ -40,9 +51,7 @@ public class DashboardActivity extends Activity {
     LottieAnimationView lottieAnimationView,ivprofile;
     //Gps
 
-    private Activity activity;
-    private LocationManager mlocManager;
-    private LocationListener gpsListener;
+
 
 
     @Override
@@ -56,6 +65,10 @@ public class DashboardActivity extends Activity {
         rlProfile = findViewById(R.id.rlProfile);
         lottieAnimationView = findViewById(R.id.ivLogout);
         ivprofile = findViewById(R.id.ivprofile);
+
+        //internet
+        broadcastReceiver = new ConnectionRecevier();
+        registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 
 
 
@@ -73,7 +86,10 @@ public class DashboardActivity extends Activity {
                 builder.setPositiveButton("yes",(new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        finish();
+                        PreferenceManager.setLoggedStatus(DashboardActivity.this,false);
+                        Intent intent=new Intent(DashboardActivity.this, LoginActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
                     }
                 }));
                 builder.setNegativeButton("No",(new DialogInterface.OnClickListener() {
@@ -151,5 +167,21 @@ alertDialog.show();
                 bottomSheetDialog.dismiss();
             }
         });
+    }
+
+    protected void unregBroadcast() {
+        try {
+            unregisterReceiver(broadcastReceiver);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+
+
+        super.onDestroy();
+        unregBroadcast();
     }
 }

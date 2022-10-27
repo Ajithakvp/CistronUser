@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.example.cistronuser.Activity.DashboardActivity;
 import com.example.cistronuser.Common.ConnectionRecevier;
+import com.example.cistronuser.Common.PreferenceManager;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.FileInputStream;
@@ -34,8 +35,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     Button login_btn;
-    TextInputEditText edName,edPass;
-
+    TextInputEditText edName, edPass;
 
 
     @Override
@@ -43,23 +43,16 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        edPass=findViewById(R.id.edPass);
-        edName=findViewById(R.id.edName);
-        login_btn=findViewById(R.id.login_btn);
+        edPass = findViewById(R.id.edPass);
+        edName = findViewById(R.id.edName);
+        login_btn = findViewById(R.id.login_btn);
 
 
-        broadcastReceiver=new ConnectionRecevier();
-        registerReceiver(broadcastReceiver,new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
-
-       // regBroadcast();
-
-       // newtork();
-
+        broadcastReceiver = new ConnectionRecevier();
+        registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 
 
         EnableGPSIfPossible();
-
-
 
 
         login_btn.setOnClickListener(new View.OnClickListener() {
@@ -69,12 +62,10 @@ public class LoginActivity extends AppCompatActivity {
 
                 CallLogin();
 
-                if (edName.getText().toString().trim().length()==0){
+                if (edName.getText().toString().trim().length() == 0) {
                     edName.setError("Enter the Name");
                     edName.requestFocus();
-                }
-
-                else if (edPass.getText().toString().trim().length()==0){
+                } else if (edPass.getText().toString().trim().length() == 0) {
                     edPass.setError("Enter the Password");
                     edPass.requestFocus();
                 }
@@ -84,13 +75,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void EnableGPSIfPossible() {
-        final LocationManager manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
-        if ( !manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
+        final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             buildAlertMessageNoGps();
         }
     }
 
-    private  void buildAlertMessageNoGps() {
+    private void buildAlertMessageNoGps() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Yout GPS seems to be disabled, do you want to enable it?")
                 .setIcon(R.drawable.ic_baseline_location_on_24)
@@ -114,88 +105,23 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-
-
-
-
-
-
-
-//    private void newtork() {
-//
-//        if(!isNetworkAvailable()==true)
-//        {
-//            new AlertDialog.Builder(this)
-//                    .setIcon(R.drawable.ic_baseline_signal_wifi_connected_no_internet_4_24)
-//                    .setTitle("Internet Connection Alert")
-//                    .setMessage("Please Check Your Internet Connection")
-//                    .setPositiveButton("Close", new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialogInterface, int i) {
-//                            finish();
-//                        }
-//                    }).show();
-//        }
-//        else if(isNetworkAvailable()==true)
-//        {
-////            Toast.makeText(LoginActivity.this,
-////                    "Welcome", Toast.LENGTH_LONG).show();
-//        }
-//
-//    }
-
-//    public boolean isNetworkAvailable() {
-//
-//        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-//
-//        if (connectivityManager != null) {
-//
-//
-//            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-//                NetworkCapabilities capabilities = connectivityManager.getNetworkCapabilities(connectivityManager.getActiveNetwork());
-//                if (capabilities != null) {
-//                    if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
-//
-//                        return true;
-//                    } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
-//
-//                        return true;
-//                    } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
-//
-//                        return true;
-//                    }
-//                }
-//            }
-//        }
-//
-//        return false;
-//
-//    }
-
-
-
-
-
     private void CallLogin() {
 
-            Intent intent=new Intent(LoginActivity.this,DashboardActivity.class);
-            startActivity(intent);
+
+        //PreferenceManager.setLoggedStatus(this,true);
+        Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
+        startActivity(intent);
 
 
     }
 
-//    protected void regBroadcast(){
-//        if (Build.VERSION.SDK_INT >=Build.VERSION_CODES.N){
-//            registerReceiver(broadcastReceiver,new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
-//        }
-//    }
 
-    protected void unregBroadcast(){
-       try {
-           unregisterReceiver(broadcastReceiver);
-       }catch (IllegalArgumentException e){
-           e.printStackTrace();
-       }
+    protected void unregBroadcast() {
+        try {
+            unregisterReceiver(broadcastReceiver);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

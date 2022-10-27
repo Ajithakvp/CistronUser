@@ -7,6 +7,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.BroadcastReceiver;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.View;
@@ -17,6 +20,7 @@ import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.cistronuser.Adapter.LeaveDetailsAdapter;
+import com.example.cistronuser.Common.ConnectionRecevier;
 import com.example.cistronuser.R;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
@@ -25,6 +29,9 @@ import java.util.Date;
 
 public class LeaveActivity extends Activity {
 
+
+    //Internet
+    BroadcastReceiver broadcastReceiver;
 
     //Bottom
     TextView tvDate;
@@ -56,11 +63,16 @@ public class LeaveActivity extends Activity {
         rcLeave=findViewById(R.id.rcLeave);
         ivdetails=findViewById(R.id.ivdetails);
 
+        //internet
+        broadcastReceiver = new ConnectionRecevier();
+        registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+
 
         //RecycleView
 
         leaveDetailsAdapter=new LeaveDetailsAdapter(this);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         rcLeave.setAdapter(leaveDetailsAdapter);
         rcLeave.setLayoutManager(linearLayoutManager);
 
@@ -105,6 +117,7 @@ public class LeaveActivity extends Activity {
         tvLeaveType=bottomSheetDialog.findViewById(R.id.tvLeaveType);
         tvDayType=bottomSheetDialog.findViewById(R.id.tvDayType);
         ivBackbottom=bottomSheetDialog.findViewById(R.id.ivBackbottom);
+
 
         Date d = new Date();
         CharSequence s  = DateFormat.format("d /MM/yyyy ", d.getTime());
