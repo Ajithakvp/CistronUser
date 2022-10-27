@@ -35,10 +35,10 @@ public class LeaveActivity extends Activity {
 
     //Bottom
     TextView tvDate;
-    Spinner spReson,tvLeaveType,tvDayType;
+    Spinner spReson, tvLeaveType, tvDayType;
 
 
-    ImageView ivBack,ivdetails,ivBackbottom;
+    ImageView ivBack, ivdetails, ivBackbottom;
 
     LottieAnimationView ivAdd;
 
@@ -58,10 +58,10 @@ public class LeaveActivity extends Activity {
         setContentView(R.layout.activity_leave);
 
 
-        ivAdd=findViewById(R.id.ivMore);
-        ivBack=findViewById(R.id.ivBack);
-        rcLeave=findViewById(R.id.rcLeave);
-        ivdetails=findViewById(R.id.ivdetails);
+        ivAdd = findViewById(R.id.ivMore);
+        ivBack = findViewById(R.id.ivBack);
+        rcLeave = findViewById(R.id.rcLeave);
+        ivdetails = findViewById(R.id.ivdetails);
 
         //internet
         broadcastReceiver = new ConnectionRecevier();
@@ -70,8 +70,8 @@ public class LeaveActivity extends Activity {
 
         //RecycleView
 
-        leaveDetailsAdapter=new LeaveDetailsAdapter(this);
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
+        leaveDetailsAdapter = new LeaveDetailsAdapter(this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         rcLeave.setAdapter(leaveDetailsAdapter);
         rcLeave.setLayoutManager(linearLayoutManager);
@@ -100,7 +100,7 @@ public class LeaveActivity extends Activity {
     }
 
     private void CallleaveDetails() {
-        BottomSheetDialog bottomSheetDialog1=new BottomSheetDialog(this);
+        BottomSheetDialog bottomSheetDialog1 = new BottomSheetDialog(this);
         bottomSheetDialog1.setContentView(R.layout.leave_lop);
         bottomSheetDialog1.show();
 
@@ -108,19 +108,19 @@ public class LeaveActivity extends Activity {
 
     private void CallLeave() {
 
-        BottomSheetDialog bottomSheetDialog=new BottomSheetDialog(this);
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
         bottomSheetDialog.setContentView(R.layout.leave_from);
         bottomSheetDialog.show();
 
-        tvDate=bottomSheetDialog.findViewById(R.id.tvDate);
-        spReson=bottomSheetDialog.findViewById(R.id.spReson);
-        tvLeaveType=bottomSheetDialog.findViewById(R.id.tvLeaveType);
-        tvDayType=bottomSheetDialog.findViewById(R.id.tvDayType);
-        ivBackbottom=bottomSheetDialog.findViewById(R.id.ivBackbottom);
+        tvDate = bottomSheetDialog.findViewById(R.id.tvDate);
+        spReson = bottomSheetDialog.findViewById(R.id.spReson);
+        tvLeaveType = bottomSheetDialog.findViewById(R.id.tvLeaveType);
+        tvDayType = bottomSheetDialog.findViewById(R.id.tvDayType);
+        ivBackbottom = bottomSheetDialog.findViewById(R.id.ivBackbottom);
 
 
         Date d = new Date();
-        CharSequence s  = DateFormat.format("d /MM/yyyy ", d.getTime());
+        CharSequence s = DateFormat.format("d /MM/yyyy ", d.getTime());
         tvDate.setText(s);
 
         ivBackbottom.setOnClickListener(new View.OnClickListener() {
@@ -141,7 +141,7 @@ public class LeaveActivity extends Activity {
 
     private void callDate() {
 
-       Calendar calendar = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);
         month = calendar.get(Calendar.MONTH);
         dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);

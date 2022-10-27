@@ -51,7 +51,7 @@ public class ExpensesActivity extends Activity {
     EditText edWorkReport, edConveyance, tvTicket, tvLodging, edOther;
 
 
-    String strConvenyance,strtickDoc,strLodgingDoc,strotherDoc;
+    String strConvenyance, strtickDoc, strLodgingDoc, strotherDoc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +79,6 @@ public class ExpensesActivity extends Activity {
         //internet
         broadcastReceiver = new ConnectionRecevier();
         registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
-
 
 
         ActivityCompat.requestPermissions(this,
@@ -112,13 +111,13 @@ public class ExpensesActivity extends Activity {
             @Override
             public void onClick(View v) {
                 try {
-                   Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                     intent.setType("*/*");
                     startActivityForResult(intent, 1);
                 } catch (Exception e) {
 
                 }
-                }
+            }
         });
 
 
@@ -126,7 +125,7 @@ public class ExpensesActivity extends Activity {
             @Override
             public void onClick(View v) {
                 try {
-                  Intent  intent = new Intent(Intent.ACTION_GET_CONTENT);
+                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                     intent.setType("*/*");
                     startActivityForResult(intent, 2);
                 } catch (Exception e) {
@@ -140,7 +139,7 @@ public class ExpensesActivity extends Activity {
             @Override
             public void onClick(View v) {
                 try {
-                   Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                     intent.setType("*/*");
                     startActivityForResult(intent, 3);
                 } catch (Exception e) {
@@ -190,7 +189,7 @@ public class ExpensesActivity extends Activity {
         switch (requestCode) {
             case PERMISSION_REQUEST_CODE:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this, "Permission Successfull", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Permission Successfully", Toast.LENGTH_SHORT).show();
 
                 } else {
                     Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
@@ -209,7 +208,7 @@ public class ExpensesActivity extends Activity {
                     Uri contentUri = data.getData();
                     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                     strConvenyance = timeStamp + "." + getFileExt(contentUri);
-                    Toast.makeText(this, "File Name"+ strConvenyance, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "File Name" + strConvenyance, Toast.LENGTH_SHORT).show();
 
                     try {
                         if (strConvenyance.length() > 0) {
@@ -232,14 +231,13 @@ public class ExpensesActivity extends Activity {
                 break;
 
 
-
             case 2:
 
                 if (resultCode == RESULT_OK) {
                     Uri contentUri = data.getData();
                     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                     strtickDoc = timeStamp + "." + getFileExt(contentUri);
-                    Toast.makeText(this, "File Name"+ strtickDoc, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "File Name" + strtickDoc, Toast.LENGTH_SHORT).show();
 
                     try {
                         if (strtickDoc.length() > 0) {
@@ -269,7 +267,7 @@ public class ExpensesActivity extends Activity {
                     Uri contentUri = data.getData();
                     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                     strLodgingDoc = timeStamp + "." + getFileExt(contentUri);
-                    Toast.makeText(this, "File Name"+ strLodgingDoc, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "File Name" + strLodgingDoc, Toast.LENGTH_SHORT).show();
 
                     try {
                         if (strLodgingDoc.length() > 0) {
@@ -293,20 +291,17 @@ public class ExpensesActivity extends Activity {
                 break;
 
 
-
-
             case 3:
 
                 if (resultCode == RESULT_OK) {
                     Uri contentUri = data.getData();
                     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                     strotherDoc = timeStamp + "." + getFileExt(contentUri);
-                    Toast.makeText(this, "File Name"+ strotherDoc, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "File Name" + strotherDoc, Toast.LENGTH_SHORT).show();
 
                     try {
                         if (strotherDoc.length() > 0) {
                             tvOtherDoc.setText(strotherDoc);
-
                         }
 
                     } catch (Exception e) {
@@ -332,7 +327,6 @@ public class ExpensesActivity extends Activity {
         MimeTypeMap mime = MimeTypeMap.getSingleton();
         return mime.getExtensionFromMimeType(c.getType(contentUri));
     }
-
 
 
     protected void unregBroadcast() {

@@ -32,14 +32,14 @@ public class ConnectionRecevier extends BroadcastReceiver {
 //            builder.setView(view);
 //            AlertDialog alertDialog=builder.create();
 //            alertDialog.show();
-           Toast.makeText(context, "Internet Connected", Toast.LENGTH_SHORT).show();
+            // Toast.makeText(context, "Internet Connected", Toast.LENGTH_SHORT).show();
         } else {
 
-            AlertDialog.Builder builder=new AlertDialog.Builder(context);
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
-            View view=LayoutInflater.from(context).inflate(R.layout.network,null);
+            View view = LayoutInflater.from(context).inflate(R.layout.network, null);
             builder.setView(view);
-            AlertDialog alertDialog=builder.create();
+            AlertDialog alertDialog = builder.create();
             alertDialog.show();
 
 

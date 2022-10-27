@@ -39,7 +39,7 @@ public class DashboardActivity extends Activity {
 
     BroadcastReceiver broadcastReceiver;
 
-    ImageView  ivBack;
+    ImageView ivBack;
     RelativeLayout rlProfile;
     CardView cvAttendance, cvExpense, cvLeave;
 
@@ -47,11 +47,8 @@ public class DashboardActivity extends Activity {
     TextView tvName, tvEmpId, tvDesignation, tvBranch, tvTeamLeader, tvMobile, tvEmail, tvDob, tvDoj;
 
 
-    
-    LottieAnimationView lottieAnimationView,ivprofile;
+    LottieAnimationView lottieAnimationView, ivprofile;
     //Gps
-
-
 
 
     @Override
@@ -71,35 +68,31 @@ public class DashboardActivity extends Activity {
         registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 
 
-
-
-
-
         lottieAnimationView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder=new AlertDialog.Builder(DashboardActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(DashboardActivity.this);
                 builder.setMessage("Do you want to LogOut");
                 builder.setTitle("Log Out!");
                 builder.setIcon(R.drawable.logout);
                 builder.setCancelable(false);
-                builder.setPositiveButton("yes",(new DialogInterface.OnClickListener() {
+                builder.setPositiveButton("yes", (new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        PreferenceManager.setLoggedStatus(DashboardActivity.this,false);
-                        Intent intent=new Intent(DashboardActivity.this, LoginActivity.class);
+                        PreferenceManager.setLoggedStatus(DashboardActivity.this, false);
+                        Intent intent = new Intent(DashboardActivity.this, LoginActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
                     }
                 }));
-                builder.setNegativeButton("No",(new DialogInterface.OnClickListener() {
+                builder.setNegativeButton("No", (new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.cancel();
                     }
                 }));
-AlertDialog alertDialog=builder.create();
-alertDialog.show();
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
 
             }
         });
@@ -140,26 +133,22 @@ alertDialog.show();
     }
 
 
-
-
-
-
     private void ProfileView() {
 
-        BottomSheetDialog bottomSheetDialog=new BottomSheetDialog(this);
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
         bottomSheetDialog.setContentView(R.layout.profileview);
         bottomSheetDialog.show();
 
-        tvDoj=bottomSheetDialog.findViewById(R.id.tvDoj);
-        tvName=bottomSheetDialog.findViewById(R.id.tvName);
-        tvEmpId=bottomSheetDialog.findViewById(R.id.tvEmpId);
-        tvDesignation=bottomSheetDialog.findViewById(R.id.tvDesignation);
-        tvBranch=bottomSheetDialog.findViewById(R.id.tvBranch);
-        tvTeamLeader=bottomSheetDialog.findViewById(R.id.tvTeamLeader);
-        tvMobile=bottomSheetDialog.findViewById(R.id.tvMobile);
-        tvEmail=bottomSheetDialog.findViewById(R.id.tvEmail);
-        tvDob=bottomSheetDialog.findViewById(R.id.tvDob);
-        ivBack=bottomSheetDialog.findViewById(R.id.ivBack);
+        tvDoj = bottomSheetDialog.findViewById(R.id.tvDoj);
+        tvName = bottomSheetDialog.findViewById(R.id.tvName);
+        tvEmpId = bottomSheetDialog.findViewById(R.id.tvEmpId);
+        tvDesignation = bottomSheetDialog.findViewById(R.id.tvDesignation);
+        tvBranch = bottomSheetDialog.findViewById(R.id.tvBranch);
+        tvTeamLeader = bottomSheetDialog.findViewById(R.id.tvTeamLeader);
+        tvMobile = bottomSheetDialog.findViewById(R.id.tvMobile);
+        tvEmail = bottomSheetDialog.findViewById(R.id.tvEmail);
+        tvDob = bottomSheetDialog.findViewById(R.id.tvDob);
+        ivBack = bottomSheetDialog.findViewById(R.id.ivBack);
 
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
