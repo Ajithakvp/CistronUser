@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#736AFF"
+    android:layout_height="match_parent">
+
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:id="@+id/lvcis"
+        app:lottie_rawRes="@raw/cistron"
+        android:tint="@color/white"
+        android:layout_centerInParent="true"
+       app:lottie_autoPlay="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_below="@id/lvcis"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/semibold"
+        android:textColor="#F5FF6B"
+        android:textSize="20dp"
+        android:layout_marginTop="10dp"
+        android:text="Cistron Systems Private Ltd"
+        />
+
+</RelativeLayout>

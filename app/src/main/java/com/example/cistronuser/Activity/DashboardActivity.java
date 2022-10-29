@@ -6,6 +6,7 @@ import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
@@ -14,6 +15,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
@@ -51,6 +54,7 @@ public class DashboardActivity extends Activity {
     //Gps
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +66,7 @@ public class DashboardActivity extends Activity {
         rlProfile = findViewById(R.id.rlProfile);
         lottieAnimationView = findViewById(R.id.ivLogout);
         ivprofile = findViewById(R.id.ivprofile);
+
 
         //internet
         broadcastReceiver = new ConnectionRecevier();

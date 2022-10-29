@@ -76,6 +76,8 @@ public class ExpensesActivity extends Activity {
         tvOtherDoc = findViewById(R.id.tvOtherDoc);
 
 
+
+
         //internet
         broadcastReceiver = new ConnectionRecevier();
         registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
