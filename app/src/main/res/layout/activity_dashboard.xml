@@ -29,9 +29,9 @@
             android:layout_centerInParent="true"
             android:layout_marginLeft="70dp"
             android:layout_toRightOf="@id/ivName"
-           app:lottie_rawRes="@raw/logout"
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
+            app:lottie_rawRes="@raw/logout"
             app:tint="@color/white" />
 
 
@@ -42,9 +42,9 @@
             android:layout_centerInParent="true"
             android:layout_marginRight="70dp"
             android:layout_toStartOf="@id/ivName"
-            app:lottie_rawRes="@raw/person"
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
+            app:lottie_rawRes="@raw/person"
             app:tint="@color/white" />
 
 
@@ -57,7 +57,10 @@
         android:background="@drawable/card_design"
         android:backgroundTint="#6495ED"
         android:layout_height="250dp"
+        android:id="@+id/rlcard"
         android:layout_below="@+id/rlhead"/>
+
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -122,7 +125,7 @@
                 android:layout_marginTop="40dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
-                android:backgroundTint="@color/skyblue"
+                android:backgroundTint="#6495ED"
                 app:cardCornerRadius="20dp">
 
                 <com.airbnb.lottie.LottieAnimationView
@@ -159,7 +162,7 @@
                 android:layout_marginRight="15dp"
                 android:layout_toRightOf="@id/cvAttendance"
                 android:layout_weight="1"
-                android:backgroundTint="@color/skyblue"
+                android:backgroundTint="#6495ED"
                 app:cardCornerRadius="20dp">
 
                 <com.airbnb.lottie.LottieAnimationView
@@ -196,7 +199,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="30dp"
-            android:backgroundTint="@color/skyblue"
+            android:backgroundTint="#6495ED"
             app:cardCornerRadius="20dp">
 
             <com.airbnb.lottie.LottieAnimationView

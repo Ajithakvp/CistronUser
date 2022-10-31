@@ -10,7 +10,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:id="@+id/rltoolbar"
-        android:background="@color/skyblue"
+        android:background="#6495ED"
         android:layout_height="60dp">
 
         <TextView
@@ -170,6 +170,7 @@
             android:text="Submit"
             android:gravity="center"
             android:background="@drawable/size"
+            android:backgroundTint="#6495ED"
             android:layout_centerHorizontal="true"/>
 
 

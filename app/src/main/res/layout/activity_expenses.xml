@@ -10,7 +10,7 @@
         android:id="@+id/rltoolbar"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="@color/skyblue">
+        android:background="#6495ED">
 
         <TextView
             android:id="@+id/tvHeader"
@@ -59,6 +59,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
+            app:cardCornerRadius="10dp"
+            android:elevation="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp">
@@ -75,7 +77,7 @@
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/bold"
                     android:gravity="center"
-                    android:text="Date                :"
+                    android:text="Date                 :"
                     android:textColor="@color/black"
                     android:textSize="20dp" />
 
@@ -85,6 +87,7 @@
                     android:layout_width="200dp"
                     android:layout_height="40dp"
                     android:layout_marginLeft="20dp"
+                    android:layout_marginRight="4dp"
                     android:layout_marginTop="10dp"
                     android:layout_toRightOf="@id/tvDateTag"
                     android:background="@drawable/size"
@@ -114,6 +117,7 @@
                     android:layout_height="40dp"
                     android:layout_below="@id/tvDate"
                     android:layout_marginLeft="20dp"
+                    android:layout_marginRight="4dp"
                     android:layout_marginTop="10dp"
                     android:layout_toRightOf="@id/tvWorkshopTag"
                     android:background="@drawable/size"
@@ -139,7 +143,7 @@
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/bold"
                     android:gravity="center"
-                    android:text="Conveyance :"
+                    android:text="Conveyance  :"
                     android:textColor="@color/black"
                     android:textSize="20dp" />
 
@@ -149,6 +153,7 @@
                     android:layout_width="200dp"
                     android:layout_height="40dp"
                     android:layout_below="@id/View1"
+                    android:layout_marginRight="4dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="10dp"
                     android:layout_toRightOf="@id/tvConveyanceTag"
@@ -163,7 +168,8 @@
                     android:layout_width="400dp"
                     android:layout_height="40dp"
                     android:layout_below="@+id/edConveyance"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/size"
                     android:backgroundTint="#D4E2E2">
@@ -207,7 +213,7 @@
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/bold"
                     android:gravity="center"
-                    android:text="Ticket :"
+                    android:text="Ticket             :"
                     android:textColor="@color/black"
                     android:textSize="20dp" />
 
@@ -218,6 +224,7 @@
                     android:layout_height="40dp"
                     android:layout_below="@id/View2"
                     android:layout_marginLeft="20dp"
+                    android:layout_marginRight="4dp"
                     android:layout_marginTop="10dp"
                     android:layout_toRightOf="@id/tvTicketTag"
                     android:background="@drawable/size"
@@ -231,7 +238,8 @@
                     android:layout_width="400dp"
                     android:layout_height="40dp"
                     android:layout_below="@+id/tvTicket"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/size"
                     android:backgroundTint="#D4E2E2">
@@ -276,7 +284,7 @@
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/bold"
                     android:gravity="center"
-                    android:text="Lodging :"
+                    android:text="Lodging        :"
                     android:textColor="@color/black"
                     android:textSize="20dp" />
 
@@ -287,6 +295,7 @@
                     android:layout_height="40dp"
                     android:layout_below="@id/View3"
                     android:layout_marginLeft="20dp"
+                    android:layout_marginRight="4dp"
                     android:layout_marginTop="10dp"
                     android:layout_toRightOf="@id/tvLodgingTag"
                     android:background="@drawable/size"
@@ -300,7 +309,8 @@
                     android:layout_width="400dp"
                     android:layout_height="40dp"
                     android:layout_below="@+id/tvLodging"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/size"
                     android:backgroundTint="#D4E2E2">
@@ -345,7 +355,7 @@
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/bold"
                     android:gravity="center"
-                    android:text="Others :"
+                    android:text="Others          :"
                     android:textColor="@color/black"
                     android:textSize="20dp" />
 
@@ -357,6 +367,7 @@
                     android:layout_below="@id/View4"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="10dp"
+                    android:layout_marginRight="4dp"
                     android:layout_toRightOf="@id/tvOtherTag"
                     android:background="@drawable/size"
                     android:backgroundTint="#D4E2E2"
@@ -369,7 +380,8 @@
                     android:layout_width="400dp"
                     android:layout_height="40dp"
                     android:layout_below="@+id/edOther"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/size"
                     android:backgroundTint="#D4E2E2">
@@ -404,6 +416,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="15dp"
                     android:background="@drawable/size"
+                    android:backgroundTint="#6495ED"
                     android:fontFamily="@font/bold"
                     android:gravity="center"
                     android:text="Submit"

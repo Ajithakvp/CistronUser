@@ -10,7 +10,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:id="@+id/rltoolbar"
-        android:background="@color/skyblue"
+        android:background="#6495ED"
         android:layout_height="60dp">
 
         <TextView
@@ -41,11 +41,11 @@
             android:id="@+id/ivdetails"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
-           android:layout_marginRight="10dp"
-            android:src="@drawable/detail"
+            android:layout_marginRight="10dp"
             android:backgroundTint="@color/white"
-          android:layout_alignParentRight="true"
+            android:src="@drawable/detail"
             app:tint="@color/white" />
 
 
