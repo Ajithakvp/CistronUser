@@ -21,6 +21,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -47,7 +48,7 @@ public class DashboardActivity extends Activity {
     CardView cvAttendance, cvExpense, cvLeave;
 
     //Bottom
-    TextView tvName, tvEmpId, tvDesignation, tvBranch, tvTeamLeader, tvMobile, tvEmail, tvDob, tvDoj;
+    TextView tvName, tvEmpId, tvDesignation, tvBranch, tvTeamLeader, tvMobile, tvEmail, tvDob, tvDoj,lWebview;
 
 
     LottieAnimationView lottieAnimationView, ivprofile;
@@ -66,6 +67,12 @@ public class DashboardActivity extends Activity {
         rlProfile = findViewById(R.id.rlProfile);
         lottieAnimationView = findViewById(R.id.ivLogout);
         ivprofile = findViewById(R.id.ivprofile);
+        lWebview=findViewById(R.id.lWebview);
+
+        lWebview.setMovementMethod(LinkMovementMethod.getInstance());
+        lWebview.setLinkTextColor(getResources().getColor(R.color.white));
+
+
 
 
         //internet

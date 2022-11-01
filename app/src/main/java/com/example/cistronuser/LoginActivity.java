@@ -20,6 +20,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.cistronuser.API.APIClient;
+import com.example.cistronuser.API.Interface.LoginInterFace;
+import com.example.cistronuser.API.Response.LoginResponse;
 import com.example.cistronuser.Activity.DashboardActivity;
 import com.example.cistronuser.Common.ConnectionRecevier;
 import com.example.cistronuser.Common.PreferenceManager;
@@ -27,6 +30,10 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -63,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
                 CallLogin();
 
                 if (edName.getText().toString().trim().length() == 0) {
-                    edName.setError("Enter the Name");
+                    edName.setError("Enter the Employee ID");
                     edName.requestFocus();
                 } else if (edPass.getText().toString().trim().length() == 0) {
                     edPass.setError("Enter the Password");
@@ -108,9 +115,32 @@ public class LoginActivity extends AppCompatActivity {
     private void CallLogin() {
 
 
-        //PreferenceManager.setLoggedStatus(this,true);
-        Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
-        startActivity(intent);
+        LoginInterFace loginInterFace = APIClient.getClient().create(LoginInterFace.class);
+        loginInterFace.getUserLogin(edName.getText().toString(), edPass.getText().toString()).enqueue(new Callback<LoginResponse>() {
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                try {
+                    if (response.isSuccessful()) {
+                        PreferenceManager.setLoggedStatus(LoginActivity.this, true);
+                        Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
+                        startActivity(intent);
+                       // Toast.makeText(LoginActivity.this, response.message(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this,"Login Success", Toast.LENGTH_LONG).show();
+                    }else {
+
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                Toast.makeText(LoginActivity.this,"Incorrect Username or password", Toast.LENGTH_LONG).show();
+
+                //Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
     }

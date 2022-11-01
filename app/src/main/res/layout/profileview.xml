@@ -8,7 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:id="@+id/rltoolbar"
-        android:background="@color/skyblue"
+        android:background="#6495ED"
         android:layout_height="50dp">
 
         <TextView
