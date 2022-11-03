@@ -12,6 +12,7 @@
 
 
 
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -79,6 +80,10 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyB38zgsBuf31H8icWOX5sKQGXXb84JnDhE"/>
+
     </application>
 
 </manifest>

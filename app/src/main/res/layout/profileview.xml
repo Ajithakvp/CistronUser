@@ -5,6 +5,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
+
+
+
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:id="@+id/rltoolbar"
@@ -39,9 +43,26 @@
     </RelativeLayout>
 
 
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_below="@+id/rltoolbar"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:id="@+id/rlView"/>-->
+
+    <ImageView
+        android:id="@+id/ivProfilePhoto"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_below="@id/rltoolbar"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="15dp"
+        android:src="@drawable/user" />
+
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_below="@id/rltoolbar"
+        android:layout_margin="15dp"
+        android:layout_below="@id/ivProfilePhoto"
         android:layout_height="match_parent">
 
 
@@ -60,7 +81,6 @@
         <TextView
             android:layout_width="wrap_content"
             android:id="@+id/tvName"
-            android:text="Cistron"
             android:textSize="20dp"
             android:layout_toRightOf="@id/tvNameTag"
             android:layout_marginLeft="20dp"
@@ -83,7 +103,6 @@
         <TextView
             android:layout_width="wrap_content"
             android:id="@+id/tvEmpId"
-            android:text="E378"
             android:layout_below="@id/tvNameTag"
             android:textSize="20dp"
             android:layout_toRightOf="@id/tvEmpTag"

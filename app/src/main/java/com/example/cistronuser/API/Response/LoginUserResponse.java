@@ -5,12 +5,12 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
-public class LoginResponse {
-
+public class LoginUserResponse {
     private boolean status;
     public String Message;
     @SerializedName("data")
-    private ArrayList<LoginuserModel>data=new ArrayList<>();
+   // private LoginuserModel data;
+    private ArrayList<LoginuserModel> data=new ArrayList<>();
 
     public boolean isStatus() {
         return status;
