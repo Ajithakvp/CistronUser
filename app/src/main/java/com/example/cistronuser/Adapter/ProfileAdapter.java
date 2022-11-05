@@ -47,7 +47,7 @@ Activity activity;
         TextView tvname;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvname=itemView.findViewById(R.id.tvname);
+           // tvname=itemView.findViewById(R.id.tvname);
         }
     }
 }

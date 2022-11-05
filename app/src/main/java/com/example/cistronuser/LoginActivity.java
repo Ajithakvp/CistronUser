@@ -1,7 +1,5 @@
 package com.example.cistronuser;
 
-import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -20,15 +18,15 @@ import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cistronuser.API.APIClient;
 import com.example.cistronuser.API.Interface.LoginInterFace;
 import com.example.cistronuser.API.Model.LoginuserModel;
-import com.example.cistronuser.API.Response.LoginResponse;
 import com.example.cistronuser.Activity.DashboardActivity;
 import com.example.cistronuser.Common.ConnectionRecevier;
 import com.example.cistronuser.Common.PreferenceManager;
@@ -56,9 +54,8 @@ public class LoginActivity extends AppCompatActivity {
     //Map
     FusedLocationProviderClient fusedLocationProviderClient;
     private final static int REQUEST_CODE = 100;
-    String AddressLine, strDeviceName;
-    double Latitude;
-    double Longtitude;
+    String strDeviceName,AddressLine;
+    double Latitude,Longtitude;
     ArrayList<LoginuserModel> loginuserModel = new ArrayList<>();
 
 
@@ -99,7 +96,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
 
 
-                CallLogin(EmpID, Pass);
+                CallLogin(EmpID, Pass,Latitude,Longtitude,AddressLine);
                 if (edName.getText().toString().trim().length() == 0) {
                     edName.setError("Enter the Employee ID");
                     edName.requestFocus();
@@ -125,7 +122,7 @@ public class LoginActivity extends AppCompatActivity {
                         Latitude = addresses.get(0).getLatitude();
                         Longtitude = addresses.get(0).getLongitude();
 
-                        //Toast.makeText(LoginActivity.this, Locate, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, AddressLine, Toast.LENGTH_SHORT).show();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -168,9 +165,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    private void CallLogin(String empID, String pass) {
+    private void CallLogin(String empID, String pass, double latitude, double longtitude, String addressLine) {
         LoginInterFace loginInterFace=APIClient.getClient().create(LoginInterFace.class);
-        loginInterFace.getUserLogin(empID,pass,Latitude,Longtitude,AddressLine,strDeviceName).enqueue(new Callback<LoginuserModel>() {
+        loginInterFace.getUserLogin(empID,pass,latitude,longtitude,addressLine,strDeviceName).enqueue(new Callback<LoginuserModel>() {
             @Override
             public void onResponse(Call<LoginuserModel> call, Response<LoginuserModel> response) {
                try {

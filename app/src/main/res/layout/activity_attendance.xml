@@ -2,9 +2,20 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
     >
+
+    <ProgressBar
+        android:id="@+id/simpleProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="true"
+        android:visibility="invisible" />
+
+
 
 
     <RelativeLayout
@@ -40,11 +51,75 @@
 
 
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:id="@+id/rlmsg"
+        android:visibility="visible"
+        android:layout_below="@id/rltoolbar"
+        android:layout_height="match_parent">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_marginTop="70dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerHorizontal="true"
+            app:lottie_rawRes="@raw/tips"
+            app:lottie_autoPlay="true"
+            android:id="@+id/tvMsgTag"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="25dp"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/semibold"
+            android:textColor="#0000FF"
+            android:layout_below="@id/tvMsgTag"
+            android:textSize="20dp"
+            android:id="@+id/tvMsg"
+           />
+
+        <TextView
+            android:id="@+id/tvCatTag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvMsg"
+            android:layout_marginStart="10dp"
+            android:visibility="gone"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/bold"
+            android:text="Category :"
+            android:textColor="@color/black"
+            android:textSize="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:visibility="gone"
+            android:textColor="@color/Radio"
+            android:fontFamily="@font/semibold"
+            android:layout_below="@+id/tvMsg"
+            android:layout_toRightOf="@id/tvCatTag"
+            android:textSize="15dp"
+            android:id="@+id/tvcat"
+            />
+
+
+    </RelativeLayout>
+
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_below="@id/rltoolbar"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
+        android:id="@+id/rlattendance"
+        android:visibility="gone"
         android:orientation="vertical">
 
         <RadioGroup
@@ -149,5 +224,6 @@
             android:text="&#8226; Attendance entered after 1.00pm will be considered as full day leave."/>
 
     </LinearLayout>
+
 
 </RelativeLayout>

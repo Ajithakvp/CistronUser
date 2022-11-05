@@ -90,20 +90,21 @@ public class PreferenceManager {
     }
 
 
-    //photo
-
-    public static void setphoto(Activity activity, String photo) {
+    public static void setShowdialog(Activity activity, boolean isDialog) {
         SharedPreferences preferences;
-        preferences = activity.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
-        preferences.edit().putString("photo", photo).apply();
+        preferences = activity.getSharedPreferences("SETTINGS", MODE_PRIVATE);
+        preferences.edit().putBoolean("show", isDialog).apply();
+    }
+
+    public static boolean isDialog(Activity activity) {
+        SharedPreferences preferences;
+        preferences = activity.getSharedPreferences("SETTINGS", MODE_PRIVATE);
+        return preferences.getBoolean("show", false);
+
+
     }
 
 
-    public static String getphoto(Activity activity) {
-        SharedPreferences preferences;
-        preferences = activity.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
-        return preferences.getString("photo", "");
-    }
 
 
 

@@ -1,25 +1,44 @@
 package com.example.cistronuser.Activity;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.cistronuser.API.APIClient;
+import com.example.cistronuser.API.Interface.AttendanceInsert;
+import com.example.cistronuser.API.Interface.AttendanceMessage;
+import com.example.cistronuser.API.Model.AttendanceMessageModel;
+import com.example.cistronuser.API.Response.AttendanceResponse;
 import com.example.cistronuser.Common.ConnectionRecevier;
+import com.example.cistronuser.Common.PreferenceManager;
 import com.example.cistronuser.R;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AttendanceActivity extends Activity {
 
@@ -34,8 +53,14 @@ public class AttendanceActivity extends Activity {
     RadioButton rbLocal,rbOutstation,rbExstation,rbRegular,rbTraining,rbMeeting;
     Button btnSubmit;
     RadioGroup rbGroup;
+    ProgressBar simpleProgressBar;
     int placeId;
+    TextView tvMsg,tvcat;
+    RelativeLayout rlmsg;
+       LinearLayout rlattendance;
+       SwipeRefreshLayout srRefresh;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,13 +77,28 @@ public class AttendanceActivity extends Activity {
         btnSubmit=findViewById(R.id.btnSubmit);
         placeLayout=findViewById(R.id.placeLayout);
         rbGroup=findViewById(R.id.rbGroup);
+        tvMsg=findViewById(R.id.tvMsg);
+        tvcat=findViewById(R.id.tvcat);
+        rlmsg=findViewById(R.id.rlmsg);
+        rlattendance=findViewById(R.id.rlattendance);
+        simpleProgressBar=findViewById(R.id.simpleProgressBar);
+       // srRefresh=findViewById(R.id.srRefresh);
+//
+//        srRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//
+//                srRefresh.setRefreshing(false);
+//
+//            }
+//        });
 
 
         //internet
         broadcastReceiver = new ConnectionRecevier();
         registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 
-
+        callAttendmsgAPI();
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -70,7 +110,12 @@ public class AttendanceActivity extends Activity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // callAttendance();
+
+
+                callAttendance();
+                simpleProgressBar.setVisibility(View.VISIBLE);
+
+
             }
         });
 
@@ -175,6 +220,67 @@ public class AttendanceActivity extends Activity {
 
 
 
+    }
+
+    private void callAttendance() {
+        simpleProgressBar.setVisibility(View.VISIBLE);
+        AttendanceInsert attendanceInsert=APIClient.getClient().create(AttendanceInsert.class);
+        attendanceInsert.callAttendInsert(PreferenceManager.getEmpID(this),placeId,edtPlace.getText().toString(),"new_attendance").enqueue(new Callback<AttendanceResponse>() {
+            @Override
+            public void onResponse(Call<AttendanceResponse> call, Response<AttendanceResponse> response) {
+                try {
+                    if (response.isSuccessful()){
+                        callAttendmsgAPI();
+                        simpleProgressBar.setVisibility(View.GONE);
+                        rlattendance.setVisibility(View.GONE);
+                        rlmsg.setVisibility(View.VISIBLE);
+                        Toast.makeText(AttendanceActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+
+                    }
+
+                }catch (Exception e){
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AttendanceResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+
+    private void callAttendmsgAPI() {
+        AttendanceMessage attendanceMessage= APIClient.getClient().create(AttendanceMessage.class);
+        attendanceMessage.CallAttendMsg(PreferenceManager.getEmpID(this),"check_attend").enqueue(new Callback<AttendanceMessageModel>() {
+            @Override
+            public void onResponse(Call<AttendanceMessageModel> call, Response<AttendanceMessageModel> response) {
+                try{
+                    if (response.isSuccessful()){
+
+                       // Toast.makeText(AttendanceActivity.this,""+(response.body().getCategory()=="no attendance"), Toast.LENGTH_SHORT).show();
+                        if (response.body().getCategory().trim().equals("no attendance")){
+                        rlattendance.setVisibility(View.VISIBLE);
+                       rlmsg.setVisibility(View.GONE);
+                        simpleProgressBar.setVisibility(View.GONE);}
+                        else {
+                            tvMsg.setText(response.body().getMessage());
+                            tvcat.setText(response.body().getCategory());
+                            rlattendance.setVisibility(View.GONE);
+                            rlmsg.setVisibility(View.VISIBLE);
+                        }
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AttendanceMessageModel> call, Throwable t) {
+
+            }
+        });
     }
 
     protected void unregBroadcast() {

@@ -10,9 +10,6 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-
-
-
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -24,6 +21,13 @@
         android:theme="@style/Theme.CistronUser"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".Policy"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name=".Activity.LeaveActivity"
             android:exported="false">
@@ -59,12 +63,13 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <receiver android:name=".Common.ConnectionRecevier"
+
+        <receiver
+            android:name=".Common.ConnectionRecevier"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
-
         </receiver>
 
         <activity
@@ -80,10 +85,10 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyB38zgsBuf31H8icWOX5sKQGXXb84JnDhE"/>
-
+            android:value="AIzaSyB38zgsBuf31H8icWOX5sKQGXXb84JnDhE" />
     </application>
 
 </manifest>
