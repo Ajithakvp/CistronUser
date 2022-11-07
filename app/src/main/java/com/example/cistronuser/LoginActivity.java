@@ -1,7 +1,11 @@
 package com.example.cistronuser;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
@@ -16,12 +20,12 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cistronuser.API.APIClient;
@@ -32,6 +36,7 @@ import com.example.cistronuser.Common.ConnectionRecevier;
 import com.example.cistronuser.Common.PreferenceManager;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -54,8 +59,9 @@ public class LoginActivity extends AppCompatActivity {
     //Map
     FusedLocationProviderClient fusedLocationProviderClient;
     private final static int REQUEST_CODE = 100;
-    String strDeviceName,AddressLine;
-    double Latitude,Longtitude;
+    String strDeviceName, AddressLine;
+    double Latitude;
+    double Longtitude;
     ArrayList<LoginuserModel> loginuserModel = new ArrayList<>();
 
 
@@ -96,7 +102,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
 
 
-                CallLogin(EmpID, Pass,Latitude,Longtitude,AddressLine);
+                CallLogin(EmpID, Pass, Latitude, Longtitude, AddressLine);
                 if (edName.getText().toString().trim().length() == 0) {
                     edName.setError("Enter the Employee ID");
                     edName.requestFocus();
@@ -110,22 +116,35 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void Map() {
-        if (ContextCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.ACCESS_FINE_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(new String[]{
+                        Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION
+                }, 100);
+            }
+        } else {
             fusedLocationProviderClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
                 @Override
                 public void onSuccess(Location location) {
+
                     Geocoder geocoder = new Geocoder(LoginActivity.this, Locale.getDefault());
                     try {
                         List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-                        AddressLine = addresses.get(0).getAddressLine(0);
-                        Latitude = addresses.get(0).getLatitude();
-                        Longtitude = addresses.get(0).getLongitude();
 
-                        Toast.makeText(LoginActivity.this, AddressLine, Toast.LENGTH_SHORT).show();
+                        AddressLine=addresses.get(0).getAddressLine(0);
+                        Latitude=addresses.get(0).getLatitude();
+                        Longtitude=addresses.get(0).getLongitude();
+
+                        Log.e(TAG, "onSuccess: "+addresses.get(0).getAddressLine(0) );
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+
                 }
             });
 
@@ -221,6 +240,20 @@ public class LoginActivity extends AppCompatActivity {
         super.onDestroy();
         unregBroadcast();
     }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
+        if (requestCode == 100) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED &&
+                    ActivityCompat.checkSelfPermission(this,
+                            Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            } else {
+                Map();
+                Toast.makeText(LoginActivity.this, "not Access", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 
 }
