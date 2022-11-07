@@ -82,9 +82,7 @@ public class DashboardActivity extends Activity {
     String strPass,Profile;
     String Name,EmpiD,Des,DOB,DOJ,TL,Mob,Branch,Email,strPhoto;
 
-    ArrayList<LoginuserModel>loginuserModels=new ArrayList<>();
 
-    String Image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
