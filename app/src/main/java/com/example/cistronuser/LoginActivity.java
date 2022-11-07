@@ -187,6 +187,7 @@ public class LoginActivity extends AppCompatActivity {
                        intent.putExtra("DOJ",response.body().getDoj());
                        intent.putExtra("DOB",response.body().getDob());
                        intent.putExtra("Photo",response.body().getPhoto());
+                       intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                        startActivity(intent);
                    }
 

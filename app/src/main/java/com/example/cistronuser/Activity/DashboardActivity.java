@@ -69,6 +69,7 @@ public class DashboardActivity extends Activity {
     ImageView ivBack, ivProfilePhoto;
     RelativeLayout rlProfile;
     CardView cvAttendance, cvExpense, cvLeave;
+    LoginuserModel loginuserModel;
 
 
     //Bottom
@@ -125,8 +126,9 @@ public class DashboardActivity extends Activity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                        PreferenceManager.setLoggedStatus(DashboardActivity.this, false);
+                       PreferenceManager.setUserModelData(DashboardActivity.this,loginuserModel);
                         Intent intent = new Intent(DashboardActivity.this, LoginActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                     }
                 }));
@@ -320,4 +322,29 @@ public class DashboardActivity extends Activity {
             }
         }
     }
+
+    @Override
+    public void onBackPressed() {
+       // super.onBackPressed();
+
+        android.app.AlertDialog alertDialog = new android.app.AlertDialog.Builder(this).create();
+        alertDialog.setMessage("Are you sure want to Quit App?");
+        alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+
+        alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        alertDialog.show();
+
+    }
+
 }

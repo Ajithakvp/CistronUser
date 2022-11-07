@@ -108,6 +108,41 @@
             android:layout_height="40dp"/>
 
 
+
+        <RelativeLayout
+            android:id="@+id/rlUpload"
+            android:layout_width="400dp"
+            android:layout_height="50dp"
+            android:visibility="visible"
+            android:layout_below="@+id/spReson"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/size"
+            android:backgroundTint="#D4E2E2">
+
+            <TextView
+                android:id="@+id/tvConveyanceDoc"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:fontFamily="@font/semibold"
+                android:gravity="center"
+                android:hint="Document Uplod"
+                android:textSize="15dp" />
+
+            <ImageView
+                android:id="@+id/ivdoc"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="35dp"
+                android:layout_toRightOf="@id/tvConveyanceDoc"
+                android:backgroundTint="@color/white"
+                android:src="@drawable/ic_baseline_upload_24" />
+
+        </RelativeLayout>
+
+
         <TextView
             android:layout_width="wrap_content"
             android:text="Leave Type  :"
@@ -116,7 +151,7 @@
             android:fontFamily="@font/bold"
             android:id="@+id/tvLeaveTypeTag"
             android:textSize="20dp"
-            android:layout_below="@id/spReson"
+            android:layout_below="@id/rlUpload"
             android:textColor="@color/black"
             android:layout_height="wrap_content"/>
 
@@ -125,7 +160,7 @@
             android:layout_marginTop="30dp"
             android:layout_toRightOf="@id/tvLeaveTypeTag"
             android:layout_marginLeft="20dp"
-            android:layout_below="@id/spReson"
+            android:layout_below="@id/rlUpload"
             android:fontFamily="@font/semibold"
             android:textSize="25dp"
             android:id="@+id/tvLeaveType"
