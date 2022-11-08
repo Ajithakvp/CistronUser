@@ -28,6 +28,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.webkit.MimeTypeMap;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
@@ -42,6 +44,7 @@ import com.example.cistronuser.API.APIClient;
 import com.example.cistronuser.API.Interface.LeaveFormDetails;
 import com.example.cistronuser.API.Interface.LeavePolicyInterface;
 import com.example.cistronuser.API.Model.LeaveFormAllocatedleave;
+import com.example.cistronuser.API.Model.LeaveResons;
 import com.example.cistronuser.API.Response.LeavePolicyResponse;
 import com.example.cistronuser.Adapter.LeaveDetailsAdapter;
 import com.example.cistronuser.Common.ConnectionRecevier;
@@ -49,10 +52,14 @@ import com.example.cistronuser.Common.FileUtli;
 import com.example.cistronuser.Common.PreferenceManager;
 import com.example.cistronuser.R;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -89,10 +96,17 @@ public class LeaveActivity extends Activity {
 
     //LeaveDetails
     TextView tvClallocatted, tvMlallocatted, tvPLallocatted, tvProlallocatted, tvClavailable,
-            tvMlavailable, tvPLavailable, tvProlavailable,tvCompoffallocatted,tvCompOffavailable1;
+            tvMlavailable, tvPLavailable, tvProlavailable, tvCompoffallocatted, tvCompOffavailable1;
     ImageView ivDownbottom;
 
-    TextView tvClallocattedTag,tvMlallocattedTag,tvPLallocattedTag,tvProlallocattedTag,tvCompoffallocattedTag;
+    TextView tvClallocattedTag, tvMlallocattedTag, tvPLallocattedTag, tvProlallocattedTag, tvCompoffallocattedTag;
+
+
+
+    ArrayList<String> leave = new ArrayList<>();
+    ArrayAdapter arrayAdapter;
+    LeaveResons leaveResons;
+
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -101,7 +115,7 @@ public class LeaveActivity extends Activity {
         setContentView(R.layout.activity_leave);
 
 
-        PreferenceManager.setLoggedStatus(this,true);
+        PreferenceManager.setLoggedStatus(this, true);
 
         ivAdd = findViewById(R.id.ivMore);
         ivBack = findViewById(R.id.ivBack);
@@ -109,12 +123,10 @@ public class LeaveActivity extends Activity {
         ivdetails = findViewById(R.id.ivdetails);
 
 
-
         //internet
 
         broadcastReceiver = new ConnectionRecevier();
         registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
-
 
 
         //externel file
@@ -139,7 +151,7 @@ public class LeaveActivity extends Activity {
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               onBackPressed();
+                onBackPressed();
             }
         });
 
@@ -254,7 +266,6 @@ public class LeaveActivity extends Activity {
     }
 
 
-
     private void CallleaveDetails() {
         BottomSheetDialog bottomSheetDialog1 = new BottomSheetDialog(this);
         bottomSheetDialog1.setContentView(R.layout.leave_lop);
@@ -333,7 +344,8 @@ public class LeaveActivity extends Activity {
                             Log.e(TAG, "onResponse:3 " + response.body().getEmptype().trim().equals("3"));
                             tvClallocatted.setText(response.body().getAllocatedleaveModel().getCl());
                             tvClavailable.setText(response.body().getAvailableLeaveModel().getCl());
-
+                            tvCompOffavailable1.setText(response.body().getAvailableLeaveModel().getCompoff());
+                            tvCompoffallocatted.setText(response.body().getAllocatedleaveModel().getCompoff());
 
                             tvMlallocatted.setVisibility(View.GONE);
                             tvPLallocatted.setVisibility(View.GONE);
@@ -373,14 +385,23 @@ public class LeaveActivity extends Activity {
         tvLeaveType = bottomSheetDialog.findViewById(R.id.tvLeaveType);
         tvDayType = bottomSheetDialog.findViewById(R.id.tvDayType);
         ivBackbottom = bottomSheetDialog.findViewById(R.id.ivBackbottom);
-        rlUpload=bottomSheetDialog.findViewById(R.id.rlUpload);
-        tvDoc=bottomSheetDialog.findViewById(R.id.tvConveyanceDoc);
-
+        rlUpload = bottomSheetDialog.findViewById(R.id.rlUpload);
+        tvDoc = bottomSheetDialog.findViewById(R.id.tvConveyanceDoc);
 
 
         Date d = new Date();
         CharSequence s = DateFormat.format("d /MM/yyyy ", d.getTime());
         tvDate.setText(s);
+
+
+        callRes();
+
+
+        arrayAdapter = new ArrayAdapter(this, com.airbnb.lottie.R.layout.support_simple_spinner_dropdown_item, leave);
+        arrayAdapter.setDropDownViewResource(com.google.android.material.R.layout.support_simple_spinner_dropdown_item);
+        spReson.setAdapter(arrayAdapter);
+
+
 
         rlUpload.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -410,6 +431,52 @@ public class LeaveActivity extends Activity {
             }
         });
 
+    }
+
+    private void callRes() {
+        LeaveFormDetails leaveFormDetails = APIClient.getClient().create(LeaveFormDetails.class);
+        leaveFormDetails.callleavedetails("e367", "available_leave").enqueue(new Callback<LeaveFormAllocatedleave>() {
+            @Override
+            public void onResponse(Call<LeaveFormAllocatedleave> call, Response<LeaveFormAllocatedleave> response) {
+
+
+                try {
+                    if (response.isSuccessful()) {
+
+
+                        Log.e(TAG, "onResponse: " + response.body().getLeaveResons().getReasons());
+                        String name=response.body().getLeaveResons().getReasons();
+
+                        String[] strings=name.split(";");
+                        for (int i=0; i < strings.length; i++)
+                        {
+                            Log.e(TAG, "onResponse: "+strings[i]);
+                            leave.add(strings[i]);
+                        }
+                        spReson.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                Toast.makeText(LeaveActivity.this, leave.get(position), Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onNothingSelected(AdapterView<?> parent) {
+                                Toast.makeText(LeaveActivity.this, "Name", Toast.LENGTH_SHORT).show();
+
+                            }
+                        });
+
+            }
+                } catch (Exception e) {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LeaveFormAllocatedleave> call, Throwable t) {
+
+            }
+        });
     }
 
 
@@ -468,6 +535,7 @@ public class LeaveActivity extends Activity {
         }
 
     }
+
     private String getFileExt(Uri contentUri) {
         ContentResolver c = getContentResolver();
         MimeTypeMap mime = MimeTypeMap.getSingleton();

@@ -16,6 +16,18 @@ public class AvailableLeaveModel {
     @SerializedName("probl")
     private String probl;
 
+
+    @SerializedName("compoff")
+    private String compoff;
+
+    public String getCompoff() {
+        return compoff;
+    }
+
+    public void setCompoff(String compoff) {
+        this.compoff = compoff;
+    }
+
     public String getCl() {
         return cl;
     }
