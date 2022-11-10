@@ -44,7 +44,6 @@ import com.example.cistronuser.Common.PreferenceManager;
 import com.example.cistronuser.LoginActivity;
 import com.example.cistronuser.R;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

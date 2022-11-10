@@ -44,7 +44,8 @@
             android:layout_toLeftOf="@id/tvHeader"
             android:backgroundTint="@color/white"
             android:src="@drawable/ic_baseline_arrow_left_24"
-            app:tint="@color/white" />
+            android:tint="@color/white"
+            tools:ignore="UseAppTint"  />
 
 
     </RelativeLayout>

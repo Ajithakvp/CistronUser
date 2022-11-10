@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:id="@+id/rltoolbar"
+        android:background="#6495ED"
+        android:layout_height="50dp">
+
+        <TextView
+            style="@style/header"
+            android:id="@+id/tvHeader"
+            android:textSize="20dp"
+            android:layout_width="250dp"
+            android:fontFamily="@font/bold"
+            android:textColor="@color/white"
+            android:layout_centerInParent="true"
+            android:layout_height="wrap_content"
+            android:text="Cancel Report"/>
+
+
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="35dp"
+            android:layout_toLeftOf="@id/tvHeader"
+            android:backgroundTint="@color/white"
+            android:src="@drawable/ic_baseline_expand_circle_down_24"
+            android:tint="@color/white"
+            tools:ignore="UseAppTint"  />
+
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvCancel"
+        android:layout_width="match_parent"
+        android:layout_below="@id/rltoolbar"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"/>
+
+</RelativeLayout>

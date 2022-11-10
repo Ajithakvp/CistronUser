@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
 
 
@@ -27,7 +28,6 @@
             android:text="Profile"/>
 
 
-
         <ImageView
             android:id="@+id/ivBack"
             android:layout_width="40dp"
@@ -36,8 +36,9 @@
             android:layout_marginRight="35dp"
             android:layout_toLeftOf="@id/tvHeader"
             android:backgroundTint="@color/white"
-            android:src="@drawable/ic_baseline_arrow_left_24"
-            app:tint="@color/white" />
+            android:src="@drawable/ic_baseline_expand_circle_down_24"
+            android:tint="@color/white"
+            tools:ignore="UseAppTint"  />
 
 
     </RelativeLayout>
