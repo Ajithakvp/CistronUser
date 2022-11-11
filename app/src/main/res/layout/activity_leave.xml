@@ -41,9 +41,10 @@
             android:id="@+id/ivMore"
             android:layout_width="40dp"
             android:layout_height="40dp"
-        android:layout_toLeftOf="@id/ivdetails"
+            android:visibility="visible"
             android:layout_centerInParent="true"
             android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@id/ivdetails"
             android:backgroundTint="@color/white"
             android:src="@drawable/ic_baseline_post_add_24"
             android:tint="@color/white"
@@ -53,6 +54,7 @@
         <ImageView
             android:id="@+id/ivdetails"
             android:layout_width="40dp"
+            android:visibility="visible"
             android:layout_height="40dp"
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
@@ -67,11 +69,47 @@
 
 
     </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:id="@+id/rlmsg"
+        android:visibility="visible"
+        android:layout_below="@id/rltoolbar"
+        android:layout_height="match_parent">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_marginTop="70dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerHorizontal="true"
+            app:lottie_rawRes="@raw/tips"
+            app:lottie_autoPlay="true"
+            android:id="@+id/tvMsgTag"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="25dp"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/semibold"
+            android:textColor="#0000FF"
+            android:layout_below="@id/tvMsgTag"
+            android:textSize="20dp"
+            android:id="@+id/tvMsg"
+            />
+
+    </RelativeLayout>
+
+
+
     <RelativeLayout
         android:id="@+id/rlcardatted"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/rltoolbar"
+        android:visibility="gone"
         android:layout_centerInParent="true"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="30dp"

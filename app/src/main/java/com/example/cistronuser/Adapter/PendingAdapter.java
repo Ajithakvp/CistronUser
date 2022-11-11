@@ -57,6 +57,18 @@ public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.ViewHold
         holder.tvReason.setText(leavedetailsModels.get(position).getReason());
         holder.tvattach.setText(leavedetailsModels.get(position).getAttachment());
 
+        try {
+            if (leavedetailsModels.get(position).getAttachment().trim().equals(null)){
+                holder.tvStatusTag.setVisibility(View.GONE);
+                holder.tvattach.setVisibility(View.GONE);
+            }else {
+                holder.tvStatusTag.setVisibility(View.VISIBLE);
+                holder.tvattach.setVisibility(View.VISIBLE);
+            }
+        }catch (Exception e){
+
+        }
+
         holder.ivDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,7 +107,7 @@ public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvDate, tvDay, tvLeaveType, tvReason, tvfullday, tvattach;
+        TextView tvDate, tvDay, tvLeaveType, tvReason, tvfullday, tvattach,tvStatusTag;
         ImageView ivDelete;
         ProgressBar simpleProgressBar;
 
@@ -109,6 +121,7 @@ public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.ViewHold
             tvfullday = itemView.findViewById(R.id.tvfullday);
             tvattach = itemView.findViewById(R.id.tvStatusPending);
             simpleProgressBar=itemView.findViewById(R.id.simpleProgressBar);
+            tvStatusTag=itemView.findViewById(R.id.tvStatusTag);
         }
 
 

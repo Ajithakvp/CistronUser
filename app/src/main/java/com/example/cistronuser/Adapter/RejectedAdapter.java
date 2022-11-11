@@ -41,6 +41,19 @@ public class RejectedAdapter extends RecyclerView.Adapter<RejectedAdapter.ViewHo
         holder.tvReason.setText(leavedetailsModels.get(position).getReason());
         holder.tvattach.setText(leavedetailsModels.get(position).getAttachment());
 
+
+        try {
+            if (leavedetailsModels.get(position).getAttachment().trim().equals(null)){
+                holder.tvStatusTag.setVisibility(View.GONE);
+                holder.tvattach.setVisibility(View.GONE);
+            }else {
+                holder.tvStatusTag.setVisibility(View.VISIBLE);
+                holder.tvattach.setVisibility(View.VISIBLE);
+            }
+        }catch (Exception e){
+
+        }
+
     }
 
     @Override
@@ -49,7 +62,7 @@ public class RejectedAdapter extends RecyclerView.Adapter<RejectedAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvDate, tvDay, tvLeaveType, tvReason, tvfullday, tvattach;
+        TextView tvDate, tvDay, tvLeaveType, tvReason, tvfullday, tvattach,tvStatusTag;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -60,6 +73,7 @@ public class RejectedAdapter extends RecyclerView.Adapter<RejectedAdapter.ViewHo
             tvReason = itemView.findViewById(R.id.tvReason);
             tvfullday = itemView.findViewById(R.id.tvfullday);
             tvattach = itemView.findViewById(R.id.tvStatusPending);
+            tvStatusTag=itemView.findViewById(R.id.tvStatusTag);
         }
     }
 }

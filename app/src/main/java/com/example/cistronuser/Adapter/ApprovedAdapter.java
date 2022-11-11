@@ -56,6 +56,21 @@ public class ApprovedAdapter extends RecyclerView.Adapter<ApprovedAdapter.ViewHo
         holder.tvattach.setText(leavedetailsModels.get(position).getAttachment());
 
 
+        try {
+            if (leavedetailsModels.get(position).getAttachment().trim().equals(null)){
+                holder.tvStatusTag.setVisibility(View.GONE);
+                holder.tvattach.setVisibility(View.GONE);
+            }else {
+                holder.tvStatusTag.setVisibility(View.VISIBLE);
+                holder.tvattach.setVisibility(View.VISIBLE);
+            }
+        }catch (Exception e){
+
+        }
+
+
+
+
         holder.ivCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,6 +100,8 @@ public class ApprovedAdapter extends RecyclerView.Adapter<ApprovedAdapter.ViewHo
         });
 
 
+
+
     }
 
     @Override
@@ -93,7 +110,7 @@ public class ApprovedAdapter extends RecyclerView.Adapter<ApprovedAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvDate, tvDay, tvLeaveType, tvReason, tvfullday, tvattach;
+        TextView tvDate, tvDay, tvLeaveType, tvReason, tvfullday, tvattach,tvStatusTag;
         ImageView ivCancel;
         ProgressBar simpleProgressBar;
 
@@ -110,7 +127,7 @@ public class ApprovedAdapter extends RecyclerView.Adapter<ApprovedAdapter.ViewHo
             tvattach = itemView.findViewById(R.id.tvStatusPending);
             ivCancel = itemView.findViewById(R.id.ivCancel);
             simpleProgressBar=itemView.findViewById(R.id.simpleProgressBar);
-
+            tvStatusTag=itemView.findViewById(R.id.tvStatusTag);
         }
 
     }

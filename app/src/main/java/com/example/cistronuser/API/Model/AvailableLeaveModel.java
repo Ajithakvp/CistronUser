@@ -20,13 +20,6 @@ public class AvailableLeaveModel {
     @SerializedName("compoff")
     private String compoff;
 
-    public String getCompoff() {
-        return compoff;
-    }
-
-    public void setCompoff(String compoff) {
-        this.compoff = compoff;
-    }
 
     public String getCl() {
         return cl;
@@ -58,5 +51,13 @@ public class AvailableLeaveModel {
 
     public void setProbl(String probl) {
         this.probl = probl;
+    }
+
+    public String getCompoff() {
+        return compoff;
+    }
+
+    public void setCompoff(String compoff) {
+        this.compoff = compoff;
     }
 }

@@ -30,34 +30,14 @@ public class LeaveFormAllocatedleave {
     @SerializedName("category")
     private String category;
 
-    @SerializedName("allocated leave")
+    @SerializedName("allocated_leave")
     private AllocatedleaveModel allocatedleaveModel;
 
-    @SerializedName("available leave")
+    @SerializedName("available_leave")
     private AvailableLeaveModel availableLeaveModel;
 
-
-//        @SerializedName("leave_reason")
-//    private ArrayList<LeaveResons> data;
     @SerializedName("leave_reason")
     private LeaveResons leaveResons;
-
-    public LeaveResons getLeaveResons() {
-        return leaveResons;
-    }
-
-    public void setLeaveResons(LeaveResons leaveResons) {
-        this.leaveResons = leaveResons;
-    }
-
-
-//    public ArrayList<LeaveResons> getData() {
-//        return data;
-//    }
-//
-//    public void setData(ArrayList<LeaveResons> data) {
-//        this.data = data;
-//    }
 
     public String getEmptype() {
         return emptype;
@@ -89,5 +69,13 @@ public class LeaveFormAllocatedleave {
 
     public void setAvailableLeaveModel(AvailableLeaveModel availableLeaveModel) {
         this.availableLeaveModel = availableLeaveModel;
+    }
+
+    public LeaveResons getLeaveResons() {
+        return leaveResons;
+    }
+
+    public void setLeaveResons(LeaveResons leaveResons) {
+        this.leaveResons = leaveResons;
     }
 }

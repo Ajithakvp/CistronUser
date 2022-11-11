@@ -164,6 +164,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="5dp"
                 android:fontFamily="@font/bold"
+                android:visibility="gone"
                 android:text="attachment :"
                 android:textColor="#0AA6F9"
                 android:textSize="20dp" />
@@ -198,7 +199,7 @@
                 android:text="Pending"
                 android:textColor="@color/black"
                 android:textSize="17dp"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
 
             <TextView

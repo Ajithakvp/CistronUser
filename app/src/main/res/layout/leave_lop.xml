@@ -93,7 +93,6 @@
                     android:layout_toRightOf="@id/viewalright"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
-                    android:gravity="center"
                     android:fontFamily="@font/bold"
                     android:layout_alignParentEnd="true"
                     android:text="Available leave"
@@ -111,7 +110,7 @@
                 <View
                     android:layout_width="0.9dp"
                     android:id="@+id/viewclright"
-                    android:layout_toRightOf="@id/tvClallocattedTag"
+                    android:layout_toRightOf="@id/tvCompoffallocattedTag"
                     android:layout_height="300dp"/>
 
                 <View
@@ -147,7 +146,6 @@
                     android:layout_toRightOf="@id/viewclright"
                     android:fontFamily="@font/bold"
                     android:gravity="center"
-                    android:text="46"
                     android:textColor="@color/black"
                     android:textSize="20dp"
                     android:visibility="visible" />
@@ -158,14 +156,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/view1"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerInParent="true"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="20dp"
-                    android:layout_alignParentEnd="true"
                     android:layout_toRightOf="@id/viewalright"
                     android:fontFamily="@font/bold"
                     android:gravity="center"
-                    android:text="46"
                     android:textColor="@color/black"
                     android:textSize="20dp"
                     android:visibility="visible" />
@@ -182,7 +179,7 @@
                     android:layout_marginTop="20dp"
                     android:visibility="visible"
                     android:fontFamily="@font/semibold"
-                    android:text="Medical leave      :"
+                    android:text="Medical leave     :"
                     android:textColor="@color/blue"
                     android:textSize="20dp" />
 
@@ -198,7 +195,6 @@
                     android:layout_toLeftOf="@id/viewalright"
                     android:gravity="center"
                     android:fontFamily="@font/bold"
-                    android:text=" 9 "
                     android:textColor="@color/black"
                     android:textSize="20dp" />
 
@@ -208,14 +204,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tvClavailable1"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerInParent="true"
                     android:layout_marginLeft="10dp"
-                    android:layout_alignParentEnd="true"
                     android:layout_marginTop="20dp"
                     android:layout_toRightOf="@id/viewalright"
                     android:fontFamily="@font/bold"
+
                     android:gravity="center"
-                    android:text="46"
                     android:textColor="@color/black"
                     android:textSize="20dp"
                     android:visibility="visible" />
@@ -246,7 +242,6 @@
                     android:layout_toLeftOf="@id/viewalright"
                     android:gravity="center"
                     android:fontFamily="@font/bold"
-                    android:text="9 "
                     android:textColor="@color/black"
                     android:textSize="20dp" />
 
@@ -263,7 +258,6 @@
                     android:layout_toRightOf="@id/viewalright"
                     android:fontFamily="@font/bold"
                     android:gravity="center"
-                    android:text="46"
                     android:textColor="@color/black"
                     android:textSize="20dp"
                     android:visibility="visible" />
@@ -295,7 +289,6 @@
                     android:layout_toLeftOf="@id/viewalright"
                     android:gravity="center"
                     android:fontFamily="@font/bold"
-                    android:text="90  "
                     android:textColor="@color/black"
                     android:textSize="20dp" />
 
@@ -304,14 +297,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tvPLavailable1"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerInParent="true"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="20dp"
                     android:layout_toRightOf="@id/viewalright"
                     android:fontFamily="@font/bold"
                     android:gravity="center"
-                    android:layout_alignParentEnd="true"
-                    android:text="46"
                     android:textColor="@color/black"
                     android:textSize="20dp"
                     android:visibility="visible" />
@@ -349,7 +341,6 @@
                     android:layout_toLeftOf="@id/viewalright"
                     android:gravity="center"
                     android:fontFamily="@font/bold"
-                    android:text="90  "
                     android:textColor="@color/black"
                     android:textSize="20dp" />
 
@@ -365,7 +356,6 @@
                     android:layout_toRightOf="@id/viewalright"
                     android:fontFamily="@font/bold"
                     android:gravity="center"
-                    android:text="46"
                     android:textColor="@color/black"
                     android:textSize="20dp"
                     android:visibility="visible" />

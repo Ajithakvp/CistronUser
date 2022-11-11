@@ -41,12 +41,16 @@ import com.example.cistronuser.API.APIClient;
 import com.example.cistronuser.API.Interface.LeaveDetailsInterface;
 import com.example.cistronuser.API.Interface.LeaveFormDetails;
 import com.example.cistronuser.API.Interface.LeavePolicyInterface;
+import com.example.cistronuser.API.Interface.LeaveSubmitForm;
+import com.example.cistronuser.API.Model.AvailableLeaveModel;
 import com.example.cistronuser.API.Model.CompOffModel;
 import com.example.cistronuser.API.Model.LeaveFormAllocatedleave;
 import com.example.cistronuser.API.Model.LeaveResons;
 import com.example.cistronuser.API.Model.LeavedetailsModel;
+import com.example.cistronuser.API.Response.AttendanceResponse;
 import com.example.cistronuser.API.Response.LeaveDetailsResponse;
 import com.example.cistronuser.API.Response.LeavePolicyResponse;
+import com.example.cistronuser.API.Response.leavesubmitresponse;
 import com.example.cistronuser.Adapter.ApprovedAdapter;
 import com.example.cistronuser.Adapter.CompoffAdapter;
 import com.example.cistronuser.Adapter.PendingAdapter;
@@ -71,20 +75,20 @@ import retrofit2.Response;
 public class LeaveActivity extends Activity {
 
 
+    final static String TAG = "Name";
     //Internet
     BroadcastReceiver broadcastReceiver;
-
     //leaveform
-    TextView tvDate;
+    TextView tvDate, tvview, tvselectDate;
     Spinner spReson, tvLeaveType, tvDayType;
     RelativeLayout rlUpload;
     File file;
     TextView tvDoc;
     String DocName;
-
-    final static String TAG = "Name";
+    String reasonName;
+    int reason;
     ImageView ivBack, ivdetails, ivBackbottom;
-   // LottieAnimationView ivAdd;
+    // LottieAnimationView ivAdd;
     //Date
     DatePickerDialog datePickerDialog;
     int year;
@@ -94,9 +98,8 @@ public class LeaveActivity extends Activity {
 
 
     //LeaveDetails
-    TextView tvClallocatted, tvMlallocatted, tvPLallocatted, tvProlallocatted, tvClavailable,
-            tvMlavailable, tvPLavailable, tvProlavailable, tvCompoffallocatted, tvCompOffavailable1;
-    ImageView ivDownbottom,ivAdd;
+    TextView tvClallocatted, tvMlallocatted, tvPLallocatted, tvProlallocatted, tvClavailable, tvMlavailable, tvPLavailable, tvProlavailable, tvCompoffallocatted, tvCompOffavailable1;
+    ImageView ivDownbottom, ivAdd;
 
     TextView tvClallocattedTag, tvMlallocattedTag, tvPLallocattedTag, tvProlallocattedTag, tvCompoffallocattedTag;
 
@@ -107,75 +110,156 @@ public class LeaveActivity extends Activity {
 
     ArrayList<String> LeaveType = new ArrayList<>();
     ArrayAdapter typeAdapter;
-    int avCl,avPL,avMl,avProbl,avCompOff;
+    double avCl, avPl, avMl, avProbl, avCompOff;
 
 
-    RadioGroup rbGroup;
-    RadioButton rbLcl;
-    RadioButton rbMl;
-    RadioButton rbPl;
-
-
+    RadioGroup rbGroup, rbGroup2, rbGroup3;
+    int typeid;
+    int day;
+    int lop;
+    int compoff;
+    RadioButton rbLcl, rbMl, rbPl, rbCompOff, rblop, rbfullday, rbHalfday;
 
     //Leave Details
-    CardView cvApporved,cvPending,cvRejected,cvDeleted,cvCancel,cvCompOff;
+    CardView cvApporved, cvPending, cvRejected, cvDeleted, cvCancel, cvCompOff;
 
 
     //Approved
     RecyclerView rvApproved;
     ApprovedAdapter approvedAdapter;
-    ArrayList<LeavedetailsModel>leavedetailsModels=new ArrayList<>();
+    ArrayList<LeavedetailsModel> leavedetailsModels = new ArrayList<>();
 
     //Pending
     RecyclerView rvPending;
     PendingAdapter pendingAdapter;
 
     //Rejected , delected and Cancel
-    RecyclerView rvRejected,rvDeleted,rvCancel;
+    RecyclerView rvRejected, rvDeleted, rvCancel;
     RejectedAdapter rejectedAdapter;
 
     //CompOff
     RecyclerView rvCompOff;
     CompoffAdapter compoffAdapter;
-    ArrayList<CompOffModel>compOffModels=new ArrayList<>();
+    ArrayList<CompOffModel> compOffModels = new ArrayList<>();
 
 
+    //    *******************
+    AvailableLeaveModel availableLeaveModel;
+    LeaveFormDetails leaveFormDetails;
+
+
+    String empid;
+
+
+    //No leave
+    RelativeLayout rlmsg, rlcardatted;
+
+    TextView tvNomsg;
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leave);
+        empid = "e367";
 
 
         PreferenceManager.setLoggedStatus(this, true);
 
-        ivAdd = findViewById(R.id.ivMore);
-        ivBack = findViewById(R.id.ivBack);
-        ivdetails = findViewById(R.id.ivdetails);
+        ivAdd =
 
-        cvApporved = findViewById(R.id.cvApporved);
-        cvPending = findViewById(R.id.cvPending);
-        cvRejected = findViewById(R.id.cvRejected);
-        cvDeleted = findViewById(R.id.cvDeleted);
-        cvCancel = findViewById(R.id.cvCancel);
-        cvCompOff = findViewById(R.id.cvCompOff);
+                findViewById(R.id.ivMore);
+
+        ivBack =
+
+                findViewById(R.id.ivBack);
+
+        ivdetails =
+
+                findViewById(R.id.ivdetails);
+
+        cvApporved =
+
+                findViewById(R.id.cvApporved);
+
+        cvPending =
+
+                findViewById(R.id.cvPending);
+
+        cvRejected =
+
+                findViewById(R.id.cvRejected);
+
+        cvDeleted =
+
+                findViewById(R.id.cvDeleted);
+
+        cvCancel =
+
+                findViewById(R.id.cvCancel);
+
+        cvCompOff =
+
+                findViewById(R.id.cvCompOff);
+        tvNomsg = findViewById(R.id.tvMsg);
+
+        rlcardatted = findViewById(R.id.rlcardatted);
+        rlmsg = findViewById(R.id.rlmsg);
 
 
         //internet
 
-        broadcastReceiver = new ConnectionRecevier();
+        broadcastReceiver = new
+
+                ConnectionRecevier();
+
         registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 
 
         //externel file
-        ActivityCompat.requestPermissions(this,
-                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.READ_EXTERNAL_STORAGE},
-                PackageManager.PERMISSION_GRANTED);
+        ActivityCompat.requestPermissions(this, new String[]
+
+                {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, PackageManager.PERMISSION_GRANTED);
+
+
+        //*********************No leave ***************//
 
 
         CalPolicy();
+        try {
+            LeavePolicyInterface leavePolicyInterface = APIClient.getClient().create(LeavePolicyInterface.class);
+            leavePolicyInterface.callleavepolicy(empid, "available_leave").enqueue(new Callback<LeavePolicyResponse>() {
+                @Override
+                public void onResponse(Call<LeavePolicyResponse> call, Response<LeavePolicyResponse> response) {
+
+                    try {
+                        if (response.isSuccessful()) {
+
+                            if (response.body().getCategory().trim().equals("no leave")) {
+                                tvNomsg.setText(response.body().getMessage());
+                                rlmsg.setVisibility(View.VISIBLE);
+                                rlcardatted.setVisibility(View.GONE);
+                                ivAdd.setVisibility(View.GONE);
+                                ivdetails.setVisibility(View.GONE);
+
+                            } else {
+                                CalPolicy();
+                            }
+
+                        }
+                    } catch (Exception e) {
+
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<LeavePolicyResponse> call, Throwable t) {
+
+                }
+            });
+        } catch (Exception e) {
+
+        }
 
         cvApporved.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -226,8 +310,6 @@ public class LeaveActivity extends Activity {
         });
 
 
-
-
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -248,6 +330,39 @@ public class LeaveActivity extends Activity {
                 CallleaveDetails();
             }
         });
+
+
+        //        *********
+        leaveFormDetails = APIClient.getClient().create(LeaveFormDetails.class);
+        leaveFormDetails.callleavedetails(empid, "available_leave").enqueue(new Callback<LeaveFormAllocatedleave>() {
+
+            @Override
+            public void onResponse(Call<LeaveFormAllocatedleave> call, Response<LeaveFormAllocatedleave> response) {
+                try {
+
+
+                    if (response.isSuccessful()) {
+                        avCl = Double.parseDouble(response.body().getAvailableLeaveModel().getCl());
+                        avMl = Double.parseDouble(response.body().getAvailableLeaveModel().getMl());
+                        avPl = Double.parseDouble(response.body().getAvailableLeaveModel().getPl());
+                        avProbl = Double.parseDouble(response.body().getAvailableLeaveModel().getProbl());
+                        avCompOff = Double.parseDouble(response.body().getAvailableLeaveModel().getCompoff());
+
+
+                    }
+                    Log.e(TAG, "onResponse: CL" + avCl + ":" + avMl + ":" + avPl + ":" + avProbl + ":" + avCompOff);
+                } catch (Exception e) {
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<LeaveFormAllocatedleave> call, Throwable t) {
+
+            }
+        });
+
     }
 
     private void callCompOff() {
@@ -255,13 +370,13 @@ public class LeaveActivity extends Activity {
         bottomSheetDialog1.setContentView(R.layout.comoffdesign);
         bottomSheetDialog1.show();
 
-        rvCompOff=bottomSheetDialog1.findViewById(R.id.rvCompOff);
-        ImageView ivBack=bottomSheetDialog1.findViewById(R.id.ivBack);
+        rvCompOff = bottomSheetDialog1.findViewById(R.id.rvCompOff);
+        ImageView ivBack = bottomSheetDialog1.findViewById(R.id.ivBack);
 
         callCompoffReport();
 
-        compoffAdapter =new CompoffAdapter(this,compOffModels);
-        LinearLayoutManager compoff=new LinearLayoutManager(this);
+        compoffAdapter = new CompoffAdapter(this, compOffModels);
+        LinearLayoutManager compoff = new LinearLayoutManager(this);
         compoff.setOrientation(RecyclerView.VERTICAL);
         rvCompOff.setAdapter(compoffAdapter);
         rvCompOff.setLayoutManager(compoff);
@@ -277,19 +392,19 @@ public class LeaveActivity extends Activity {
     }
 
     private void callCompoffReport() {
-        LeaveDetailsInterface leaveDetailsInterface=APIClient.getClient().create(LeaveDetailsInterface.class);
-        leaveDetailsInterface.CallDetails("compoffReport",PreferenceManager.getEmpID(this)).enqueue(new Callback<LeaveDetailsResponse>() {
+        LeaveDetailsInterface leaveDetailsInterface = APIClient.getClient().create(LeaveDetailsInterface.class);
+        leaveDetailsInterface.CallDetails("compoffReport", PreferenceManager.getEmpID(this)).enqueue(new Callback<LeaveDetailsResponse>() {
             @Override
             public void onResponse(Call<LeaveDetailsResponse> call, Response<LeaveDetailsResponse> response) {
                 try {
-                    if (response.isSuccessful()){
+                    if (response.isSuccessful()) {
 
-                        compoffAdapter.compOffModels=response.body().getCompOffModels();
+                        compoffAdapter.compOffModels = response.body().getCompOffModels();
                         compoffAdapter.notifyDataSetChanged();
 
                     }
 
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
 
@@ -307,12 +422,12 @@ public class LeaveActivity extends Activity {
         bottomSheetDialog1.setContentView(R.layout.deleted);
         bottomSheetDialog1.show();
 
-        rvDeleted=bottomSheetDialog1.findViewById(R.id.rvDeleted);
-        ImageView ivBack=bottomSheetDialog1.findViewById(R.id.ivBack);
+        rvDeleted = bottomSheetDialog1.findViewById(R.id.rvDeleted);
+        ImageView ivBack = bottomSheetDialog1.findViewById(R.id.ivBack);
         calldeletedReport();
 
-        rejectedAdapter=new RejectedAdapter(this,leavedetailsModels);
-        LinearLayoutManager deleted=new LinearLayoutManager(this);
+        rejectedAdapter = new RejectedAdapter(this, leavedetailsModels);
+        LinearLayoutManager deleted = new LinearLayoutManager(this);
         deleted.setOrientation(RecyclerView.VERTICAL);
         rvDeleted.setLayoutManager(deleted);
         rvDeleted.setAdapter(rejectedAdapter);
@@ -328,19 +443,19 @@ public class LeaveActivity extends Activity {
     }
 
     private void calldeletedReport() {
-        LeaveDetailsInterface leaveDetailsInterface=APIClient.getClient().create(LeaveDetailsInterface.class);
-        leaveDetailsInterface.CallDetails("deletedLeaveReqs",PreferenceManager.getEmpID(this)).enqueue(new Callback<LeaveDetailsResponse>() {
+        LeaveDetailsInterface leaveDetailsInterface = APIClient.getClient().create(LeaveDetailsInterface.class);
+        leaveDetailsInterface.CallDetails("deletedLeaveReqs", PreferenceManager.getEmpID(this)).enqueue(new Callback<LeaveDetailsResponse>() {
             @Override
             public void onResponse(Call<LeaveDetailsResponse> call, Response<LeaveDetailsResponse> response) {
                 try {
-                    if (response.isSuccessful()){
+                    if (response.isSuccessful()) {
 
-                        rejectedAdapter.leavedetailsModels=response.body().getData();
+                        rejectedAdapter.leavedetailsModels = response.body().getData();
                         rejectedAdapter.notifyDataSetChanged();
 
                     }
 
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
 
@@ -358,12 +473,12 @@ public class LeaveActivity extends Activity {
         bottomSheetDialog1.setContentView(R.layout.cancel);
         bottomSheetDialog1.show();
 
-        rvCancel=bottomSheetDialog1.findViewById(R.id.rvCancel);
-        ImageView ivBack=bottomSheetDialog1.findViewById(R.id.ivBack);
+        rvCancel = bottomSheetDialog1.findViewById(R.id.rvCancel);
+        ImageView ivBack = bottomSheetDialog1.findViewById(R.id.ivBack);
         callcancelReport();
 
-        rejectedAdapter=new RejectedAdapter(this,leavedetailsModels);
-        LinearLayoutManager cancel=new LinearLayoutManager(this);
+        rejectedAdapter = new RejectedAdapter(this, leavedetailsModels);
+        LinearLayoutManager cancel = new LinearLayoutManager(this);
         cancel.setOrientation(RecyclerView.VERTICAL);
         rvCancel.setLayoutManager(cancel);
         rvCancel.setAdapter(rejectedAdapter);
@@ -379,19 +494,19 @@ public class LeaveActivity extends Activity {
     }
 
     private void callcancelReport() {
-        LeaveDetailsInterface leaveDetailsInterface=APIClient.getClient().create(LeaveDetailsInterface.class);
-        leaveDetailsInterface.CallDetails("cancelledLeaveReqs",PreferenceManager.getEmpID(this)).enqueue(new Callback<LeaveDetailsResponse>() {
+        LeaveDetailsInterface leaveDetailsInterface = APIClient.getClient().create(LeaveDetailsInterface.class);
+        leaveDetailsInterface.CallDetails("cancelledLeaveReqs", PreferenceManager.getEmpID(this)).enqueue(new Callback<LeaveDetailsResponse>() {
             @Override
             public void onResponse(Call<LeaveDetailsResponse> call, Response<LeaveDetailsResponse> response) {
                 try {
-                    if (response.isSuccessful()){
+                    if (response.isSuccessful()) {
 
-                        rejectedAdapter.leavedetailsModels=response.body().getData();
+                        rejectedAdapter.leavedetailsModels = response.body().getData();
                         rejectedAdapter.notifyDataSetChanged();
 
                     }
 
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
 
@@ -410,12 +525,12 @@ public class LeaveActivity extends Activity {
         bottomSheetDialog1.setContentView(R.layout.rejected);
         bottomSheetDialog1.show();
 
-        rvRejected=bottomSheetDialog1.findViewById(R.id.rvRejected);
-        ImageView ivBack=bottomSheetDialog1.findViewById(R.id.ivBack);
+        rvRejected = bottomSheetDialog1.findViewById(R.id.rvRejected);
+        ImageView ivBack = bottomSheetDialog1.findViewById(R.id.ivBack);
         CallRejected();
 
-        rejectedAdapter=new RejectedAdapter(this,leavedetailsModels);
-        LinearLayoutManager rejected=new LinearLayoutManager(this);
+        rejectedAdapter = new RejectedAdapter(this, leavedetailsModels);
+        LinearLayoutManager rejected = new LinearLayoutManager(this);
         rejected.setOrientation(RecyclerView.VERTICAL);
         rvRejected.setLayoutManager(rejected);
         rvRejected.setAdapter(rejectedAdapter);
@@ -431,19 +546,19 @@ public class LeaveActivity extends Activity {
 
     private void CallRejected() {
 
-        LeaveDetailsInterface leaveDetailsInterface=APIClient.getClient().create(LeaveDetailsInterface.class);
-        leaveDetailsInterface.CallDetails("rejectedLeaveReqs",PreferenceManager.getEmpID(this)).enqueue(new Callback<LeaveDetailsResponse>() {
+        LeaveDetailsInterface leaveDetailsInterface = APIClient.getClient().create(LeaveDetailsInterface.class);
+        leaveDetailsInterface.CallDetails("rejectedLeaveReqs", PreferenceManager.getEmpID(this)).enqueue(new Callback<LeaveDetailsResponse>() {
             @Override
             public void onResponse(Call<LeaveDetailsResponse> call, Response<LeaveDetailsResponse> response) {
                 try {
-                    if (response.isSuccessful()){
+                    if (response.isSuccessful()) {
 
-                        rejectedAdapter.leavedetailsModels=response.body().getData();
+                        rejectedAdapter.leavedetailsModels = response.body().getData();
                         rejectedAdapter.notifyDataSetChanged();
 
                     }
 
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
 
@@ -462,13 +577,13 @@ public class LeaveActivity extends Activity {
         bottomSheetDialog1.setContentView(R.layout.pending);
         bottomSheetDialog1.show();
 
-        rvPending=bottomSheetDialog1.findViewById(R.id.rvPending);
-        ImageView ivBack=bottomSheetDialog1.findViewById(R.id.ivBack);
+        rvPending = bottomSheetDialog1.findViewById(R.id.rvPending);
+        ImageView ivBack = bottomSheetDialog1.findViewById(R.id.ivBack);
 
         Callpending();
 
-        pendingAdapter=new PendingAdapter(this,leavedetailsModels);
-        LinearLayoutManager pending=new LinearLayoutManager(this);
+        pendingAdapter = new PendingAdapter(this, leavedetailsModels);
+        LinearLayoutManager pending = new LinearLayoutManager(this);
         pending.setOrientation(RecyclerView.VERTICAL);
         rvPending.setAdapter(pendingAdapter);
         rvPending.setLayoutManager(pending);
@@ -483,19 +598,19 @@ public class LeaveActivity extends Activity {
     }
 
     private void Callpending() {
-        LeaveDetailsInterface leaveDetailsInterface=APIClient.getClient().create(LeaveDetailsInterface.class);
-        leaveDetailsInterface.CallDetails("pendingLeaveReqs",PreferenceManager.getEmpID(this)).enqueue(new Callback<LeaveDetailsResponse>() {
+        LeaveDetailsInterface leaveDetailsInterface = APIClient.getClient().create(LeaveDetailsInterface.class);
+        leaveDetailsInterface.CallDetails("pendingLeaveReqs", PreferenceManager.getEmpID(this)).enqueue(new Callback<LeaveDetailsResponse>() {
             @Override
             public void onResponse(Call<LeaveDetailsResponse> call, Response<LeaveDetailsResponse> response) {
                 try {
-                    if (response.isSuccessful()){
+                    if (response.isSuccessful()) {
 
-                        pendingAdapter.leavedetailsModels=response.body().getData();
+                        pendingAdapter.leavedetailsModels = response.body().getData();
                         pendingAdapter.notifyDataSetChanged();
 
                     }
 
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
 
@@ -516,13 +631,13 @@ public class LeaveActivity extends Activity {
         bottomSheetDialog1.setContentView(R.layout.approved);
         bottomSheetDialog1.show();
 
-        rvApproved=bottomSheetDialog1.findViewById(R.id.rvApproved);
-        ImageView ivBack=bottomSheetDialog1.findViewById(R.id.ivBack);
+        rvApproved = bottomSheetDialog1.findViewById(R.id.rvApproved);
+        ImageView ivBack = bottomSheetDialog1.findViewById(R.id.ivBack);
 
         CallApprovedList();
 
-        approvedAdapter=new ApprovedAdapter(LeaveActivity.this,leavedetailsModels);
-        LinearLayoutManager approved=new LinearLayoutManager(LeaveActivity.this);
+        approvedAdapter = new ApprovedAdapter(LeaveActivity.this, leavedetailsModels);
+        LinearLayoutManager approved = new LinearLayoutManager(LeaveActivity.this);
         approved.setOrientation(RecyclerView.VERTICAL);
         rvApproved.setLayoutManager(approved);
         rvApproved.setAdapter(approvedAdapter);
@@ -531,32 +646,29 @@ public class LeaveActivity extends Activity {
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              bottomSheetDialog1.dismiss();
+                bottomSheetDialog1.dismiss();
             }
         });
-
-
-
 
 
     }
 
     private void CallApprovedList() {
-        LeaveDetailsInterface leaveDetailsInterface=APIClient.getClient().create(LeaveDetailsInterface.class);
-        leaveDetailsInterface.CallDetails("approvedLeaveReqs",PreferenceManager.getEmpID(this)).enqueue(new Callback<LeaveDetailsResponse>() {
+        LeaveDetailsInterface leaveDetailsInterface = APIClient.getClient().create(LeaveDetailsInterface.class);
+        leaveDetailsInterface.CallDetails("approvedLeaveReqs", PreferenceManager.getEmpID(this)).enqueue(new Callback<LeaveDetailsResponse>() {
             @Override
             public void onResponse(Call<LeaveDetailsResponse> call, Response<LeaveDetailsResponse> response) {
                 try {
-                    if (response.isSuccessful()){
+                    if (response.isSuccessful()) {
 
-                       // Toast.makeText(this,+approvedAdapter.leavedetailsModels=response.body().getData(), Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(this,+approvedAdapter.leavedetailsModels=response.body().getData(), Toast.LENGTH_SHORT).show();
 
-                        approvedAdapter.leavedetailsModels=response.body().getData();
+                        approvedAdapter.leavedetailsModels = response.body().getData();
                         approvedAdapter.notifyDataSetChanged();
 
                     }
 
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
 
@@ -571,7 +683,7 @@ public class LeaveActivity extends Activity {
 
     private void CalPolicy() {
         LeavePolicyInterface leavePolicyInterface = APIClient.getClient().create(LeavePolicyInterface.class);
-        leavePolicyInterface.callleavepolicy(PreferenceManager.getEmpID(this), "available_leave").enqueue(new Callback<LeavePolicyResponse>() {
+        leavePolicyInterface.callleavepolicy(empid, "available_leave").enqueue(new Callback<LeavePolicyResponse>() {
             @Override
             public void onResponse(Call<LeavePolicyResponse> call, Response<LeavePolicyResponse> response) {
 
@@ -592,6 +704,12 @@ public class LeaveActivity extends Activity {
                             Button btClose = dialog.findViewById(R.id.btClose);
 
 
+                            rlmsg.setVisibility(View.GONE);
+                            rlcardatted.setVisibility(View.VISIBLE);
+                            ivAdd.setVisibility(View.VISIBLE);
+                            ivdetails.setVisibility(View.VISIBLE);
+
+
                             tvmsg.setText(response.body().getMessage());
                             tvHeader.setText(response.body().getCategory());
 
@@ -606,7 +724,7 @@ public class LeaveActivity extends Activity {
                                             @Override
                                             public void onClick(View v) {
                                                 LeavePolicyInterface leavePolicyInterface = APIClient.getClient().create(LeavePolicyInterface.class);
-                                                leavePolicyInterface.callleavepolicy(PreferenceManager.getEmpID(LeaveActivity.this), "confirmLeavePolicy").enqueue(new Callback<LeavePolicyResponse>() {
+                                                leavePolicyInterface.callleavepolicy(empid, "confirmLeavePolicy").enqueue(new Callback<LeavePolicyResponse>() {
                                                     @Override
                                                     public void onResponse(Call<LeavePolicyResponse> call, Response<LeavePolicyResponse> response) {
                                                         if (response.isSuccessful()) {
@@ -647,7 +765,12 @@ public class LeaveActivity extends Activity {
                             });
 //
                         } else if (response.body().getCategory().trim().equals("leave form")) {
-                            Toast.makeText(LeaveActivity.this, response.body().getCategory(), Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(LeaveActivity.this, response.body().getCategory(), Toast.LENGTH_SHORT).show();
+
+                            rlmsg.setVisibility(View.GONE);
+                            rlcardatted.setVisibility(View.VISIBLE);
+                            ivAdd.setVisibility(View.VISIBLE);
+                            ivdetails.setVisibility(View.VISIBLE);
                         }
                     }
                 } catch (Exception e) {
@@ -692,6 +815,7 @@ public class LeaveActivity extends Activity {
 
         callDetail();
 
+
         ivDownbottom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -701,79 +825,57 @@ public class LeaveActivity extends Activity {
 
     }
 
+
     private void callDetail() {
         LeaveFormDetails leaveFormDetails = APIClient.getClient().create(LeaveFormDetails.class);
-        leaveFormDetails.callleavedetails(PreferenceManager.getEmpID(this), "available_leave").enqueue(new Callback<LeaveFormAllocatedleave>() {
+        leaveFormDetails.callleavedetails(empid, "available_leave").enqueue(new Callback<LeaveFormAllocatedleave>() {
             @Override
             public void onResponse(Call<LeaveFormAllocatedleave> call, Response<LeaveFormAllocatedleave> response) {
+
+
                 try {
                     if (response.isSuccessful()) {
-                        if (response.body().getEmptype().trim().equals("1") || response.body().getEmptype().trim().equals("2") ) {
 
-                            Log.e(TAG, "onResponse:1 " + response.body().getEmptype().trim().equals("1"));
-
-                            avCl= Integer.parseInt(response.body().getAllocatedleaveModel().getCl());
-                            avCompOff= Integer.parseInt(response.body().getAllocatedleaveModel().getCompoff());
-                            avMl= Integer.parseInt(response.body().getAllocatedleaveModel().getMl());
-                            avPL= Integer.parseInt(response.body().getAllocatedleaveModel().getPl());
-                            avProbl= 0;
-
-
-
+                        if (response.body().getEmptype().trim().equals("1") || response.body().getEmptype().trim().equals("2")) {
                             tvClallocatted.setText(response.body().getAllocatedleaveModel().getCl());
                             tvMlallocatted.setText(response.body().getAllocatedleaveModel().getMl());
                             tvPLallocatted.setText(response.body().getAllocatedleaveModel().getPl());
-                            tvProlallocatted.setText(response.body().getAllocatedleaveModel().getProbl());
+                            tvCompoffallocatted.setText(response.body().getAllocatedleaveModel().getCompoff());
+
                             tvClavailable.setText(response.body().getAvailableLeaveModel().getCl());
                             tvMlavailable.setText(response.body().getAvailableLeaveModel().getMl());
                             tvPLavailable.setText(response.body().getAvailableLeaveModel().getPl());
-                            tvProlavailable.setText(response.body().getAvailableLeaveModel().getProbl());
-                            tvCompoffallocatted.setVisibility(View.GONE);
-                            tvCompoffallocattedTag.setVisibility(View.GONE);
-                            tvCompOffavailable1.setVisibility(View.GONE);
+                            tvCompOffavailable1.setText(response.body().getAvailableLeaveModel().getCompoff());
 
-//                        } else if (response.body().getEmptype().trim().equals("2")) {
-//
-//                            Log.e(TAG, "onResponse:2 " + response.body().getEmptype().trim().equals("2"));
-//                            tvClallocatted.setText(response.body().getAllocatedleaveModel().getCl());
-//                            tvMlallocatted.setText(response.body().getAllocatedleaveModel().getMl());
-//                            tvPLallocatted.setText(response.body().getAllocatedleaveModel().getPl());
-//                            tvProlallocatted.setText(response.body().getAllocatedleaveModel().getProbl());
-//                            tvClavailable.setText(response.body().getAvailableLeaveModel().getCl());
-//                            tvMlavailable.setText(response.body().getAvailableLeaveModel().getMl());
-//                            tvPLavailable.setText(response.body().getAvailableLeaveModel().getPl());
-//                            tvProlavailable.setText(response.body().getAvailableLeaveModel().getProbl());
-//                            tvCompoffallocatted.setVisibility(View.GONE);
-//                            tvCompoffallocattedTag.setVisibility(View.GONE);
-//                            tvCompOffavailable1.setVisibility(View.GONE);
+
+                            tvProlallocattedTag.setVisibility(View.GONE);
+                            tvProlallocatted.setVisibility(View.GONE);
+                            tvProlavailable.setVisibility(View.GONE);
+
+
                         } else if (response.body().getEmptype().trim().equals("3")) {
 
-                            Log.e(TAG, "onResponse:3 " + response.body().getEmptype().trim().equals("3"));
-                            tvClallocatted.setText(response.body().getAllocatedleaveModel().getCl());
-                            tvClavailable.setText(response.body().getAvailableLeaveModel().getCl());
+
+                            tvMlallocattedTag.setVisibility(View.GONE);
+                            tvMlallocatted.setVisibility(View.GONE);
+                            tvMlavailable.setVisibility(View.GONE);
+                            tvPLallocattedTag.setVisibility(View.GONE);
+                            tvPLallocatted.setVisibility(View.GONE);
+                            tvPLavailable.setVisibility(View.GONE);
+                            tvClallocattedTag.setVisibility(View.GONE);
+                            tvClavailable.setVisibility(View.GONE);
+                            tvClallocatted.setVisibility(View.GONE);
+
+
+                            tvProlallocatted.setText(response.body().getAllocatedleaveModel().getProbl());
+                            tvProlavailable.setText(response.body().getAvailableLeaveModel().getProbl());
                             tvCompOffavailable1.setText(response.body().getAvailableLeaveModel().getCompoff());
                             tvCompoffallocatted.setText(response.body().getAllocatedleaveModel().getCompoff());
 
 
-                            avCl= 0;
-                            avCompOff= Integer.parseInt(response.body().getAllocatedleaveModel().getCompoff());
-                            avMl= 0;
-                            avPL= 0;
-                            avProbl= Integer.parseInt(response.body().getAllocatedleaveModel().getProbl());
-
-                            tvMlallocatted.setVisibility(View.GONE);
-                            tvPLallocatted.setVisibility(View.GONE);
-                            tvProlallocatted.setVisibility(View.GONE);
-                            tvMlallocattedTag.setVisibility(View.GONE);
-                            tvMlavailable.setVisibility(View.GONE);
-                            tvPLavailable.setVisibility(View.GONE);
-                            tvProlavailable.setVisibility(View.GONE);
-                            tvProlallocattedTag.setVisibility(View.GONE);
-                            tvPLallocattedTag.setVisibility(View.GONE);
-
-
                         }
                     }
+
 
                 } catch (Exception e) {
 
@@ -807,12 +909,32 @@ public class LeaveActivity extends Activity {
         rbLcl = bottomSheetDialog.findViewById(R.id.rbLcl);
         rbMl = bottomSheetDialog.findViewById(R.id.rbMl);
         rbPl = bottomSheetDialog.findViewById(R.id.rbPl);
+        rbCompOff = bottomSheetDialog.findViewById(R.id.rbCompOff);
+        rbGroup2 = bottomSheetDialog.findViewById(R.id.rbGroup2);
+        rblop = bottomSheetDialog.findViewById(R.id.rblop);
+        rbGroup3 = bottomSheetDialog.findViewById(R.id.rbGroup3);
+        rbfullday = bottomSheetDialog.findViewById(R.id.rbfullday);
+        rbHalfday = bottomSheetDialog.findViewById(R.id.rbHalfday);
+        tvselectDate = bottomSheetDialog.findViewById(R.id.tvselectDate);
+        TextView tvSubmit = bottomSheetDialog.findViewById(R.id.tvSubmit);
 
-        Date d = new Date();
-        CharSequence s = DateFormat.format("d /MM/yyyy ", d.getTime());
-        tvDate.setText(s);
+
+        tvview = bottomSheetDialog.findViewById(R.id.tvview);
 
 
+        if ((avCompOff + avMl + avCl + avPl + avProbl) == 0) {
+
+            tvview.setVisibility(View.VISIBLE);
+            rblop.setChecked(true);
+            rblop.setClickable(false);
+            rblop.setVisibility(View.VISIBLE);
+
+        }
+
+
+//        Date d = new Date();
+//        CharSequence s = DateFormat.format("d /MM/yyyy ", d.getTime());
+//        tvDate.setText(s);
 
 
         callRes();
@@ -827,21 +949,63 @@ public class LeaveActivity extends Activity {
         typeAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
         tvLeaveType.setAdapter(typeAdapter);
 
+        rbGroup3.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                View gb3 = rbGroup3.findViewById(checkedId);
+                int rb3 = rbGroup3.indexOfChild(gb3);
+                switch (rb3) {
+                    case 0:
+                        Toast.makeText(LeaveActivity.this, "full day", Toast.LENGTH_SHORT).show();
+                        day = 0;
+                        break;
+
+                    case 1:
+                        Toast.makeText(LeaveActivity.this, "Half day", Toast.LENGTH_SHORT).show();
+                        day = 1;
+                        break;
+                }
+            }
+        });
+
+        rbGroup2.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                View gb2 = rbGroup2.findViewById(checkedId);
+                int rb2 = rbGroup2.indexOfChild(gb2);
+                rblop.isChecked();
+                switch (rb2) {
+                    case 0:
+
+                        Toast.makeText(LeaveActivity.this, "CompOff", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 1:
+
+                        Toast.makeText(LeaveActivity.this, "CompOff", Toast.LENGTH_SHORT).show();
+                        break;
+
+                }
+            }
+        });
+
         rbGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
 
-                View view=rbGroup.findViewById(checkedId);
-                int rb=rbGroup.indexOfChild(view);
-               // Toast.makeText(LeaveActivity.this, , Toast.LENGTH_SHORT).show();
-                switch (rb){
+                View view = rbGroup.findViewById(checkedId);
+                int rb = rbGroup.indexOfChild(view);
+                // Toast.makeText(LeaveActivity.this, , Toast.LENGTH_SHORT).show();
+                switch (rb) {
                     case 0:
+                        typeid = 0;
                         Toast.makeText(LeaveActivity.this, "Cl", Toast.LENGTH_SHORT).show();
                         break;
                     case 1:
+                        typeid = 1;
                         Toast.makeText(LeaveActivity.this, "ML", Toast.LENGTH_SHORT).show();
                         break;
                     case 2:
+                        typeid = 2;
                         Toast.makeText(LeaveActivity.this, "PL", Toast.LENGTH_SHORT).show();
                         break;
                 }
@@ -881,22 +1045,56 @@ public class LeaveActivity extends Activity {
             }
         });
 
+        tvSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Callsubmit();
+            }
+        });
+
     }
 
-    private void date() {
+    private void Callsubmit() {
+        LeaveSubmitForm leaveSubmitForm = APIClient.getClient().create(LeaveSubmitForm.class);
+        int lop = rblop.isChecked() ? 1 : 0;
+        int compoff = rbCompOff.isChecked() ? 1 : 0;
+        int clmlpl;
+        if (lop == 1)
+            clmlpl = 2;
+        else {
+            clmlpl = rbLcl.isChecked() ? 1 : (rbMl.isChecked() ? 3 : (rbPl.isChecked() ? 2 : 0));
+        }
+        leaveSubmitForm.callLeaveformsubmit("applyLeave",empid, clmlpl, reason, tvDate.getText().toString(), day, lop, compoff).enqueue(new Callback<leavesubmitresponse>() {
+            @Override
+            public void onResponse(Call<leavesubmitresponse> call, Response<leavesubmitresponse> response) {
+                try {
+                    if (response.isSuccessful()) {
+                        Toast.makeText(LeaveActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                    }
 
+                } catch (Exception e) {
 
+                }
 
+            }
+
+            @Override
+            public void onFailure(Call<leavesubmitresponse> call, Throwable t) {
+
+            }
+        });
     }
+
 
     private void Calltype() {
         LeaveFormDetails formDetails = APIClient.getClient().create(LeaveFormDetails.class);
-        formDetails.callleavedetails("e367", "available_leave").enqueue(new Callback<LeaveFormAllocatedleave>() {
+        formDetails.callleavedetails(empid, "available_leave").enqueue(new Callback<LeaveFormAllocatedleave>() {
             @Override
             public void onResponse(Call<LeaveFormAllocatedleave> call, Response<LeaveFormAllocatedleave> response) {
                 try {
                     if (response.isSuccessful()) {
                         String type = response.body().getLeaveResons().getLeavetype();
+                        LeaveType.add("");
                         String[] typearray = type.split(";");
                         for (int i = 0; i < typearray.length; i++) {
                             LeaveType.add(typearray[i]);
@@ -919,7 +1117,7 @@ public class LeaveActivity extends Activity {
 
     private void callRes() {
         LeaveFormDetails leaveFormDetails = APIClient.getClient().create(LeaveFormDetails.class);
-        leaveFormDetails.callleavedetails("e367", "available_leave").enqueue(new Callback<LeaveFormAllocatedleave>() {
+        leaveFormDetails.callleavedetails(empid, "available_leave").enqueue(new Callback<LeaveFormAllocatedleave>() {
             @Override
             public void onResponse(Call<LeaveFormAllocatedleave> call, Response<LeaveFormAllocatedleave> response) {
 
@@ -934,152 +1132,52 @@ public class LeaveActivity extends Activity {
                         leave.add("----Select----");
                         String[] strings = name.split(";");
                         for (int i = 0; i < strings.length; i++) {
-                            Log.e(TAG, "onResponse: " + strings[i]);
+                            //Log.e(TAG, "onResponse: " + strings[i]);
                             leave.add(strings[i]);
                         }
 
                         arrayAdapter.notifyDataSetChanged();
 
 
-
                         spReson.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             @Override
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                                 Toast.makeText(LeaveActivity.this, leave.get(position), Toast.LENGTH_SHORT).show();
+                                // reason = Integer.parseInt(leave.get(position));
+                                reason = position;
+                                //reasonName=leave.get(position);
 
+                                // Toast.makeText(LeaveActivity.this, LeaveType.get(position), Toast.LENGTH_SHORT).show();
 
-                                if (leave.get(position).trim().equals("Dependent Sick / Surgery/ Hospitalized")) {
-                                    rlUpload.setVisibility(View.VISIBLE);
-                                    rbPl.setClickable(false);
-                                    rbLcl.setClickable(false);
-                                    rbMl.setClickable(true);
+                                String cl = LeaveType.get(position);
 
-                                    rbPl.setVisibility(View.GONE);
-                                    rbLcl.setVisibility(View.GONE);
-                                    rbMl.setVisibility(View.VISIBLE);
+                                String[] clpl = cl.split(",");
+                                rbPl.setEnabled(false);
+                                rbLcl.setEnabled(false);
+                                rbMl.setEnabled(false);
 
-                                } else if (leave.get(position).trim().equals("Long travel or trip ( Visiting temple,Visiting relative house )")) {
-                                    rlUpload.setVisibility(View.GONE);
-                                    rbPl.setClickable(true);
-                                    rbLcl.setClickable(true);
-                                    rbMl.setClickable(false);
+                                if (avCompOff == 0) {
 
-                                    rbPl.setVisibility(View.VISIBLE);
-                                    rbLcl.setVisibility(View.VISIBLE);
-                                    rbMl.setVisibility(View.GONE);
+                                    for (int i = 0; i < clpl.length; i++) {
 
-                                } else if (leave.get(position).trim().equals("Not Feasible to travel")) {
-                                    rlUpload.setVisibility(View.GONE);
-                                    rbPl.setClickable(true);
-                                    rbLcl.setClickable(true);
-                                    rbMl.setClickable(false);
+                                        if (clpl[i].trim().equals("CL")) {
+                                            if (avCl > 0 || avProbl>0) rbLcl.setEnabled(true);
 
-                                    rbPl.setVisibility(View.VISIBLE);
-                                    rbLcl.setVisibility(View.VISIBLE);
-                                    rbMl.setVisibility(View.GONE);
+                                        } else if (clpl[i].trim().equals("PL")) {
+                                            if (avPl > 0 || avProbl>0) rbPl.setEnabled(true);
 
-
-                                } else if (leave.get(position).trim().equals("Shifting to new house")) {
-                                    rlUpload.setVisibility(View.GONE);
-                                    rbPl.setClickable(true);
-                                    rbLcl.setClickable(true);
-                                    rbMl.setClickable(false);
-
-                                    rbPl.setVisibility(View.VISIBLE);
-                                    rbLcl.setVisibility(View.VISIBLE);
-                                    rbMl.setVisibility(View.GONE);
-
-
-                                } else if (leave.get(position).trim().equals("Sick and not Hospitalized")) {
-                                    rlUpload.setVisibility(View.VISIBLE);
-                                    rbPl.setClickable(false);
-                                    rbLcl.setClickable(false);
-                                    rbMl.setClickable(true);
-
-                                    rbPl.setVisibility(View.GONE);
-                                    rbLcl.setVisibility(View.GONE);
-                                    rbMl.setVisibility(View.VISIBLE);
-
-                                } else if (leave.get(position).trim().equals("Surgery /Hospitalization")) {
-                                    rlUpload.setVisibility(View.GONE);
-                                    rbPl.setClickable(false);
-                                    rbLcl.setClickable(false);
-                                    rbMl.setClickable(true);
-
-                                    rbPl.setVisibility(View.GONE);
-                                    rbLcl.setVisibility(View.GONE);
-                                    rbMl.setVisibility(View.VISIBLE);
-
-                                } else if (leave.get(position).trim().equals("To attend Self / Friends/ Relative marriage")) {
-                                    rlUpload.setVisibility(View.GONE);
-                                    rbPl.setClickable(true);
-                                    rbLcl.setClickable(true);
-                                    rbMl.setClickable(false);
-
-                                    rbPl.setVisibility(View.VISIBLE);
-                                    rbLcl.setVisibility(View.VISIBLE);
-                                    rbMl.setVisibility(View.GONE);
-
-
-                                } else if (leave.get(position).trim().equals("To get essential needs")) {
-                                    rlUpload.setVisibility(View.GONE);
-                                    rbPl.setClickable(true);
-                                    rbLcl.setClickable(true);
-                                    rbMl.setClickable(false);
-
-                                    rbPl.setVisibility(View.VISIBLE);
-                                    rbLcl.setVisibility(View.VISIBLE);
-                                    rbMl.setVisibility(View.GONE);
-
-
-                                } else if (leave.get(position).trim().equals("Personal Emergency")) {
-                                    rlUpload.setVisibility(View.GONE);
-                                    rbPl.setClickable(true);
-                                    rbLcl.setClickable(true);
-                                    rbMl.setClickable(false);
-
-
-                                    rbPl.setVisibility(View.VISIBLE);
-                                    rbLcl.setVisibility(View.VISIBLE);
-                                    rbMl.setVisibility(View.GONE);
-
-
-                                } else if (leave.get(position).trim().equals("Sick and Hospitalized")) {
-                                    rlUpload.setVisibility(View.GONE);
-                                    rbPl.setClickable(false);
-                                    rbLcl.setClickable(false);
-                                    rbMl.setClickable(true);
-
-
-                                    rbPl.setVisibility(View.GONE);
-                                    rbLcl.setVisibility(View.GONE);
-                                    rbMl.setVisibility(View.VISIBLE);
-
-                                } else if (leave.get(position).trim().equals("Family Occasions")) {
-                                    rlUpload.setVisibility(View.GONE);
-                                    rbPl.setClickable(true);
-                                    rbLcl.setClickable(true);
-                                    rbMl.setClickable(false);
-
-
-                                    rbPl.setVisibility(View.VISIBLE);
-                                    rbLcl.setVisibility(View.VISIBLE);
-                                    rbMl.setVisibility(View.GONE);
-
-
-                                } else if (leave.get(position).trim().equals("Health Discomfort")) {
-                                    rlUpload.setVisibility(View.GONE);
-                                    rbPl.setClickable(true);
-                                    rbLcl.setClickable(true);
-                                    rbMl.setClickable(false);
-
-                                    rbPl.setVisibility(View.VISIBLE);
-                                    rbLcl.setVisibility(View.VISIBLE);
-                                    rbMl.setVisibility(View.GONE);
-
+                                        } else if (clpl[i].trim().equals("ML")) {
+                                            if (avMl > 0 || avProbl>0) rbMl.setEnabled(true);
+                                            rlUpload.setVisibility(View.VISIBLE);
+                                        }
 
                                 }
+                            }else {
+                                    rbCompOff.setChecked(true);
+                                    rbCompOff.setClickable(false);
+                                    rbCompOff.setVisibility(View.VISIBLE);
 
+                                }
                             }
 
                             @Override
@@ -1110,13 +1208,36 @@ public class LeaveActivity extends Activity {
         month = calendar.get(Calendar.MONTH);
         dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
         calendar.add(Calendar.MONTH, 3);
-        datePickerDialog = new DatePickerDialog(LeaveActivity.this,
-                new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                        tvDate.setText(day + "/" + (month + 1) + "/" + year);
+        datePickerDialog = new DatePickerDialog(LeaveActivity.this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                String date = tvDate.getText().toString();
+                String selectedDt = year + "-" + (month + 1) + "-" + day;
+                if (!date.isEmpty()) {
+                    if (date.contains(", " + selectedDt)) {
+                        System.out.println("1\n");
+                        date = date.replace(", " + selectedDt, "");
+                    } else if (date.contains(selectedDt)) {
+                        if (date.equals(selectedDt))
+                            date = "";
+                        else
+                            date = date.replace(selectedDt + ", ", "");
+                    } else {
+                        System.out.println("3\n");
+                        date += ", " + selectedDt;
                     }
-                }, year, month, dayOfMonth);
+                } else
+                    date = selectedDt;
+                tvDate.setText(date);
+                int count = date.split(",", -1).length;
+                if (count == 0)
+                    tvselectDate.setText("");
+                else if (count == 1)
+                    tvselectDate.setText("One day is selected");
+                else
+                    tvselectDate.setText(count + " days are selected");
+            }
+        }, year, month, dayOfMonth);
         datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
 
 
