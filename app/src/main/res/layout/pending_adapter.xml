@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
@@ -173,26 +174,11 @@
                 android:layout_marginBottom="5dp"
                 android:fontFamily="@font/bold"
                 android:text="attachment :"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:textColor="#0AA6F9"
                 android:textSize="20dp" />
 
-            <TextView
-                android:id="@+id/tvStatusApproved"
-                android:layout_width="150dp"
-                android:layout_height="30dp"
-                android:layout_below="@id/tvfullday"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="5dp"
-                android:layout_toRightOf="@id/tvStatusTag"
-                android:background="@drawable/cardview"
-                android:fontFamily="@font/semibold"
-                android:gravity="center"
-                android:text="Approved"
-                android:textColor="@color/white"
-                android:textSize="17dp"
-                android:visibility="gone" />
+
 
             <TextView
                 android:id="@+id/tvStatusPending"
@@ -202,6 +188,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="5dp"
+
                 android:layout_toRightOf="@id/tvStatusTag"
                 android:fontFamily="@font/semibold"
                 android:text="Pending"
@@ -210,42 +197,29 @@
                 android:visibility="gone" />
 
 
-            <TextView
-                android:id="@+id/tvStatusDelate"
-                android:layout_width="150dp"
-                android:layout_height="30dp"
+
+            <ImageView
+                android:id="@+id/ivfile"
+                android:layout_width="50dp"
+                android:layout_height="40dp"
                 android:layout_below="@id/tvfullday"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_toRightOf="@id/tvStatusTag"
-                android:background="@drawable/cardview"
-                android:backgroundTint="#FC5609"
-                android:fontFamily="@font/semibold"
-                android:gravity="center"
-                android:text="Deleted"
-                android:textColor="@color/white"
-                android:textSize="17dp"
-                android:visibility="gone" />
+                android:src="@drawable/fileopen"
+                android:visibility="visible" />
 
 
-            <TextView
-                android:id="@+id/tvStatusRejected"
-                android:layout_width="150dp"
-                android:layout_height="30dp"
-                android:layout_below="@id/tvfullday"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="5dp"
-                android:layout_toRightOf="@id/tvStatusTag"
-                android:background="@drawable/cardview"
-                android:backgroundTint="#F91A0C"
-                android:fontFamily="@font/semibold"
-                android:gravity="center"
-                android:text="Rejected"
-                android:textColor="@color/white"
-                android:textSize="17dp"
-                android:visibility="gone" />
+
+
+
+
+
+
+
+
+
 
             <ImageView
                 android:id="@+id/ivDelete"

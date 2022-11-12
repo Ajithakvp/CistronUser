@@ -9,6 +9,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -185,12 +186,17 @@ public class LoginActivity extends AppCompatActivity {
 
 
     private void CallLogin(String empID, String pass, double latitude, double longtitude, String addressLine) {
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Employee Login...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
         LoginInterFace loginInterFace=APIClient.getClient().create(LoginInterFace.class);
-        loginInterFace.getUserLogin(empID,pass,latitude,longtitude,addressLine,strDeviceName).enqueue(new Callback<LoginuserModel>() {
+        loginInterFace.getUserLogin(edName.getText().toString(),edPass.getText().toString(),latitude,longtitude,addressLine,strDeviceName).enqueue(new Callback<LoginuserModel>() {
             @Override
             public void onResponse(Call<LoginuserModel> call, Response<LoginuserModel> response) {
                try {
                    if (response.isSuccessful()){
+                       progressDialog.dismiss();
                        PreferenceManager.setLoggedStatus(LoginActivity.this,true);
                        PreferenceManager.saveData(LoginActivity.this,loginuserModel);
                        PreferenceManager.setEmpID(LoginActivity.this,response.body().getEmpid());
@@ -217,6 +223,8 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<LoginuserModel> call, Throwable t) {
+                progressDialog.dismiss();
+                Toast.makeText(LoginActivity.this, "Incorrect Employee ID and Password", Toast.LENGTH_SHORT).show();
 
             }
         });

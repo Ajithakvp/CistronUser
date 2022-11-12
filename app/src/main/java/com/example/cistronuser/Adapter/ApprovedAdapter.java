@@ -2,6 +2,9 @@ package com.example.cistronuser.Adapter;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,13 +15,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cistronuser.API.APIClient;
 import com.example.cistronuser.API.Interface.DeletedAPIInterface;
 import com.example.cistronuser.API.Model.LeavedetailsModel;
 import com.example.cistronuser.API.Response.LeaveDetailsResponse;
+import com.example.cistronuser.Activity.LeaveActivity;
 import com.example.cistronuser.Common.PreferenceManager;
+import com.example.cistronuser.Common.WebviewPage;
 import com.example.cistronuser.R;
 
 import java.util.ArrayList;
@@ -30,6 +36,7 @@ import retrofit2.Response;
 public class ApprovedAdapter extends RecyclerView.Adapter<ApprovedAdapter.ViewHolder> {
 
     Activity activity;
+    Context context;
 
     public ArrayList<LeavedetailsModel>leavedetailsModels;
 
@@ -55,14 +62,24 @@ public class ApprovedAdapter extends RecyclerView.Adapter<ApprovedAdapter.ViewHo
         holder.tvReason.setText(leavedetailsModels.get(position).getReason());
         holder.tvattach.setText(leavedetailsModels.get(position).getAttachment());
 
+        holder.ivfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(activity, WebviewPage.class);
+                intent.putExtra("pdf",leavedetailsModels.get(position).getAttachment());
+                activity.startActivity(intent);
+            }
+        });
+
+
 
         try {
             if (leavedetailsModels.get(position).getAttachment().trim().equals(null)){
                 holder.tvStatusTag.setVisibility(View.GONE);
-                holder.tvattach.setVisibility(View.GONE);
+                holder.ivfile.setVisibility(View.GONE);
             }else {
                 holder.tvStatusTag.setVisibility(View.VISIBLE);
-                holder.tvattach.setVisibility(View.VISIBLE);
+                holder.ivfile.setVisibility(View.VISIBLE);
             }
         }catch (Exception e){
 
@@ -74,28 +91,51 @@ public class ApprovedAdapter extends RecyclerView.Adapter<ApprovedAdapter.ViewHo
         holder.ivCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                holder.simpleProgressBar.setVisibility(View.VISIBLE);
-                DeletedAPIInterface deletedAPIInterface= APIClient.getClient().create(DeletedAPIInterface.class);
-                deletedAPIInterface.CallDetails("cancelLeave", PreferenceManager.getEmpID(activity),leavedetailsModels.get(position).getId()).enqueue(new Callback<LeaveDetailsResponse>() {
+                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                builder.setMessage("Are you sure you want to cancel ?");
+                builder.setTitle("cancel!");
+                builder.setIcon(R.drawable.ic_baseline_cancel_24);
+                builder.setCancelable(false);
+                builder.setPositiveButton("yes", (new DialogInterface.OnClickListener() {
                     @Override
-                    public void onResponse(Call<LeaveDetailsResponse> call, Response<LeaveDetailsResponse> response) {
-                        try{
-                            if (response.isSuccessful()){
-                                Toast.makeText(activity, "Cancel", Toast.LENGTH_SHORT).show();
-                                holder.simpleProgressBar.setVisibility(View.GONE);
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        DeletedAPIInterface deletedAPIInterface= APIClient.getClient().create(DeletedAPIInterface.class);
+                        deletedAPIInterface.CallDetails("cancelLeave", PreferenceManager.getEmpID(activity),leavedetailsModels.get(position).getId()).enqueue(new Callback<LeaveDetailsResponse>() {
+                            @Override
+                            public void onResponse(Call<LeaveDetailsResponse> call, Response<LeaveDetailsResponse> response) {
+                                try{
+                                    if (response.isSuccessful()){
+
+                                       activity.finish();
+
+                                        Toast.makeText(activity, "cancel", Toast.LENGTH_SHORT).show();
+
+                                    }
+
+                                }catch (Exception e){
+
+                                }
+
                             }
 
-                        }catch (Exception e){
+                            @Override
+                            public void onFailure(Call<LeaveDetailsResponse> call, Throwable t) {
 
-                        }
+                            }
+                        });
 
                     }
-
+                }));
+                builder.setNegativeButton("No", (new DialogInterface.OnClickListener() {
                     @Override
-                    public void onFailure(Call<LeaveDetailsResponse> call, Throwable t) {
-
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
                     }
-                });
+                }));
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+
+
             }
         });
 
@@ -111,7 +151,7 @@ public class ApprovedAdapter extends RecyclerView.Adapter<ApprovedAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvDate, tvDay, tvLeaveType, tvReason, tvfullday, tvattach,tvStatusTag;
-        ImageView ivCancel;
+        ImageView ivCancel,ivfile;
         ProgressBar simpleProgressBar;
 
 
@@ -128,6 +168,8 @@ public class ApprovedAdapter extends RecyclerView.Adapter<ApprovedAdapter.ViewHo
             ivCancel = itemView.findViewById(R.id.ivCancel);
             simpleProgressBar=itemView.findViewById(R.id.simpleProgressBar);
             tvStatusTag=itemView.findViewById(R.id.tvStatusTag);
+            ivfile=itemView.findViewById(R.id.ivfile);
+
         }
 
     }

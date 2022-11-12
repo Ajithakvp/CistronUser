@@ -10,6 +10,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -29,6 +30,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -68,6 +70,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -82,7 +87,7 @@ public class LeaveActivity extends Activity {
     TextView tvDate, tvview, tvselectDate;
     Spinner spReson, tvLeaveType, tvDayType;
     RelativeLayout rlUpload;
-    File file;
+    File filename;
     TextView tvDoc;
     String DocName;
     String reasonName;
@@ -156,12 +161,14 @@ public class LeaveActivity extends Activity {
 
     TextView tvNomsg;
 
+    ProgressBar simpleProgressBar;
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leave);
-        empid = "e367";
+        empid = PreferenceManager.getEmpID(this);
 
 
         PreferenceManager.setLoggedStatus(this, true);
@@ -206,6 +213,8 @@ public class LeaveActivity extends Activity {
         rlcardatted = findViewById(R.id.rlcardatted);
         rlmsg = findViewById(R.id.rlmsg);
 
+        simpleProgressBar = findViewById(R.id.simpleProgressBar);
+
 
         //internet
 
@@ -227,6 +236,7 @@ public class LeaveActivity extends Activity {
 
         CalPolicy();
         try {
+            simpleProgressBar.setVisibility(View.VISIBLE);
             LeavePolicyInterface leavePolicyInterface = APIClient.getClient().create(LeavePolicyInterface.class);
             leavePolicyInterface.callleavepolicy(empid, "available_leave").enqueue(new Callback<LeavePolicyResponse>() {
                 @Override
@@ -238,6 +248,7 @@ public class LeaveActivity extends Activity {
                             if (response.body().getCategory().trim().equals("no leave")) {
                                 tvNomsg.setText(response.body().getMessage());
                                 rlmsg.setVisibility(View.VISIBLE);
+                                simpleProgressBar.setVisibility(View.GONE);
                                 rlcardatted.setVisibility(View.GONE);
                                 ivAdd.setVisibility(View.GONE);
                                 ivdetails.setVisibility(View.GONE);
@@ -366,6 +377,7 @@ public class LeaveActivity extends Activity {
     }
 
     private void callCompOff() {
+        simpleProgressBar.setVisibility(View.VISIBLE);
         BottomSheetDialog bottomSheetDialog1 = new BottomSheetDialog(this);
         bottomSheetDialog1.setContentView(R.layout.comoffdesign);
         bottomSheetDialog1.show();
@@ -392,6 +404,10 @@ public class LeaveActivity extends Activity {
     }
 
     private void callCompoffReport() {
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
         LeaveDetailsInterface leaveDetailsInterface = APIClient.getClient().create(LeaveDetailsInterface.class);
         leaveDetailsInterface.CallDetails("compoffReport", PreferenceManager.getEmpID(this)).enqueue(new Callback<LeaveDetailsResponse>() {
             @Override
@@ -399,6 +415,8 @@ public class LeaveActivity extends Activity {
                 try {
                     if (response.isSuccessful()) {
 
+                        progressDialog.dismiss();
+                        simpleProgressBar.setVisibility(View.GONE);
                         compoffAdapter.compOffModels = response.body().getCompOffModels();
                         compoffAdapter.notifyDataSetChanged();
 
@@ -412,12 +430,13 @@ public class LeaveActivity extends Activity {
 
             @Override
             public void onFailure(Call<LeaveDetailsResponse> call, Throwable t) {
-
+                progressDialog.dismiss();
             }
         });
     }
 
     private void callDeleted() {
+        simpleProgressBar.setVisibility(View.VISIBLE);
         BottomSheetDialog bottomSheetDialog1 = new BottomSheetDialog(this);
         bottomSheetDialog1.setContentView(R.layout.deleted);
         bottomSheetDialog1.show();
@@ -443,19 +462,24 @@ public class LeaveActivity extends Activity {
     }
 
     private void calldeletedReport() {
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
         LeaveDetailsInterface leaveDetailsInterface = APIClient.getClient().create(LeaveDetailsInterface.class);
         leaveDetailsInterface.CallDetails("deletedLeaveReqs", PreferenceManager.getEmpID(this)).enqueue(new Callback<LeaveDetailsResponse>() {
             @Override
             public void onResponse(Call<LeaveDetailsResponse> call, Response<LeaveDetailsResponse> response) {
                 try {
                     if (response.isSuccessful()) {
-
+                        progressDialog.dismiss();
                         rejectedAdapter.leavedetailsModels = response.body().getData();
                         rejectedAdapter.notifyDataSetChanged();
 
                     }
 
                 } catch (Exception e) {
+                    progressDialog.dismiss();
 
                 }
 
@@ -469,6 +493,7 @@ public class LeaveActivity extends Activity {
     }
 
     private void callCancel() {
+        simpleProgressBar.setVisibility(View.VISIBLE);
         BottomSheetDialog bottomSheetDialog1 = new BottomSheetDialog(this);
         bottomSheetDialog1.setContentView(R.layout.cancel);
         bottomSheetDialog1.show();
@@ -494,13 +519,17 @@ public class LeaveActivity extends Activity {
     }
 
     private void callcancelReport() {
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
         LeaveDetailsInterface leaveDetailsInterface = APIClient.getClient().create(LeaveDetailsInterface.class);
         leaveDetailsInterface.CallDetails("cancelledLeaveReqs", PreferenceManager.getEmpID(this)).enqueue(new Callback<LeaveDetailsResponse>() {
             @Override
             public void onResponse(Call<LeaveDetailsResponse> call, Response<LeaveDetailsResponse> response) {
                 try {
                     if (response.isSuccessful()) {
-
+                        progressDialog.dismiss();
                         rejectedAdapter.leavedetailsModels = response.body().getData();
                         rejectedAdapter.notifyDataSetChanged();
 
@@ -515,12 +544,15 @@ public class LeaveActivity extends Activity {
             @Override
             public void onFailure(Call<LeaveDetailsResponse> call, Throwable t) {
 
+                progressDialog.dismiss();
             }
+
         });
     }
 
     private void callRejected() {
 
+        simpleProgressBar.setVisibility(View.VISIBLE);
         BottomSheetDialog bottomSheetDialog1 = new BottomSheetDialog(this);
         bottomSheetDialog1.setContentView(R.layout.rejected);
         bottomSheetDialog1.show();
@@ -545,21 +577,24 @@ public class LeaveActivity extends Activity {
     }
 
     private void CallRejected() {
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading...");
 
+        progressDialog.show();
         LeaveDetailsInterface leaveDetailsInterface = APIClient.getClient().create(LeaveDetailsInterface.class);
         leaveDetailsInterface.CallDetails("rejectedLeaveReqs", PreferenceManager.getEmpID(this)).enqueue(new Callback<LeaveDetailsResponse>() {
             @Override
             public void onResponse(Call<LeaveDetailsResponse> call, Response<LeaveDetailsResponse> response) {
                 try {
                     if (response.isSuccessful()) {
-
+                        progressDialog.dismiss();
                         rejectedAdapter.leavedetailsModels = response.body().getData();
                         rejectedAdapter.notifyDataSetChanged();
 
                     }
 
                 } catch (Exception e) {
-
+                    progressDialog.dismiss();
                 }
 
             }
@@ -573,6 +608,7 @@ public class LeaveActivity extends Activity {
     }
 
     private void callPending() {
+        simpleProgressBar.setVisibility(View.VISIBLE);
         BottomSheetDialog bottomSheetDialog1 = new BottomSheetDialog(this);
         bottomSheetDialog1.setContentView(R.layout.pending);
         bottomSheetDialog1.show();
@@ -598,13 +634,17 @@ public class LeaveActivity extends Activity {
     }
 
     private void Callpending() {
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
         LeaveDetailsInterface leaveDetailsInterface = APIClient.getClient().create(LeaveDetailsInterface.class);
         leaveDetailsInterface.CallDetails("pendingLeaveReqs", PreferenceManager.getEmpID(this)).enqueue(new Callback<LeaveDetailsResponse>() {
             @Override
             public void onResponse(Call<LeaveDetailsResponse> call, Response<LeaveDetailsResponse> response) {
                 try {
                     if (response.isSuccessful()) {
-
+                        progressDialog.dismiss();
                         pendingAdapter.leavedetailsModels = response.body().getData();
                         pendingAdapter.notifyDataSetChanged();
 
@@ -618,7 +658,7 @@ public class LeaveActivity extends Activity {
 
             @Override
             public void onFailure(Call<LeaveDetailsResponse> call, Throwable t) {
-
+                progressDialog.dismiss();
             }
         });
 
@@ -654,15 +694,20 @@ public class LeaveActivity extends Activity {
     }
 
     private void CallApprovedList() {
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
         LeaveDetailsInterface leaveDetailsInterface = APIClient.getClient().create(LeaveDetailsInterface.class);
         leaveDetailsInterface.CallDetails("approvedLeaveReqs", PreferenceManager.getEmpID(this)).enqueue(new Callback<LeaveDetailsResponse>() {
             @Override
             public void onResponse(Call<LeaveDetailsResponse> call, Response<LeaveDetailsResponse> response) {
                 try {
                     if (response.isSuccessful()) {
+                        progressDialog.dismiss();
 
                         // Toast.makeText(this,+approvedAdapter.leavedetailsModels=response.body().getData(), Toast.LENGTH_SHORT).show();
-
+                        simpleProgressBar.setVisibility(View.GONE);
                         approvedAdapter.leavedetailsModels = response.body().getData();
                         approvedAdapter.notifyDataSetChanged();
 
@@ -676,12 +721,14 @@ public class LeaveActivity extends Activity {
 
             @Override
             public void onFailure(Call<LeaveDetailsResponse> call, Throwable t) {
+                progressDialog.dismiss();
 
             }
         });
     }
 
     private void CalPolicy() {
+        simpleProgressBar.setVisibility(View.VISIBLE);
         LeavePolicyInterface leavePolicyInterface = APIClient.getClient().create(LeavePolicyInterface.class);
         leavePolicyInterface.callleavepolicy(empid, "available_leave").enqueue(new Callback<LeavePolicyResponse>() {
             @Override
@@ -689,7 +736,7 @@ public class LeaveActivity extends Activity {
 
                 try {
                     if (response.isSuccessful()) {
-
+                        simpleProgressBar.setVisibility(View.GONE);
                         // tvmsg.setText(response.body().getMessage());
                         // tvHeader.setText(response.body().getCategory());
                         if (response.body().getCategory().trim().equals("leave policy")) {
@@ -789,6 +836,8 @@ public class LeaveActivity extends Activity {
 
 
     private void CallleaveDetails() {
+
+        simpleProgressBar.setVisibility(View.VISIBLE);
         BottomSheetDialog bottomSheetDialog1 = new BottomSheetDialog(this);
         bottomSheetDialog1.setContentView(R.layout.leave_lop);
         bottomSheetDialog1.show();
@@ -835,7 +884,7 @@ public class LeaveActivity extends Activity {
 
                 try {
                     if (response.isSuccessful()) {
-
+                        simpleProgressBar.setVisibility(View.GONE);
                         if (response.body().getEmptype().trim().equals("1") || response.body().getEmptype().trim().equals("2")) {
                             tvClallocatted.setText(response.body().getAllocatedleaveModel().getCl());
                             tvMlallocatted.setText(response.body().getAllocatedleaveModel().getMl());
@@ -892,6 +941,7 @@ public class LeaveActivity extends Activity {
 
     private void CallLeave() {
 
+        simpleProgressBar.setVisibility(View.VISIBLE);
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
         bottomSheetDialog.setContentView(R.layout.leave_from);
         bottomSheetDialog.show();
@@ -1048,7 +1098,56 @@ public class LeaveActivity extends Activity {
         tvSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Callsubmit();
+                //Callsubmit();
+                calluploadsubmit();
+                bottomSheetDialog.dismiss();
+            }
+        });
+
+    }
+
+    private void calluploadsubmit() {
+        LeaveSubmitForm leaveSubmitForm = APIClient.getClient().create(LeaveSubmitForm.class);
+
+        int lop = rblop.isChecked() ? 1 : 0;
+        int compoff = rbCompOff.isChecked() ? 1 : 0;
+        int clmlpl;
+        if (lop == 1) {
+            clmlpl = 2;
+        }
+        else {
+            clmlpl = rbLcl.isChecked() ? 1 : (rbMl.isChecked() ? 3 : (rbPl.isChecked() ? 2 : 0));
+        }
+
+        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), filename);
+        MultipartBody.Part file = MultipartBody.Part.createFormData("file_in", filename.getName(), requestFile);
+
+        RequestBody action = RequestBody.create(MediaType.parse("text/plain"), "applyLeave");
+        RequestBody empid = RequestBody.create(MediaType.parse("text/plain"), PreferenceManager.getEmpID(this));
+        RequestBody code = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(clmlpl));
+        RequestBody reasonid = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(reason));
+        RequestBody date = RequestBody.create(MediaType.parse("text/plain"), tvDate.getText().toString());
+        RequestBody fhhd = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(day));
+        RequestBody LOP = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(lop));
+        RequestBody COMPOFF = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(compoff));
+
+        leaveSubmitForm.callLeaveformsubmitWithDocumentAPI(action, empid, code, reasonid, date, fhhd, LOP, COMPOFF, file).enqueue(new Callback<leavesubmitresponse>() {
+            @Override
+            public void onResponse(Call<leavesubmitresponse> call, Response<leavesubmitresponse> response) {
+                try {
+                    if (response.isSuccessful()) {
+
+                        Toast.makeText(LeaveActivity.this, "success", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<leavesubmitresponse> call, Throwable t) {
+
             }
         });
 
@@ -1064,7 +1163,7 @@ public class LeaveActivity extends Activity {
         else {
             clmlpl = rbLcl.isChecked() ? 1 : (rbMl.isChecked() ? 3 : (rbPl.isChecked() ? 2 : 0));
         }
-        leaveSubmitForm.callLeaveformsubmit("applyLeave",empid, clmlpl, reason, tvDate.getText().toString(), day, lop, compoff).enqueue(new Callback<leavesubmitresponse>() {
+        leaveSubmitForm.callLeaveformsubmit("applyLeave", empid, clmlpl, reason, tvDate.getText().toString(), day, lop, compoff).enqueue(new Callback<leavesubmitresponse>() {
             @Override
             public void onResponse(Call<leavesubmitresponse> call, Response<leavesubmitresponse> response) {
                 try {
@@ -1161,18 +1260,18 @@ public class LeaveActivity extends Activity {
                                     for (int i = 0; i < clpl.length; i++) {
 
                                         if (clpl[i].trim().equals("CL")) {
-                                            if (avCl > 0 || avProbl>0) rbLcl.setEnabled(true);
+                                            if (avCl > 0 || avProbl > 0) rbLcl.setEnabled(true);
 
                                         } else if (clpl[i].trim().equals("PL")) {
-                                            if (avPl > 0 || avProbl>0) rbPl.setEnabled(true);
+                                            if (avPl > 0 || avProbl > 0) rbPl.setEnabled(true);
 
                                         } else if (clpl[i].trim().equals("ML")) {
-                                            if (avMl > 0 || avProbl>0) rbMl.setEnabled(true);
+                                            if (avMl > 0 || avProbl > 0) rbMl.setEnabled(true);
                                             rlUpload.setVisibility(View.VISIBLE);
                                         }
 
-                                }
-                            }else {
+                                    }
+                                } else {
                                     rbCompOff.setChecked(true);
                                     rbCompOff.setClickable(false);
                                     rbCompOff.setVisibility(View.VISIBLE);
@@ -1270,7 +1369,7 @@ public class LeaveActivity extends Activity {
 
 
                     try {
-                        file = FileUtli.from(this, contentUri);
+                        filename = FileUtli.from(this, contentUri);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

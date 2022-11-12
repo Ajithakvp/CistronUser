@@ -101,7 +101,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/bold"
                 android:hint="Employee ID"
-                android:text="E367" />
+                 />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -121,13 +121,13 @@
                 android:fontFamily="@font/bold"
                 android:hint="Password"
                 android:inputType="textPassword"
-                android:text="3iS$sYs" />
+                />
         </com.google.android.material.textfield.TextInputLayout>
 
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
-
+<!--    android:text="3iS$sYs"-->
 
 
 </RelativeLayout>
