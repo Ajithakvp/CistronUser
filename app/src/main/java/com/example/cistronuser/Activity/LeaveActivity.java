@@ -876,6 +876,10 @@ public class LeaveActivity extends Activity {
 
 
     private void callDetail() {
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
         LeaveFormDetails leaveFormDetails = APIClient.getClient().create(LeaveFormDetails.class);
         leaveFormDetails.callleavedetails(empid, "available_leave").enqueue(new Callback<LeaveFormAllocatedleave>() {
             @Override
@@ -884,6 +888,7 @@ public class LeaveActivity extends Activity {
 
                 try {
                     if (response.isSuccessful()) {
+                        progressDialog.dismiss();
                         simpleProgressBar.setVisibility(View.GONE);
                         if (response.body().getEmptype().trim().equals("1") || response.body().getEmptype().trim().equals("2")) {
                             tvClallocatted.setText(response.body().getAllocatedleaveModel().getCl());
@@ -897,6 +902,13 @@ public class LeaveActivity extends Activity {
                             tvCompOffavailable1.setText(response.body().getAvailableLeaveModel().getCompoff());
 
 
+
+                            tvMlallocattedTag.setVisibility(View.VISIBLE);
+                            tvPLallocattedTag.setVisibility(View.VISIBLE);
+                            tvClallocattedTag.setVisibility(View.VISIBLE);
+                            tvCompoffallocattedTag.setVisibility(View.VISIBLE);
+
+
                             tvProlallocattedTag.setVisibility(View.GONE);
                             tvProlallocatted.setVisibility(View.GONE);
                             tvProlavailable.setVisibility(View.GONE);
@@ -905,6 +917,7 @@ public class LeaveActivity extends Activity {
                         } else if (response.body().getEmptype().trim().equals("3")) {
 
 
+                            progressDialog.dismiss();
                             tvMlallocattedTag.setVisibility(View.GONE);
                             tvMlallocatted.setVisibility(View.GONE);
                             tvMlavailable.setVisibility(View.GONE);
@@ -916,6 +929,8 @@ public class LeaveActivity extends Activity {
                             tvClallocatted.setVisibility(View.GONE);
 
 
+                            tvProlallocattedTag.setVisibility(View.VISIBLE);
+                            tvCompoffallocattedTag.setVisibility(View.VISIBLE);
                             tvProlallocatted.setText(response.body().getAllocatedleaveModel().getProbl());
                             tvProlavailable.setText(response.body().getAvailableLeaveModel().getProbl());
                             tvCompOffavailable1.setText(response.body().getAvailableLeaveModel().getCompoff());
@@ -934,6 +949,7 @@ public class LeaveActivity extends Activity {
             @Override
             public void onFailure(Call<LeaveFormAllocatedleave> call, Throwable t) {
 
+                progressDialog.dismiss();
             }
         });
 
@@ -1107,6 +1123,10 @@ public class LeaveActivity extends Activity {
     }
 
     private void calluploadsubmit() {
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Waiting...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
         LeaveSubmitForm leaveSubmitForm = APIClient.getClient().create(LeaveSubmitForm.class);
 
         int lop = rblop.isChecked() ? 1 : 0;
@@ -1136,8 +1156,9 @@ public class LeaveActivity extends Activity {
             public void onResponse(Call<leavesubmitresponse> call, Response<leavesubmitresponse> response) {
                 try {
                     if (response.isSuccessful()) {
+                        progressDialog.dismiss();
 
-                        Toast.makeText(LeaveActivity.this, "success", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LeaveActivity.this, "Submited", Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception e) {
 
@@ -1147,6 +1168,8 @@ public class LeaveActivity extends Activity {
 
             @Override
             public void onFailure(Call<leavesubmitresponse> call, Throwable t) {
+                progressDialog.dismiss();
+                Toast.makeText(LeaveActivity.this, "Not Submited", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -1215,6 +1238,11 @@ public class LeaveActivity extends Activity {
     }
 
     private void callRes() {
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
         LeaveFormDetails leaveFormDetails = APIClient.getClient().create(LeaveFormDetails.class);
         leaveFormDetails.callleavedetails(empid, "available_leave").enqueue(new Callback<LeaveFormAllocatedleave>() {
             @Override
@@ -1223,6 +1251,8 @@ public class LeaveActivity extends Activity {
 
                 try {
                     if (response.isSuccessful()) {
+
+                        progressDialog.dismiss();
 
 
                         Log.e(TAG, "onResponse: " + response.body().getLeaveResons().getReasons());
@@ -1281,6 +1311,7 @@ public class LeaveActivity extends Activity {
 
                             @Override
                             public void onNothingSelected(AdapterView<?> parent) {
+
                                 Toast.makeText(LeaveActivity.this, "Name", Toast.LENGTH_SHORT).show();
 
                             }
@@ -1294,6 +1325,7 @@ public class LeaveActivity extends Activity {
 
             @Override
             public void onFailure(Call<LeaveFormAllocatedleave> call, Throwable t) {
+                progressDialog.dismiss();
 
             }
         });

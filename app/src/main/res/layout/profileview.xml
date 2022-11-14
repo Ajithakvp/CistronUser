@@ -52,18 +52,24 @@
 
     <ImageView
         android:id="@+id/ivProfilePhoto"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_below="@id/rltoolbar"
         android:layout_centerHorizontal="true"
         android:layout_margin="15dp"
         android:src="@drawable/user" />
 
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_below="@id/ivProfilePhoto"
+        android:layout_height="match_parent">
+
+
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_margin="15dp"
-        android:layout_below="@id/ivProfilePhoto"
         android:layout_height="match_parent">
 
 
@@ -82,7 +88,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:id="@+id/tvName"
-            android:textSize="20dp"
+            android:textSize="15dp"
             android:textColor="@color/black"
             android:layout_toRightOf="@id/tvNameTag"
             android:layout_marginLeft="20dp"
@@ -106,7 +112,7 @@
             android:layout_width="wrap_content"
             android:id="@+id/tvEmpId"
             android:layout_below="@id/tvNameTag"
-            android:textSize="20dp"
+            android:textSize="15dp"
             android:textColor="@color/black"
             android:layout_toRightOf="@id/tvEmpTag"
             android:layout_marginLeft="20dp"
@@ -132,7 +138,7 @@
             android:id="@+id/tvDesignation"
             android:text="Android developer"
             android:layout_below="@id/tvEmpTag"
-            android:textSize="20dp"
+            android:textSize="15dp"
             android:textColor="@color/black"
             android:layout_toRightOf="@id/tvDesignationTag"
             android:layout_marginLeft="20dp"
@@ -158,7 +164,7 @@
             android:id="@+id/tvBranch"
             android:text="Tamil Nadu"
             android:layout_below="@id/tvDesignation"
-            android:textSize="20dp"
+            android:textSize="15dp"
             android:textColor="@color/black"
             android:layout_toRightOf="@id/tvBranchTag"
             android:layout_marginLeft="20dp"
@@ -185,7 +191,7 @@
             android:id="@+id/tvTeamLeader"
             android:text="Cistron"
             android:layout_below="@id/tvBranch"
-            android:textSize="20dp"
+            android:textSize="15dp"
             android:textColor="@color/black"
             android:layout_toRightOf="@id/tvTeamLeaderTag"
             android:layout_marginLeft="20dp"
@@ -212,7 +218,7 @@
             android:id="@+id/tvMobile"
             android:text="9876543210"
             android:layout_below="@id/tvTeamLeader"
-            android:textSize="20dp"
+            android:textSize="15dp"
             android:textColor="@color/black"
             android:layout_toRightOf="@id/tvMobileTag"
             android:layout_marginLeft="20dp"
@@ -237,7 +243,7 @@
             android:id="@+id/tvEmail"
             android:text="cistron@gmail.com"
             android:layout_below="@id/tvMobile"
-            android:textSize="20dp"
+            android:textSize="15dp"
             android:textColor="@color/black"
             android:layout_toRightOf="@id/tvEmailTag"
             android:layout_marginLeft="20dp"
@@ -264,7 +270,7 @@
             android:text="10-12-2022"
             android:textColor="@color/black"
             android:layout_below="@id/tvEmail"
-            android:textSize="20dp"
+            android:textSize="15dp"
             android:layout_toRightOf="@id/tvDobTag"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
@@ -289,7 +295,7 @@
             android:id="@+id/tvDoj"
             android:text="10-12-2022"
             android:layout_below="@id/tvDob"
-            android:textSize="20dp"
+            android:textSize="15dp"
             android:textColor="@color/black"
             android:layout_toRightOf="@id/tvDojTag"
             android:layout_marginLeft="20dp"
@@ -304,5 +310,5 @@
     </RelativeLayout>
 
 
-
+    </ScrollView>
 </RelativeLayout>

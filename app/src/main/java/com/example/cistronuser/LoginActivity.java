@@ -200,6 +200,15 @@ public class LoginActivity extends AppCompatActivity {
                        PreferenceManager.setLoggedStatus(LoginActivity.this,true);
                        PreferenceManager.saveData(LoginActivity.this,loginuserModel);
                        PreferenceManager.setEmpID(LoginActivity.this,response.body().getEmpid());
+                       PreferenceManager.setEmpName(LoginActivity.this,response.body().getName());
+                       PreferenceManager.setEmpbranch(LoginActivity.this,response.body().getBranch());
+                       PreferenceManager.setEmpMobile(LoginActivity.this,response.body().getMobile());
+                       PreferenceManager.setEmpdob(LoginActivity.this,response.body().getDob());
+                       PreferenceManager.setEmpdoj(LoginActivity.this,response.body().getDoj());
+                       PreferenceManager.setEmpdesignation(LoginActivity.this,response.body().getDesignation());
+                       PreferenceManager.setEmpphoto(LoginActivity.this,response.body().getPhoto());
+                       PreferenceManager.setEmpemail(LoginActivity.this,response.body().getEmail());
+                       PreferenceManager.setEmpteamleader(LoginActivity.this,response.body().getTeamleader());
                        Intent intent=new Intent(LoginActivity.this,DashboardActivity.class);
                        intent.putExtra("Pass",pass);
                        intent.putExtra("EmpID",response.body().getEmpid());

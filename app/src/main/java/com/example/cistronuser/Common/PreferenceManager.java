@@ -69,6 +69,141 @@ public class PreferenceManager {
     }
 
 
+
+    //profile details
+
+    //name
+    public static void setEmpName(Context context, String empid) {
+        SharedPreferences preferences;
+        preferences = context.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
+        preferences.edit().putString("name", empid).apply();
+    }
+
+    public static String getEmpName(Context activity) {
+        SharedPreferences preferences;
+        preferences = activity.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
+        return preferences.getString("name", "");
+
+    }
+    //Mobile
+    public static void setEmpMobile(Context context, String empid) {
+        SharedPreferences preferences;
+        preferences = context.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
+        preferences.edit().putString("mobile", empid).apply();
+    }
+
+    public static String getEmpMobile(Context activity) {
+        SharedPreferences preferences;
+        preferences = activity.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
+        return preferences.getString("mobile", "");
+
+    }
+    //Email
+    public static void setEmpemail(Context context, String empid) {
+        SharedPreferences preferences;
+        preferences = context.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
+        preferences.edit().putString("email", empid).apply();
+    }
+
+    public static String getEmpemail(Context activity) {
+        SharedPreferences preferences;
+        preferences = activity.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
+        return preferences.getString("email", "");
+
+    }
+    //dob
+
+    public static void setEmpdob(Context context, String empid) {
+        SharedPreferences preferences;
+        preferences = context.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
+        preferences.edit().putString("dob", empid).apply();
+    }
+
+    public static String getEmpdob(Context activity) {
+        SharedPreferences preferences;
+        preferences = activity.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
+        return preferences.getString("dob", "");
+
+    }
+
+    //doj
+    public static void setEmpdoj(Context context, String empid) {
+        SharedPreferences preferences;
+        preferences = context.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
+        preferences.edit().putString("doj", empid).apply();
+    }
+
+    public static String getEmpdoj(Context activity) {
+        SharedPreferences preferences;
+        preferences = activity.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
+        return preferences.getString("doj", "");
+
+    }
+
+    //designation
+
+    public static void setEmpdesignation(Context context, String empid) {
+        SharedPreferences preferences;
+        preferences = context.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
+        preferences.edit().putString("designation", empid).apply();
+    }
+
+    public static String getEmpdesignation(Context activity) {
+        SharedPreferences preferences;
+        preferences = activity.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
+        return preferences.getString("designation", "");
+
+    }
+    //branch
+    public static void setEmpbranch(Context context, String empid) {
+        SharedPreferences preferences;
+        preferences = context.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
+        preferences.edit().putString("branch", empid).apply();
+    }
+
+    public static String getEmpbranch(Context activity) {
+        SharedPreferences preferences;
+        preferences = activity.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
+        return preferences.getString("branch", "");
+
+    }
+
+//teamleader
+    public static void setEmpteamleader(Context context, String empid) {
+        SharedPreferences preferences;
+        preferences = context.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
+        preferences.edit().putString("teamleader", empid).apply();
+    }
+
+    public static String getEmpteamleader(Context activity) {
+        SharedPreferences preferences;
+        preferences = activity.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
+        return preferences.getString("teamleader", "");
+
+
+    }
+
+
+
+    //photo
+    public static void setEmpphoto(Context context, String empid) {
+        SharedPreferences preferences;
+        preferences = context.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
+        preferences.edit().putString("photo", empid).apply();
+    }
+
+    public static String getEmpphoto(Context activity) {
+        SharedPreferences preferences;
+        preferences = activity.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
+        return preferences.getString("photo", "");
+
+    }
+
+
+
+
+
+
     //get
 
 
