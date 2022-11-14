@@ -40,7 +40,7 @@ public class WebviewPage extends AppCompatActivity {
         String web=getIntent().getStringExtra("pdf");
 
         webview.requestFocus();
-        urladdress="https://cistronsystems.in/beta1/medicalattach/"+web;
+        urladdress="https://cistronsystems.in/beta1/"+web;
             Log.e(TAG, "onCreate: "+urladdress );
         webview.setWebViewClient(new MyBrowser());
         webview.getSettings().setLoadsImagesAutomatically(true);

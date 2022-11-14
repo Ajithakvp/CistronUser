@@ -19,7 +19,6 @@ import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -38,7 +37,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.airbnb.lottie.L;
 import com.example.cistronuser.API.APIClient;
 import com.example.cistronuser.API.Interface.LeaveDetailsInterface;
 import com.example.cistronuser.API.Interface.LeaveFormDetails;
@@ -49,7 +47,6 @@ import com.example.cistronuser.API.Model.CompOffModel;
 import com.example.cistronuser.API.Model.LeaveFormAllocatedleave;
 import com.example.cistronuser.API.Model.LeaveResons;
 import com.example.cistronuser.API.Model.LeavedetailsModel;
-import com.example.cistronuser.API.Response.AttendanceResponse;
 import com.example.cistronuser.API.Response.LeaveDetailsResponse;
 import com.example.cistronuser.API.Response.LeavePolicyResponse;
 import com.example.cistronuser.API.Response.leavesubmitresponse;
@@ -1047,7 +1044,7 @@ public class LeaveActivity extends Activity {
                         break;
                     case 1:
 
-                        Toast.makeText(LeaveActivity.this, "CompOff", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LeaveActivity.this, "Lop", Toast.LENGTH_SHORT).show();
                         break;
 
                 }
@@ -1063,11 +1060,11 @@ public class LeaveActivity extends Activity {
                 // Toast.makeText(LeaveActivity.this, , Toast.LENGTH_SHORT).show();
                 switch (rb) {
                     case 0:
-                        typeid = 0;
+                        typeid = 1;
                         Toast.makeText(LeaveActivity.this, "Cl", Toast.LENGTH_SHORT).show();
                         break;
                     case 1:
-                        typeid = 1;
+                        typeid = 3;
                         Toast.makeText(LeaveActivity.this, "ML", Toast.LENGTH_SHORT).show();
                         break;
                     case 2:
