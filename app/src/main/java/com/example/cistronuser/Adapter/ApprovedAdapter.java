@@ -1,10 +1,13 @@
 package com.example.cistronuser.Adapter;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,6 +70,7 @@ public class ApprovedAdapter extends RecyclerView.Adapter<ApprovedAdapter.ViewHo
             public void onClick(View v) {
                 Intent intent=new Intent(activity, WebviewPage.class);
                 intent.putExtra("pdf",leavedetailsModels.get(position).getAttachment());
+                Log.e(TAG, "onClick: "+leavedetailsModels.get(position).getAttachment() );
                 activity.startActivity(intent);
             }
         });
@@ -74,7 +78,7 @@ public class ApprovedAdapter extends RecyclerView.Adapter<ApprovedAdapter.ViewHo
 
 
         try {
-            if (leavedetailsModels.get(position).getAttachment().trim().equals(null)){
+            if (leavedetailsModels.get(position).getAttachment().trim().equals("")){
                 holder.tvStatusTag.setVisibility(View.GONE);
                 holder.ivfile.setVisibility(View.GONE);
             }else {

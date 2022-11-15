@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.BroadcastReceiver;
@@ -14,9 +15,6 @@ import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.DatePicker;
@@ -47,12 +45,13 @@ public class ExpensesActivity extends Activity {
     ImageView ivBack;
 
     RelativeLayout rlUpload, rlUploadTicket, rlUploadother, rlUploadLodging;
-    TextView tvDate, tvConveyanceDoc, tvTicketDoc, tvLodgingDoc, tvOtherDoc;
+    TextView tvDate, tvConveyanceDoc, tvTicketDoc, tvLodgingDoc, tvOtherDoc,tvselectDate;
     EditText edWorkReport, edConveyance, tvTicket, tvLodging, edOther;
 
 
     String strConvenyance, strtickDoc, strLodgingDoc, strotherDoc;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +73,7 @@ public class ExpensesActivity extends Activity {
         tvTicketDoc = findViewById(R.id.tvTicketDoc);
         tvLodgingDoc = findViewById(R.id.tvLodgingDoc);
         tvOtherDoc = findViewById(R.id.tvOtherDoc);
+        tvselectDate=findViewById(R.id.tvselectDate);
 
 
 
@@ -88,10 +88,10 @@ public class ExpensesActivity extends Activity {
                         Manifest.permission.READ_EXTERNAL_STORAGE},
                 PackageManager.PERMISSION_GRANTED);
 
-
-        Date d = new Date();
-        CharSequence s = DateFormat.format("d /MM/yyyy ", d.getTime());
-        tvDate.setText(s);
+//
+//        Date d = new Date();
+//        CharSequence s = DateFormat.format("d /MM/yyyy ", d.getTime());
+//        tvDate.setText(s);
 
 
         tvDate.setOnClickListener(new View.OnClickListener() {
@@ -171,15 +171,51 @@ public class ExpensesActivity extends Activity {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
-        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+        int dayOfMonth = calendar.get(Calendar.WEEK_OF_YEAR);
         DatePickerDialog datePickerDialog = new DatePickerDialog(this,
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                        tvDate.setText(day + "/" + (month + 1) + "/" + year);
+                        String date = tvDate.getText().toString();
+                        String selectedDt = year + "-" + (month + 1) + "-" + day;
+                        if (!date.isEmpty()) {
+                            if (date.contains(", " + selectedDt)) {
+                                System.out.println("1\n");
+                                date = date.replace(", " + selectedDt, "");
+                            } else if (date.contains(selectedDt)) {
+                                if (date.equals(selectedDt))
+                                    date = "";
+                                else
+                                    date = date.replace(selectedDt + ", ", "");
+                            } else {
+                                System.out.println("3\n");
+                                date += ", " + selectedDt;
+                            }
+                        } else
+                            date = selectedDt;
+                        tvDate.setText(date);
+                        int count = date.split(",", -1).length;
+                        if (count == 0)
+                            tvselectDate.setText("");
+                        else if (count == 1)
+                            tvselectDate.setText("One day is selected");
+                        else
+                            tvselectDate.setText(count + " days are selected");
                     }
+
                 }, year, month, dayOfMonth);
-        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
+       // datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis()-7);
+
+//        long now = System.currentTimeMillis() - 1000;
+//        datePickerDialog.getDatePicker().setMinDate(now);
+//        datePickerDialog.getDatePicker().setMaxDate(now+(1000*60*60*16));
+
+       // calendar.add(Calendar.DAY_OF_MONTH,6);
+        Date result = calendar.getTime();
+        datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+        datePickerDialog.getDatePicker().setMinDate(result.getTime());
+
+
         datePickerDialog.show();
     }
 

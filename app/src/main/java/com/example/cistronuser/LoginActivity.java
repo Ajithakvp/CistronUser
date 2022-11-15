@@ -9,6 +9,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -27,6 +28,7 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cistronuser.API.APIClient;
@@ -56,6 +58,7 @@ public class LoginActivity extends AppCompatActivity {
     BroadcastReceiver broadcastReceiver;
     Button login_btn;
     TextInputEditText edName, edPass;
+    TextView tvfailed;
 
     //Map
     FusedLocationProviderClient fusedLocationProviderClient;
@@ -66,6 +69,7 @@ public class LoginActivity extends AppCompatActivity {
     ArrayList<LoginuserModel> loginuserModel = new ArrayList<>();
 
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +77,7 @@ public class LoginActivity extends AppCompatActivity {
 
         edPass = findViewById(R.id.edPass);
         edName = findViewById(R.id.edName);
+        tvfailed=findViewById(R.id.tvfailed);
         login_btn = findViewById(R.id.login_btn);
         String EmpID = edName.getText().toString();
         String Pass = edPass.getText().toString();
@@ -104,13 +109,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
                 CallLogin(EmpID, Pass, Latitude, Longtitude, AddressLine);
-                if (edName.getText().toString().trim().length() == 0) {
-                    edName.setError("Enter the Employee ID");
-                    edName.requestFocus();
-                } else if (edPass.getText().toString().trim().length() == 0) {
-                    edPass.setError("Enter the Password");
-                    edPass.requestFocus();
-                }
+
             }
         });
 
@@ -233,7 +232,25 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<LoginuserModel> call, Throwable t) {
                 progressDialog.dismiss();
-                Toast.makeText(LoginActivity.this, "Incorrect Employee ID and Password", Toast.LENGTH_SHORT).show();
+
+
+
+                if (edName.getText().toString().trim().length() == 0) {
+                    edName.setError("Enter the Employee ID");
+                    edName.requestFocus();
+                    tvfailed.setVisibility(View.GONE);
+
+
+                } else if (edPass.getText().toString().trim().length() == 0) {
+                    edPass.setError("Enter the Password");
+                    edPass.requestFocus();
+                    tvfailed.setVisibility(View.GONE);
+                }else {
+                    tvfailed.setVisibility(View.VISIBLE);
+                   // Toast.makeText(LoginActivity.this, "Incorrect Employee ID and Password", Toast.LENGTH_SHORT).show();
+                }
+
+
 
             }
         });

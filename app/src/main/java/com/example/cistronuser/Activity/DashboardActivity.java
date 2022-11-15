@@ -26,6 +26,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -72,7 +73,8 @@ public class DashboardActivity extends Activity {
 
 
     //Bottom
-    TextView tvName, tvEmpId, tvDesignation, tvBranch, tvTeamLeader, tvMobile, tvEmail, tvDob, tvDoj, lWebview,tvProfilename;
+    TextView tvName, tvEmpId, tvDesignation, tvBranch, tvTeamLeader, tvMobile, tvEmail, tvDob, tvDoj, lWebview,tvProfilename,btnpasssubmit;
+    EditText edNewPass,edRetypePass;
 
 
     LottieAnimationView lottieAnimationView, ivprofile;
@@ -185,6 +187,7 @@ public class DashboardActivity extends Activity {
 
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
         bottomSheetDialog.setContentView(R.layout.profileview);
+        bottomSheetDialog.setCancelable(false);
         bottomSheetDialog.show();
 
         tvDoj = bottomSheetDialog.findViewById(R.id.tvDoj);
@@ -198,6 +201,12 @@ public class DashboardActivity extends Activity {
         tvDob = bottomSheetDialog.findViewById(R.id.tvDob);
         ivBack = bottomSheetDialog.findViewById(R.id.ivBack);
         ivProfilePhoto = bottomSheetDialog.findViewById(R.id.ivProfilePhoto);
+        TextView tvpassword=bottomSheetDialog.findViewById(R.id.tvpassword);
+        edNewPass = bottomSheetDialog.findViewById(R.id.edNewPass);
+        edRetypePass = bottomSheetDialog.findViewById(R.id.edRetypePass);
+        btnpasssubmit = bottomSheetDialog.findViewById(R.id.btnpasssubmit);
+        TextView tvClose=bottomSheetDialog.findViewById(R.id.tvClose);
+
 
 
 
@@ -242,6 +251,33 @@ public class DashboardActivity extends Activity {
             @Override
             public void onClick(View view) {
                 bottomSheetDialog.dismiss();
+            }
+        });
+
+        tvpassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tvpassword.setVisibility(View.GONE);
+                tvClose.setVisibility(View.VISIBLE);
+                edNewPass.setVisibility(View.VISIBLE);
+                edRetypePass.setVisibility(View.VISIBLE);
+                btnpasssubmit.setVisibility(View.VISIBLE);
+
+            }
+        });
+
+        tvClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                    tvpassword.setVisibility(View.VISIBLE);
+                    tvClose.setVisibility(View.GONE);
+                    edNewPass.setVisibility(View.GONE);
+                    edRetypePass.setVisibility(View.GONE);
+                    btnpasssubmit.setVisibility(View.GONE);
+
+
             }
         });
     }

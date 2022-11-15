@@ -1,5 +1,7 @@
 package com.example.cistronuser.Activity;
 
+import static okhttp3.RequestBody.create;
+
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -77,7 +79,7 @@ import retrofit2.Response;
 public class LeaveActivity extends Activity {
 
 
-    final static String TAG = "Name";
+    final static String TAG = "Leave";
     //Internet
     BroadcastReceiver broadcastReceiver;
     //leaveform
@@ -86,6 +88,7 @@ public class LeaveActivity extends Activity {
     RelativeLayout rlUpload;
     File filename;
     TextView tvDoc;
+    Uri contentUri;
     String DocName;
     String reasonName;
     int reason;
@@ -576,7 +579,6 @@ public class LeaveActivity extends Activity {
     private void CallRejected() {
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading...");
-
         progressDialog.show();
         LeaveDetailsInterface leaveDetailsInterface = APIClient.getClient().create(LeaveDetailsInterface.class);
         leaveDetailsInterface.CallDetails("rejectedLeaveReqs", PreferenceManager.getEmpID(this)).enqueue(new Callback<LeaveDetailsResponse>() {
@@ -899,7 +901,6 @@ public class LeaveActivity extends Activity {
                             tvCompOffavailable1.setText(response.body().getAvailableLeaveModel().getCompoff());
 
 
-
                             tvMlallocattedTag.setVisibility(View.VISIBLE);
                             tvPLallocattedTag.setVisibility(View.VISIBLE);
                             tvClallocattedTag.setVisibility(View.VISIBLE);
@@ -1111,9 +1112,17 @@ public class LeaveActivity extends Activity {
         tvSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Callsubmit();
-                calluploadsubmit();
-                bottomSheetDialog.dismiss();
+
+                try {
+                    if (filename==null) {
+                        Callsubmit();
+                        bottomSheetDialog.dismiss();
+                    }else {
+                        calluploadsubmit();
+                    }
+                } catch (Exception e) {
+                    Log.e(TAG, "onClick: " + e.getMessage());
+                }
             }
         });
 
@@ -1131,45 +1140,48 @@ public class LeaveActivity extends Activity {
         int clmlpl;
         if (lop == 1) {
             clmlpl = 2;
-        }
-        else {
+        } else {
             clmlpl = rbLcl.isChecked() ? 1 : (rbMl.isChecked() ? 3 : (rbPl.isChecked() ? 2 : 0));
         }
 
-        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), filename);
-        MultipartBody.Part file = MultipartBody.Part.createFormData("file_in", filename.getName(), requestFile);
 
-        RequestBody action = RequestBody.create(MediaType.parse("text/plain"), "applyLeave");
-        RequestBody empid = RequestBody.create(MediaType.parse("text/plain"), PreferenceManager.getEmpID(this));
-        RequestBody code = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(clmlpl));
-        RequestBody reasonid = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(reason));
-        RequestBody date = RequestBody.create(MediaType.parse("text/plain"), tvDate.getText().toString());
-        RequestBody fhhd = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(day));
-        RequestBody LOP = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(lop));
-        RequestBody COMPOFF = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(compoff));
+            RequestBody requestFile = create(MediaType.parse("multipart/form-data"), filename);
+            MultipartBody.Part file = MultipartBody.Part.createFormData("file_in", filename.getName(), requestFile);
+            RequestBody action = create(MediaType.parse("text/plain"), "applyLeave");
+            RequestBody empid = create(MediaType.parse("text/plain"), PreferenceManager.getEmpID(this));
+            RequestBody code = create(MediaType.parse("text/plain"), String.valueOf(clmlpl));
+            RequestBody reasonid = create(MediaType.parse("text/plain"), String.valueOf(reason));
+            RequestBody date = create(MediaType.parse("text/plain"), tvDate.getText().toString());
+            RequestBody fhhd = create(MediaType.parse("text/plain"), String.valueOf(day));
+            RequestBody LOP = create(MediaType.parse("text/plain"), String.valueOf(lop));
+            RequestBody COMPOFF = create(MediaType.parse("text/plain"), String.valueOf(compoff));
 
-        leaveSubmitForm.callLeaveformsubmitWithDocumentAPI(action, empid, code, reasonid, date, fhhd, LOP, COMPOFF, file).enqueue(new Callback<leavesubmitresponse>() {
-            @Override
-            public void onResponse(Call<leavesubmitresponse> call, Response<leavesubmitresponse> response) {
-                try {
-                    if (response.isSuccessful()) {
-                        progressDialog.dismiss();
 
-                        Toast.makeText(LeaveActivity.this, "Submited", Toast.LENGTH_SHORT).show();
+            leaveSubmitForm.callLeaveformsubmitWithDocumentAPI(action, empid, code, reasonid, date, fhhd, LOP, COMPOFF, file).enqueue(new Callback<leavesubmitresponse>() {
+                @Override
+                public void onResponse(Call<leavesubmitresponse> call, Response<leavesubmitresponse> response) {
+
+                    try {
+                        if (response.isSuccessful()) {
+                            progressDialog.dismiss();
+                            Toast.makeText(LeaveActivity.this, "Submited", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (Exception e) {
+                        Log.e(TAG, "onResponse: " + e.getMessage());
+
                     }
-                } catch (Exception e) {
 
                 }
 
-            }
+                @Override
+                public void onFailure(Call<leavesubmitresponse> call, Throwable t) {
+                    progressDialog.dismiss();
+                    Toast.makeText(LeaveActivity.this, "Not Submited", Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "onFailure: " + t.getMessage());
 
-            @Override
-            public void onFailure(Call<leavesubmitresponse> call, Throwable t) {
-                progressDialog.dismiss();
-                Toast.makeText(LeaveActivity.this, "Not Submited", Toast.LENGTH_SHORT).show();
+                }
+            });
 
-            }
-        });
 
     }
 
@@ -1183,7 +1195,7 @@ public class LeaveActivity extends Activity {
         else {
             clmlpl = rbLcl.isChecked() ? 1 : (rbMl.isChecked() ? 3 : (rbPl.isChecked() ? 2 : 0));
         }
-        leaveSubmitForm.callLeaveformsubmit("applyLeave", empid, clmlpl, reason, tvDate.getText().toString(), day, lop, compoff).enqueue(new Callback<leavesubmitresponse>() {
+        leaveSubmitForm.callLeaveformsubmit("applyLeave", empid, clmlpl, reason, tvDate.getText().toString(), day, lop, compoff, String.valueOf(filename)).enqueue(new Callback<leavesubmitresponse>() {
             @Override
             public void onResponse(Call<leavesubmitresponse> call, Response<leavesubmitresponse> response) {
                 try {
@@ -1204,7 +1216,6 @@ public class LeaveActivity extends Activity {
         });
     }
 
-
     private void Calltype() {
         LeaveFormDetails formDetails = APIClient.getClient().create(LeaveFormDetails.class);
         formDetails.callleavedetails(empid, "available_leave").enqueue(new Callback<LeaveFormAllocatedleave>() {
@@ -1218,7 +1229,6 @@ public class LeaveActivity extends Activity {
                         for (int i = 0; i < typearray.length; i++) {
                             LeaveType.add(typearray[i]);
                         }
-
 
                     }
 
@@ -1287,14 +1297,17 @@ public class LeaveActivity extends Activity {
                                     for (int i = 0; i < clpl.length; i++) {
 
                                         if (clpl[i].trim().equals("CL")) {
-                                            if (avCl > 0 || avProbl > 0) rbLcl.setEnabled(true);
+                                            if (avCl > 0 || avProbl > 0){
+                                                rbLcl.setEnabled(true);
+                                            rlUpload.setVisibility(View.GONE);
+                                            }
 
                                         } else if (clpl[i].trim().equals("PL")) {
-                                            if (avPl > 0 || avProbl > 0) rbPl.setEnabled(true);
-
+                                            if (avPl > 0 || avProbl > 0) {rbPl.setEnabled(true);
+                                            rlUpload.setVisibility(View.GONE);}
                                         } else if (clpl[i].trim().equals("ML")) {
-                                            if (avMl > 0 || avProbl > 0) rbMl.setEnabled(true);
-                                            rlUpload.setVisibility(View.VISIBLE);
+                                            if (avMl > 0 || avProbl > 0){ rbMl.setEnabled(true);
+                                            rlUpload.setVisibility(View.VISIBLE);}
                                         }
 
                                     }
@@ -1382,7 +1395,7 @@ public class LeaveActivity extends Activity {
             case 1:
 
                 if (resultCode == RESULT_OK) {
-                    Uri contentUri = data.getData();
+                    contentUri = data.getData();
                     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                     DocName = timeStamp + "." + getFileExt(contentUri);
                     Toast.makeText(this, "File Name" + DocName, Toast.LENGTH_SHORT).show();

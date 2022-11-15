@@ -1,9 +1,12 @@
 package com.example.cistronuser.Adapter;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +33,7 @@ import com.example.cistronuser.LoginActivity;
 import com.example.cistronuser.R;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -65,6 +69,8 @@ public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.ViewHold
         holder.tvReason.setText(leavedetailsModels.get(position).getReason());
         holder.tvattach.setText(leavedetailsModels.get(position).getAttachment());
 
+
+
         holder.ivfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,12 +79,14 @@ public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.ViewHold
                 activity.startActivity(intent);
             }
         });
-
         try {
+
             if (leavedetailsModels.get(position).getAttachment().trim().equals(null)){
+                Log.e(TAG, "onBindViewHolder: "+leavedetailsModels.get(position).getAttachment().trim().equals("null") );
                 holder.tvStatusTag.setVisibility(View.GONE);
                 holder.ivfile.setVisibility(View.GONE);
             }else {
+
                 holder.tvStatusTag.setVisibility(View.VISIBLE);
                 holder.ivfile.setVisibility(View.VISIBLE);
             }
@@ -105,17 +113,10 @@ public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.ViewHold
                         deletedAPIInterface.CallDetails("deleteLeave", PreferenceManager.getEmpID(activity),leavedetailsModels.get(position).getId()).enqueue(new Callback<LeaveDetailsResponse>() {
                             @Override
                             public void onResponse(Call<LeaveDetailsResponse> call, Response<LeaveDetailsResponse> response) {
-                                try{
-                                    if (response.isSuccessful()){
+
+
                                         activity.finish();
                                         Toast.makeText(activity, "Deleted", Toast.LENGTH_SHORT).show();
-                                        holder.simpleProgressBar.setVisibility(View.GONE);
-
-                                    }
-
-                                }catch (Exception e){
-
-                                }
 
                             }
 

@@ -19,7 +19,8 @@ public interface LeaveSubmitForm {
     @GET("attendance_leave.php")
     Call<leavesubmitresponse> callLeaveformsubmit(@Query("action")String action,@Query("empid")String empid, @Query("code")int code,
                                                   @Query("reason")int  reason, @Query("dates")String dates,
-                                                  @Query("ful_or_half")int ful_or_half, @Query("lop") int lop, @Query("compoff")int compoff
+                                                  @Query("ful_or_half")int ful_or_half, @Query("lop") int lop, @Query("compoff")int compoff,
+                                                  @Query("file_in")String file_in
                                               );
 
 

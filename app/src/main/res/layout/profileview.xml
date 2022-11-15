@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -8,7 +8,9 @@
 
 
 
-
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -305,6 +307,108 @@
 
 
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/tvpasswordTag"
+            android:text="Do you want to change Password?"
+            android:layout_below="@id/tvDoj"
+            android:textSize="15dp"
+            android:textColor="@color/Radio"
+          android:layout_centerHorizontal="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/semibold"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/tvpassword"
+            android:text="Click here"
+            android:layout_below="@id/tvpasswordTag"
+            android:textSize="15dp"
+            android:visibility="visible"
+            android:textColor="@color/blue"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/semibold"
+            android:layout_height="wrap_content"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/tvClose"
+            android:text="Close here"
+            android:layout_below="@id/tvpasswordTag"
+            android:textSize="15dp"
+            android:visibility="gone"
+            android:textColor="@color/blue"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/semibold"
+            android:layout_height="wrap_content"/>
+
+
+        <EditText
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:id="@+id/edNewPass"
+            android:hint="New password"
+            android:layout_marginTop="15dp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/semibold"
+            android:textSize="15dp"
+            android:imeOptions="actionNext"
+            android:maxLines="1"
+            android:inputType="textPassword"
+            android:visibility="gone"
+            android:background="@drawable/edittext"
+            android:backgroundTint="#FFFBFB"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/tvClose"
+             />
+
+        <EditText
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:id="@+id/edRetypePass"
+            android:visibility="gone"
+            android:maxLines="1"
+            android:inputType="textPassword"
+            android:imeOptions="actionNext"
+            android:hint="Retype password"
+            android:textColor="@color/black"
+            android:fontFamily="@font/semibold"
+            android:textSize="15dp"
+            android:background="@drawable/edittext"
+            android:backgroundTint="#FFFBFB"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/edNewPass"
+            />
+
+
+        <TextView
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_below="@id/edRetypePass"
+            android:layout_marginTop="20dp"
+            android:id="@+id/btnpasssubmit"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/bold"
+            android:visibility="gone"
+            android:textColor="@color/white"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="Submit"
+            android:background="@drawable/cardview"/>
+
+
 
 
     </RelativeLayout>
@@ -312,3 +416,4 @@
 
     </ScrollView>
 </RelativeLayout>
+</ScrollView>

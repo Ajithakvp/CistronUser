@@ -1,8 +1,11 @@
 package com.example.cistronuser.Adapter;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +48,8 @@ public class RejectedAdapter extends RecyclerView.Adapter<RejectedAdapter.ViewHo
         holder.tvReason.setText(leavedetailsModels.get(position).getReason());
         holder.tvattach.setText(leavedetailsModels.get(position).getAttachment());
 
+
+
         holder.ivfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,6 +62,7 @@ public class RejectedAdapter extends RecyclerView.Adapter<RejectedAdapter.ViewHo
 
         try {
             if (leavedetailsModels.get(position).getAttachment().trim().equals(null)){
+
                 holder.tvStatusTag.setVisibility(View.GONE);
                 holder.ivfile.setVisibility(View.GONE);
             }else {
