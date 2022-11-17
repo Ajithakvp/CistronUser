@@ -65,6 +65,7 @@ public class ApprovedAdapter extends RecyclerView.Adapter<ApprovedAdapter.ViewHo
         holder.tvReason.setText(leavedetailsModels.get(position).getReason());
         holder.tvattach.setText(leavedetailsModels.get(position).getAttachment());
 
+
         holder.ivfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

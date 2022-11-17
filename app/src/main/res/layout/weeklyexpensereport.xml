@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tvDateTag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="5dp"
+                    android:fontFamily="@font/bold"
+                    android:text="Date :"
+                    android:textColor="#0AA6F9"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/tvDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_toRightOf="@id/tvDateTag"
+                    android:fontFamily="@font/semibold"
+                    android:text="31/10/2021"
+                    android:textColor="#F92E0A"
+                    android:textSize="17dp" />
+
+
+                <TextView
+                    android:id="@+id/tvWorkreportTag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvDate"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="5dp"
+                    android:fontFamily="@font/bold"
+                    android:text="Work Report :"
+                    android:textColor="#0AA6F9"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/tvWorkreport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvDate"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_toRightOf="@id/tvWorkreportTag"
+                    android:fontFamily="@font/semibold"
+                    android:text="Report Details"
+                    android:textColor="@color/black"
+                    android:textSize="17dp" />
+
+                <TextView
+                    android:id="@+id/tvConvencyamtTag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvWorkreport"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="5dp"
+                    android:fontFamily="@font/bold"
+                    android:text="Conveyance   :"
+                    android:textColor="#0AA6F9"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/tvConvencyamt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvWorkreport"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_toRightOf="@id/ivConvencyView"
+                    android:fontFamily="@font/semibold"
+                    android:text="1000"
+                    android:textColor="@color/black"
+                    android:textSize="17dp" />
+
+
+                <ImageView
+                    android:id="@+id/ivConvencyView"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_below="@id/tvWorkreport"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_toRightOf="@id/tvConvencyamtTag"
+                    android:src="@drawable/fileopen" />
+
+
+                <TextView
+                    android:id="@+id/tvTicketamtTag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ivConvencyView"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="5dp"
+                    android:fontFamily="@font/bold"
+                    android:text="Ticket               :"
+                    android:textColor="#0AA6F9"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/tvTicketamt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ivConvencyView"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_toRightOf="@id/ivTicketView"
+                    android:fontFamily="@font/semibold"
+                    android:text="1000"
+                    android:textColor="@color/black"
+                    android:textSize="17dp" />
+
+                <ImageView
+                    android:id="@+id/ivTicketView"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_below="@id/ivConvencyView"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_toRightOf="@id/tvTicketamtTag"
+                    android:src="@drawable/fileopen" />
+
+
+                <TextView
+                    android:id="@+id/tvLodgingamtTag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ivTicketView"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="5dp"
+                    android:fontFamily="@font/bold"
+                    android:text="Lodging           :"
+                    android:textColor="#0AA6F9"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/tvLodgingamt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ivTicketView"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_toRightOf="@id/ivLodgingView"
+                    android:fontFamily="@font/semibold"
+                    android:text="1000"
+                    android:textColor="@color/black"
+                    android:textSize="17dp" />
+
+
+                <ImageView
+                    android:id="@+id/ivLodgingView"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_below="@id/ivTicketView"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_toRightOf="@id/tvLodgingamtTag"
+                    android:src="@drawable/fileopen" />
+
+
+                <TextView
+                    android:id="@+id/tvOtheramtTag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ivLodgingView"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="5dp"
+                    android:fontFamily="@font/bold"
+                    android:text="Others              :"
+                    android:textColor="#0AA6F9"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/tvOtheramt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ivLodgingView"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_toRightOf="@id/ivOtherView"
+                    android:fontFamily="@font/semibold"
+                    android:text="1000"
+                    android:textColor="@color/black"
+                    android:textSize="17dp" />
+
+
+                <ImageView
+                    android:id="@+id/ivOtherView"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_below="@id/ivLodgingView"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_toRightOf="@id/tvOtheramtTag"
+                    android:src="@drawable/fileopen" />
+
+
+            </RelativeLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

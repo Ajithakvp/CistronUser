@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activity.ExpensesActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/rltoolbar"
@@ -38,22 +42,58 @@
 
         <ImageView
             android:id="@+id/ivMore"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_centerInParent="true"
             android:layout_marginLeft="35dp"
+            android:layout_marginRight="10dp"
             android:layout_toRightOf="@id/tvHeader"
             android:backgroundTint="@color/white"
-            android:src="@drawable/ic_baseline_post_add_24"
+            android:src="@drawable/ic_baseline_view_list_24"
+            android:tint="@color/white"
             android:visibility="gone"
-            app:tint="@color/white" />
+            tools:ignore="UseAppTint" />
 
 
     </RelativeLayout>
 
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:id="@+id/rlmsg"
+            android:visibility="gone"
+            android:layout_below="@id/rltoolbar"
+            android:layout_height="match_parent">
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_marginTop="70dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerHorizontal="true"
+                app:lottie_rawRes="@raw/tips"
+                app:lottie_autoPlay="true"
+                android:id="@+id/tvMsgTag"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="25dp"
+                android:gravity="center"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/semibold"
+                android:textColor="#0000FF"
+                android:layout_below="@id/tvMsgTag"
+                android:textSize="20dp"
+                android:id="@+id/tvMsg"
+                />
+
+        </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:id="@+id/rlExpenseLayout"
         android:layout_below="@id/rltoolbar">
 
         <androidx.cardview.widget.CardView
@@ -65,7 +105,7 @@
             android:background="#fdfff5"
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp">
+            android:layout_marginBottom="60dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -73,16 +113,51 @@
 
 
                 <TextView
-                    android:layout_width="200dp"
+                    android:layout_width="wrap_content"
                     android:layout_marginTop="30dp"
                     android:gravity="center"
                     android:layout_toRightOf="@id/tvDateTag"
                     android:fontFamily="@font/semibold"
                     android:id="@+id/tvselectDate"
                     android:textSize="15dp"
+                    android:text="18-10-1999"
+                    android:visibility="gone"
                     android:layout_marginLeft="20dp"
                     android:textColor="@color/blue"
                     android:layout_height="wrap_content"/>
+
+
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:gravity="center"
+                    android:layout_toRightOf="@id/tvselectDate"
+                    android:fontFamily="@font/semibold"
+                    android:id="@+id/tvto"
+                    android:text="to"
+                    android:visibility="gone"
+                    android:textSize="15dp"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/Radio"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:gravity="center"
+                    android:layout_toRightOf="@id/tvto"
+                    android:fontFamily="@font/semibold"
+                    android:id="@+id/tvEnddate"
+                    android:textSize="15dp"
+                    android:visibility="gone"
+                    android:text="18-10-1999"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/blue"
+                    android:layout_height="wrap_content"/>
+
+
 
                 <TextView
                     android:id="@+id/tvDateTag"
@@ -176,6 +251,7 @@
                     android:layout_below="@id/View1"
                     android:layout_marginRight="4dp"
                     android:layout_marginLeft="20dp"
+                    android:inputType="number"
                     android:textColor="@color/black"
                     android:layout_marginTop="10dp"
                     android:layout_toRightOf="@id/tvConveyanceTag"
@@ -185,14 +261,42 @@
                     android:gravity="center"
                     android:textSize="15dp" />
 
+
+                <ImageView
+                    android:id="@+id/ivConvencypreview"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_below="@id/edConveyance"
+                    android:layout_centerInParent="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_toLeftOf="@id/ivConvencyDelete"
+                    android:backgroundTint="@color/white"
+                    android:src="@drawable/preview"
+                    android:tint="@color/blue"
+                    android:visibility="gone"
+                    tools:ignore="UseAppTint" />
+
+                <ImageView
+                    android:id="@+id/ivConvencyDelete"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="35dp"
+                    android:visibility="gone"
+                    android:layout_below="@id/edConveyance"
+                    android:backgroundTint="@color/white"
+                    android:src="@drawable/ic_baseline_delete_24" />
+
+
                 <RelativeLayout
                     android:id="@+id/rlUpload"
                     android:layout_width="400dp"
                     android:layout_height="40dp"
-                    android:layout_below="@+id/edConveyance"
+                    android:layout_below="@+id/ivConvencyDelete"
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
                     android:layout_marginTop="10dp"
+                    android:visibility="gone"
                     android:background="@drawable/size"
                     android:backgroundTint="#D4E2E2">
 
@@ -200,20 +304,36 @@
                         android:id="@+id/tvConveyanceDoc"
                         android:layout_width="300dp"
                         android:layout_height="40dp"
+                        android:visibility="visible"
                         android:fontFamily="@font/semibold"
                         android:gravity="center"
                         android:hint="Document Upload"
                         android:textSize="15dp" />
 
+                    <TextView
+                        android:id="@+id/tvConveyanceEmptyDoc"
+                        android:layout_width="300dp"
+                        android:layout_height="40dp"
+                        android:fontFamily="@font/semibold"
+                        android:gravity="center"
+                        android:visibility="gone"
+                        android:hint="Document Upload"
+                        android:textSize="15dp" />
+
+
                     <ImageView
-                        android:id="@+id/ivdoc"
+                        android:id="@+id/ivConvencydoc"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_centerInParent="true"
                         android:layout_marginRight="35dp"
-                        android:layout_toRightOf="@id/tvConveyanceDoc"
+                        android:layout_alignParentEnd="true"
                         android:backgroundTint="@color/white"
-                        android:src="@drawable/ic_baseline_upload_24" />
+                        android:src="@drawable/ic_baseline_upload_24"
+                        android:visibility="visible" />
+
+
+
 
                 </RelativeLayout>
 
@@ -235,7 +355,7 @@
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/semibold"
                     android:gravity="center"
-                    android:text="Ticket             :"
+                    android:text="Ticket              :"
                     android:textColor="@color/blue"
                     android:textSize="20dp" />
 
@@ -248,6 +368,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="4dp"
                     android:layout_marginTop="10dp"
+                    android:inputType="number"
                     android:textColor="@color/black"
                     android:layout_toRightOf="@id/tvTicketTag"
                     android:background="@drawable/size"
@@ -256,13 +377,41 @@
                     android:gravity="center"
                     android:textSize="15dp" />
 
+
+                <ImageView
+                    android:id="@+id/ivpreviewtTicket"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_below="@id/tvTicket"
+                    android:layout_centerInParent="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_toLeftOf="@id/ivDeleteTicket"
+                    android:backgroundTint="@color/white"
+                    android:src="@drawable/preview"
+                    android:tint="@color/blue"
+                    android:visibility="gone"
+                    tools:ignore="UseAppTint" />
+
+                <ImageView
+                    android:id="@+id/ivDeleteTicket"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="35dp"
+                    android:visibility="gone"
+                    android:layout_below="@id/tvTicket"
+                    android:backgroundTint="@color/white"
+                    android:src="@drawable/ic_baseline_delete_24" />
+
+
                 <RelativeLayout
                     android:id="@+id/rlUploadTicket"
                     android:layout_width="400dp"
                     android:layout_height="40dp"
-                    android:layout_below="@+id/tvTicket"
+                    android:layout_below="@+id/ivDeleteTicket"
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
+                    android:visibility="gone"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/size"
                     android:backgroundTint="#D4E2E2">
@@ -273,6 +422,17 @@
                         android:layout_height="40dp"
                         android:fontFamily="@font/semibold"
                         android:gravity="center"
+                        android:visibility="visible"
+                        android:hint="Document Upload"
+                        android:textSize="15dp" />
+
+                    <TextView
+                        android:id="@+id/tvTicketEmptyDoc"
+                        android:layout_width="300dp"
+                        android:layout_height="40dp"
+                        android:fontFamily="@font/semibold"
+                        android:gravity="center"
+                        android:visibility="gone"
                         android:hint="Document Upload"
                         android:textSize="15dp" />
 
@@ -282,7 +442,7 @@
                         android:layout_height="40dp"
                         android:layout_centerInParent="true"
                         android:layout_marginRight="35dp"
-                        android:layout_toRightOf="@id/tvTicketDoc"
+                        android:layout_alignParentEnd="true"
                         android:backgroundTint="@color/white"
                         android:src="@drawable/ic_baseline_upload_24" />
 
@@ -307,7 +467,7 @@
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/semibold"
                     android:gravity="center"
-                    android:text="Lodging        :"
+                    android:text="Lodging          :"
                     android:textColor="@color/blue"
                     android:textSize="20dp" />
 
@@ -320,6 +480,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="4dp"
                     android:layout_marginTop="10dp"
+                    android:inputType="number"
                     android:layout_toRightOf="@id/tvLodgingTag"
                     android:background="@drawable/size"
                     android:backgroundTint="#D4E2E2"
@@ -328,14 +489,46 @@
                     android:gravity="center"
                     android:textSize="15dp" />
 
+
+                <ImageView
+                    android:id="@+id/ivpreviewtlodging"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_below="@id/tvLodging"
+                    android:layout_centerInParent="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_toLeftOf="@id/ivDeletelodging"
+                    android:backgroundTint="@color/white"
+                    android:src="@drawable/preview"
+                    android:tint="@color/blue"
+                    android:visibility="gone"
+                    tools:ignore="UseAppTint" />
+
+                <ImageView
+                    android:id="@+id/ivDeletelodging"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="35dp"
+                    android:visibility="gone"
+                    android:layout_below="@id/tvLodging"
+                    android:backgroundTint="@color/white"
+                    android:src="@drawable/ic_baseline_delete_24" />
+
+
+
+
+
+
                 <RelativeLayout
                     android:id="@+id/rlUploadLodging"
                     android:layout_width="400dp"
                     android:layout_height="40dp"
-                    android:layout_below="@+id/tvLodging"
+                    android:layout_below="@+id/ivDeletelodging"
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
                     android:layout_marginTop="10dp"
+                    android:visibility="gone"
                     android:background="@drawable/size"
                     android:backgroundTint="#D4E2E2">
 
@@ -343,8 +536,19 @@
                         android:id="@+id/tvLodgingDoc"
                         android:layout_width="300dp"
                         android:layout_height="40dp"
+                        android:visibility="visible"
                         android:fontFamily="@font/semibold"
                         android:gravity="center"
+                        android:hint="Document Upload"
+                        android:textSize="15dp" />
+
+                    <TextView
+                        android:id="@+id/tvLodgingEmptyDoc"
+                        android:layout_width="300dp"
+                        android:layout_height="40dp"
+                        android:fontFamily="@font/semibold"
+                        android:gravity="center"
+                        android:visibility="gone"
                         android:hint="Document Upload"
                         android:textSize="15dp" />
 
@@ -354,7 +558,7 @@
                         android:layout_height="40dp"
                         android:layout_centerInParent="true"
                         android:layout_marginRight="35dp"
-                        android:layout_toRightOf="@id/tvLodgingDoc"
+                        android:layout_alignParentEnd="true"
                         android:backgroundTint="@color/white"
                         android:src="@drawable/ic_baseline_upload_24" />
 
@@ -379,7 +583,7 @@
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/semibold"
                     android:gravity="center"
-                    android:text="Others          :"
+                    android:text="Others             :"
                     android:textColor="@color/blue"
                     android:textSize="20dp" />
 
@@ -395,19 +599,50 @@
                     android:layout_toRightOf="@id/tvOtherTag"
                     android:background="@drawable/size"
                     android:backgroundTint="#D4E2E2"
+                    android:inputType="number"
                     android:textColor="@color/black"
                     android:fontFamily="@font/semibold"
                     android:gravity="center"
                     android:textSize="15dp" />
 
+
+                <ImageView
+                    android:id="@+id/ivpreviewOther"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_below="@id/edOther"
+                    android:layout_centerInParent="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_toLeftOf="@id/ivDeleteOther"
+                    android:backgroundTint="@color/white"
+                    android:src="@drawable/preview"
+                    android:tint="@color/blue"
+                    android:visibility="gone"
+                    tools:ignore="UseAppTint" />
+
+                <ImageView
+                    android:id="@+id/ivDeleteOther"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="35dp"
+                    android:visibility="gone"
+                    android:layout_below="@id/edOther"
+                    android:backgroundTint="@color/white"
+                    android:src="@drawable/ic_baseline_delete_24" />
+
+
+
+
                 <RelativeLayout
                     android:id="@+id/rlUploadother"
                     android:layout_width="400dp"
                     android:layout_height="40dp"
-                    android:layout_below="@+id/edOther"
+                    android:layout_below="@+id/ivDeleteOther"
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
                     android:layout_marginTop="10dp"
+                    android:visibility="gone"
                     android:background="@drawable/size"
                     android:backgroundTint="#D4E2E2">
 
@@ -417,6 +652,18 @@
                         android:layout_height="40dp"
                         android:fontFamily="@font/semibold"
                         android:gravity="center"
+
+                        android:visibility="visible"
+                        android:hint="Document Upload"
+                        android:textSize="15dp" />
+
+                    <TextView
+                        android:id="@+id/tvOtherEmptyDoc"
+                        android:layout_width="300dp"
+                        android:layout_height="40dp"
+                        android:fontFamily="@font/semibold"
+                        android:gravity="center"
+                        android:visibility="gone"
                         android:hint="Document Upload"
                         android:textSize="15dp" />
 
@@ -426,7 +673,7 @@
                         android:layout_height="40dp"
                         android:layout_centerInParent="true"
                         android:layout_marginRight="35dp"
-                        android:layout_toRightOf="@id/tvOtherDoc"
+                        android:layout_alignParentEnd="true"
                         android:backgroundTint="@color/white"
                         android:src="@drawable/ic_baseline_upload_24" />
 
@@ -435,18 +682,37 @@
 
                 <TextView
                     android:id="@+id/tvSubmit"
-                    android:layout_width="200dp"
-                    android:layout_height="60dp"
+                    android:layout_width="150dp"
+                    android:layout_toRightOf="@id/tvView"
+                    android:layout_height="50dp"
                     android:layout_below="@id/rlUploadother"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="15dp"
+                   android:layout_marginLeft="40dp"
+                    android:layout_marginTop="25dp"
                     android:background="@drawable/size"
                     android:backgroundTint="#6495ED"
                     android:fontFamily="@font/bold"
                     android:gravity="center"
-                    android:text="Submit"
+                    android:text="Save"
+                    android:layout_marginBottom="30dp"
                     android:textColor="@color/white"
                     android:textSize="20dp" />
+
+
+                <TextView
+                    android:id="@+id/tvView"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:layout_below="@id/rlUploadother"
+                    android:layout_marginTop="25dp"
+                    android:background="@drawable/size"
+                    android:backgroundTint="#ee2c2c"
+                    android:fontFamily="@font/bold"
+                    android:gravity="center"
+                    android:layout_marginBottom="30dp"
+                    android:layout_marginLeft="20dp"
+                    android:text="View Weekly Report"
+                    android:textColor="@color/white"
+                    android:textSize="13dp" />
 
 
             </RelativeLayout>
@@ -455,4 +721,6 @@
 
     </RelativeLayout>
 
-</RelativeLayout>
+    </RelativeLayout>
+
+</ScrollView>

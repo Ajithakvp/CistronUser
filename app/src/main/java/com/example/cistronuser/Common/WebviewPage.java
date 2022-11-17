@@ -23,6 +23,7 @@ public class WebviewPage extends AppCompatActivity {
 
     WebView webview;
     String urladdress;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,49 +37,54 @@ public class WebviewPage extends AppCompatActivity {
         progressDialog.setCancelable(false);
 
         try {
-        webview=findViewById(R.id.Webview);
-        String web=getIntent().getStringExtra("pdf");
-
-        webview.requestFocus();
-        urladdress="https://cistronsystems.in/beta1/"+web;
-            Log.e(TAG, "onCreate: "+urladdress );
-        webview.setWebViewClient(new MyBrowser());
-        webview.getSettings().setLoadsImagesAutomatically(true);
-        webview.getSettings().setJavaScriptEnabled(true);
+            webview = findViewById(R.id.Webview);
 
 
 
-        webview.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
-        webview.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
-        webview.getSettings().setAppCacheEnabled(true);
-        webview.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-        webview.getSettings().setDomStorageEnabled(true);
-        webview.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
-        webview.getSettings().setUseWideViewPort(true);
-        webview.getSettings().setSaveFormData(true);
-        webview.getSettings().setPluginState(WebSettings.PluginState.ON);
-        webview.getSettings().setEnableSmoothTransition(true);
+
+            String web = getIntent().getStringExtra("pdf");
 
 
+            webview.requestFocus();
+            urladdress = getResources().getString(R.string.Localhost) + web;
+            // Log.e(TAG, "onCreate: " + urladdress);
 
-        webview.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-        webview.getSettings().setBuiltInZoomControls(true);
-        webview.getSettings().setJavaScriptEnabled(true);
 
+            webview.setWebViewClient(new MyBrowser());
+            webview.getSettings().setLoadsImagesAutomatically(true);
+            webview.getSettings().setJavaScriptEnabled(true);
+
+
+            webview.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
+            webview.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+            webview.getSettings().setAppCacheEnabled(true);
+            webview.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+            webview.getSettings().setDomStorageEnabled(true);
+            webview.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
+            webview.getSettings().setUseWideViewPort(true);
+            webview.getSettings().setSaveFormData(true);
+            webview.getSettings().setPluginState(WebSettings.PluginState.ON);
+            webview.getSettings().setEnableSmoothTransition(true);
+
+
+            webview.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+            webview.getSettings().setBuiltInZoomControls(true);
+            webview.getSettings().setJavaScriptEnabled(true);
 
             webview.loadUrl(urladdress);
-        }catch (Exception e){
-            Log.e(TAG, "onCreate: "+e.getMessage());
+
+
+        } catch (Exception e) {
+            Log.e(TAG, "onCreate: " + e.getMessage());
         }
 
 
-
-        webview.setWebChromeClient(new WebChromeClient(){
+        webview.setWebChromeClient(new WebChromeClient() {
             public void onProgressChanged(WebView view, int progress) {
 
-                Intent intent=new Intent(Intent.ACTION_VIEW);
+                Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse(urladdress));
-                // Log.e(TAG, "shouldOverrideUrlLoading: "+Uri.parse(url) );
+                Log.e(TAG, "shouldOverrideUrlLoading: " + Uri.parse(urladdress));
                 startActivity(intent);
                 if (progress < 100) {
                     progressDialog.show();
@@ -89,17 +95,15 @@ public class WebviewPage extends AppCompatActivity {
             }
         });
 
+
     }
-
-
-
     private class MyBrowser extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
 
-            Intent intent=new Intent(Intent.ACTION_VIEW);
+            Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setData(Uri.parse(urladdress));
-           // Log.e(TAG, "shouldOverrideUrlLoading: "+Uri.parse(url) );
+            // Log.e(TAG, "shouldOverrideUrlLoading: "+Uri.parse(url) );
             startActivity(intent);
             return true;
         }

@@ -17,11 +17,12 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
         android:fontFamily="@font/bold"
         android:text="leave policy"
         android:textColor="@color/Radio"
-        android:textSize="30dp" />
+        android:textSize="25dp" />
 
     <CheckBox
         android:id="@+id/cbname"
