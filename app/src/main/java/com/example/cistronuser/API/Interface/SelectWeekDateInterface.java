@@ -11,6 +11,6 @@ public interface SelectWeekDateInterface {
     //expenses.php?action=viewWeeklyExpenses&date=2022-11-10
 
     @GET("expenses.php")
-    Call<SelectWeekResponse> CallSelectWeek(@Query("action")String action,@Query("date")String date);
+    Call<SelectWeekResponse> CallSelectWeek(@Query("action")String action,@Query("date")String date,@Query("empid")String empid);
 
 }

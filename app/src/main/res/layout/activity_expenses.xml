@@ -89,6 +89,57 @@
 
         </RelativeLayout>
 
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:id="@+id/rlErrormsg"
+            android:visibility="gone"
+            android:layout_below="@id/rltoolbar"
+            android:layout_height="match_parent">
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_marginTop="70dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerHorizontal="true"
+                app:lottie_rawRes="@raw/tips"
+                app:lottie_autoPlay="true"
+                android:id="@+id/tvExtraMsgTag"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="25dp"
+                android:gravity="center"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/semibold"
+                android:textColor="#0000FF"
+                android:layout_below="@id/tvExtraMsgTag"
+                android:textSize="20dp"
+                android:id="@+id/tvExtraMsg"
+                />
+
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:layout_margin="25dp"
+                android:background="@drawable/cardview"
+                android:gravity="center"
+                android:layout_centerInParent="true"
+                android:backgroundTint="@color/Radio"
+                android:fontFamily="@font/semibold"
+                android:textColor="@color/white"
+                android:text="Check Weekly Reported"
+                android:layout_below="@id/tvExtraMsg"
+                android:textSize="18dp"
+                android:id="@+id/tvCheckWeekReportMsg"
+                />
+
+
+        </RelativeLayout>
+
+
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -304,7 +355,7 @@
                         android:id="@+id/tvConveyanceDoc"
                         android:layout_width="300dp"
                         android:layout_height="40dp"
-                        android:visibility="visible"
+                        android:visibility="gone"
                         android:fontFamily="@font/semibold"
                         android:gravity="center"
                         android:hint="Document Upload"
@@ -316,8 +367,9 @@
                         android:layout_height="40dp"
                         android:fontFamily="@font/semibold"
                         android:gravity="center"
-                        android:visibility="gone"
-                        android:hint="Document Upload"
+                        android:visibility="visible"
+                        android:textColor="@color/Radio"
+                        android:text="Document Upload"
                         android:textSize="15dp" />
 
 
@@ -433,7 +485,8 @@
                         android:fontFamily="@font/semibold"
                         android:gravity="center"
                         android:visibility="gone"
-                        android:hint="Document Upload"
+                        android:textColor="@color/Radio"
+                        android:text="Document Upload"
                         android:textSize="15dp" />
 
                     <ImageView
@@ -549,7 +602,8 @@
                         android:fontFamily="@font/semibold"
                         android:gravity="center"
                         android:visibility="gone"
-                        android:hint="Document Upload"
+                        android:textColor="@color/Radio"
+                        android:text="Document Upload"
                         android:textSize="15dp" />
 
                     <ImageView
@@ -664,7 +718,8 @@
                         android:fontFamily="@font/semibold"
                         android:gravity="center"
                         android:visibility="gone"
-                        android:hint="Document Upload"
+                        android:textColor="@color/Radio"
+                        android:text="Document Upload"
                         android:textSize="15dp" />
 
                     <ImageView

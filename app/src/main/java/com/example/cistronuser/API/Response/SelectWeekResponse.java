@@ -13,6 +13,28 @@ public class SelectWeekResponse {
     @SerializedName("enddate")
     private String enddate;
 
+    @SerializedName("error")
+    private String error;
+
+    @SerializedName("extra")
+    private String extra;
+
+    public String getExtra() {
+        return extra;
+    }
+
+    public void setExtra(String extra) {
+        this.extra = extra;
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
+
     public String getCategory() {
         return category;
     }

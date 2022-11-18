@@ -11,6 +11,9 @@ public class ViewExpenseResponse {
     @SerializedName("category")
     private String category;
 
+    @SerializedName("error")
+    private String error;
+
     @SerializedName("startdate")
     private String startdate;
 
@@ -31,6 +34,15 @@ public class ViewExpenseResponse {
 
     @SerializedName("selectedDtExp")
     private SelecteddtExpenses selecteddtExpenses;
+
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
 
     public String getCategory() {
         return category;

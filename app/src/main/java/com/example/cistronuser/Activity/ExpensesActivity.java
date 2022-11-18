@@ -5,6 +5,7 @@ import static com.example.cistronuser.Activity.LeaveActivity.TAG;
 import static okhttp3.RequestBody.create;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,8 +15,10 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
@@ -39,6 +42,7 @@ import android.widget.Toast;
 
 import com.example.cistronuser.API.APIClient;
 import com.example.cistronuser.API.Interface.AttachRemoveInterface;
+import com.example.cistronuser.API.Interface.DeletedAPIInterface;
 import com.example.cistronuser.API.Interface.ExpenseInterface;
 import com.example.cistronuser.API.Interface.ExpensePolicyInterface;
 import com.example.cistronuser.API.Interface.LeavePolicyInterface;
@@ -50,6 +54,7 @@ import com.example.cistronuser.API.Model.WeeklyExpensesModel;
 import com.example.cistronuser.API.Response.AttachRemoveResponse;
 import com.example.cistronuser.API.Response.ExpensePolicyResponse;
 import com.example.cistronuser.API.Response.ExpenseResponse;
+import com.example.cistronuser.API.Response.LeaveDetailsResponse;
 import com.example.cistronuser.API.Response.LeavePolicyResponse;
 import com.example.cistronuser.API.Response.SelectWeekResponse;
 import com.example.cistronuser.API.Response.ViewExpenseResponse;
@@ -125,6 +130,10 @@ public class ExpensesActivity extends Activity {
     String strWeekall;
     ArrayList<WeeklyExpensesModel>weeklyExpensesModels=new ArrayList<>();
 
+    //CheckWeekExpensesmsg
+    RelativeLayout rlErrormsg;
+    TextView tvExtraMsg,tvCheckWeekReportMsg;
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,6 +162,11 @@ public class ExpensesActivity extends Activity {
         tvSubmit = findViewById(R.id.tvSubmit);
         ivMore = findViewById(R.id.ivMore);
         tvViewWeeklyreport=findViewById(R.id.tvViewWeeklyreport);
+
+
+        rlErrormsg=findViewById(R.id.rlErrormsg);
+        tvExtraMsg=findViewById(R.id.tvExtraMsg);
+        tvCheckWeekReportMsg=findViewById(R.id.tvCheckWeekReportMsg);
 
         rlExpenseLayout = findViewById(R.id.rlExpenseLayout);
         rlmsg = findViewById(R.id.rlmsg);
@@ -419,7 +433,30 @@ public class ExpensesActivity extends Activity {
         ivConvencyDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                callconvencyDelete();
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(ExpensesActivity.this);
+                builder.setMessage("Are you sure you want to Delete ?");
+                builder.setTitle("Delete!");
+                builder.setIcon(R.drawable.ic_baseline_delete_24);
+                builder.setCancelable(false);
+                builder.setPositiveButton("yes", (new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        callconvencyDelete();
+                        dialogInterface.dismiss();
+                    }
+                }));
+                builder.setNegativeButton("No", (new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                }));
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+
+
             }
         });
 
@@ -427,14 +464,68 @@ public class ExpensesActivity extends Activity {
         ivDeleteOther.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                calldeleteOther();
+
+
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(ExpensesActivity.this);
+                builder.setMessage("Are you sure you want to Delete ?");
+                builder.setTitle("Delete!");
+                builder.setIcon(R.drawable.ic_baseline_delete_24);
+                builder.setCancelable(false);
+                builder.setPositiveButton("yes", (new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        calldeleteOther();
+                        dialogInterface.dismiss();
+                    }
+                }));
+                builder.setNegativeButton("No", (new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                }));
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+
+
+
             }
         });
 
         ivDeleteTicket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                callTicketDelete();
+
+
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(ExpensesActivity.this);
+                builder.setMessage("Are you sure you want to Delete ?");
+                builder.setTitle("Delete!");
+                builder.setIcon(R.drawable.ic_baseline_delete_24);
+                builder.setCancelable(false);
+                builder.setPositiveButton("yes", (new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        callTicketDelete();
+                        dialogInterface.dismiss();
+                    }
+                }));
+                builder.setNegativeButton("No", (new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                }));
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+
+
+
+
+
             }
         });
 
@@ -442,7 +533,33 @@ public class ExpensesActivity extends Activity {
         ivDeletelodging.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                calldeleteLodging();
+
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(ExpensesActivity.this);
+                builder.setMessage("Are you sure you want to Delete ?");
+                builder.setTitle("Delete!");
+                builder.setIcon(R.drawable.ic_baseline_delete_24);
+                builder.setCancelable(false);
+                builder.setPositiveButton("yes", (new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        calldeleteLodging();
+                        dialogInterface.dismiss();
+                    }
+                }));
+                builder.setNegativeButton("No", (new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                }));
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+
+
+
+
             }
         });
 
@@ -498,6 +615,14 @@ public class ExpensesActivity extends Activity {
                 }else {
                     callExpenseList();
                 }
+            }
+        });
+
+        tvCheckWeekReportMsg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               // callExpenseList();
+                callcheckWeekList();
             }
         });
 
@@ -612,7 +737,63 @@ public class ExpensesActivity extends Activity {
 
     }
 
+    private void callcheckWeekList() {
 
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
+        bottomSheetDialog.setContentView(R.layout.checkweeklyexpense);
+        bottomSheetDialog.show();
+        ivBottomBack = bottomSheetDialog.findViewById(R.id.ivBottomBack);
+        rvExpense = bottomSheetDialog.findViewById(R.id.rvExpense);
+        tvViewWeeklyreportSubmit=bottomSheetDialog.findViewById(R.id.tvViewWeeklyreportSubmit);
+        rlUploadWeekAll=bottomSheetDialog.findViewById(R.id.rlUploadWeekAll);
+        tvWeekDoc=bottomSheetDialog.findViewById(R.id.tvWeekDoc);
+
+
+
+
+        weeklyAdapter=new ExpensesViewWeeklyAdapter(ExpensesActivity.this,BaseExpenseUrl,weeklyExpensesModels);
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(ExpensesActivity .this);
+        linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
+        rvExpense.setLayoutManager(linearLayoutManager);
+        rvExpense.setAdapter(weeklyAdapter);
+
+
+
+        ViewExpenseListInterface viewExpenseListInterface=APIClient.getClient().create(ViewExpenseListInterface.class);
+        viewExpenseListInterface.CallSelectWeek("viewWeeklyExpenses",tvDate.getText().toString(),PreferenceManager.getEmpID(this)).enqueue(new Callback<ViewExpenseResponse>() {
+            @Override
+            public void onResponse(Call<ViewExpenseResponse> call, Response<ViewExpenseResponse> response) {
+                try{
+                    if (response.isSuccessful()){
+                        progressDialog.dismiss();
+                        weeklyAdapter.weeklyExpensesModels=response.body().getWeeklyExpensesModels();
+                        weeklyAdapter.notifyDataSetChanged();
+
+                    }
+
+                }catch (Exception e){
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ViewExpenseResponse> call, Throwable t) {
+
+            }
+        });
+
+        ivBottomBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bottomSheetDialog.dismiss();
+            }
+        });
+    }
 
 
     void previewattache(String url) {
@@ -925,6 +1106,10 @@ public class ExpensesActivity extends Activity {
     }
 
     private void callExpenseList() {
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
         bottomSheetDialog.setContentView(R.layout.expense_list_recycleview);
         bottomSheetDialog.show();
@@ -951,6 +1136,7 @@ public class ExpensesActivity extends Activity {
            public void onResponse(Call<ViewExpenseResponse> call, Response<ViewExpenseResponse> response) {
                try{
                    if (response.isSuccessful()){
+                       progressDialog.dismiss();
                        weeklyAdapter.weeklyExpensesModels=response.body().getWeeklyExpensesModels();
                        weeklyAdapter.notifyDataSetChanged();
 
@@ -963,6 +1149,7 @@ public class ExpensesActivity extends Activity {
 
            @Override
            public void onFailure(Call<ViewExpenseResponse> call, Throwable t) {
+               progressDialog.dismiss();
 
            }
        });
@@ -994,6 +1181,7 @@ public class ExpensesActivity extends Activity {
             public void onClick(View v) {
                 callWeekallSubmit();
                 bottomSheetDialog.dismiss();
+
 
             }
         });
@@ -1093,18 +1281,37 @@ public class ExpensesActivity extends Activity {
 
                         callselectdateViewExpenses();
 
-
+                        final ProgressDialog progressDialog = new ProgressDialog(ExpensesActivity.this);
+                        progressDialog.setMessage("Loading...");
+                        progressDialog.setCancelable(false);
+                        progressDialog.show();
                         SelectWeekDateInterface selectWeekDateInterface = APIClient.getClient().create(SelectWeekDateInterface.class);
-                        selectWeekDateInterface.CallSelectWeek("viewWeeklyExpenses", tvDate.getText().toString()).enqueue(new Callback<SelectWeekResponse>() {
+                        selectWeekDateInterface.CallSelectWeek("viewWeeklyExpenses", tvDate.getText().toString(),PreferenceManager.getEmpID(ExpensesActivity.this)).enqueue(new Callback<SelectWeekResponse>() {
                             @Override
                             public void onResponse(Call<SelectWeekResponse> call, Response<SelectWeekResponse> response) {
                                 try {
                                     if (response.isSuccessful()) {
+
+                                        progressDialog.dismiss();
+                                        if (response.body().getError().trim().equals("1")){
+                                            rlExpenseLayout.setVisibility(View.GONE);
+                                            rlErrormsg.setVisibility(View.VISIBLE);
+                                            tvExtraMsg.setText(response.body().getExtra());
+
+                                        }else {
+                                            rlExpenseLayout.setVisibility(View.VISIBLE);
+                                            rlErrormsg.setVisibility(View.GONE);
+                                            rlmsg.setVisibility(View.GONE);
+
+                                        }
+                                        Log.e(TAG, "onResponse: "+response.body().getError() );
                                         tvStartdate.setText(response.body().getStartdate());
                                         tvEnddate.setText(response.body().getEnddate());
                                         tvEnddate.setVisibility(View.VISIBLE);
                                         tvto.setVisibility(View.VISIBLE);
                                         tvStartdate.setVisibility(View.VISIBLE);
+
+
                                     }
 
                                 } catch (Exception e) {

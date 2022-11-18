@@ -34,10 +34,7 @@ import retrofit2.Response;
 public class ExpensesViewWeeklyAdapter extends RecyclerView.Adapter<ExpensesViewWeeklyAdapter.ViewHolder> {
 
     Activity activity;
-   // String baseurl="http://192.168.29.173/";
-
     String baseurl;
-
     public ArrayList<WeeklyExpensesModel>weeklyExpensesModels;
 
     public ExpensesViewWeeklyAdapter(Activity activity, String baseurl, ArrayList<WeeklyExpensesModel> weeklyExpensesModels) {
@@ -102,7 +99,6 @@ public class ExpensesViewWeeklyAdapter extends RecyclerView.Adapter<ExpensesView
         }
 
 
-        callBaseUrl();
 
 
         holder.ivConvencyView.setOnClickListener(new View.OnClickListener() {
@@ -151,27 +147,9 @@ public class ExpensesViewWeeklyAdapter extends RecyclerView.Adapter<ExpensesView
 
 
 
-    }
-
-    private void callBaseUrl() {
-        ViewExpenseListInterface viewExpenseListInterface=APIClient.getClient().create(ViewExpenseListInterface.class);
-        viewExpenseListInterface.CallSelectWeek("viewWeeklyExpenses","2022-11-03", PreferenceManager.getEmpID(activity)).enqueue(new Callback<ViewExpenseResponse>() {
-            @Override
-            public void onResponse(Call<ViewExpenseResponse> call, Response<ViewExpenseResponse> response) {
-
-                if (response.isSuccessful()){
-                    Log.e(TAG, "onResponse: "+ response.body().getAttachBaseUrl() );
-                    Toast.makeText(activity, response.body().getAttachBaseUrl(), Toast.LENGTH_SHORT).show();
-                }
 
 
-            }
 
-            @Override
-            public void onFailure(Call<ViewExpenseResponse> call, Throwable t) {
-
-            }
-        });
     }
 
     void callAttach(String s) {

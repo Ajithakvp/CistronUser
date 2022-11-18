@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:id="@+id/rltoolbar"
+        android:background="#6495ED"
+        android:layout_height="50dp">
+
+        <TextView
+            android:id="@+id/tvHeader"
+            style="@style/header"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/bold"
+            android:text="Weekly Expense List"
+            android:textColor="@color/white"
+            android:textSize="20dp" />
+
+
+        <ImageView
+            android:id="@+id/ivBottomBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="35dp"
+            android:layout_toLeftOf="@id/tvHeader"
+            android:backgroundTint="@color/white"
+            android:src="@drawable/ic_baseline_expand_circle_down_24"
+            android:tint="@color/white"
+            tools:ignore="UseAppTint"  />
+
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvExpense"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rltoolbar"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp" />
+
+
+    <RelativeLayout
+        android:id="@+id/rlUploadWeekAll"
+        android:layout_width="400dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/rvExpense"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="10dp"
+        android:visibility="gone"
+        android:background="@drawable/size"
+        android:backgroundTint="#D4E2E2">
+
+        <TextView
+            android:id="@+id/tvWeekDoc"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:fontFamily="@font/semibold"
+            android:gravity="center"
+            android:visibility="visible"
+            android:hint="Upload Weekly Work Record"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/tvWeekEmptyDoc"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:fontFamily="@font/semibold"
+            android:gravity="center"
+            android:visibility="gone"
+            android:hint="Document Upload"
+            android:textSize="15dp" />
+
+        <ImageView
+            android:id="@+id/ivWeekDoc"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="35dp"
+            android:layout_alignParentEnd="true"
+            android:backgroundTint="@color/white"
+            android:src="@drawable/ic_baseline_upload_24" />
+
+    </RelativeLayout>
+
+
+
+    <TextView
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/rlUploadWeekAll"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="18dp"
+        android:visibility="gone"
+        android:id="@+id/tvViewWeeklyreportSubmit"
+        android:text="Submit"
+        android:fontFamily="@font/bold"
+        android:background="@drawable/cardview"/>
+</RelativeLayout>
