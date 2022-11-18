@@ -683,7 +683,7 @@
                 <TextView
                     android:id="@+id/tvSubmit"
                     android:layout_width="150dp"
-                    android:layout_toRightOf="@id/tvView"
+                    android:layout_toRightOf="@id/tvViewWeeklyreport"
                     android:layout_height="50dp"
                     android:layout_below="@id/rlUploadother"
                    android:layout_marginLeft="40dp"
@@ -699,7 +699,7 @@
 
 
                 <TextView
-                    android:id="@+id/tvView"
+                    android:id="@+id/tvViewWeeklyreport"
                     android:layout_width="150dp"
                     android:layout_height="50dp"
                     android:layout_below="@id/rlUploadother"

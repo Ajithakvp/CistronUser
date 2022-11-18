@@ -6,6 +6,7 @@ import static okhttp3.RequestBody.create;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
@@ -43,13 +44,17 @@ import com.example.cistronuser.API.Interface.ExpensePolicyInterface;
 import com.example.cistronuser.API.Interface.LeavePolicyInterface;
 import com.example.cistronuser.API.Interface.SelectWeekDateInterface;
 import com.example.cistronuser.API.Interface.ViewExpenseListInterface;
+import com.example.cistronuser.API.Interface.WeeklySubmitExpensesInterface;
 import com.example.cistronuser.API.Model.SelecteddtExpenses;
+import com.example.cistronuser.API.Model.WeeklyExpensesModel;
 import com.example.cistronuser.API.Response.AttachRemoveResponse;
 import com.example.cistronuser.API.Response.ExpensePolicyResponse;
 import com.example.cistronuser.API.Response.ExpenseResponse;
 import com.example.cistronuser.API.Response.LeavePolicyResponse;
 import com.example.cistronuser.API.Response.SelectWeekResponse;
 import com.example.cistronuser.API.Response.ViewExpenseResponse;
+import com.example.cistronuser.API.Response.WeeklySubmitExpensesResponse;
+import com.example.cistronuser.Adapter.ExpensesViewWeeklyAdapter;
 import com.example.cistronuser.Common.ConnectionRecevier;
 import com.example.cistronuser.Common.FileUtli;
 import com.example.cistronuser.Common.PreferenceManager;
@@ -106,10 +111,19 @@ public class ExpensesActivity extends Activity {
     //ViewExpenses
     String BaseExpenseUrl, WebviewConvency, WebViewOther, WebViewLodging, WebViewTicket;
     String fillconv, fileot, filelod, filetic;
+    TextView tvViewWeeklyreport,tvViewWeeklyreportSubmit;
 
     //Policy
     RelativeLayout rlmsg, rlExpenseLayout;
     TextView tvMsg, checkboxtextview, tvHeader;
+
+    //WeeklyExpense
+    ExpensesViewWeeklyAdapter weeklyAdapter;
+    RelativeLayout rlUploadWeekAll;
+    TextView tvWeekDoc;
+    File fileWeek;
+    String strWeekall;
+    ArrayList<WeeklyExpensesModel>weeklyExpensesModels=new ArrayList<>();
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -138,6 +152,7 @@ public class ExpensesActivity extends Activity {
         tvEnddate = findViewById(R.id.tvEnddate);
         tvSubmit = findViewById(R.id.tvSubmit);
         ivMore = findViewById(R.id.ivMore);
+        tvViewWeeklyreport=findViewById(R.id.tvViewWeeklyreport);
 
         rlExpenseLayout = findViewById(R.id.rlExpenseLayout);
         rlmsg = findViewById(R.id.rlmsg);
@@ -189,7 +204,7 @@ public class ExpensesActivity extends Activity {
             }
         });
 
-        
+
 
         edOther.addTextChangedListener(new TextWatcher() {
             @Override
@@ -358,38 +373,48 @@ public class ExpensesActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                Log.e(TAG, "onClick: 5");
-                Callsubmitexpense();
-                if (fileconvency != null) {
-                    Callsaveconvency();
-                    Log.e(TAG, "onClick: 1");
-                }
-                if (filelodging != null) {
-                    Log.e(TAG, "onClick: 2");
 
-                    Callsavelodging();
-                }
-                if (fileticket != null) {
-                    Log.e(TAG, "onClick: 3");
+                if (tvDate.getText().toString().isEmpty()){
+                    tvDate.setError("Please Select Date");
+                    Toast.makeText(ExpensesActivity.this, "Please select Date ", Toast.LENGTH_SHORT).show();
+                    tvDate.requestFocus();
+                }else if (edWorkReport.getText().toString().trim().length()==0){
+                    edWorkReport.setError("Please Enter Report");
+                    edWorkReport.requestFocus();
+                }else if(edConveyance.getText().toString().isEmpty() || edOther.getText().toString().isEmpty() || tvTicket.getText().toString().isEmpty() || tvLodging.getText().toString().isEmpty() ){
+                    Toast.makeText(ExpensesActivity.this, "Please enter any one of the expenses", Toast.LENGTH_SHORT).show();
+                }else {
 
-                    Callsaveticket();
-                }
-                if (fileOther != null) {
-                    Log.e(TAG, "onClick: 4");
+                    Log.e(TAG, "onClick: 5");
+                    Callsubmitexpense();
+                    if (fileconvency != null) {
+                        Callsaveconvency();
+                        Log.e(TAG, "onClick: 1");
+                    }
+                    if (filelodging != null) {
+                        Log.e(TAG, "onClick: 2");
 
-                    Callsaveother();
+                        Callsavelodging();
+                    }
+                    if (fileticket != null) {
+                        Log.e(TAG, "onClick: 3");
+
+                        Callsaveticket();
+                    }
+                    if (fileOther != null) {
+                        Log.e(TAG, "onClick: 4");
+
+                        Callsaveother();
+                    }
                 }
+
+
 
 
             }
         });
 
-        ivMore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                callExpenseList();
-            }
-        });
+
 
         ivConvencyDelete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -461,6 +486,21 @@ public class ExpensesActivity extends Activity {
 
             }
         });
+
+
+        tvViewWeeklyreport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (tvDate.getText().toString().isEmpty()) {
+                    Toast.makeText(ExpensesActivity.this, "Please select Date ", Toast.LENGTH_SHORT).show();
+                    tvDate.requestFocus();
+                }else {
+                    callExpenseList();
+                }
+            }
+        });
+
 
 
         //Policy check
@@ -571,7 +611,6 @@ public class ExpensesActivity extends Activity {
         });
 
     }
-
 
 
 
@@ -891,6 +930,58 @@ public class ExpensesActivity extends Activity {
         bottomSheetDialog.show();
         ivBottomBack = bottomSheetDialog.findViewById(R.id.ivBottomBack);
         rvExpense = bottomSheetDialog.findViewById(R.id.rvExpense);
+        tvViewWeeklyreportSubmit=bottomSheetDialog.findViewById(R.id.tvViewWeeklyreportSubmit);
+        rlUploadWeekAll=bottomSheetDialog.findViewById(R.id.rlUploadWeekAll);
+        tvWeekDoc=bottomSheetDialog.findViewById(R.id.tvWeekDoc);
+
+
+
+
+        weeklyAdapter=new ExpensesViewWeeklyAdapter(ExpensesActivity.this,BaseExpenseUrl,weeklyExpensesModels);
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(ExpensesActivity .this);
+        linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
+        rvExpense.setLayoutManager(linearLayoutManager);
+        rvExpense.setAdapter(weeklyAdapter);
+
+
+
+       ViewExpenseListInterface viewExpenseListInterface=APIClient.getClient().create(ViewExpenseListInterface.class);
+       viewExpenseListInterface.CallSelectWeek("viewWeeklyExpenses",tvDate.getText().toString(),PreferenceManager.getEmpID(this)).enqueue(new Callback<ViewExpenseResponse>() {
+           @Override
+           public void onResponse(Call<ViewExpenseResponse> call, Response<ViewExpenseResponse> response) {
+               try{
+                   if (response.isSuccessful()){
+                       weeklyAdapter.weeklyExpensesModels=response.body().getWeeklyExpensesModels();
+                       weeklyAdapter.notifyDataSetChanged();
+
+                   }
+
+               }catch (Exception e){
+
+               }
+           }
+
+           @Override
+           public void onFailure(Call<ViewExpenseResponse> call, Throwable t) {
+
+           }
+       });
+
+       rlUploadWeekAll.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+
+               try {
+                   Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                   intent.setType("*/*");
+                   startActivityForResult(intent, 5);
+               } catch (Exception e) {
+
+               }
+
+           }
+       });
+
 
         ivBottomBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -898,6 +989,45 @@ public class ExpensesActivity extends Activity {
                 bottomSheetDialog.dismiss();
             }
         });
+        tvViewWeeklyreportSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callWeekallSubmit();
+                bottomSheetDialog.dismiss();
+
+            }
+        });
+
+    }
+
+    private void callWeekallSubmit() {
+        WeeklySubmitExpensesInterface weeklySubmitExpensesInterface=APIClient.getClient().create(WeeklySubmitExpensesInterface.class);
+        RequestBody Action=RequestBody.create(MediaType.parse("text/plain"),"submitExpenses");
+        RequestBody EmpID=RequestBody.create(MediaType.parse("text/plain"),PreferenceManager.getEmpID(this));
+        RequestBody StartDate=RequestBody.create(MediaType.parse("text/plain"),tvStartdate.getText().toString());
+        RequestBody EndDate=RequestBody.create(MediaType.parse("text/plain"),tvEnddate.getText().toString());
+        RequestBody WeekAllrequest = create(MediaType.parse("multipart/form-data"), fileWeek);
+        MultipartBody.Part WeekFile = MultipartBody.Part.createFormData("filename_r", fileWeek.getName(), WeekAllrequest);
+        weeklySubmitExpensesInterface.CallConvency(Action,EmpID,StartDate,EndDate,WeekFile).enqueue(new Callback<WeeklySubmitExpensesResponse>() {
+            @Override
+            public void onResponse(Call<WeeklySubmitExpensesResponse> call, Response<WeeklySubmitExpensesResponse> response) {
+                try{
+                    if (response.isSuccessful()){
+                        Toast.makeText(ExpensesActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+
+                    }
+
+                }catch (Exception e){
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<WeeklySubmitExpensesResponse> call, Throwable t) {
+
+            }
+        });
+
 
     }
 
@@ -951,7 +1081,6 @@ public class ExpensesActivity extends Activity {
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                        String date = tvDate.getText().toString();
                         String moth, dt;
 
                         moth = ((month + 1) > 9) ? "" + (month + 1) : ("0" + (month + 1));
@@ -991,44 +1120,12 @@ public class ExpensesActivity extends Activity {
                         });
 
 
-                        // callWeekDate();
-//                        if (!date.isEmpty()) {
-//                            if (date.contains(", " + selectedDt)) {
-//                                System.out.println("1\n");
-//                                date = date.replace(", " + selectedDt, "");
-//                            } else if (date.contains(selectedDt)) {
-//                                if (date.equals(selectedDt))
-//                                    date = "";
-//                                else
-//                                    date = date.replace(selectedDt + ", ", "");
-//                            } else {
-//                                System.out.println("3\n");
-//                                date += ", " + selectedDt;
-//                            }
-//                        } else
-//                            date = selectedDt;
-//                        tvDate.setText(date);
-//                        int count = date.split(",", -1).length;
-//                        if (count == 0)
-//                            tvselectDate.setText("");
-//                        else if (count == 1)
-//                            tvselectDate.setText("One day is selected");
-//                        else
-//                            tvselectDate.setText(count + " days are selected");
-//                    }
                     }
 
                 }, year, month, dayOfMonth);
-        // datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis()-7);
 
-//        long now = System.currentTimeMillis() - 1000;
-//        datePickerDialog.getDatePicker().setMinDate(now);
-//        datePickerDialog.getDatePicker().setMaxDate(now+(1000*60*60*16));
-
-//        calendar.add(Calendar.DAY_OF_MONTH,-7);
-//        Date result = calendar.getTime();
         datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis() - 1000);
-        //datePickerDialog.getDatePicker().setMinDate(result.getTime());
+
 
 
         datePickerDialog.show();
@@ -1063,6 +1160,10 @@ public class ExpensesActivity extends Activity {
                         filelod = response.body().getSelecteddtExpenses().getFilename_l();
                         fileot = response.body().getSelecteddtExpenses().getFilename_o();
                         filetic = response.body().getSelecteddtExpenses().getFilename_t();
+
+
+
+
 
 
                         if (response.body().getSelecteddtExpenses().getFilename_all().trim().equals("")) {
@@ -1130,6 +1231,7 @@ public class ExpensesActivity extends Activity {
 
 
                         }
+
 
 
                     }
@@ -1283,7 +1385,45 @@ public class ExpensesActivity extends Activity {
 
                 }
                 break;
+
+
+
+            case 5:
+
+                if (resultCode == RESULT_OK) {
+                    Uri contentUri = data.getData();
+                    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+                    strWeekall = timeStamp + "." + getFileExt(contentUri);
+                    Toast.makeText(this, "File Name" + strWeekall, Toast.LENGTH_SHORT).show();
+
+                    try {
+                        if (strWeekall.length() > 0) {
+                            tvWeekDoc.setText(strWeekall);
+                        }
+
+                    } catch (Exception e) {
+
+                    }
+
+
+                    try {
+                        fileWeek = FileUtli.from(this, contentUri);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+
+                }
+                break;
+
+
+
         }
+
+
+
+
+
 
     }
 
