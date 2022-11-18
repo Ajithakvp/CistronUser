@@ -8,19 +8,18 @@
 
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:background="@color/skyblue"
         android:id="@+id/rlhead"
-        android:backgroundTint="#6495ED"
-        android:layout_height="55dp">
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="@color/skyblue"
+        android:backgroundTint="#6495ED">
 
         <ImageView
-            android:layout_width="wrap_content"
             android:id="@+id/ivName"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/logo_top"
             android:layout_centerInParent="true"
-            />
+            android:src="@drawable/logo_top" />
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/ivLogout"
@@ -48,27 +47,420 @@
             app:tint="@color/white" />
 
 
+    </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/rlcard"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_below="@+id/rlhead"
+        android:background="@drawable/card_design"
+        android:backgroundTint="#6495ED" />
+
+
+
+
+
+    <RelativeLayout
+        android:id="@+id/rlProfile"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_below="@id/rlhead"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/cardview"
+        android:backgroundTint="#FEFCFF	"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/tvProfilename"
+            android:layout_width="330dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="6dp"
+            android:layout_toRightOf="@id/ivprofilename"
+            android:fontFamily="@font/semibold"
+            android:text="Cistron System private ltd"
+            android:textColor="@color/black"
+            android:textSize="20dp" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/ivprofilename"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/person2"
+            app:tint="@color/white" />
 
 
     </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:background="@drawable/card_design"
-        android:backgroundTint="#6495ED"
-        android:layout_height="250dp"
-        android:id="@+id/rlcard"
-        android:layout_below="@+id/rlhead"/>
 
 
-    <RelativeLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:background="@drawable/bottomcard"
-        android:backgroundTint="#6495ED"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
+      android:layout_marginTop="60dp"
+        android:layout_marginBottom="60dp"
+        android:layout_below="@id/rlProfile">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+
+            <RelativeLayout
+                android:id="@+id/rlcardatted"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+               android:layout_centerHorizontal="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginBottom="30dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/cardview"
+                android:backgroundTint="#fdfff5">
+
+                <LinearLayout
+                    android:id="@+id/llview"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cvAttendance"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="40dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="#6495ED"
+                        app:cardCornerRadius="20dp">
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_below="@+id/tvDoj"
+                            android:layout_gravity="center"
+                            app:lottie_autoPlay="true"
+                            app:lottie_loop="true"
+                            app:lottie_rawRes="@raw/attendancegif" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="45dp"
+                            android:fontFamily="@font/bold"
+                            android:text="Attendance"
+                            android:textColor="@color/white" />
+
+
+                    </androidx.cardview.widget.CardView>
+
+
+                    <!--        Expenses-->
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cvExpense"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="40dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_toRightOf="@id/cvAttendance"
+                        android:layout_weight="1"
+                        android:backgroundTint="#6495ED"
+                        app:cardCornerRadius="20dp">
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:layout_width="45dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center"
+                            app:lottie_autoPlay="true"
+                            app:lottie_loop="true"
+                            app:lottie_rawRes="@raw/expense" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="45dp"
+                            android:fontFamily="@font/bold"
+                            android:text="Expenses"
+                            android:textColor="@color/white" />
+
+
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
+
+
+                <!--        Leave-->
+
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cvLeave"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_below="@+id/llview"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="20dp"
+                    android:backgroundTint="#6495ED"
+                    app:cardCornerRadius="20dp">
+
+                    <com.airbnb.lottie.LottieAnimationView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        app:lottie_autoPlay="true"
+                        app:lottie_loop="true"
+                        app:lottie_rawRes="@raw/leave"
+                        app:tint="@color/white" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="45dp"
+                        android:fontFamily="@font/bold"
+                        android:text="Leave Application"
+                        android:textColor="@color/white" />
+
+
+                </androidx.cardview.widget.CardView>
+
+
+            </RelativeLayout>
+
+
+<!--            Admin-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:id="@+id/rlWaitingApproval"
+                android:visibility="visible"
+                android:layout_below="@+id/rlcardatted"
+                android:layout_height="wrap_content">
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/cardview"
+                    android:backgroundTint="#fdfff5 ">
+
+                    <TextView
+                        android:id="@+id/tvWaitingApproved"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/bold"
+                        android:text="Waiting for  Approval"
+                        android:textColor="@color/black"
+                        android:textSize="20dp" />
+
+
+                    <RelativeLayout
+                        android:id="@+id/rlWaitingExpense"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_below="@id/tvWaitingApproved"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/cardview"
+                        android:backgroundTint="#6495ED">
+
+                        <ImageView
+                            android:id="@+id/ivExpense"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="30dp"
+                            android:src="@drawable/waitexpenses"
+                            android:tint="@color/white"
+                            tools:ignore="UseAppTint" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="20dp"
+                            android:layout_toRightOf="@+id/ivExpense"
+                            android:fontFamily="@font/semibold"
+                            android:text="Expenses"
+                            android:textColor="@color/white"
+                            android:textSize="18dp" />
+
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
+                        android:id="@+id/rlWaitingLeaveRequest"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_below="@id/rlWaitingExpense"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/cardview"
+                        android:backgroundTint="#6495ED">
+
+                        <ImageView
+                            android:id="@+id/ivLeaveRequest"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="30dp"
+                            android:src="@drawable/leavereques"
+                            android:tint="@color/white"
+                            tools:ignore="UseAppTint" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="20dp"
+                            android:layout_toRightOf="@+id/ivLeaveRequest"
+                            android:fontFamily="@font/semibold"
+                            android:text="Leave Request"
+                            android:textColor="@color/white"
+                            android:textSize="18dp" />
+
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
+            </RelativeLayout>
+
+<!--                Report-->
+
+
+
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:id="@+id/rlReport"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="30dp"
+                    android:layout_below="@id/rlWaitingApproval"
+                    android:layout_height="wrap_content">
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:background="@drawable/cardview"
+                        android:backgroundTint="#fdfff5 ">
+
+                        <TextView
+                            android:id="@+id/tvExpenseReportTag"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="20dp"
+                            android:fontFamily="@font/bold"
+                            android:text="Report"
+                            android:textColor="@color/black"
+                            android:textSize="20dp" />
+
+
+                        <RelativeLayout
+                            android:id="@+id/rlExpenseReport"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:layout_below="@id/tvExpenseReportTag"
+                            android:layout_marginTop="20dp"
+                            android:background="@drawable/cardview"
+                            android:backgroundTint="#6495ED">
+
+                            <ImageView
+                                android:id="@+id/ivExpenseReport"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="30dp"
+                                android:src="@drawable/expensereport"
+                                android:tint="@color/white"
+                                tools:ignore="UseAppTint" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="20dp"
+                                android:layout_toRightOf="@+id/ivExpenseReport"
+                                android:fontFamily="@font/semibold"
+                                android:text="Expenses"
+                                android:textColor="@color/white"
+                                android:textSize="18dp" />
+
+                        </RelativeLayout>
+
+
+                        <RelativeLayout
+                            android:id="@+id/rlrlAttendaceReport"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:layout_marginBottom="20dp"
+                            android:layout_below="@id/rlExpenseReport"
+                            android:layout_marginTop="20dp"
+                            android:background="@drawable/cardview"
+                            android:backgroundTint="#6495ED">
+
+                            <ImageView
+                                android:id="@+id/ivAttendaceReport"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="30dp"
+                                android:src="@drawable/attendacereport"
+                                android:tint="@color/white"
+                                tools:ignore="UseAppTint" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="20dp"
+                                android:layout_toRightOf="@+id/ivAttendaceReport"
+                                android:fontFamily="@font/semibold"
+                                android:text="Attendance"
+                                android:textColor="@color/white"
+                                android:textSize="18dp" />
+
+                        </RelativeLayout>
+
+
+                    </RelativeLayout>
+
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+
+    <RelativeLayout
         android:id="@+id/rltopcard"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:visibility="visible"
         android:layout_alignParentBottom="true"
-        >
+        android:background="@drawable/bottomcard"
+        android:backgroundTint="#6495ED">
 
         <TextView
             android:id="@+id/lWebview"
@@ -81,188 +473,6 @@
             android:textSize="20dp" />
 
     </RelativeLayout>
-
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:id="@+id/rlProfile"
-        android:layout_marginTop="30dp"
-        android:padding="10dp"
-        android:background="@drawable/cardview"
-        android:backgroundTint="#FEFCFF	"
-        android:layout_below="@id/rlhead"
-        android:layout_height="60dp">
-
-        <TextView
-            android:layout_width="330dp"
-            android:id="@+id/tvProfilename"
-            android:textSize="20dp"
-            android:layout_toRightOf="@id/ivprofilename"
-            android:layout_centerVertical="true"
-            android:fontFamily="@font/semibold"
-            android:layout_marginLeft="6dp"
-            android:textColor="@color/black"
-           android:text="Cistron System private ltd"
-            android:layout_height="wrap_content"/>
-
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/ivprofilename"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_centerVertical="true"
-           app:lottie_rawRes="@raw/person2"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true"
-            app:tint="@color/white" />
-
-
-    </RelativeLayout>
-
-
-    <RelativeLayout
-        android:id="@+id/rlcardatted"
-        android:layout_width="match_parent"
-        android:layout_height="450dp"
-        android:layout_below="@id/rlProfile"
-        android:layout_centerInParent="true"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginRight="20dp"
-        android:background="@drawable/cardview"
-        android:backgroundTint="#FEFCFF">
-
-        <LinearLayout
-            android:id="@+id/llview"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cvAttendance"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_alignParentStart="true"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="40dp"
-                android:layout_marginRight="20dp"
-                android:layout_weight="1"
-                android:backgroundTint="#6495ED"
-                app:cardCornerRadius="20dp">
-
-                <com.airbnb.lottie.LottieAnimationView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_below="@+id/tvDoj"
-                    android:layout_gravity="center"
-                    app:lottie_autoPlay="true"
-                    app:lottie_loop="true"
-                    app:lottie_rawRes="@raw/attendancegif" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="45dp"
-                    android:fontFamily="@font/bold"
-                    android:text="Attendance"
-                    android:textColor="@color/white" />
-
-
-            </androidx.cardview.widget.CardView>
-
-
-            <!--        Expenses-->
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cvExpense"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_alignParentEnd="true"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="40dp"
-                android:layout_marginRight="15dp"
-                android:layout_toRightOf="@id/cvAttendance"
-                android:layout_weight="1"
-                android:backgroundTint="#6495ED"
-                app:cardCornerRadius="20dp">
-
-                <com.airbnb.lottie.LottieAnimationView
-                    android:layout_width="45dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center"
-                    app:lottie_autoPlay="true"
-                    app:lottie_loop="true"
-                    app:lottie_rawRes="@raw/expense" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="45dp"
-                    android:fontFamily="@font/bold"
-                    android:text="Expenses"
-                    android:textColor="@color/white" />
-
-
-            </androidx.cardview.widget.CardView>
-
-        </LinearLayout>
-
-
-        <!--        Leave-->
-
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cvLeave"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_below="@+id/llview"
-            android:layout_centerHorizontal="true"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="30dp"
-            android:backgroundTint="#6495ED"
-            app:cardCornerRadius="20dp">
-
-            <com.airbnb.lottie.LottieAnimationView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                app:lottie_autoPlay="true"
-                app:lottie_loop="true"
-                app:lottie_rawRes="@raw/leave"
-                app:tint="@color/white" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="45dp"
-                android:fontFamily="@font/bold"
-                android:text="Leave Application"
-                android:textColor="@color/white" />
-
-
-        </androidx.cardview.widget.CardView>
-
-
-        <!--        <View-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:id="@+id/viewcenter"-->
-        <!--            android:background="@color/white"-->
-        <!--            android:layout_centerInParent="true"-->
-        <!--            android:layout_height="0.9dp"/>-->
-
-        <!--        <View-->
-        <!--            android:layout_width="0.9dp"-->
-        <!--            android:id="@+id/viewhorcenter"-->
-        <!--            android:background="@color/white"-->
-        <!--            android:layout_centerHorizontal="true"-->
-        <!--            android:layout_height="230dp"/>-->
-
-    </RelativeLayout>
-
-
 
 
 </RelativeLayout>

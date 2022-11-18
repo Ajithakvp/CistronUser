@@ -333,6 +333,8 @@ public class ExpensesActivity extends Activity {
                     Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                     intent.setType("*/*");
                     startActivityForResult(intent, 1);
+                    tvConveyanceEmptyDoc.setVisibility(View.GONE);
+                    tvConveyanceDoc.setVisibility(View.VISIBLE);
                 } catch (Exception e) {
 
                 }
@@ -347,6 +349,8 @@ public class ExpensesActivity extends Activity {
                     Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                     intent.setType("*/*");
                     startActivityForResult(intent, 2);
+                    tvTicketEmptyDoc.setVisibility(View.GONE);
+                    tvTicketDoc.setVisibility(View.VISIBLE);
                 } catch (Exception e) {
 
                 }
@@ -361,6 +365,8 @@ public class ExpensesActivity extends Activity {
                     Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                     intent.setType("*/*");
                     startActivityForResult(intent, 3);
+                    tvOtherEmptyDoc.setVisibility(View.GONE);
+                    tvOtherDoc.setVisibility(View.VISIBLE);
                 } catch (Exception e) {
 
                 }
@@ -375,6 +381,8 @@ public class ExpensesActivity extends Activity {
                     Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                     intent.setType("*/*");
                     startActivityForResult(intent, 4);
+                    tvLodgingEmptyDoc.setVisibility(View.GONE);
+                    ivLodgingDoc.setVisibility(View.VISIBLE);
                 } catch (Exception e) {
 
                 }
@@ -812,7 +820,7 @@ public class ExpensesActivity extends Activity {
                         Toast.makeText(ExpensesActivity.this, "Remove", Toast.LENGTH_SHORT).show();
 
                         ivDeletelodging.setVisibility(View.GONE);
-                        tvLodgingEmptyDoc.setVisibility(View.GONE);
+                        tvLodgingEmptyDoc.setVisibility(View.VISIBLE);
                         ivLodgingDoc.setVisibility(View.VISIBLE);
                         tvLodgingDoc.setVisibility(View.GONE);
                         ivpreviewtlodging.setVisibility(View.GONE);
@@ -857,9 +865,9 @@ public class ExpensesActivity extends Activity {
                         Toast.makeText(ExpensesActivity.this, "Remove", Toast.LENGTH_SHORT).show();
 
                         ivpreviewtTicket.setVisibility(View.GONE);
+                        tvTicketDoc.setVisibility(View.GONE);
                         tvTicketEmptyDoc.setVisibility(View.VISIBLE);
                         ivTicketDoc.setVisibility(View.VISIBLE);
-                        tvTicketDoc.setVisibility(View.GONE);
                         ivDeleteTicket.setVisibility(View.GONE);
                         if (response.body().getSelecteddtExpenses().getFilename_t().trim().equals("")) {
                             ivpreviewtTicket.setVisibility(View.GONE);
@@ -895,9 +903,9 @@ public class ExpensesActivity extends Activity {
                     if (response.isSuccessful()) {
                         Toast.makeText(ExpensesActivity.this, "Remove", Toast.LENGTH_SHORT).show();
                         ivpreviewOther.setVisibility(View.GONE);
+                        tvOtherDoc.setVisibility(View.VISIBLE);
                         tvOtherEmptyDoc.setVisibility(View.VISIBLE);
                         ivotherDoc.setVisibility(View.VISIBLE);
-                        tvOtherDoc.setVisibility(View.GONE);
                         ivDeleteOther.setVisibility(View.GONE);
 
                         if (response.body().getSelecteddtExpenses().getFilename_o().trim().equals("")) {
@@ -1075,9 +1083,9 @@ public class ExpensesActivity extends Activity {
                     if (response.isSuccessful()) {
 
                         ivConvencyDelete.setVisibility(View.GONE);
+                        tvConveyanceDoc.setVisibility(View.GONE);
                         tvConveyanceEmptyDoc.setVisibility(View.VISIBLE);
                         ivConvencydoc.setVisibility(View.VISIBLE);
-                        tvConveyanceDoc.setVisibility(View.GONE);
                         ivConvencypreview.setVisibility(View.GONE);
 
                         if (response.body().getSelecteddtExpenses().getFilename_all().trim().equals("")) {
@@ -1483,6 +1491,7 @@ public class ExpensesActivity extends Activity {
                     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                     strConvenyance = timeStamp + "." + getFileExt(contentUri);
                     Toast.makeText(this, "File Name" + strConvenyance, Toast.LENGTH_SHORT).show();
+                    tvConveyanceDoc.setVisibility(View.VISIBLE);
 
                     try {
                         if (strConvenyance.length() > 0) {
@@ -1512,6 +1521,8 @@ public class ExpensesActivity extends Activity {
                     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                     strtickDoc = timeStamp + "." + getFileExt(contentUri);
                     Toast.makeText(this, "File Name" + strtickDoc, Toast.LENGTH_SHORT).show();
+                    tvTicketDoc.setVisibility(View.VISIBLE);
+
 
                     try {
                         if (strtickDoc.length() > 0) {
@@ -1542,10 +1553,12 @@ public class ExpensesActivity extends Activity {
                     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                     strLodgingDoc = timeStamp + "." + getFileExt(contentUri);
                     Toast.makeText(this, "File Name" + strLodgingDoc, Toast.LENGTH_SHORT).show();
+                    tvLodgingDoc.setVisibility(View.VISIBLE);
 
                     try {
                         if (strLodgingDoc.length() > 0) {
                             tvLodgingDoc.setText(strLodgingDoc);
+
 
                         }
 
@@ -1572,7 +1585,7 @@ public class ExpensesActivity extends Activity {
                     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                     strotherDoc = timeStamp + "." + getFileExt(contentUri);
                     Toast.makeText(this, "File Name" + strotherDoc, Toast.LENGTH_SHORT).show();
-
+                    tvOtherDoc.setVisibility(View.VISIBLE);
                     try {
                         if (strotherDoc.length() > 0) {
                             tvOtherDoc.setText(strotherDoc);
