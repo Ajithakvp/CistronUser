@@ -189,9 +189,7 @@ public class ExpensesActivity extends Activity {
             }
         });
 
-
-
-
+        
 
         edOther.addTextChangedListener(new TextWatcher() {
             @Override
@@ -264,35 +262,6 @@ public class ExpensesActivity extends Activity {
 
             }
         });
-
-
-
-
-
-//        if (edConveyance.getText().toString().trim().length() == 0){
-//            rlUpload.setEnabled(false);
-//        }else {
-//            rlUpload.setEnabled(true);
-//        }
-//
-//        if (edOther.getText().toString().trim().length() == 0){
-//            rlUploadother.setEnabled(false);
-//        }else {
-//            rlUploadother.setEnabled(true);
-//        }
-//
-//        if (tvTicket.getText().toString().trim().length() == 0){
-//            rlUploadTicket.setEnabled(false);
-//        }else {
-//            rlUploadTicket.setEnabled(false);
-//        }
-//
-//
-//        if (tvLodging.getText().toString().trim().length() == 0){
-//            rlUploadLodging.setEnabled(false);
-//        }else {
-//            rlUploadLodging.setEnabled(false);
-//        }
 
 
 
