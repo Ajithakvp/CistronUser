@@ -2,22 +2,8 @@ package com.example.cistronuser.API.Model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class WeeklyExpensesModel {
-//     "date": "2022-11-10",
-//             "c_amo": "1",
-//             "t_amo": "2",
-//             "l_amo": "3",
-//             "o_amo": "4",
-//             "active": "0",
-//             "workreport": "date",
-//             "filename_all": "exp_report/12~filename_all.jpg",
-//             "filename_t": "exp_report/12~filename_t.jpg",
-//             "filename_l": "exp_report/12~filename_l.jpg",
-//             "filename_o": "exp_report/12~filename_o.jpg",
-//             "active_upload_all": "1",
-//             "active_upload_t": "1",
-//             "active_upload_l": "1",
-//             "active_upload_o": "1"
+public class ReportExpensesViewModel {
+
 
 
     @SerializedName("date")
@@ -49,7 +35,6 @@ public class WeeklyExpensesModel {
 
     @SerializedName("filename_o")
     private String filename_o;
-
 
     @SerializedName("sum")
     private String sum;

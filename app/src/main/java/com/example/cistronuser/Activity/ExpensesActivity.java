@@ -125,7 +125,7 @@ public class ExpensesActivity extends Activity {
     //WeeklyExpense
     ExpensesViewWeeklyAdapter weeklyAdapter;
     RelativeLayout rlUploadWeekAll;
-    TextView tvWeekDoc;
+    TextView tvWeekDoc,tvGrandsumDoc;
     File fileWeek;
     String strWeekall;
     ArrayList<WeeklyExpensesModel>weeklyExpensesModels=new ArrayList<>();
@@ -760,6 +760,7 @@ public class ExpensesActivity extends Activity {
         tvViewWeeklyreportSubmit=bottomSheetDialog.findViewById(R.id.tvViewWeeklyreportSubmit);
         rlUploadWeekAll=bottomSheetDialog.findViewById(R.id.rlUploadWeekAll);
         tvWeekDoc=bottomSheetDialog.findViewById(R.id.tvWeekDoc);
+        tvGrandsumDoc=bottomSheetDialog.findViewById(R.id.tvGrandsumDoc);
 
 
 
@@ -779,6 +780,7 @@ public class ExpensesActivity extends Activity {
                 try{
                     if (response.isSuccessful()){
                         progressDialog.dismiss();
+                        tvGrandsumDoc.setText(response.body().getGrandSum());
                         weeklyAdapter.weeklyExpensesModels=response.body().getWeeklyExpensesModels();
                         weeklyAdapter.notifyDataSetChanged();
 
@@ -1126,6 +1128,7 @@ public class ExpensesActivity extends Activity {
         tvViewWeeklyreportSubmit=bottomSheetDialog.findViewById(R.id.tvViewWeeklyreportSubmit);
         rlUploadWeekAll=bottomSheetDialog.findViewById(R.id.rlUploadWeekAll);
         tvWeekDoc=bottomSheetDialog.findViewById(R.id.tvWeekDoc);
+        tvGrandsumDoc=bottomSheetDialog.findViewById(R.id.tvGrandsumDoc);
 
 
 
@@ -1145,6 +1148,7 @@ public class ExpensesActivity extends Activity {
                try{
                    if (response.isSuccessful()){
                        progressDialog.dismiss();
+                       tvGrandsumDoc.setText(response.body().getGrandSum());
                        weeklyAdapter.weeklyExpensesModels=response.body().getWeeklyExpensesModels();
                        weeklyAdapter.notifyDataSetChanged();
 

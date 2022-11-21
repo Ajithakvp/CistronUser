@@ -35,6 +35,16 @@ public class ViewExpenseResponse {
     @SerializedName("selectedDtExp")
     private SelecteddtExpenses selecteddtExpenses;
 
+    @SerializedName("grandSum")
+    private String  grandSum;
+
+    public String getGrandSum() {
+        return grandSum;
+    }
+
+    public void setGrandSum(String grandSum) {
+        this.grandSum = grandSum;
+    }
 
     public String getError() {
         return error;

@@ -44,6 +44,7 @@ import com.example.cistronuser.Common.ConnectionRecevier;
 import com.example.cistronuser.Common.PreferenceManager;
 import com.example.cistronuser.LoginActivity;
 import com.example.cistronuser.R;
+import com.example.cistronuser.Report.Activity.ExpensesReport;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.io.ByteArrayOutputStream;
@@ -84,6 +85,10 @@ public class DashboardActivity extends Activity {
     String strPhoto;
 
 
+    //Admin Dashboard
+    RelativeLayout rlExpenseReport;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +105,7 @@ public class DashboardActivity extends Activity {
         ivprofile = findViewById(R.id.ivprofile);
         lWebview = findViewById(R.id.lWebview);
         tvProfilename=findViewById(R.id.tvProfilename);
+        rlExpenseReport=findViewById(R.id.rlExpenseReport);
 
 
         tvProfilename.setText(PreferenceManager.getEmpName(this));
@@ -171,8 +177,17 @@ public class DashboardActivity extends Activity {
 
         ivprofile.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)     {
                 ProfileView();
+            }
+        });
+
+        rlExpenseReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(DashboardActivity.this, ExpensesReport.class);
+                startActivity(intent);
+
             }
         });
 

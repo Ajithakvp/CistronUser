@@ -1,9 +1,8 @@
-package com.example.cistronuser.Adapter;
+package com.example.cistronuser.Report.Adapter;
 
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
@@ -12,32 +11,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.cistronuser.API.APIClient;
-import com.example.cistronuser.API.Interface.ExpenseInterface;
-import com.example.cistronuser.API.Interface.ViewExpenseListInterface;
-import com.example.cistronuser.API.Model.WeeklyExpensesModel;
-import com.example.cistronuser.API.Response.ViewExpenseResponse;
+import com.example.cistronuser.API.Model.ReportExpensesViewModel;
 import com.example.cistronuser.Common.PreferenceManager;
 import com.example.cistronuser.R;
 
 import java.util.ArrayList;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-public class ExpensesViewWeeklyAdapter extends RecyclerView.Adapter<ExpensesViewWeeklyAdapter.ViewHolder> {
+public class ReportViewWeeklyAdapter extends RecyclerView.Adapter<ReportViewWeeklyAdapter.ViewHolder>{
 
     Activity activity;
     String baseurl;
-    public ArrayList<WeeklyExpensesModel>weeklyExpensesModels;
+    public ArrayList<ReportExpensesViewModel>weeklyExpensesModels;
 
-    public ExpensesViewWeeklyAdapter(Activity activity, String baseurl, ArrayList<WeeklyExpensesModel> weeklyExpensesModels) {
+
+    public ReportViewWeeklyAdapter(Activity activity, String baseurl, ArrayList<ReportExpensesViewModel> weeklyExpensesModels) {
         this.activity = activity;
         this.baseurl = baseurl;
         this.weeklyExpensesModels = weeklyExpensesModels;
@@ -45,13 +36,14 @@ public class ExpensesViewWeeklyAdapter extends RecyclerView.Adapter<ExpensesView
 
     @NonNull
     @Override
-    public ExpensesViewWeeklyAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ReportViewWeeklyAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.weeklyexpensereport, parent, false);
-        return new ExpensesViewWeeklyAdapter.ViewHolder(itemView);
+        return new ReportViewWeeklyAdapter.ViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ExpensesViewWeeklyAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ReportViewWeeklyAdapter.ViewHolder holder, int position) {
+
         holder.tvDate.setText(weeklyExpensesModels.get(position).getDate());
         holder.tvWorkreport.setText(weeklyExpensesModels.get(position).getWorkreport());
         holder.tvConvencyamt.setText(weeklyExpensesModels.get(position).getC_amo());
@@ -107,7 +99,7 @@ public class ExpensesViewWeeklyAdapter extends RecyclerView.Adapter<ExpensesView
             public void onClick(View v) {
 
                 callAttach(baseurl+fileConvency);
-                Log.e(TAG, "onClick: 1"+baseurl+fileConvency );
+                Log.e(TAG, "onClick: 1"+baseurl );
 
 
             }
@@ -137,17 +129,6 @@ public class ExpensesViewWeeklyAdapter extends RecyclerView.Adapter<ExpensesView
                 Log.e(TAG, "onClick: 4"+baseurl+Others );
             }
         });
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -182,7 +163,6 @@ public class ExpensesViewWeeklyAdapter extends RecyclerView.Adapter<ExpensesView
             ivLodgingView=itemView.findViewById(R.id.ivLodgingView);
             ivOtherView=itemView.findViewById(R.id.ivOtherView);
             tvTotalamt=itemView.findViewById(R.id.tvTotalamt);
-
         }
     }
 }

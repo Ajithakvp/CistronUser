@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="10dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tvName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/bold"
+                    android:text="Cistron System"
+                    android:textColor="@color/blue"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:id="@+id/tvspace"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_toRightOf="@id/tvName"
+                    android:fontFamily="@font/bold"
+                    android:text="-"
+                    android:textColor="@color/blue"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/tvEmpId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_toRightOf="@id/tvspace"
+                    android:fontFamily="@font/bold"
+                    android:text="E367"
+                    android:textColor="@color/Radio"
+                    android:textSize="18dp" />
+
+
+                <TextView
+                    android:id="@+id/tvWeekTag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvName"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/semibold"
+                    android:text="Week :"
+                    android:textColor="@color/black"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:id="@+id/tvStartDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvName"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_toRightOf="@id/tvWeekTag"
+                    android:fontFamily="@font/semibold"
+                    android:text="2022-12-22"
+                    android:textColor="@color/black"
+                    android:textSize="16dp" />
+
+
+                <TextView
+                    android:id="@+id/tvSpaceDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvName"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_toRightOf="@id/tvStartDate"
+                    android:fontFamily="@font/semibold"
+                    android:text="-"
+                    android:textColor="@color/Radio"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:id="@+id/tvEndDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvName"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_toRightOf="@id/tvSpaceDate"
+                    android:fontFamily="@font/semibold"
+                    android:text="2022-12-22"
+                    android:textColor="@color/black"
+                    android:textSize="16dp" />
+
+
+                <TextView
+                    android:id="@+id/tvSubmitOnTag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvWeekTag"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/semibold"
+                    android:text="SubmittedOn :"
+                    android:textColor="@color/black"
+                    android:textSize="15dp" />
+
+                <TextView
+                    android:id="@+id/tvSubmitDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvWeekTag"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_toRightOf="@id/tvSubmitOnTag"
+                    android:fontFamily="@font/semibold"
+                    android:text="2022-12-22"
+                    android:textColor="@color/black"
+                    android:textSize="15dp" />
+
+
+                <TextView
+                    android:id="@+id/tvSpacetime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvWeekTag"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_toRightOf="@id/tvSubmitDate"
+                    android:fontFamily="@font/semibold"
+                    android:text="-"
+                    android:visibility="gone"
+                    android:textColor="@color/Radio"
+                    android:textSize="15dp" />
+
+                <TextView
+                    android:id="@+id/tvSubmittedTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvWeekTag"
+                    android:layout_marginLeft="8dp"
+                    android:visibility="gone"
+                    android:layout_marginTop="8dp"
+                    android:layout_toRightOf="@id/tvSpacetime"
+                    android:fontFamily="@font/semibold"
+                    android:text="18:09:20"
+                    android:textColor="@color/black"
+                    android:textSize="15dp" />
+
+
+                <TextView
+                    android:id="@+id/tvView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvWeekTag"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="8dp"
+                    android:fontFamily="@font/semibold"
+                    android:text="View -->"
+                    android:textColor="@color/blue"
+                    android:textSize="19dp" />
+
+
+            </RelativeLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

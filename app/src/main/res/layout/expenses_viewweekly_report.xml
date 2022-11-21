@@ -1,0 +1,639 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="30dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <RelativeLayout
+            android:id="@+id/rltoolbar"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="#6495ED">
+
+            <TextView
+                android:id="@+id/tvHeader"
+                style="@style/header"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/bold"
+                android:text="Expenses Weekly Report"
+                android:textColor="@color/white"
+                android:textSize="20dp" />
+
+            <ImageView
+                android:id="@+id/ivBack"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="35dp"
+                android:backgroundTint="@color/white"
+                android:src="@drawable/ic_baseline_expand_circle_down_24"
+                android:tint="@color/white"
+                tools:ignore="UseAppTint" />
+
+
+            <ImageView
+                android:id="@+id/ivMore"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@id/ivdetails"
+                android:backgroundTint="@color/white"
+                android:src="@drawable/ic_baseline_post_add_24"
+                android:tint="@color/white"
+                android:visibility="gone"
+                tools:ignore="UseAppTint" />
+
+
+            <ImageView
+                android:id="@+id/ivdetails"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="10dp"
+                android:backgroundTint="@color/white"
+                android:src="@drawable/detail"
+                android:tint="@color/white"
+                android:visibility="gone"
+                tools:ignore="UseAppTint" />
+
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/rltoolbar">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp">
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvExpenseweeklyView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp" />
+
+
+                <TextView
+                    android:id="@+id/tvGrandsumDocTag"
+                    android:layout_width="150dp"
+                    android:layout_height="40dp"
+                    android:layout_below="@id/rvExpenseweeklyView"
+                    android:fontFamily="@font/semibold"
+                    android:gravity="center"
+                    android:text="Week Total :"
+                    android:textColor="@color/Radio"
+                    android:textSize="15dp"
+                    android:visibility="visible" />
+
+
+                <TextView
+                    android:id="@+id/tvGrandsumDoc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_below="@id/rvExpenseweeklyView"
+                    android:layout_toRightOf="@id/tvGrandsumDocTag"
+                    android:fontFamily="@font/semibold"
+                    android:gravity="center"
+                    android:text="100"
+                    android:textColor="@color/Radio"
+                    android:textSize="15dp"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/tvWeeklyPreviewTag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvGrandsumDoc"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/bold"
+                    android:text="Weekly Preview :"
+                    android:textColor="@color/Radio"
+                    android:textSize="20dp" />
+
+                <ImageView
+                    android:id="@+id/ivWeekPreview"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_below="@id/tvGrandsumDoc"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@id/tvWeeklyPreviewTag"
+                    android:src="@drawable/fileopen" />
+
+
+                <RelativeLayout
+                    android:id="@+id/rlAdjustmentLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvWeeklyPreviewTag"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/cardview"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:id="@+id/tvAdjustmentTag"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/bold"
+                        android:gravity="center"
+                        android:text="Adjustment "
+                        android:textColor="@color/white"
+                        android:textSize="20dp" />
+
+                    <ImageView
+                        android:id="@+id/ivDown"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="35dp"
+                        android:backgroundTint="@color/white"
+                        android:src="@drawable/ic_baseline_arrow_circle_down_24"
+                        android:tint="@color/white"
+                        android:visibility="visible"
+                        tools:ignore="UseAppTint" />
+
+
+                    <ImageView
+                        android:id="@+id/ivUp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="35dp"
+                        android:backgroundTint="@color/white"
+                        android:src="@drawable/ic_baseline_arrow_circle_up_24"
+                        android:tint="@color/white"
+                        android:visibility="gone"
+                        tools:ignore="UseAppTint" />
+
+
+                    <TextView
+                        android:id="@+id/tvOperterTag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvAdjustmentTag"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/semibold"
+                        android:text="Operator :"
+                        android:textColor="@color/white"
+                        android:textSize="18dp"
+                        android:visibility="gone" />
+
+                    <Spinner
+                        android:id="@+id/spOperator"
+                        android:layout_width="200dp"
+                        android:layout_height="50dp"
+                        android:layout_below="@id/tvAdjustmentTag"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_toRightOf="@id/tvOperterTag"
+                        android:background="@drawable/edittext"
+                        android:backgroundTint="@color/white"
+                        android:gravity="center"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/tvAmtTag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/spOperator"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/semibold"
+                        android:text="Amount   :"
+                        android:textColor="@color/white"
+                        android:textSize="18dp"
+                        android:visibility="gone" />
+
+
+                    <EditText
+                        android:id="@+id/edAmt"
+                        android:layout_width="200dp"
+                        android:layout_height="50dp"
+                        android:layout_below="@id/spOperator"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_toRightOf="@id/tvAmtTag"
+                        android:background="@drawable/edittext"
+                        android:backgroundTint="@color/white"
+                        android:gravity="center"
+                        android:inputType="number"
+                        android:textColor="@color/black"
+                        android:visibility="gone" />
+
+
+                    <TextView
+                        android:id="@+id/tvReasoTag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/edAmt"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/semibold"
+                        android:text="Reason    :"
+                        android:textColor="@color/white"
+                        android:textSize="18dp"
+                        android:visibility="gone" />
+
+
+                    <EditText
+                        android:id="@+id/edReason"
+                        android:layout_width="200dp"
+                        android:layout_height="50dp"
+                        android:layout_below="@id/edAmt"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_toRightOf="@id/tvReasoTag"
+                        android:background="@drawable/edittext"
+                        android:backgroundTint="@color/white"
+                        android:gravity="center"
+                        android:inputType="number"
+                        android:textColor="@color/black"
+                        android:visibility="gone" />
+
+
+                    <TextView
+                        android:id="@+id/tvUpdate"
+                        android:layout_width="200dp"
+                        android:layout_height="50dp"
+                        android:layout_below="@id/edReason"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:background="@drawable/edittext"
+                        android:backgroundTint="@color/Radio"
+                        android:fontFamily="@font/semibold"
+                        android:gravity="center"
+                        android:text="Update"
+                        android:textColor="@color/white"
+                        android:textSize="18dp"
+                        android:visibility="gone" />
+
+
+                </RelativeLayout>
+
+
+                <!--            Reset-->
+
+
+                <RelativeLayout
+                    android:id="@+id/rlResetLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/rlAdjustmentLayout"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/cardview"
+                    android:backgroundTint="#F9807C"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:id="@+id/tvResetTag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginTop="30dp"
+                        android:fontFamily="@font/bold"
+                        android:text="Reset :"
+                        android:textColor="@color/white"
+                        android:textSize="20dp" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/stReset"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_toRightOf="@id/tvResetTag"
+                        android:checked="false" />
+
+
+                </RelativeLayout>
+
+
+                <!--            Hardcopy-->
+
+
+                <RelativeLayout
+                    android:id="@+id/rlhardcopyLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/rlResetLayout"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/cardview"
+                    android:backgroundTint="#FFBF00"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:id="@+id/tvhcTag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="39dp"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/bold"
+                        android:text="HardCopy Received :"
+                        android:textColor="@color/white"
+                        android:textSize="20dp" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/sthardcopy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_toRightOf="@id/tvhcTag"
+                        android:checked="false" />
+
+
+                    <TextView
+                        android:id="@+id/tvDateTag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvhcTag"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="50dp"
+                        android:fontFamily="@font/semibold"
+                        android:text="Date            :"
+                        android:textColor="@color/white"
+                        android:textSize="18dp"
+                        android:visibility="gone" />
+
+
+                    <TextView
+                        android:id="@+id/tvDate"
+                        android:layout_width="200dp"
+                        android:layout_height="50dp"
+                        android:layout_below="@id/tvhcTag"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="40dp"
+                        android:layout_toRightOf="@id/tvDateTag"
+                        android:background="@drawable/edittext"
+                        android:backgroundTint="@color/white"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:visibility="gone" />
+
+
+                    <TextView
+                        android:id="@+id/tvRpTag"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvDate"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/semibold"
+                        android:text="Received Person         :"
+                        android:textColor="@color/white"
+                        android:textSize="18dp"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/tvRp"
+                        android:layout_width="200dp"
+                        android:layout_height="50dp"
+                        android:layout_below="@id/tvDate"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_toRightOf="@id/tvRpTag"
+                        android:background="@drawable/edittext"
+                        android:backgroundTint="@color/white"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:visibility="gone" />
+
+
+                    <TextView
+                        android:id="@+id/tvhcSubmit"
+                        android:layout_width="200dp"
+                        android:layout_height="50dp"
+                        android:layout_below="@id/tvRp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:background="@drawable/edittext"
+                        android:backgroundTint="@color/Radio"
+                        android:fontFamily="@font/semibold"
+                        android:gravity="center"
+                        android:text="Submit"
+                        android:textColor="@color/white"
+                        android:textSize="18dp"
+                        android:visibility="gone" />
+
+
+                </RelativeLayout>
+
+
+                <!--            Payment-->
+
+                <RelativeLayout
+                    android:id="@+id/rlPaymentLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/rlhardcopyLayout"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/cardview"
+                    android:backgroundTint="#40E0D0"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:id="@+id/tvPayTag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="39dp"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/bold"
+                        android:text="Payment Processed :"
+                        android:textColor="@color/white"
+                        android:textSize="20dp" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/stPay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_toRightOf="@id/tvPayTag"
+                        android:checked="false" />
+
+
+                    <TextView
+                        android:id="@+id/tvPayDateTag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvPayTag"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="50dp"
+                        android:fontFamily="@font/semibold"
+                        android:text="Date            :"
+                        android:textColor="@color/white"
+                        android:textSize="18dp"
+                        android:visibility="gone" />
+
+
+                    <TextView
+                        android:id="@+id/tvPayDate"
+                        android:layout_width="200dp"
+                        android:layout_height="50dp"
+                        android:layout_below="@id/tvPayTag"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="40dp"
+                        android:layout_toRightOf="@id/tvPayDateTag"
+                        android:background="@drawable/edittext"
+                        android:backgroundTint="@color/white"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:visibility="gone" />
+
+
+                    <TextView
+                        android:id="@+id/tvPaySubmit"
+                        android:layout_width="200dp"
+                        android:layout_height="50dp"
+                        android:layout_below="@id/tvPayDate"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:background="@drawable/edittext"
+                        android:backgroundTint="@color/Radio"
+                        android:fontFamily="@font/semibold"
+                        android:gravity="center"
+                        android:text="Submit"
+                        android:textColor="@color/white"
+                        android:textSize="18dp"
+                        android:visibility="gone" />
+
+                </RelativeLayout>
+
+                <!--            Paid-->
+
+
+                <RelativeLayout
+                    android:id="@+id/rlPaidmentLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/rlPaymentLayout"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginBottom="30dp"
+                    android:background="@drawable/cardview"
+                    android:backgroundTint="#000080"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:id="@+id/tvPaidTag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginLeft="39dp"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/bold"
+                        android:text="Paid :"
+                        android:textColor="@color/white"
+                        android:textSize="20dp" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/stPaid"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_toRightOf="@id/tvPaidTag"
+                        android:checked="false" />
+
+
+                    <TextView
+                        android:id="@+id/tvPaidDateTag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvPaidTag"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="50dp"
+                        android:fontFamily="@font/semibold"
+                        android:text="Date            :"
+                        android:textColor="@color/white"
+                        android:textSize="18dp"
+                        android:visibility="gone" />
+
+
+                    <TextView
+                        android:id="@+id/tvPaidDate"
+                        android:layout_width="200dp"
+                        android:layout_height="50dp"
+                        android:layout_below="@id/tvPaidTag"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="40dp"
+                        android:layout_toRightOf="@id/tvPaidDateTag"
+                        android:background="@drawable/edittext"
+                        android:backgroundTint="@color/white"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:visibility="gone" />
+
+
+                    <TextView
+                        android:id="@+id/tvPaidSubmit"
+                        android:layout_width="200dp"
+                        android:layout_height="50dp"
+                        android:layout_below="@id/tvPaidDate"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:background="@drawable/edittext"
+                        android:backgroundTint="@color/Radio"
+                        android:fontFamily="@font/semibold"
+                        android:gravity="center"
+                        android:text="Submit"
+                        android:textColor="@color/white"
+                        android:textSize="18dp"
+                        android:visibility="gone" />
+
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+</androidx.core.widget.NestedScrollView>

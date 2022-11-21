@@ -69,6 +69,8 @@ public class LoginActivity extends AppCompatActivity {
     ArrayList<LoginuserModel> loginuserModel = new ArrayList<>();
 
 
+
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {

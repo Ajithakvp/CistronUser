@@ -6,10 +6,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
 
-
-
-
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:id="@+id/rltoolbar"
@@ -52,6 +48,36 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp" />
+
+
+    <TextView
+        android:id="@+id/tvGrandsumDocTag"
+        android:layout_width="150dp"
+        android:layout_below="@id/rvExpense"
+        android:layout_height="40dp"
+        android:textColor="@color/Radio"
+        android:fontFamily="@font/semibold"
+        android:gravity="center"
+        android:visibility="visible"
+        android:text="Week Total :"
+        android:textSize="15dp" />
+
+
+    <TextView
+        android:id="@+id/tvGrandsumDoc"
+        android:layout_width="wrap_content"
+        android:layout_below="@id/rvExpense"
+        android:layout_height="40dp"
+        android:textColor="@color/Radio"
+        android:layout_toRightOf="@id/tvGrandsumDocTag"
+        android:fontFamily="@font/semibold"
+        android:gravity="center"
+        android:visibility="visible"
+        android:text="100"
+        android:textSize="15dp" />
+
+
+
 
 
     <RelativeLayout
