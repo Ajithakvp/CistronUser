@@ -1,4 +1,4 @@
-package com.example.cistronuser.Report.Adapter;
+package com.example.cistronuser.WaitingforApprovel.Adapter;
 
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
@@ -15,11 +15,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.cistronuser.API.APIClient;
+import com.example.cistronuser.API.Interface.ReportExpensesViewInterface;
 import com.example.cistronuser.API.Model.ReportExpensesViewModel;
+import com.example.cistronuser.API.Response.ReportExpensesViewResponses;
 import com.example.cistronuser.Common.PreferenceManager;
 import com.example.cistronuser.R;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ReportViewWeeklyAdapter extends RecyclerView.Adapter<ReportViewWeeklyAdapter.ViewHolder>{
 
@@ -130,7 +137,39 @@ public class ReportViewWeeklyAdapter extends RecyclerView.Adapter<ReportViewWeek
             }
         });
 
+        Callbaseurl();
 
+
+
+    }
+
+    private void Callbaseurl() {
+        ReportExpensesViewInterface reportExpensesViewInterface = APIClient.getClient().create(ReportExpensesViewInterface.class);
+        reportExpensesViewInterface.callreportviewexpenses("viewsubmittedExpenses", PreferenceManager.getEmpID(activity),"2022-10-23", "2022-10-29").enqueue(new Callback<ReportExpensesViewResponses>() {
+            @Override
+            public void onResponse(Call<ReportExpensesViewResponses> call, Response<ReportExpensesViewResponses> response) {
+
+                try {
+                    if (response.isSuccessful()) {
+
+                        baseurl=response.body().getAttachBaseUrl();
+
+
+                    }
+
+                } catch (Exception e) {
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ReportExpensesViewResponses> call, Throwable t) {
+
+
+
+            }
+        });
 
     }
 

@@ -133,6 +133,8 @@ public class ExpensesActivity extends Activity {
     //CheckWeekExpensesmsg
     RelativeLayout rlErrormsg;
     TextView tvExtraMsg,tvCheckWeekReportMsg;
+    ImageView ivWeekPreview;
+    String WeekBaseurl,Filename_r;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -761,6 +763,7 @@ public class ExpensesActivity extends Activity {
         rlUploadWeekAll=bottomSheetDialog.findViewById(R.id.rlUploadWeekAll);
         tvWeekDoc=bottomSheetDialog.findViewById(R.id.tvWeekDoc);
         tvGrandsumDoc=bottomSheetDialog.findViewById(R.id.tvGrandsumDoc);
+        ivWeekPreview=bottomSheetDialog.findViewById(R.id.ivWeekPreview);
 
 
 
@@ -770,6 +773,13 @@ public class ExpensesActivity extends Activity {
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         rvExpense.setLayoutManager(linearLayoutManager);
         rvExpense.setAdapter(weeklyAdapter);
+
+        ivWeekPreview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                previewattache(WeekBaseurl+Filename_r);
+            }
+        });
 
 
 
@@ -781,6 +791,8 @@ public class ExpensesActivity extends Activity {
                     if (response.isSuccessful()){
                         progressDialog.dismiss();
                         tvGrandsumDoc.setText(response.body().getGrandSum());
+                        Filename_r=response.body().getFilename_r();
+                        WeekBaseurl=response.body().getAttachBaseUrl();
                         weeklyAdapter.weeklyExpensesModels=response.body().getWeeklyExpensesModels();
                         weeklyAdapter.notifyDataSetChanged();
 

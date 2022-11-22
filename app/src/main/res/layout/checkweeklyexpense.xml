@@ -78,6 +78,30 @@
 
 
 
+    <TextView
+        android:id="@+id/tvWeeklyPreviewTag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvGrandsumDoc"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:fontFamily="@font/bold"
+        android:text="Weekly Preview :"
+        android:textColor="@color/Radio"
+        android:textSize="20dp" />
+
+    <ImageView
+        android:id="@+id/ivWeekPreview"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="30dp"
+        android:layout_below="@id/tvGrandsumDoc"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@id/tvWeeklyPreviewTag"
+        android:src="@drawable/fileopen" />
+
+
+
 
 
     <RelativeLayout

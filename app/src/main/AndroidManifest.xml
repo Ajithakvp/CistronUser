@@ -24,7 +24,14 @@
         tools:replace="android:label"
         tools:targetApi="31">
         <activity
-            android:name=".Report.Activity.ExpensesReport"
+            android:name=".Report.Activity.ExpenseReportWM"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".WaitingforApprovel.Activity.ExpensesReport"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

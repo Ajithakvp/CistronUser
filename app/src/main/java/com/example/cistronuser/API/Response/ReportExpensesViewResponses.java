@@ -26,6 +26,9 @@ public class ReportExpensesViewResponses {
 
 
 
+    @SerializedName("active")
+    private String active;
+
     @SerializedName("expenses")
     private ArrayList<ReportExpensesViewModel>reportExpensesViewModels;
 
@@ -72,6 +75,14 @@ public class ReportExpensesViewResponses {
 
     @SerializedName("attachBaseUrl")
     private String attachBaseUrl;
+
+    public String getActive() {
+        return active;
+    }
+
+    public void setActive(String active) {
+        this.active = active;
+    }
 
     public String getGrandSum() {
         return grandSum;

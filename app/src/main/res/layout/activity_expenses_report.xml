@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Report.Activity.ExpensesReport">
+    tools:context=".WaitingforApprovel.Activity.ExpensesReport">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:fontFamily="@font/bold"
-                android:text="Expenses Reports"
+                android:text="Expenses Submitted for payment"
                 android:textColor="@color/white"
                 android:textSize="20dp" />
 
@@ -37,7 +37,7 @@
                 android:backgroundTint="@color/white"
                 android:src="@drawable/ic_baseline_arrow_left_24"
                 android:tint="@color/white"
-                tools:ignore="UseAppTint"  />
+                tools:ignore="UseAppTint" />
 
 
             <ImageView

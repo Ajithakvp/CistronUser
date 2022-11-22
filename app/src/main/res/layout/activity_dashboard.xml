@@ -294,11 +294,51 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="20dp"
+                            android:id="@+id/tvExpenseName"
                             android:layout_toRightOf="@+id/ivExpense"
                             android:fontFamily="@font/semibold"
                             android:text="Expenses"
                             android:textColor="@color/white"
                             android:textSize="18dp" />
+
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="10dp"
+                            android:id="@+id/tvCountExpensestart"
+                            android:layout_toRightOf="@+id/tvExpenseName"
+                            android:fontFamily="@font/semibold"
+                            android:text="("
+                            android:textColor="#C0C0C0"
+                            android:textSize="18dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="10dp"
+                            android:id="@+id/tvwaitingCountExpense"
+                            android:layout_toRightOf="@+id/tvCountExpensestart"
+                            android:fontFamily="@font/bold"
+                            android:text="45"
+                            android:textColor="#FF0000"
+                            android:textSize="18dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="10dp"
+                            android:id="@+id/tvCountExpenseend"
+                            android:layout_toRightOf="@+id/tvwaitingCountExpense"
+                            android:fontFamily="@font/semibold"
+                            android:text=")"
+                            android:textColor="#C0C0C0"
+                            android:textSize="18dp" />
+
 
                     </RelativeLayout>
 

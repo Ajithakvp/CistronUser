@@ -26,8 +26,8 @@ public class ViewExpenseResponse {
     @SerializedName("extra")
     private String extra;
 
-    @SerializedName("consolidatedAttach")
-    private String consolidatedAttach;
+    @SerializedName("filename_r")
+    private String filename_r;
 
     @SerializedName("weeklyExpenses")
    private ArrayList<WeeklyExpensesModel>weeklyExpensesModels;
@@ -40,6 +40,14 @@ public class ViewExpenseResponse {
 
     public String getGrandSum() {
         return grandSum;
+    }
+
+    public String getFilename_r() {
+        return filename_r;
+    }
+
+    public void setFilename_r(String filename_r) {
+        this.filename_r = filename_r;
     }
 
     public void setGrandSum(String grandSum) {
@@ -94,13 +102,7 @@ public class ViewExpenseResponse {
         this.extra = extra;
     }
 
-    public String getConsolidatedAttach() {
-        return consolidatedAttach;
-    }
 
-    public void setConsolidatedAttach(String consolidatedAttach) {
-        this.consolidatedAttach = consolidatedAttach;
-    }
 
     public ArrayList<WeeklyExpensesModel> getWeeklyExpensesModels() {
         return weeklyExpensesModels;

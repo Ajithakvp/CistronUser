@@ -1,4 +1,4 @@
-package com.example.cistronuser.Report.Activity;
+package com.example.cistronuser.WaitingforApprovel.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -6,13 +6,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.example.cistronuser.API.APIClient;
 import com.example.cistronuser.API.Interface.ReportExpensesInterface;
 import com.example.cistronuser.API.Model.ReportExpensesModel;
 import com.example.cistronuser.API.Response.ReportExpensesResponse;
 import com.example.cistronuser.R;
-import com.example.cistronuser.Report.Adapter.ReportExpenseAdapter;
+import com.example.cistronuser.WaitingforApprovel.Adapter.ReportExpenseAdapter;
 
 import java.util.ArrayList;
 
@@ -26,6 +28,7 @@ public class ExpensesReport extends AppCompatActivity {
     ArrayList<ReportExpensesModel>reportExpensesModels=new ArrayList<>();
     ReportExpenseAdapter reportExpenseAdapter;
 
+    ImageView ivBack;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -33,6 +36,7 @@ public class ExpensesReport extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_expenses_report);
         rvExpenseReport=findViewById(R.id.rvExpenseReport);
+        ivBack=findViewById(R.id.ivBack);
 
 
         callReportExpenses();
@@ -41,6 +45,13 @@ public class ExpensesReport extends AppCompatActivity {
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         rvExpenseReport.setAdapter(reportExpenseAdapter);
         rvExpenseReport.setLayoutManager(linearLayoutManager);
+
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
 
     }

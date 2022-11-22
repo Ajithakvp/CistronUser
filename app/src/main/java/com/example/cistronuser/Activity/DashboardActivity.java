@@ -1,58 +1,38 @@
 package com.example.cistronuser.Activity;
 
-import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
-
-import static java.text.DateFormat.DEFAULT;
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.text.method.LinkMovementMethod;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.cistronuser.API.APIClient;
-import com.example.cistronuser.API.Interface.LoginInterFace;
-import com.example.cistronuser.API.Interface.ProfileUserDataInterface;
+import com.example.cistronuser.API.Interface.ExpenseCountInterface;
 import com.example.cistronuser.API.Model.LoginuserModel;
-import com.example.cistronuser.API.Response.LoginResponse;
-import com.example.cistronuser.API.Response.LoginUserResponse;
-import com.example.cistronuser.Adapter.ProfileAdapter;
+import com.example.cistronuser.API.Response.WaitingExpenseCountInterface;
 import com.example.cistronuser.Common.ConnectionRecevier;
 import com.example.cistronuser.Common.PreferenceManager;
 import com.example.cistronuser.LoginActivity;
 import com.example.cistronuser.R;
-import com.example.cistronuser.Report.Activity.ExpensesReport;
+import com.example.cistronuser.Report.Activity.ExpenseReportWM;
+import com.example.cistronuser.WaitingforApprovel.Activity.ExpensesReport;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.sql.Blob;
-import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -87,9 +67,12 @@ public class DashboardActivity extends Activity {
 
     //Admin Dashboard
     RelativeLayout rlExpenseReport;
+    TextView tvwaitingCountExpense;
 
 
 
+
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,6 +89,8 @@ public class DashboardActivity extends Activity {
         lWebview = findViewById(R.id.lWebview);
         tvProfilename=findViewById(R.id.tvProfilename);
         rlExpenseReport=findViewById(R.id.rlExpenseReport);
+        RelativeLayout rlWaitingExpense=findViewById(R.id.rlWaitingExpense);
+        tvwaitingCountExpense=findViewById(R.id.tvwaitingCountExpense);
 
 
         tvProfilename.setText(PreferenceManager.getEmpName(this));
@@ -182,14 +167,47 @@ public class DashboardActivity extends Activity {
             }
         });
 
-        rlExpenseReport.setOnClickListener(new View.OnClickListener() {
+        rlWaitingExpense.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(DashboardActivity.this, ExpensesReport.class);
+
+                //Waiting approval
+                Intent intent=new Intent(DashboardActivity.this,ExpensesReport.class);
                 startActivity(intent);
 
             }
         });
+
+        rlExpenseReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent expenseReport=new Intent(DashboardActivity.this, ExpenseReportWM.class);
+                startActivity(expenseReport);
+            }
+        });
+
+
+        ExpenseCountInterface expenseCountInterface= APIClient.getClient().create(ExpenseCountInterface.class);
+        expenseCountInterface.Callcount("expensesApprovalCount").enqueue(new Callback<WaitingExpenseCountInterface>() {
+            @Override
+            public void onResponse(Call<WaitingExpenseCountInterface> call, Response<WaitingExpenseCountInterface> response) {
+                try {
+                    if (response.isSuccessful()){
+                        tvwaitingCountExpense.setText(response.body().getCount());
+                    }
+
+                }catch (Exception e){
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<WaitingExpenseCountInterface> call, Throwable t) {
+
+            }
+        });
+
+
 
 
     }
