@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/rlweekreport"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <TextView
+                    android:id="@+id/tvEmpIDTag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:fontFamily="@font/semibold"
+                    android:text="EmpID"
+                    android:layout_below="@+id/tvNameTag"
+                    android:textColor="#1325F9"
+                    android:textSize="11dp" />
+                <TextView
+                    android:id="@+id/tvNameTag"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center_vertical"
+                    android:fontFamily="@font/semibold"
+                    android:text="Name"
+                    android:textColor="@color/black"
+                    android:textSize="11dp" />
+
+                <View
+                    android:id="@+id/Wview2"
+                    android:layout_width="0.9dp"
+                    android:layout_height="fill_parent"
+                    android:layout_marginLeft="4dp"
+                    android:layout_toRightOf="@id/tvNameTag"
+                    android:background="@color/black" />
+
+
+                <TextView
+                    android:id="@+id/tvDateTag"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:gravity="center_vertical"
+                    android:layout_toRightOf="@id/Wview2"
+                    android:fontFamily="@font/semibold"
+                    android:text="Date"
+                    android:textColor="@color/black"
+                    android:textSize="11dp" />
+
+
+                <View
+                    android:id="@+id/Wview3"
+                    android:layout_width="0.9dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
+                    android:layout_toRightOf="@id/tvDateTag"
+                    android:background="@color/black" />
+
+
+                <TextView
+                    android:id="@+id/tvReportTag"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_toRightOf="@id/Wview3"
+                    android:fontFamily="@font/semibold"
+                    android:text="Work Report"
+                    android:textColor="@color/black"
+                    android:textSize="13dp" />
+
+
+                <TextView
+                    android:id="@+id/tvc_amountag"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvReportTag"
+                    android:layout_marginLeft="8dp"
+                    android:visibility="visible"
+                    android:layout_toRightOf="@id/Wview3"
+                    android:fontFamily="@font/semibold"
+                    android:text="convency"
+                    android:textColor="@color/blue"
+                    android:textSize="11dp" />
+
+
+                <TextView
+                    android:id="@+id/tvt_amountag"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvc_amountag"
+                    android:layout_marginLeft="8dp"
+                    android:visibility="visible"
+                    android:layout_toRightOf="@id/Wview3"
+                    android:fontFamily="@font/semibold"
+                    android:text="Tikcet"
+                    android:textColor="@color/blue"
+                    android:textSize="11dp" />
+
+
+                <TextView
+                    android:id="@+id/tvl_amountag"
+                    android:layout_width="120dp"
+                    android:visibility="visible"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvt_amountag"
+                    android:layout_marginLeft="8dp"
+                    android:layout_toRightOf="@id/Wview3"
+                    android:fontFamily="@font/semibold"
+                    android:text="Tikcet"
+                    android:textColor="@color/blue"
+                    android:textSize="11dp" />
+
+                <TextView
+                    android:id="@+id/tvo_amountag"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvl_amountag"
+                    android:layout_marginLeft="8dp"
+                    android:visibility="visible"
+                    android:layout_toRightOf="@id/Wview3"
+                    android:fontFamily="@font/semibold"
+                    android:text="Tikcet"
+                    android:textColor="@color/blue"
+                    android:textSize="11dp" />
+
+                <TextView
+                    android:id="@+id/tva_amountag"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvo_amountag"
+                    android:layout_marginLeft="8dp"
+                    android:visibility="visible"
+                    android:layout_toRightOf="@id/Wview3"
+                    android:fontFamily="@font/semibold"
+                    android:text="Tikcet"
+                    android:textColor="@color/blue"
+                    android:textSize="11dp" />
+
+
+                <View
+                    android:id="@+id/Wview4"
+                    android:layout_width="0.9dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
+                    android:layout_toRightOf="@id/tvReportTag"
+                    android:background="@color/black" />
+
+
+                <TextView
+                    android:id="@+id/tvTotalTag"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:gravity="center"
+                    android:layout_toRightOf="@id/Wview4"
+                    android:fontFamily="@font/semibold"
+                    android:text="Total"
+                    android:textColor="@color/Radio"
+                    android:textSize="11dp" />
+
+
+
+
+                <View
+                    android:id="@+id/Wview6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0.5dp"
+                    android:layout_marginLeft="4dp"
+                   android:layout_below="@id/Wview4"
+                    android:background="@color/black" />
+
+
+            </RelativeLayout>
+
+                </TableRow>
+            </TableLayout>
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

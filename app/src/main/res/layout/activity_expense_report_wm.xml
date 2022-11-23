@@ -37,6 +37,21 @@
             tools:ignore="UseAppTint"  />
 
 
+        <ImageView
+            android:id="@+id/ivfilter"
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@id/tvHeader"
+            android:backgroundTint="@color/white"
+            android:src="@drawable/filtericon"
+            android:tint="@color/white"
+            tools:ignore="UseAppTint"  />
+
+
+
+
     </RelativeLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -51,6 +66,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:id="@+id/rlfilter"
+            android:visibility="visible"
             android:layout_height="wrap_content">
 
             <androidx.cardview.widget.CardView
@@ -78,7 +94,6 @@
                         android:id="@+id/tvreportTypeTag"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="30dp"
-                        android:layout_below="@id/spUser"
                         android:textColor="@color/white"
                         android:fontFamily="@font/bold"
                         android:text="Report Type  :"/>
@@ -87,7 +102,6 @@
                         android:id="@+id/spreportType"
                         android:layout_width="200dp"
                         android:layout_height="50dp"
-                        android:layout_below="@id/spUser"
                         android:layout_marginLeft="8dp"
                         android:layout_marginTop="20dp"
                         android:layout_toRightOf="@id/tvreportTypeTag"
@@ -115,6 +129,10 @@
                         android:layout_width="200dp"
                         android:layout_below="@id/spreportType"
                         android:layout_height="50dp"
+                        android:fontFamily="@font/semibold"
+                        android:gravity="center"
+                        android:textSize="17dp"
+                        android:textColor="@color/black"
                         android:visibility="gone"
                         android:layout_marginLeft="8dp"
                         android:layout_marginTop="20dp"
@@ -147,6 +165,10 @@
                         android:layout_height="50dp"
                         android:layout_marginLeft="8dp"
                         android:visibility="gone"
+                        android:fontFamily="@font/semibold"
+                        android:gravity="center"
+                        android:textSize="17dp"
+                        android:textColor="@color/black"
                         android:layout_marginTop="20dp"
                         android:layout_toRightOf="@id/tvEndDateTag"
                         android:background="@drawable/edittext"
@@ -175,6 +197,10 @@
                         android:layout_height="50dp"
                         android:layout_marginLeft="8dp"
                         android:visibility="gone"
+                        android:fontFamily="@font/semibold"
+                        android:gravity="center"
+                        android:textSize="17dp"
+                        android:textColor="@color/black"
                         android:layout_marginTop="20dp"
                         android:layout_toRightOf="@id/tvMonthyearTag"
                         android:background="@drawable/edittext"
@@ -182,45 +208,79 @@
                         />
 
 
+                </RelativeLayout>
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/view1"
+                        android:layout_below="@+id/rlReport"
+                        android:layout_height="0.5dp"/>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_below="@id/view1"
+                        android:id="@+id/rluser"
+                        android:layout_marginBottom="15dp"
+                        android:layout_height="wrap_content">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="18dp"
                         android:id="@+id/tvUserTag"
+                        android:visibility="gone"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="30dp"
                         android:textColor="@color/white"
                         android:fontFamily="@font/bold"
                         android:text="User                  :"/>
 
-                    <Spinner
-                        android:id="@+id/spUser"
-                        android:layout_width="200dp"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_toRightOf="@id/tvUserTag"
-                        android:background="@drawable/edittext"
-                        android:backgroundTint="@color/white"
-                        />
+                        <Spinner
+                            android:id="@+id/spUser"
+                            android:layout_width="200dp"
+                            android:layout_height="50dp"
+                            android:visibility="gone"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_toRightOf="@id/tvUserTag"
+                            android:background="@drawable/edittext"
+                            android:backgroundTint="@color/white"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="18dp"
+                            android:id="@+id/tvMonthlyUserTag"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="30dp"
+                            android:visibility="gone"
+                            android:textColor="@color/white"
+                            android:fontFamily="@font/bold"
+                            android:text="User                  :"/>
+
+                        <Spinner
+                            android:id="@+id/spUserMonthy"
+                            android:layout_width="200dp"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="8dp"
+                            android:visibility="gone"
+                            android:layout_marginTop="20dp"
+                            android:layout_toRightOf="@id/tvMonthlyUserTag"
+                            android:background="@drawable/edittext"
+                            android:backgroundTint="@color/white"
+                            />
 
 
+                    </RelativeLayout>
 
-
-                </RelativeLayout>
-
-                <View
-                    android:layout_width="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:id="@+id/view1"
-                    android:layout_below="@+id/rlReport"
-                    android:layout_height="0.5dp"/>
 
                     <TextView
                         android:id="@+id/tvSubmit"
                         android:layout_width="200dp"
                         android:layout_height="50dp"
-                        android:layout_below="@id/view1"
+                        android:layout_below="@id/rluser"
                         android:layout_centerHorizontal="true"
                         android:layout_marginLeft="8dp"
                         android:layout_marginTop="10dp"
@@ -232,7 +292,7 @@
                         android:text="Submit"
                         android:textColor="@color/white"
                         android:textSize="19dp"
-                        android:visibility="visible" />
+                        android:visibility="gone" />
 
                 </RelativeLayout>
 
@@ -240,13 +300,147 @@
 
         </RelativeLayout>
 
+
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:id="@+id/rlMonthly"
+                android:layout_below="@id/rlfilter"
+                android:visibility="gone"
+                android:layout_height="wrap_content">
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:id="@+id/rlweekreport"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TableLayout
+                            android:layout_width="match_parent"
+                            android:background="@color/blue"
+                            android:layout_height="wrap_content">
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="100dp"
+                                android:fontFamily="@font/semibold"
+                                android:textSize="13dp"
+                                android:id="@+id/tvEmpIDTag"
+                                android:gravity="center"
+                                android:layout_marginLeft="5dp"
+                                android:textColor="@color/white"
+                                android:layout_height="wrap_content"
+                                android:text="Employee"/>
+
+
+                            <View
+                                android:layout_width="0.5dp"
+                                android:id="@+id/Wview2"
+                                android:layout_marginLeft="4dp"
+                                android:layout_height="wrap_content"
+                                android:background="@color/black"
+                                android:layout_toRightOf="@id/tvEmpIDTag"/>
+
+
+                            <TextView
+                                android:layout_width="80dp"
+                                android:fontFamily="@font/semibold"
+                                android:textSize="13dp"
+                                android:layout_toRightOf="@id/Wview2"
+                                android:id="@+id/tvDateTag"
+                                android:gravity="center"
+                                android:layout_marginLeft="8dp"
+                                android:textColor="@color/white"
+                                android:layout_height="wrap_content"
+                                android:text="Date"/>
+
+
+                            <View
+                                android:layout_width="0.5dp"
+                                android:id="@+id/Wview3"
+                                android:layout_marginLeft="4dp"
+                                android:layout_height="wrap_content"
+                                android:background="@color/black"
+                                android:layout_toRightOf="@id/tvDateTag"/>
+
+
+
+                            <TextView
+                                android:layout_width="120dp"
+                                android:fontFamily="@font/semibold"
+                                android:textSize="13dp"
+                                android:layout_toRightOf="@id/Wview3"
+                                android:id="@+id/tvReportTag"
+                                android:gravity="center"
+                                android:layout_marginLeft="8dp"
+                                android:textColor="@color/white"
+                                android:layout_height="wrap_content"
+                                android:text="Work Report"/>
+
+
+                            <View
+                                android:layout_width="0.5dp"
+                                android:id="@+id/Wview4"
+                                android:layout_marginLeft="4dp"
+                                android:layout_height="wrap_content"
+                                android:background="@color/black"
+                                android:layout_toRightOf="@id/tvReportTag"/>
+
+
+                            <TextView
+                                android:layout_width="50dp"
+                                android:fontFamily="@font/semibold"
+                                android:textSize="13dp"
+                                android:layout_toRightOf="@id/Wview4"
+                                android:id="@+id/tvCamtTag"
+                                android:gravity="center"
+                                android:layout_marginLeft="8dp"
+                                android:textColor="@color/white"
+                                android:layout_height="wrap_content"
+                                android:text="Total"/>
+
+
+                            <View
+                                android:layout_width="0.5dp"
+                                android:id="@+id/Wview5"
+                                android:layout_marginLeft="4dp"
+                                android:layout_height="wrap_content"
+                                android:background="@color/black"
+                                android:layout_toRightOf="@id/tvCamtTag"/>
+
+
+                        </RelativeLayout>
+                            </TableRow>
+
+                        </TableLayout>
+
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_below="@id/rlfilter"
-            android:layout_marginLeft="10dp"
+           android:visibility="visible"
+            android:layout_below="@id/rlweekreport"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="10dp"
+            android:id="@+id/rvuserDailyweekExpense"
             android:layout_height="wrap_content"
             />
-
+            </RelativeLayout>
         </RelativeLayout>
 
     </androidx.core.widget.NestedScrollView>
