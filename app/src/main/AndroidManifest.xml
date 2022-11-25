@@ -24,6 +24,20 @@
         tools:replace="android:label"
         tools:targetApi="31">
         <activity
+            android:name=".WaitingforApprovel.Activity.LeaveRequest"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".Report.Activity.LeaveReport"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".Report.Activity.AttendanceReports"
             android:exported="false">
             <meta-data

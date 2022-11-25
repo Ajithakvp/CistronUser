@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.cistronuser.API.APIClient;
 import com.example.cistronuser.API.Interface.DeletedAPIInterface;
 import com.example.cistronuser.API.Model.LeavedetailsModel;
+import com.example.cistronuser.API.Response.DeleteResponse;
 import com.example.cistronuser.API.Response.LeaveDetailsResponse;
 import com.example.cistronuser.Activity.DashboardActivity;
 import com.example.cistronuser.Activity.LeaveActivity;
@@ -42,9 +43,8 @@ import retrofit2.Response;
 public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.ViewHolder> {
 
 
+    public ArrayList<LeavedetailsModel> leavedetailsModels;
     Activity activity;
-
-    public ArrayList<LeavedetailsModel>leavedetailsModels;
 
     public PendingAdapter(Activity activity, ArrayList<LeavedetailsModel> leavedetailsModels) {
         this.activity = activity;
@@ -70,31 +70,28 @@ public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.ViewHold
         holder.tvattach.setText(leavedetailsModels.get(position).getAttachment());
 
 
-
         holder.ivfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(activity, WebviewPage.class);
-                intent.putExtra("pdf",leavedetailsModels.get(position).getAttachment());
+                Intent intent = new Intent(activity, WebviewPage.class);
+                intent.putExtra("pdf", leavedetailsModels.get(position).getAttachment());
                 activity.startActivity(intent);
             }
         });
         try {
 
-            if (leavedetailsModels.get(position).getAttachment().trim().equals(null)){
-                Log.e(TAG, "onBindViewHolder: "+leavedetailsModels.get(position).getAttachment().trim().equals("null") );
+            if (leavedetailsModels.get(position).getAttachment().trim().equals(null)) {
+                Log.e(TAG, "onBindViewHolder: " + leavedetailsModels.get(position).getAttachment().trim().equals("null"));
                 holder.tvStatusTag.setVisibility(View.GONE);
                 holder.ivfile.setVisibility(View.GONE);
-            }else {
+            } else {
 
                 holder.tvStatusTag.setVisibility(View.VISIBLE);
                 holder.ivfile.setVisibility(View.VISIBLE);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
-
-
 
 
         holder.ivDelete.setOnClickListener(new View.OnClickListener() {
@@ -109,25 +106,37 @@ public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.ViewHold
                 builder.setPositiveButton("yes", (new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        DeletedAPIInterface deletedAPIInterface= APIClient.getClient().create(DeletedAPIInterface.class);
-                        deletedAPIInterface.CallDetails("deleteLeave", PreferenceManager.getEmpID(activity),leavedetailsModels.get(position).getId()).enqueue(new Callback<LeaveDetailsResponse>() {
+                        DeletedAPIInterface deletedAPIInterface = APIClient.getClient().create(DeletedAPIInterface.class);
+                        deletedAPIInterface.CallDetails("deleteLeave", PreferenceManager.getEmpID(activity), leavedetailsModels.get(position).getId()).enqueue(new Callback<DeleteResponse>() {
                             @Override
-                            public void onResponse(Call<LeaveDetailsResponse> call, Response<LeaveDetailsResponse> response) {
+                            public void onResponse(Call<DeleteResponse> call, Response<DeleteResponse> response) {
 
+                                try {
+                                    if (response.isSuccessful()){
 
+                                        Toast.makeText(activity, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                                         activity.finish();
-                                        Toast.makeText(activity, "Deleted", Toast.LENGTH_SHORT).show();
+                                        activity.overridePendingTransition(0, 0);
+                                        activity.startActivity(activity.getIntent());
+                                        activity.overridePendingTransition(0, 0);
+                                    }
 
+                                }catch (Exception e){
+
+                                }
                             }
 
                             @Override
-                            public void onFailure(Call<LeaveDetailsResponse> call, Throwable t) {
+                            public void onFailure(Call<DeleteResponse> call, Throwable t) {
 
                             }
                         });
 
+
                     }
                 }));
+
+
                 builder.setNegativeButton("No", (new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -136,8 +145,6 @@ public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.ViewHold
                 }));
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
-
-
 
 
             }
@@ -152,8 +159,8 @@ public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvDate, tvDay, tvLeaveType, tvReason, tvfullday, tvattach,tvStatusTag;
-        ImageView ivDelete,ivfile;
+        TextView tvDate, tvDay, tvLeaveType, tvReason, tvfullday, tvattach, tvStatusTag;
+        ImageView ivDelete, ivfile;
         ProgressBar simpleProgressBar;
 
         public ViewHolder(@NonNull View itemView) {
@@ -165,9 +172,9 @@ public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.ViewHold
             tvReason = itemView.findViewById(R.id.tvReason);
             tvfullday = itemView.findViewById(R.id.tvfullday);
             tvattach = itemView.findViewById(R.id.tvStatusPending);
-            simpleProgressBar=itemView.findViewById(R.id.simpleProgressBar);
-            tvStatusTag=itemView.findViewById(R.id.tvStatusTag);
-            ivfile=itemView.findViewById(R.id.ivfile);
+            simpleProgressBar = itemView.findViewById(R.id.simpleProgressBar);
+            tvStatusTag = itemView.findViewById(R.id.tvStatusTag);
+            ivfile = itemView.findViewById(R.id.ivfile);
         }
 
 

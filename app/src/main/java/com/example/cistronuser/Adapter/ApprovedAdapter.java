@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.cistronuser.API.APIClient;
 import com.example.cistronuser.API.Interface.DeletedAPIInterface;
 import com.example.cistronuser.API.Model.LeavedetailsModel;
+import com.example.cistronuser.API.Response.DeleteResponse;
 import com.example.cistronuser.API.Response.LeaveDetailsResponse;
 import com.example.cistronuser.Activity.LeaveActivity;
 import com.example.cistronuser.Common.PreferenceManager;
@@ -105,29 +106,29 @@ public class ApprovedAdapter extends RecyclerView.Adapter<ApprovedAdapter.ViewHo
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         DeletedAPIInterface deletedAPIInterface= APIClient.getClient().create(DeletedAPIInterface.class);
-                        deletedAPIInterface.CallDetails("cancelLeave", PreferenceManager.getEmpID(activity),leavedetailsModels.get(position).getId()).enqueue(new Callback<LeaveDetailsResponse>() {
+                        deletedAPIInterface.CallDetails("cancelLeave", PreferenceManager.getEmpID(activity),leavedetailsModels.get(position).getId()).enqueue(new Callback<DeleteResponse>() {
                             @Override
-                            public void onResponse(Call<LeaveDetailsResponse> call, Response<LeaveDetailsResponse> response) {
-                                try{
+                            public void onResponse(Call<DeleteResponse> call, Response<DeleteResponse> response) {
+                                try {
                                     if (response.isSuccessful()){
-
-                                       activity.finish();
-
-                                        Toast.makeText(activity, "cancel", Toast.LENGTH_SHORT).show();
-
+                                        Toast.makeText(activity, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                        activity.finish();
+                                        activity.overridePendingTransition(0, 0);
+                                        activity.startActivity(activity.getIntent());
+                                        activity.overridePendingTransition(0, 0);
                                     }
 
                                 }catch (Exception e){
 
                                 }
-
                             }
 
                             @Override
-                            public void onFailure(Call<LeaveDetailsResponse> call, Throwable t) {
+                            public void onFailure(Call<DeleteResponse> call, Throwable t) {
 
                             }
                         });
+
 
                     }
                 }));

@@ -298,7 +298,7 @@ public class LoginActivity extends AppCompatActivity {
                             Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             } else {
                 Map();
-                Toast.makeText(LoginActivity.this, "not Access", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(LoginActivity.this, "not Access", Toast.LENGTH_SHORT).show();
             }
         }
     }

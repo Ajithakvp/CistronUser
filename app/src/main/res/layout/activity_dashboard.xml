@@ -323,7 +323,6 @@
                             android:id="@+id/tvwaitingCountExpense"
                             android:layout_toRightOf="@+id/tvCountExpensestart"
                             android:fontFamily="@font/bold"
-                            android:text="45"
                             android:textColor="#FF0000"
                             android:textSize="18dp" />
 
@@ -452,7 +451,6 @@
                             android:id="@+id/rlrlAttendaceReport"
                             android:layout_width="match_parent"
                             android:layout_height="60dp"
-                            android:layout_marginBottom="20dp"
                             android:layout_below="@id/rlExpenseReport"
                             android:layout_marginTop="20dp"
                             android:background="@drawable/cardview"
@@ -482,6 +480,45 @@
                         </RelativeLayout>
 
 
+
+
+
+                        <RelativeLayout
+                            android:id="@+id/rlrlLeaveReport"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:layout_marginBottom="20dp"
+                            android:layout_below="@id/rlrlAttendaceReport"
+                            android:layout_marginTop="20dp"
+                            android:background="@drawable/cardview"
+                            android:backgroundTint="#6495ED">
+
+                            <ImageView
+                                android:id="@+id/ivleaveReport"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="30dp"
+                                android:src="@drawable/report"
+                                android:tint="@color/white"
+                                tools:ignore="UseAppTint" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="20dp"
+                                android:layout_toRightOf="@+id/ivleaveReport"
+                                android:fontFamily="@font/semibold"
+                                android:text="Leave"
+                                android:textColor="@color/white"
+                                android:textSize="18dp" />
+
+                        </RelativeLayout>
+
+
+
+
                     </RelativeLayout>
 
 
@@ -506,6 +543,7 @@
             android:id="@+id/lWebview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/bold"
             android:layout_centerInParent="true"
             android:clickable="true"
             android:text="@string/weblink"

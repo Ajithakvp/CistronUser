@@ -32,7 +32,7 @@
                     android:fontFamily="@font/semibold"
                     android:text="EmpID"
                     android:layout_below="@+id/tvNameTag"
-                    android:textColor="#1325F9"
+                    android:textColor="#00033a"
                     android:textSize="11dp" />
                 <TextView
                     android:id="@+id/tvNameTag"

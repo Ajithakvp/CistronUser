@@ -178,8 +178,6 @@ public class AttendanceReports extends AppCompatActivity {
 
 
 
-
-
         ReportTypeWMselectedModel week = new ReportTypeWMselectedModel();
         week.setId("1");
         week.setReporttype("Daily");
@@ -232,7 +230,6 @@ public class AttendanceReports extends AppCompatActivity {
                     tvMonthyear.setVisibility(View.VISIBLE);
                     spUserMonthy.setVisibility(View.VISIBLE);
                     tvMonthlyUserTag.setVisibility(View.VISIBLE);
-
                     rvMonthlyattendanceReport.setVisibility(View.VISIBLE);
 
                     tvStartDateTag.setVisibility(View.GONE);

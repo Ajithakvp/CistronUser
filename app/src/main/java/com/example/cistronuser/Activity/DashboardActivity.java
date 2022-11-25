@@ -45,7 +45,9 @@ import com.example.cistronuser.LoginActivity;
 import com.example.cistronuser.R;
 import com.example.cistronuser.Report.Activity.AttendanceReports;
 import com.example.cistronuser.Report.Activity.ExpenseReportWM;
+import com.example.cistronuser.Report.Activity.LeaveReport;
 import com.example.cistronuser.WaitingforApprovel.Activity.ExpensesReport;
+import com.example.cistronuser.WaitingforApprovel.Activity.LeaveRequest;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import retrofit2.Call;
@@ -80,7 +82,7 @@ public class DashboardActivity extends Activity {
 
 
     //Admin Dashboard
-    RelativeLayout rlExpenseReport,rlrlAttendaceReport;
+    RelativeLayout rlExpenseReport,rlrlAttendaceReport,rlrlLeaveReport,rlWaitingLeaveRequest;
     TextView tvwaitingCountExpense;
 
     Context context;
@@ -110,6 +112,8 @@ public class DashboardActivity extends Activity {
         RelativeLayout rlWaitingExpense=findViewById(R.id.rlWaitingExpense);
         tvwaitingCountExpense=findViewById(R.id.tvwaitingCountExpense);
         rlrlAttendaceReport=findViewById(R.id.rlrlAttendaceReport);
+        rlrlLeaveReport=findViewById(R.id.rlrlLeaveReport);
+        rlWaitingLeaveRequest=findViewById(R.id.rlWaitingLeaveRequest);
 
 
         tvProfilename.setText(PreferenceManager.getEmpName(this));
@@ -233,6 +237,13 @@ public class DashboardActivity extends Activity {
 
             }
         });
+        rlWaitingLeaveRequest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent leaveReq=new Intent(DashboardActivity.this, LeaveRequest.class);
+                startActivity(leaveReq);
+            }
+        });
 
         rlExpenseReport.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -247,6 +258,14 @@ public class DashboardActivity extends Activity {
             public void onClick(View v) {
                 Intent AttendReport=new Intent(DashboardActivity.this, AttendanceReports.class);
                 startActivity(AttendReport);
+            }
+        });
+        rlrlLeaveReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent leaveReport=new Intent(DashboardActivity.this, LeaveReport.class);
+                startActivity(leaveReport);
             }
         });
 
