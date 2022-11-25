@@ -4,14 +4,14 @@ import com.google.gson.annotations.SerializedName;
 
 public class DailyReportUserAttendanceModel {
 
-    @SerializedName("All")
-    private String All;
+    @SerializedName("employee")
+    private String employee;
 
-    public String getAll() {
-        return All;
+    public String getEmployee() {
+        return employee;
     }
 
-    public void setAll(String all) {
-        All = all;
+    public void setEmployee(String employee) {
+        this.employee = employee;
     }
 }
