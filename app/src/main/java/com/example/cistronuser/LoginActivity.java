@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -22,6 +21,8 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -60,6 +61,8 @@ public class LoginActivity extends AppCompatActivity {
     TextInputEditText edName, edPass;
     TextView tvfailed;
 
+    Context context;
+
     //Map
     FusedLocationProviderClient fusedLocationProviderClient;
     private final static int REQUEST_CODE = 100;
@@ -83,6 +86,15 @@ public class LoginActivity extends AppCompatActivity {
         login_btn = findViewById(R.id.login_btn);
         String EmpID = edName.getText().toString();
         String Pass = edPass.getText().toString();
+
+
+
+        context=getApplicationContext();
+        WifiManager wifiMan = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        WifiInfo wifiInf = wifiMan.getConnectionInfo();
+        int ipAddress = wifiInf.getIpAddress();
+        String ip = String.format("%d.%d.%d.%d", (ipAddress & 0xff),(ipAddress >> 8 & 0xff),(ipAddress >> 16 & 0xff),(ipAddress >> 24 & 0xff));
+       //  Log.e(TAG, "onCreate: "+ip );
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         Map();
@@ -110,7 +122,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
 
 
-                CallLogin(EmpID, Pass, Latitude, Longtitude, AddressLine);
+                CallLogin(EmpID, Pass, Latitude, Longtitude, AddressLine,ip);
 
             }
         });
@@ -136,8 +148,7 @@ public class LoginActivity extends AppCompatActivity {
                         AddressLine=addresses.get(0).getAddressLine(0);
                         Latitude=addresses.get(0).getLatitude();
                         Longtitude=addresses.get(0).getLongitude();
-
-                        Log.e(TAG, "onSuccess: "+addresses.get(0).getAddressLine(0) );
+                        
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -186,13 +197,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    private void CallLogin(String empID, String pass, double latitude, double longtitude, String addressLine) {
+    private void CallLogin(String empID, String pass, double latitude, double longtitude, String addressLine, String ip) {
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Employee Login...");
         progressDialog.setCancelable(false);
         progressDialog.show();
         LoginInterFace loginInterFace=APIClient.getClient().create(LoginInterFace.class);
-        loginInterFace.getUserLogin(edName.getText().toString(),edPass.getText().toString(),latitude,longtitude,addressLine,strDeviceName).enqueue(new Callback<LoginuserModel>() {
+        loginInterFace.getUserLogin("login",edName.getText().toString(),edPass.getText().toString(),latitude,longtitude,addressLine,strDeviceName,ip).enqueue(new Callback<LoginuserModel>() {
             @Override
             public void onResponse(Call<LoginuserModel> call, Response<LoginuserModel> response) {
                try {

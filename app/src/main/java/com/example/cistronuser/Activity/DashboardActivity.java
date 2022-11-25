@@ -6,30 +6,44 @@ import androidx.cardview.widget.CardView;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.text.format.Formatter;
 import android.text.method.LinkMovementMethod;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.cistronuser.API.APIClient;
+import com.example.cistronuser.API.Interface.ChangePasswordInterface;
 import com.example.cistronuser.API.Interface.ExpenseCountInterface;
+import com.example.cistronuser.API.Interface.LogoutInterFace;
 import com.example.cistronuser.API.Model.LoginuserModel;
+import com.example.cistronuser.API.Response.ChangePasswordResponse;
+import com.example.cistronuser.API.Response.LogoutResponse;
 import com.example.cistronuser.API.Response.WaitingExpenseCountInterface;
 import com.example.cistronuser.Common.ConnectionRecevier;
 import com.example.cistronuser.Common.PreferenceManager;
 import com.example.cistronuser.LoginActivity;
 import com.example.cistronuser.R;
+import com.example.cistronuser.Report.Activity.AttendanceReports;
 import com.example.cistronuser.Report.Activity.ExpenseReportWM;
 import com.example.cistronuser.WaitingforApprovel.Activity.ExpensesReport;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -66,8 +80,12 @@ public class DashboardActivity extends Activity {
 
 
     //Admin Dashboard
-    RelativeLayout rlExpenseReport;
+    RelativeLayout rlExpenseReport,rlrlAttendaceReport;
     TextView tvwaitingCountExpense;
+
+    Context context;
+
+
 
 
 
@@ -91,6 +109,7 @@ public class DashboardActivity extends Activity {
         rlExpenseReport=findViewById(R.id.rlExpenseReport);
         RelativeLayout rlWaitingExpense=findViewById(R.id.rlWaitingExpense);
         tvwaitingCountExpense=findViewById(R.id.tvwaitingCountExpense);
+        rlrlAttendaceReport=findViewById(R.id.rlrlAttendaceReport);
 
 
         tvProfilename.setText(PreferenceManager.getEmpName(this));
@@ -105,6 +124,15 @@ public class DashboardActivity extends Activity {
         registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 
 
+
+
+        context=getApplicationContext();
+        WifiManager wifiMan = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        WifiInfo wifiInf = wifiMan.getConnectionInfo();
+        int ipAddress = wifiInf.getIpAddress();
+        String ip = String.format("%d.%d.%d.%d", (ipAddress & 0xff),(ipAddress >> 8 & 0xff),(ipAddress >> 16 & 0xff),(ipAddress >> 24 & 0xff));
+       // Log.e(TAG, "onCreate: "+ip );
+
         lottieAnimationView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -116,11 +144,39 @@ public class DashboardActivity extends Activity {
                 builder.setPositiveButton("yes", (new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                       PreferenceManager.setLoggedStatus(DashboardActivity.this, false);
-                       PreferenceManager.setUserModelData(DashboardActivity.this,loginuserModel);
-                        Intent intent = new Intent(DashboardActivity.this, LoginActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
+
+                        LogoutInterFace logoutInterFace=APIClient.getClient().create(LogoutInterFace.class);
+                        logoutInterFace.Calllogout("logout",PreferenceManager.getEmpID(DashboardActivity.this),ip).enqueue(new Callback<LogoutResponse>() {
+                            @Override
+                            public void onResponse(Call<LogoutResponse> call, Response<LogoutResponse> response) {
+
+                                try{
+
+                                    if (response.isSuccessful()){
+
+                                        PreferenceManager.setLoggedStatus(DashboardActivity.this, false);
+
+                                        PreferenceManager.setUserModelData(DashboardActivity.this,loginuserModel);
+                                        finish();
+                                        Intent intent = new Intent(DashboardActivity.this, LoginActivity.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        startActivity(intent);
+                                    }
+
+                                }catch (Exception e){
+
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<LogoutResponse> call, Throwable t) {
+
+                            }
+                        });
+
+
+
+
                     }
                 }));
                 builder.setNegativeButton("No", (new DialogInterface.OnClickListener() {
@@ -186,6 +242,14 @@ public class DashboardActivity extends Activity {
             }
         });
 
+        rlrlAttendaceReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent AttendReport=new Intent(DashboardActivity.this, AttendanceReports.class);
+                startActivity(AttendReport);
+            }
+        });
+
 
         ExpenseCountInterface expenseCountInterface= APIClient.getClient().create(ExpenseCountInterface.class);
         expenseCountInterface.Callcount("expensesApprovalCount").enqueue(new Callback<WaitingExpenseCountInterface>() {
@@ -239,6 +303,82 @@ public class DashboardActivity extends Activity {
         edRetypePass = bottomSheetDialog.findViewById(R.id.edRetypePass);
         btnpasssubmit = bottomSheetDialog.findViewById(R.id.btnpasssubmit);
         TextView tvClose=bottomSheetDialog.findViewById(R.id.tvClose);
+        TextView tvpasswordnotmatch=bottomSheetDialog.findViewById(R.id.tvpasswordnotmatch);
+        TextView tvpasswordlisten1=bottomSheetDialog.findViewById(R.id.tvpasswordlisten1);
+        TextView tvcheck=bottomSheetDialog.findViewById(R.id.tvcheck);
+
+
+        edNewPass.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                if (TextUtils.isEmpty(edNewPass.getText().toString()) || edNewPass.getText().length()<7){
+                    tvcheck.setVisibility(View.VISIBLE);
+                }else {
+                    edRetypePass.setVisibility(View.VISIBLE);
+                    tvcheck.setVisibility(View.GONE);
+                }
+
+            }
+        });
+
+
+
+
+
+
+            edRetypePass.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    if (edNewPass.getText().toString().trim().equals(edRetypePass.getText().toString())) {
+                        tvpasswordlisten1.setVisibility(View.VISIBLE);
+                        tvpasswordnotmatch.setVisibility(View.GONE);
+                        btnpasssubmit.setVisibility(View.VISIBLE);
+                        tvcheck.setVisibility(View.GONE);
+
+                    } else {
+
+                        tvpasswordlisten1.setVisibility(View.GONE);
+                        tvpasswordnotmatch.setVisibility(View.VISIBLE);
+                        btnpasssubmit.setVisibility(View.GONE);
+
+                    }
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                    if (edNewPass.getText().toString().trim().equals(edRetypePass.getText().toString())) {
+                        tvpasswordlisten1.setVisibility(View.VISIBLE);
+                        tvpasswordnotmatch.setVisibility(View.GONE);
+                        btnpasssubmit.setVisibility(View.VISIBLE);
+                        tvcheck.setVisibility(View.GONE);
+
+                    } else {
+
+                        tvpasswordlisten1.setVisibility(View.GONE);
+                        tvpasswordnotmatch.setVisibility(View.VISIBLE);
+                        btnpasssubmit.setVisibility(View.GONE);
+
+                    }
+
+                }
+            });
 
 
 
@@ -293,8 +433,11 @@ public class DashboardActivity extends Activity {
                 tvpassword.setVisibility(View.GONE);
                 tvClose.setVisibility(View.VISIBLE);
                 edNewPass.setVisibility(View.VISIBLE);
-                edRetypePass.setVisibility(View.VISIBLE);
-                btnpasssubmit.setVisibility(View.VISIBLE);
+                tvpasswordlisten1.setVisibility(View.GONE);
+                tvpasswordnotmatch.setVisibility(View.GONE);
+                tvcheck.setVisibility(View.GONE);
+
+
 
             }
         });
@@ -309,11 +452,45 @@ public class DashboardActivity extends Activity {
                     edNewPass.setVisibility(View.GONE);
                     edRetypePass.setVisibility(View.GONE);
                     btnpasssubmit.setVisibility(View.GONE);
+                    tvpasswordlisten1.setVisibility(View.GONE);
+                    tvpasswordnotmatch.setVisibility(View.GONE);
+                    tvcheck.setVisibility(View.GONE);
+
+
 
 
             }
         });
+
+        btnpasssubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ChangePasswordInterface changePasswordInterface=APIClient.getClient().create(ChangePasswordInterface.class);
+                changePasswordInterface.callchangepasswor("changePassword",PreferenceManager.getEmpID(DashboardActivity.this),edRetypePass.getText().toString()).enqueue(new Callback<ChangePasswordResponse>() {
+                    @Override
+                    public void onResponse(Call<ChangePasswordResponse> call, Response<ChangePasswordResponse> response) {
+
+                        try{
+                            if (response.isSuccessful()){
+                                Toast.makeText(DashboardActivity.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
+                           bottomSheetDialog.dismiss();
+                            }
+
+                        }catch (Exception e){
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<ChangePasswordResponse> call, Throwable t) {
+
+                    }
+                });
+            }
+        });
     }
+
 
 
 

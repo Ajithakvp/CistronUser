@@ -11,15 +11,17 @@ import retrofit2.http.POST;
 public interface LoginInterFace {
 
     @FormUrlEncoded
-    @POST("login.php")
+    @POST("user_action.php")
     Call<LoginuserModel> getUserLogin(
 
+            @Field("action") String action,
             @Field("empid") String ID,
             @Field("pwd") String password,
              @Field("lat") Double Latitude,
             @Field("long") Double longtitude,
              @Field("place") String Addresss,
-            @Field("devName") String devName
+            @Field("devName") String devName,
+            @Field("ip") String ip
     );
 
 }

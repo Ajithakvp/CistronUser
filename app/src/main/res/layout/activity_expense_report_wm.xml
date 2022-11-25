@@ -75,7 +75,7 @@
                 app:cardCornerRadius="10dp"
                 app:cardElevation="10dp"
                 android:background="@drawable/edittext"
-                android:backgroundTint="#000080"
+                android:backgroundTint="#6495ED"
                 android:layout_height="wrap_content">
 
                 <RelativeLayout
@@ -294,6 +294,26 @@
                         android:textSize="19dp"
                         android:visibility="gone" />
 
+
+
+                    <TextView
+                        android:id="@+id/tvWeellySubmit"
+                        android:layout_width="200dp"
+                        android:layout_height="50dp"
+                        android:layout_below="@id/rluser"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="20dp"
+                        android:fontFamily="@font/semibold"
+                        android:background="@drawable/edittext"
+                        android:backgroundTint="@color/Radio"
+                        android:gravity="center"
+                        android:text="Submit"
+                        android:textColor="@color/white"
+                        android:textSize="19dp"
+                        android:visibility="gone" />
+
                 </RelativeLayout>
 
             </androidx.cardview.widget.CardView>
@@ -431,17 +451,53 @@
 
                 </RelativeLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-           android:visibility="visible"
-            android:layout_below="@id/rlweekreport"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="10dp"
-            android:id="@+id/rvuserDailyweekExpense"
-            android:layout_height="wrap_content"
-            />
+
+
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:visibility="visible"
+                    android:layout_marginLeft="8dp"
+                    android:layout_below="@id/rlweekreport"
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/rvuserDailyweekExpense"
+                    android:layout_height="wrap_content"
+                    />
+
+
+            <TextView
+                android:id="@+id/tvGrandsumDocTag"
+                android:layout_width="150dp"
+                android:layout_below="@id/rvuserDailyweekExpense"
+                android:layout_height="40dp"
+                android:textColor="@color/Radio"
+                android:fontFamily="@font/semibold"
+                android:gravity="center"
+                android:layout_marginLeft="10dp"
+                android:visibility="visible"
+                android:text=" Expense Total :"
+                android:textSize="20dp" />
+
+
+            <TextView
+                android:id="@+id/tvGrandsumDoc"
+                android:layout_width="wrap_content"
+                android:layout_below="@id/rvuserDailyweekExpense"
+                android:layout_height="40dp"
+                android:textColor="@color/Radio"
+                android:layout_toRightOf="@id/tvGrandsumDocTag"
+                android:fontFamily="@font/semibold"
+                android:gravity="center"
+                android:visibility="visible"
+                android:textSize="20dp" />
+
             </RelativeLayout>
+
         </RelativeLayout>
+
+
+
 
     </androidx.core.widget.NestedScrollView>
 

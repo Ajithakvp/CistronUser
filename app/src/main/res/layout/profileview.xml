@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginBottom="10dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -65,6 +66,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_below="@id/ivProfilePhoto"
+        android:layout_marginBottom="50dp"
         android:layout_height="match_parent">
 
 
@@ -335,12 +337,18 @@
             android:fontFamily="@font/semibold"
             android:layout_height="wrap_content"/>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:id="@+id/rlpass"
+            android:layout_below="@id/tvpasswordTag"
+            android:layout_height="wrap_content">
+
 
         <TextView
             android:layout_width="wrap_content"
             android:id="@+id/tvClose"
             android:text="Close here"
-            android:layout_below="@id/tvpasswordTag"
+
             android:textSize="15dp"
             android:visibility="gone"
             android:textColor="@color/blue"
@@ -367,10 +375,24 @@
             android:inputType="textPassword"
             android:visibility="gone"
             android:background="@drawable/edittext"
-            android:backgroundTint="#FFFBFB"
+            android:backgroundTint="#B6BFCD"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/tvClose"
              />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:id="@+id/tvcheck"
+                android:text="You must have 7 characters in your password"
+                android:layout_below="@id/edNewPass"
+                android:textSize="15dp"
+                android:visibility="gone"
+                android:textColor="#3848FA"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/semibold"
+                android:layout_height="wrap_content"/>
 
         <EditText
             android:layout_width="300dp"
@@ -387,16 +409,46 @@
             android:fontFamily="@font/semibold"
             android:textSize="15dp"
             android:background="@drawable/edittext"
-            android:backgroundTint="#FFFBFB"
+            android:backgroundTint="#B6BFCD"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/edNewPass"
             />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/tvpasswordnotmatch"
+            android:text="Password Not Matched"
+            android:layout_below="@id/edRetypePass"
+            android:textSize="15dp"
+            android:visibility="gone"
+            android:textColor="@color/Radio"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/semibold"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/tvpasswordlisten1"
+            android:text="Password is Matched"
+            android:layout_below="@id/edRetypePass"
+            android:textSize="15dp"
+            android:visibility="gone"
+            android:textColor="#00FF00"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/semibold"
+            android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
 
 
         <TextView
             android:layout_width="150dp"
             android:layout_height="50dp"
-            android:layout_below="@id/edRetypePass"
+            android:layout_below="@id/rlpass"
             android:layout_marginTop="20dp"
             android:id="@+id/btnpasssubmit"
             android:layout_marginBottom="10dp"

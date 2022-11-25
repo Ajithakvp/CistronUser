@@ -17,14 +17,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.cistronuser.API.APIClient;
 import com.example.cistronuser.API.Interface.ReportExpenseWMInterface;
+import com.example.cistronuser.API.Interface.ReportWeeklyExpensInterface;
 import com.example.cistronuser.API.Interface.UserMonthlyExpensesReportMW;
 import com.example.cistronuser.API.Interface.UserWeeklyReportExpenseMW;
 import com.example.cistronuser.API.Model.ReportTypeWMselectedModel;
@@ -50,7 +49,7 @@ public class ExpenseReportWM extends AppCompatActivity {
     RelativeLayout  rlfilter;
 
     Spinner spUser, spreportType, spUserMonthy;
-    TextView tvStartDateTag, tvStartDate, tvEndDateTag, tvEndDate, tvMonthyearTag, tvMonthyear, tvSubmit, tvMonthlyUserTag, tvUserTag;
+    TextView tvStartDateTag, tvStartDate, tvEndDateTag, tvEndDate, tvMonthyearTag, tvMonthyear, tvSubmit,tvWeellySubmit, tvMonthlyUserTag, tvUserTag;
 
 
     //Reporttype
@@ -61,7 +60,7 @@ public class ExpenseReportWM extends AppCompatActivity {
     int mDay, mMonth, mYear;
 
     //Recycleview
-    RecyclerView rvuserDailyweekExpense;
+    RecyclerView rvuserDailyweekExpense,rvUserWeekly;
     ExpensesWeeklyAdapter weeklyAdapter;
     ArrayList<UserDailyExpensesWMModel> userDailyExpensesWMModels = new ArrayList<>();
 
@@ -75,6 +74,11 @@ public class ExpenseReportWM extends AppCompatActivity {
 
     //Dailyreport
     RelativeLayout rlMonthly;
+    TextView tvGrandsumDoc;
+
+    //Weekly
+
+
 
 
     @SuppressLint({"MissingInflatedId", "WrongViewCast"})
@@ -100,17 +104,23 @@ public class ExpenseReportWM extends AppCompatActivity {
         rlfilter=findViewById(R.id.rlfilter);
         ivfilter=findViewById(R.id.ivfilter);
         ivBack=findViewById(R.id.ivBack);
+        tvGrandsumDoc=findViewById(R.id.tvGrandsumDoc);
+        tvWeellySubmit=findViewById(R.id.tvWeellySubmit);
 
 
 
 
-        // callUserWeeklyMW();
+
+        // Monthly
         //RecycleView
         weeklyAdapter = new ExpensesWeeklyAdapter(this, userDailyExpensesWMModels);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         rvuserDailyweekExpense.setLayoutManager(linearLayoutManager);
         rvuserDailyweekExpense.setAdapter(weeklyAdapter);
+
+
+
 
 
 
@@ -205,7 +215,7 @@ public class ExpenseReportWM extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 try {
                     WeeklyId = userWeeklyReportExpensesMWModels.get(position).getEmployee();
-                    tvSubmit.setVisibility(View.VISIBLE);
+                    tvWeellySubmit.setVisibility(View.VISIBLE);
 
                 }catch (Exception e){
 
@@ -366,7 +376,18 @@ public class ExpenseReportWM extends AppCompatActivity {
         tvSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Monthly
                 callUserWeeklyMW();
+                rlMonthly.setVisibility(View.VISIBLE);
+                rlfilter.setVisibility(View.GONE);
+
+            }
+        });
+        tvWeellySubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Weekly
+                callOnlyuserWeekly();
                 rlMonthly.setVisibility(View.VISIBLE);
                 rlfilter.setVisibility(View.GONE);
             }
@@ -375,7 +396,45 @@ public class ExpenseReportWM extends AppCompatActivity {
 
     }
 
+    private void callOnlyuserWeekly() {
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        ReportWeeklyExpensInterface reportWeeklyExpensInterface=APIClient.getClient().create(ReportWeeklyExpensInterface.class);
+        reportWeeklyExpensInterface.callWeekly("expensesReport",ReportTyee,WeeklyId,tvStartDate.getText().toString(),tvEndDate.getText().toString()).enqueue(new Callback<ReportExpenseWMResponses>() {
+            @Override
+            public void onResponse(Call<ReportExpenseWMResponses> call, Response<ReportExpenseWMResponses> response) {
+                try {
+                    if (response.isSuccessful()){
+
+                        tvGrandsumDoc.setText(response.body().getExpenses_sum());
+                        weeklyAdapter.userDailyExpensesWMModels=response.body().getUserDailyExpensesWMModels();
+                        weeklyAdapter.notifyDataSetChanged();
+                        progressDialog.dismiss();
+
+                    }else {
+                        progressDialog.dismiss();
+                        weeklyAdapter.notifyDataSetChanged();
+                    }
+
+                }catch (Exception e){
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ReportExpenseWMResponses> call, Throwable t) {
+                progressDialog.dismiss();
+
+            }
+        });
+
+
+    }
+
     private void callMonthlyuser() {
+
         UserMonthlyExpensesReportMW userMonthlyExpensesReportMW = APIClient.getClient().create(UserMonthlyExpensesReportMW.class);
         userMonthlyExpensesReportMW.callMonthly("userListForExpenses", ReportTyee, tvMonthyear.getText().toString()).enqueue(new Callback<UserWeeklyReportExpenseMWResponses>() {
             @Override
@@ -453,11 +512,12 @@ public class ExpenseReportWM extends AppCompatActivity {
 
                     if (response.isSuccessful()) {
 
-                        progressDialog.dismiss();
+
+                        tvGrandsumDoc.setText(response.body().getExpenses_sum());
                         weeklyAdapter.userDailyExpensesWMModels = response.body().getUserDailyExpensesWMModels();
                         weeklyAdapter.notifyDataSetChanged();
                         rlMonthly.setVisibility(View.VISIBLE);
-
+                        progressDialog.dismiss();
                     }
 
                 } catch (Exception e) {

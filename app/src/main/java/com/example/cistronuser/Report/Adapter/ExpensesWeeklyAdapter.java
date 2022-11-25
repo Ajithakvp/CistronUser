@@ -17,6 +17,9 @@ import java.util.ArrayList;
 
 public class ExpensesWeeklyAdapter extends RecyclerView.Adapter<ExpensesWeeklyAdapter.ViewHolder> {
 
+
+    //Monthly
+
     Activity activity;
     public ArrayList<UserDailyExpensesWMModel>userDailyExpensesWMModels;
 

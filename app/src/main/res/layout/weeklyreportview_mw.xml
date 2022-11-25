@@ -40,7 +40,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:gravity="center_vertical"
-                    android:fontFamily="@font/semibold"
+                    android:fontFamily="@font/bold"
                     android:text="Name"
                     android:textColor="@color/black"
                     android:textSize="11dp" />
