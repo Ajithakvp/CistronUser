@@ -75,9 +75,10 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/login_btn"
             style="@style/textInput"
-            android:layout_height="70dp"
+            android:layout_height="60dp"
+            android:background="@drawable/design"
             android:layout_below="@+id/tvfailed"
-            android:backgroundTint="@color/skyblue"
+            android:backgroundTint="#6495ED"
             android:fontFamily="@font/bold"
             android:text="LOGIN"
             android:layout_centerHorizontal="true"

@@ -14,6 +14,7 @@ public class LeaveApprovelModel {
 //             "pl": "0.0",
 //             "probl": "0.0",
 //             "compoff": "0.0",
+    //lop
 //             "applied_date": "2022-11-25, Fri ",
 //             "applied_time": "2:45PM",
 //             "leavedate": "2022-11-24",
@@ -67,6 +68,8 @@ public class LeaveApprovelModel {
     @SerializedName("leavetype")
     private String leavetype;
 
+    @SerializedName("lop")
+    private String lop;
 
 
     @SerializedName("reason")
@@ -85,6 +88,13 @@ public class LeaveApprovelModel {
     private String expired;
 
 
+    public String getLop() {
+        return lop;
+    }
+
+    public void setLop(String lop) {
+        this.lop = lop;
+    }
 
     public String getLeaveid() {
         return leaveid;

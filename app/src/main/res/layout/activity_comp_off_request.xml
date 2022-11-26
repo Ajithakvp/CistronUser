@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".WaitingforApprovel.Activity.LeaveRequest">
+    tools:context=".WaitingforApprovel.Activity.CompOffRequest">
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -23,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:fontFamily="@font/bold"
-                android:text="Leave Request"
+                android:text="CompOff Request"
                 android:textColor="@color/white"
                 android:textSize="20dp" />
 
@@ -63,7 +64,7 @@
             android:layout_height="wrap_content">
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
-                android:id="@+id/rvLeaveReq"
+                android:id="@+id/rvCompOffReq"
                 android:layout_marginLeft="5dp"
                 android:layout_height="wrap_content">
 
@@ -73,7 +74,5 @@
 
         </RelativeLayout>
     </RelativeLayout>
-
-
 
 </RelativeLayout>

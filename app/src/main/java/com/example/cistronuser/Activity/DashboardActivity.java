@@ -48,10 +48,12 @@ import com.example.cistronuser.R;
 import com.example.cistronuser.Report.Activity.AttendanceReports;
 import com.example.cistronuser.Report.Activity.ExpenseReportWM;
 import com.example.cistronuser.Report.Activity.LeaveReport;
+import com.example.cistronuser.WaitingforApprovel.Activity.CompOffRequest;
 import com.example.cistronuser.WaitingforApprovel.Activity.ExpensesReport;
 import com.example.cistronuser.WaitingforApprovel.Activity.LeaveRequest;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -65,7 +67,9 @@ public class DashboardActivity extends Activity {
 
     BroadcastReceiver broadcastReceiver;
 
-    ImageView ivBack, ivProfilePhoto;
+    ImageView ivBack;
+
+    CircleImageView ivProfilePhoto;
     RelativeLayout rlProfile;
     CardView cvAttendance, cvExpense, cvLeave;
     LoginuserModel loginuserModel;
@@ -84,7 +88,7 @@ public class DashboardActivity extends Activity {
 
 
     //Admin Dashboard
-    RelativeLayout rlExpenseReport,rlrlAttendaceReport,rlrlLeaveReport,rlWaitingLeaveRequest;
+    RelativeLayout rlExpenseReport,rlrlAttendaceReport,rlrlLeaveReport,rlWaitingLeaveRequest,rlWaitingCompOFfRequest;
     TextView tvwaitingCountExpense,tvCountLeaveReq;
 
     Context context;
@@ -205,6 +209,7 @@ public class DashboardActivity extends Activity {
         rlrlLeaveReport=findViewById(R.id.rlrlLeaveReport);
         rlWaitingLeaveRequest=findViewById(R.id.rlWaitingLeaveRequest);
         tvCountLeaveReq=findViewById(R.id.tvCountLeaveReq);
+        rlWaitingCompOFfRequest=findViewById(R.id.rlWaitingCompOFfRequest);
 
 
         tvProfilename.setText(PreferenceManager.getEmpName(this));
@@ -361,6 +366,16 @@ public class DashboardActivity extends Activity {
         });
 
 
+        rlWaitingCompOFfRequest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent=new Intent(DashboardActivity.this, CompOffRequest.class);
+                startActivity(intent);
+            }
+        });
+
+
 
 
         //LeaveApprovalCount
@@ -446,12 +461,29 @@ public class DashboardActivity extends Activity {
         edNewPass.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                if (TextUtils.isEmpty(edNewPass.getText().toString()) || edNewPass.getText().length()<7){
+                    tvcheck.setVisibility(View.VISIBLE);
+                }
+                else {
+                    edRetypePass.setVisibility(View.GONE);
+                    tvcheck.setVisibility(View.GONE);
+                    tvpasswordlisten1.setVisibility(View.GONE);
+                    tvpasswordnotmatch.setVisibility(View.GONE);
+                }
 
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                if (TextUtils.isEmpty(edNewPass.getText().toString()) || edNewPass.getText().length()<7){
+                    tvcheck.setVisibility(View.VISIBLE);
+                }
+                else {
+                    edRetypePass.setVisibility(View.GONE);
+                    tvcheck.setVisibility(View.GONE);
+                    tvpasswordlisten1.setVisibility(View.GONE);
+                    tvpasswordnotmatch.setVisibility(View.GONE);
+                }
             }
 
             @Override

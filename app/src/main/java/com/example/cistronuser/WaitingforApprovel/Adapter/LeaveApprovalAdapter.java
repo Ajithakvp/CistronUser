@@ -20,11 +20,13 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cistronuser.API.APIClient;
+import com.example.cistronuser.API.Interface.ApprovalLeaveReqInterface;
 import com.example.cistronuser.API.Interface.DeletedAPIInterface;
 import com.example.cistronuser.API.Interface.LeaveApprovalDeleteInterface;
 import com.example.cistronuser.API.Interface.LeaveApprovalRejectedInterface;
 import com.example.cistronuser.API.Interface.LeaveApprovelInterface;
 import com.example.cistronuser.API.Model.LeaveApprovelModel;
+import com.example.cistronuser.API.Response.ApprovalleaveRequestResponse;
 import com.example.cistronuser.API.Response.DeleteResponse;
 import com.example.cistronuser.API.Response.LeaveApprovalDeletedResponse;
 import com.example.cistronuser.API.Response.LeaveApprovalRejectedResponse;
@@ -80,6 +82,8 @@ public class LeaveApprovalAdapter extends RecyclerView.Adapter<LeaveApprovalAdap
 
 
 
+
+
         LeaveApprovelInterface leaveApprovelInterface = APIClient.getClient().create(LeaveApprovelInterface.class);
         leaveApprovelInterface.callLeaveApprovel("leaveForApproval").enqueue(new Callback<leaveApprovelResponse>() {
             @Override
@@ -98,6 +102,46 @@ public class LeaveApprovalAdapter extends RecyclerView.Adapter<LeaveApprovalAdap
             @Override
             public void onFailure(Call<leaveApprovelResponse> call, Throwable t) {
 
+            }
+        });
+
+
+        holder.tvApproved.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ApprovalLeaveReqInterface approvalLeaveReqInterface=APIClient.getClient().create(ApprovalLeaveReqInterface.class);
+                approvalLeaveReqInterface.CallApproval("approveLeaveRequest",leaveApprovelModels.get(position).getLeaveid(),leaveApprovelModels.get(position).getLop(),leaveApprovelModels.get(position).getCompoff()).enqueue(new Callback<ApprovalleaveRequestResponse>() {
+                    @Override
+                    public void onResponse(Call<ApprovalleaveRequestResponse> call, Response<ApprovalleaveRequestResponse> response) {
+                        try {
+                            if (response.isSuccessful()){
+                                if (response.body().getSuccess().trim().equals("1")){
+                                    Toast.makeText(activity, response.body().getMessage() ,Toast.LENGTH_SHORT).show();
+                                    activity.finish();
+                                    activity.overridePendingTransition(0, 0);
+                                    activity.startActivity(activity.getIntent());
+                                    activity.overridePendingTransition(0, 0);
+                                }else {
+                                    AlertDialog.Builder msg=new AlertDialog.Builder(activity);
+                                    msg.setMessage(response.body().getMessage());
+                                    msg.setTitle(" Failed !");
+                                    msg.setIcon(R.drawable.oops);
+                                    AlertDialog alertDialog = msg.create();
+                                    alertDialog.show();
+
+                                }
+                            }
+
+                        }catch (Exception e){
+
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ApprovalleaveRequestResponse> call, Throwable t) {
+
+                    }
+                });
             }
         });
 

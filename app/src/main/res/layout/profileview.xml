@@ -46,6 +46,14 @@
 
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/rlcard"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_below="@+id/rltoolbar"
+        android:background="@drawable/card_design"
+        android:backgroundTint="#6495ED" />
+
 
 <!--    <androidx.recyclerview.widget.RecyclerView-->
 <!--        android:layout_width="wrap_content"-->
@@ -53,13 +61,13 @@
 <!--        android:layout_height="wrap_content"-->
 <!--        android:id="@+id/rlView"/>-->
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/ivProfilePhoto"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_below="@id/rltoolbar"
         android:layout_centerHorizontal="true"
-        android:layout_margin="15dp"
+        android:layout_marginTop="20dp"
         android:src="@drawable/user" />
 
 

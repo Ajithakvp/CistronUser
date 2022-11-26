@@ -38,7 +38,7 @@ public class LeaveRequest extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leave_request);
         rvLeaveReq = findViewById(R.id.rvLeaveReq);
-        ivBack.findViewById(R.id.ivBack);
+        ivBack=findViewById(R.id.ivBack1);
 
         callLeaveApprovalList();
 

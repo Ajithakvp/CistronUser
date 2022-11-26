@@ -412,6 +412,77 @@
                     </RelativeLayout>
 
 
+
+
+                    <RelativeLayout
+                        android:id="@+id/rlWaitingCompOFfRequest"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_below="@id/rlWaitingLeaveRequest"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/cardview"
+                        android:backgroundTint="#6495ED">
+
+                        <ImageView
+                            android:id="@+id/ivCompOffRequest"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="30dp"
+                            android:src="@drawable/compoff"
+                            android:tint="@color/white"
+                            tools:ignore="UseAppTint" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="20dp"
+                            android:id="@+id/ivCompOffRequestName"
+                            android:layout_toRightOf="@+id/ivCompOffRequest"
+                            android:fontFamily="@font/semibold"
+                            android:text="CompOff Request"
+                            android:textColor="@color/white"
+                            android:textSize="18dp" />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="10dp"
+                            android:id="@+id/tvCountCompOffReqstart"
+                            android:layout_toRightOf="@+id/ivCompOffRequestName"
+                            android:fontFamily="@font/semibold"
+                            android:text="("
+                            android:textColor="#C0C0C0"
+                            android:textSize="18dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="10dp"
+                            android:id="@+id/tvCountCompOffReq"
+                            android:layout_toRightOf="@+id/tvCountCompOffReqstart"
+                            android:fontFamily="@font/bold"
+                            android:textColor="#FF0000"
+                            android:textSize="18dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="10dp"
+                            android:id="@+id/tvCountCompOffReqEnd"
+                            android:layout_toRightOf="@+id/tvCountCompOffReq"
+                            android:fontFamily="@font/semibold"
+                            android:text=")"
+                            android:textColor="#C0C0C0"
+                            android:textSize="18dp" />
+
+                    </RelativeLayout>
+
                 </RelativeLayout>
             </RelativeLayout>
 
