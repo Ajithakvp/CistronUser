@@ -17,6 +17,17 @@ public class leaveApprovelResponse {
     @SerializedName("record")
     private ArrayList<LeaveApprovelModel>leaveApprovelModels;
 
+    @SerializedName("attchBaseUrl")
+    private String attchBaseUrl;
+
+    public String getAttchBaseUrl() {
+        return attchBaseUrl;
+    }
+
+    public void setAttchBaseUrl(String attchBaseUrl) {
+        this.attchBaseUrl = attchBaseUrl;
+    }
+
     public String getCategory() {
         return category;
     }

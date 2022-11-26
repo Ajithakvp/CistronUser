@@ -1119,6 +1119,7 @@ public class LeaveActivity extends Activity {
                         bottomSheetDialog.dismiss();
                     }else {
                         calluploadsubmit();
+                        bottomSheetDialog.dismiss();
                     }
                 } catch (Exception e) {
                     Log.e(TAG, "onClick: " + e.getMessage());

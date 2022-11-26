@@ -366,10 +366,47 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="20dp"
+                            android:id="@+id/tvLeaveReqName"
                             android:layout_toRightOf="@+id/ivLeaveRequest"
                             android:fontFamily="@font/semibold"
                             android:text="Leave Request"
                             android:textColor="@color/white"
+                            android:textSize="18dp" />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="10dp"
+                            android:id="@+id/tvCountLeaveReqstart"
+                            android:layout_toRightOf="@+id/tvLeaveReqName"
+                            android:fontFamily="@font/semibold"
+                            android:text="("
+                            android:textColor="#C0C0C0"
+                            android:textSize="18dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="10dp"
+                            android:id="@+id/tvCountLeaveReq"
+                            android:layout_toRightOf="@+id/tvCountLeaveReqstart"
+                            android:fontFamily="@font/bold"
+                            android:textColor="#FF0000"
+                            android:textSize="18dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="10dp"
+                            android:id="@+id/tvCountLeaveReqEnd"
+                            android:layout_toRightOf="@+id/tvCountLeaveReq"
+                            android:fontFamily="@font/semibold"
+                            android:text=")"
+                            android:textColor="#C0C0C0"
                             android:textSize="18dp" />
 
                     </RelativeLayout>

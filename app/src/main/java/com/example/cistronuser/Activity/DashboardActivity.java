@@ -34,9 +34,11 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.example.cistronuser.API.APIClient;
 import com.example.cistronuser.API.Interface.ChangePasswordInterface;
 import com.example.cistronuser.API.Interface.ExpenseCountInterface;
+import com.example.cistronuser.API.Interface.LeaveApprovelCountInterface;
 import com.example.cistronuser.API.Interface.LogoutInterFace;
 import com.example.cistronuser.API.Model.LoginuserModel;
 import com.example.cistronuser.API.Response.ChangePasswordResponse;
+import com.example.cistronuser.API.Response.LeaveApprovelCountResponse;
 import com.example.cistronuser.API.Response.LogoutResponse;
 import com.example.cistronuser.API.Response.WaitingExpenseCountInterface;
 import com.example.cistronuser.Common.ConnectionRecevier;
@@ -83,13 +85,101 @@ public class DashboardActivity extends Activity {
 
     //Admin Dashboard
     RelativeLayout rlExpenseReport,rlrlAttendaceReport,rlrlLeaveReport,rlWaitingLeaveRequest;
-    TextView tvwaitingCountExpense;
+    TextView tvwaitingCountExpense,tvCountLeaveReq;
 
     Context context;
 
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        LeaveApprovelCountInterface leaveApprovelCountInterface=APIClient.getClient().create(LeaveApprovelCountInterface.class);
+        leaveApprovelCountInterface.Callcount("getLeaveForApprovalCount").enqueue(new Callback<LeaveApprovelCountResponse>() {
+            @Override
+            public void onResponse(Call<LeaveApprovelCountResponse> call, Response<LeaveApprovelCountResponse> response) {
+                try {
+                    if (response.isSuccessful()){
+                        tvCountLeaveReq.setText(response.body().getCount());
+                    }
+
+                }catch (Exception e){
+                }
+            }
+            @Override
+            public void onFailure(Call<LeaveApprovelCountResponse> call, Throwable t) {
+
+            }
+        });
+
+        //Expense Count
+
+        ExpenseCountInterface expenseCountInterface= APIClient.getClient().create(ExpenseCountInterface.class);
+        expenseCountInterface.Callcount("expensesApprovalCount").enqueue(new Callback<WaitingExpenseCountInterface>() {
+            @Override
+            public void onResponse(Call<WaitingExpenseCountInterface> call, Response<WaitingExpenseCountInterface> response) {
+                try {
+                    if (response.isSuccessful()){
+                        tvwaitingCountExpense.setText(response.body().getCount());
+                    }
+
+                }catch (Exception e){
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<WaitingExpenseCountInterface> call, Throwable t) {
+
+            }
+        });
 
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LeaveApprovelCountInterface leaveApprovelCountInterface=APIClient.getClient().create(LeaveApprovelCountInterface.class);
+        leaveApprovelCountInterface.Callcount("getLeaveForApprovalCount").enqueue(new Callback<LeaveApprovelCountResponse>() {
+            @Override
+            public void onResponse(Call<LeaveApprovelCountResponse> call, Response<LeaveApprovelCountResponse> response) {
+                try {
+                    if (response.isSuccessful()){
+                        tvCountLeaveReq.setText(response.body().getCount());
+                    }
+
+                }catch (Exception e){
+                }
+            }
+            @Override
+            public void onFailure(Call<LeaveApprovelCountResponse> call, Throwable t) {
+
+            }
+        });
+
+
+        //Expense Count
+        ExpenseCountInterface expenseCountInterface= APIClient.getClient().create(ExpenseCountInterface.class);
+        expenseCountInterface.Callcount("expensesApprovalCount").enqueue(new Callback<WaitingExpenseCountInterface>() {
+            @Override
+            public void onResponse(Call<WaitingExpenseCountInterface> call, Response<WaitingExpenseCountInterface> response) {
+                try {
+                    if (response.isSuccessful()){
+                        tvwaitingCountExpense.setText(response.body().getCount());
+                    }
+
+                }catch (Exception e){
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<WaitingExpenseCountInterface> call, Throwable t) {
+
+            }
+        });
+
+    }
 
 
     @SuppressLint("MissingInflatedId")
@@ -114,6 +204,7 @@ public class DashboardActivity extends Activity {
         rlrlAttendaceReport=findViewById(R.id.rlrlAttendaceReport);
         rlrlLeaveReport=findViewById(R.id.rlrlLeaveReport);
         rlWaitingLeaveRequest=findViewById(R.id.rlWaitingLeaveRequest);
+        tvCountLeaveReq=findViewById(R.id.tvCountLeaveReq);
 
 
         tvProfilename.setText(PreferenceManager.getEmpName(this));
@@ -268,6 +359,31 @@ public class DashboardActivity extends Activity {
                 startActivity(leaveReport);
             }
         });
+
+
+
+
+        //LeaveApprovalCount
+        LeaveApprovelCountInterface leaveApprovelCountInterface=APIClient.getClient().create(LeaveApprovelCountInterface.class);
+        leaveApprovelCountInterface.Callcount("getLeaveForApprovalCount").enqueue(new Callback<LeaveApprovelCountResponse>() {
+            @Override
+            public void onResponse(Call<LeaveApprovelCountResponse> call, Response<LeaveApprovelCountResponse> response) {
+                try {
+                    if (response.isSuccessful()){
+                        tvCountLeaveReq.setText(response.body().getCount());
+                    }
+
+                }catch (Exception e){
+                }
+            }
+            @Override
+            public void onFailure(Call<LeaveApprovelCountResponse> call, Throwable t) {
+
+            }
+        });
+
+
+        //ExpenseCount
 
 
         ExpenseCountInterface expenseCountInterface= APIClient.getClient().create(ExpenseCountInterface.class);

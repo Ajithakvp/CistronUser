@@ -670,7 +670,7 @@ public class ExpensesActivity extends Activity {
 
 
                             checkboxtextview.setText(response.body().getPolicy());
-                            tvHeader.setText(response.body().getCategory());
+                            //tvHeader.setText(response.body().getCategory());
 
 
                             checkBox.setOnClickListener(new View.OnClickListener() {
