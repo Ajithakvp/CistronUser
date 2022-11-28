@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.cistronuser.API.APIClient;
 import com.example.cistronuser.API.Interface.DailyAttendanceUserInterface;
@@ -30,6 +31,7 @@ import com.example.cistronuser.API.Model.ReportTypeWMselectedModel;
 import com.example.cistronuser.API.Response.DailyReportAttendanceResponse;
 import com.example.cistronuser.API.Response.DailyReportUserAttendanceResponse;
 import com.example.cistronuser.API.Response.MonthlyReportAttendanceResponse;
+import com.example.cistronuser.Common.PreferenceManager;
 import com.example.cistronuser.R;
 import com.example.cistronuser.Report.Adapter.DailyReportAdapter;
 import com.example.cistronuser.Report.Adapter.ExpensesWeeklyAdapter;
@@ -47,7 +49,7 @@ import retrofit2.Response;
 public class AttendanceReports extends AppCompatActivity {
 
     Spinner spUser, spreportType, spUserMonthy;
-    TextView tvStartDateTag, tvStartDate, tvEndDateTag, tvEndDate, tvMonthyearTag, tvMonthyear, tvSubmit,tvWeellySubmit, tvMonthlyUserTag, tvUserTag;
+    TextView tvStartDateTag, tvStartDate, tvEndDateTag, tvEndDate, tvMonthyearTag, tvMonthyear, tvMonthlySubmit,tvWeellySubmit, tvMonthlyUserTag, tvUserTag;
     ImageView ivfilter,ivBack;
     RelativeLayout  rlfilter;
 
@@ -85,7 +87,7 @@ public class AttendanceReports extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attendance_reports);
 
-        tvSubmit = findViewById(R.id.tvSubmit);
+        tvMonthlySubmit = findViewById(R.id.tvMonthlySubmit);
         spUser = findViewById(R.id.spUser);
         spreportType = findViewById(R.id.spreportType);
         tvStartDateTag = findViewById(R.id.tvStartDateTag);
@@ -111,9 +113,9 @@ public class AttendanceReports extends AppCompatActivity {
 
 
 
-        Date d = new Date();
-        CharSequence s = DateFormat.format("yyyy-MM-dd ", d.getTime());
-        tvStartDate.setText(s);
+//        Date d = new Date();
+//        CharSequence s = DateFormat.format("yyyy-MM-dd ", d.getTime());
+//        tvStartDate.setText(s);
 
 
 
@@ -143,8 +145,8 @@ public class AttendanceReports extends AppCompatActivity {
         spUser.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Dailyuser=dailyReportUserAttendanceModels.get(position).getEmployee();
-                callDailyReport();
+               // Dailyuser=dailyReportUserAttendanceModels.get(position).getEmployee();
+               // callDailyReport();
             }
 
             @Override
@@ -161,10 +163,12 @@ public class AttendanceReports extends AppCompatActivity {
         spUserMonthy.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Dailyuser=dailyReportUserAttendanceModels.get(position).getEmployee();
+               // Dailyuser=dailyReportUserAttendanceModels.get(position).getEmployee();
 
-                if (position>0){
-                callMonthlyReport();}
+//                if (position>0){
+//                callMonthlyReport();}else {
+//                    callMonthlyReport();
+//                }
             }
 
             @Override
@@ -200,7 +204,7 @@ public class AttendanceReports extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                ReportTyee = reportTypeWMselectedModels.get(position).getReporttype();
+               ReportTyee = reportTypeWMselectedModels.get(position).getReporttype();
 
                 if (reportTypeWMselectedModels.get(position).getReporttype().trim().equals("Daily")) {
 
@@ -211,6 +215,7 @@ public class AttendanceReports extends AppCompatActivity {
                     tvUserTag.setVisibility(View.VISIBLE);
                     spUser.setVisibility(View.VISIBLE);
                     rvDailyattendanceReport.setVisibility(View.VISIBLE);
+                    tvWeellySubmit.setVisibility(View.VISIBLE);
 
                     tvMonthyearTag.setVisibility(View.GONE);
                     tvMonthyear.setVisibility(View.GONE);
@@ -220,7 +225,8 @@ public class AttendanceReports extends AppCompatActivity {
                     tvspace.setVisibility(View.GONE);
                     tvMonthlyUserTag.setVisibility(View.GONE);
                     rvMonthlyattendanceReport.setVisibility(View.GONE);
-                    CallDailyUser();
+                    tvMonthlySubmit.setVisibility(View.GONE);
+                  //  CallDailyUser();
 
 
 
@@ -231,6 +237,7 @@ public class AttendanceReports extends AppCompatActivity {
                     spUserMonthy.setVisibility(View.VISIBLE);
                     tvMonthlyUserTag.setVisibility(View.VISIBLE);
                     rvMonthlyattendanceReport.setVisibility(View.VISIBLE);
+                    tvMonthlySubmit.setVisibility(View.VISIBLE);
 
                     tvStartDateTag.setVisibility(View.GONE);
                     tvEndDateTag.setVisibility(View.GONE);
@@ -239,8 +246,9 @@ public class AttendanceReports extends AppCompatActivity {
                     tvUserTag.setVisibility(View.GONE);
                     spUser.setVisibility(View.GONE);
                     rvDailyattendanceReport.setVisibility(View.GONE);
+                    tvWeellySubmit.setVisibility(View.GONE);
 
-                    callMonthlyUser();
+                    //callMonthlyUser();
 
 
 
@@ -252,6 +260,25 @@ public class AttendanceReports extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
+
+        tvWeellySubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callDailyReport();
+            }
+        });
+
+        tvMonthlySubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (spUserMonthy.getSelectedItem().toString().trim().equals("All")){
+                    Toast.makeText(AttendanceReports.this, "Please select user", Toast.LENGTH_SHORT).show();
+                }else {
+                    callMonthlyReport();
+                }
             }
         });
 
@@ -276,6 +303,7 @@ public class AttendanceReports extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
+
                         Calendar calendar = Calendar.getInstance();
                         int year = calendar.get(Calendar.YEAR);
                         int month = calendar.get(Calendar.MONTH);
@@ -295,7 +323,8 @@ public class AttendanceReports extends AppCompatActivity {
                                 String strDate = year + "-" + moth + "-" + dt;
                                 tvStartDate.setText(strDate);
 
-                                callDailyReport();
+                                CallDailyUser();
+                               // callDailyReport();
                             }
 
                         }, year, month, dayOfMonth);
@@ -314,6 +343,8 @@ public class AttendanceReports extends AppCompatActivity {
         tvMonthyear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                callMonthlyUser();
                 Calendar mcurrentDate = Calendar.getInstance();
 
                 mYear = mcurrentDate.get(Calendar.YEAR);
@@ -333,6 +364,9 @@ public class AttendanceReports extends AppCompatActivity {
                         mDay = dayOfMonth;
                         mMonth = month;
                         mYear = year;
+
+                        callMonthlyUser();
+                        //callMonthlyReport();
 
 
                     }
@@ -354,12 +388,13 @@ public class AttendanceReports extends AppCompatActivity {
 
     private void callMonthlyUser() {
         DailyAttendanceUserInterface dailyAttendanceUserInterface=APIClient.getClient().create(DailyAttendanceUserInterface.class);
-        dailyAttendanceUserInterface.callDailyUser("getEmployeeRecord").enqueue(new Callback<DailyReportUserAttendanceResponse>() {
+        dailyAttendanceUserInterface.callDailyUser("getEmployeeRecord",PreferenceManager.getEmpuser(this),PreferenceManager.getEmpID(this)).enqueue(new Callback<DailyReportUserAttendanceResponse>() {
             @Override
             public void onResponse(Call<DailyReportUserAttendanceResponse> call, Response<DailyReportUserAttendanceResponse> response) {
                 try {
                     if (response.body().getDailyReportUserAttendanceModels().size()>0){
                         dailyReportUserAttendanceModels=response.body().getDailyReportUserAttendanceModels();
+                        strmonthlyUser.clear();
                         for (int i=0;i<dailyReportUserAttendanceModels.size();i++){
                             strmonthlyUser.add(dailyReportUserAttendanceModels.get(i).getEmployee());
                         }
@@ -383,6 +418,11 @@ public class AttendanceReports extends AppCompatActivity {
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();
+
+        ReportTyee = spreportType.getSelectedItem().toString();
+        Dailyuser=spUserMonthy.getSelectedItem().toString();
+
+
         MonthlyReportAttendanceInterFace monthlyReportAttendanceInterFace=APIClient.getClient().create(MonthlyReportAttendanceInterFace.class);
         monthlyReportAttendanceInterFace.callMonthlyReport("monthlyAttendanceReport",tvMonthyear.getText().toString(),Dailyuser,ReportTyee).enqueue(new Callback<MonthlyReportAttendanceResponse>() {
             @Override
@@ -414,12 +454,13 @@ public class AttendanceReports extends AppCompatActivity {
 
     private void CallDailyUser() {
         DailyAttendanceUserInterface dailyAttendanceUserInterface=APIClient.getClient().create(DailyAttendanceUserInterface.class);
-        dailyAttendanceUserInterface.callDailyUser("getEmployeeRecord").enqueue(new Callback<DailyReportUserAttendanceResponse>() {
+        dailyAttendanceUserInterface.callDailyUser("getEmployeeRecord", PreferenceManager.getEmpuser(this),PreferenceManager.getEmpID(this)).enqueue(new Callback<DailyReportUserAttendanceResponse>() {
             @Override
             public void onResponse(Call<DailyReportUserAttendanceResponse> call, Response<DailyReportUserAttendanceResponse> response) {
                 try {
                     if (response.body().getDailyReportUserAttendanceModels().size()>0){
                         dailyReportUserAttendanceModels=response.body().getDailyReportUserAttendanceModels();
+                        strDailyUser.clear();
                         for (int i=0;i<dailyReportUserAttendanceModels.size();i++){
                             strDailyUser.add(dailyReportUserAttendanceModels.get(i).getEmployee());
                         }
@@ -443,6 +484,9 @@ public class AttendanceReports extends AppCompatActivity {
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();
+
+        ReportTyee = spreportType.getSelectedItem().toString();
+        Dailyuser=spUser.getSelectedItem().toString();
         DailyReportAttendanceInterFace dailyReportAttendanceInterFace= APIClient.getClient().create(DailyReportAttendanceInterFace.class);
         dailyReportAttendanceInterFace.callDailyReport("dailyAttendanceReport",tvStartDate.getText().toString(),Dailyuser,ReportTyee).enqueue(new Callback<DailyReportAttendanceResponse>() {
             @Override

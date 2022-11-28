@@ -14,5 +14,5 @@ public interface UserMonthlyExpensesReportMW {
 
     @GET("expenses.php")
     Call<UserWeeklyReportExpenseMWResponses> callMonthly(@Query("action")String action, @Query("reportType")String reportType,
-                                                        @Query("monthYear")String monthYear);
+                                                        @Query("monthYear")String monthYear, @Query("role")String role, @Query("empid")String empid);
 }

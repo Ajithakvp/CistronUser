@@ -42,6 +42,18 @@ public class LoginuserModel {
     @SerializedName("photo")
     private String photo;
 
+
+    @SerializedName("user")
+    private String user;
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
     public String getPhoto() {
         return photo;
     }

@@ -221,6 +221,7 @@ public class LoginActivity extends AppCompatActivity {
                        PreferenceManager.setEmpphoto(LoginActivity.this,response.body().getPhoto());
                        PreferenceManager.setEmpemail(LoginActivity.this,response.body().getEmail());
                        PreferenceManager.setEmpteamleader(LoginActivity.this,response.body().getTeamleader());
+                       PreferenceManager.setEmpUser(LoginActivity.this,response.body().getUser());
                        Intent intent=new Intent(LoginActivity.this,DashboardActivity.class);
                        intent.putExtra("Pass",pass);
                        intent.putExtra("EmpID",response.body().getEmpid());

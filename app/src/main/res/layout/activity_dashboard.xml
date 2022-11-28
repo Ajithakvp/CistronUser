@@ -43,8 +43,7 @@
             android:layout_toStartOf="@id/ivName"
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
-            app:lottie_rawRes="@raw/person"
-            />
+            app:lottie_rawRes="@raw/person" />
 
 
     </RelativeLayout>
@@ -56,9 +55,6 @@
         android:layout_below="@+id/rlhead"
         android:background="@drawable/card_design"
         android:backgroundTint="#6495ED" />
-
-
-
 
 
     <RelativeLayout
@@ -100,24 +96,23 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-      android:layout_marginTop="60dp"
-        android:layout_marginBottom="60dp"
-        android:layout_below="@id/rlProfile">
+        android:layout_below="@id/rlProfile"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="60dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
+            android:layout_height="match_parent">
 
 
             <RelativeLayout
                 android:id="@+id/rlcardatted"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-               android:layout_centerHorizontal="true"
+                android:layout_centerHorizontal="true"
                 android:layout_marginLeft="20dp"
-                android:layout_marginBottom="30dp"
                 android:layout_marginRight="20dp"
+                android:layout_marginBottom="30dp"
                 android:background="@drawable/cardview"
                 android:backgroundTint="#fdfff5">
 
@@ -240,265 +235,265 @@
             </RelativeLayout>
 
 
-<!--            Admin-->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:id="@+id/rlWaitingApproval"
-                android:visibility="visible"
-                android:layout_below="@+id/rlcardatted"
-                android:layout_height="wrap_content">
+            <!--            Admin-->
 
+            <RelativeLayout
+                android:id="@+id/rlAdmin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rlcardatted"
+                android:visibility="visible">
 
                 <RelativeLayout
+                    android:id="@+id/rlWaitingApproval"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:background="@drawable/cardview"
-                    android:backgroundTint="#fdfff5 ">
+                    android:visibility="visible">
 
-                    <TextView
-                        android:id="@+id/tvWaitingApproved"
-                        android:layout_width="wrap_content"
+                    <RelativeLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="20dp"
-                        android:fontFamily="@font/bold"
-                        android:text="Waiting for  Approval"
-                        android:textColor="@color/black"
-                        android:textSize="20dp" />
-
-
-                    <RelativeLayout
-                        android:id="@+id/rlWaitingExpense"
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:layout_below="@id/tvWaitingApproved"
-                        android:layout_marginTop="20dp"
+                        android:layout_centerInParent="true"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
                         android:background="@drawable/cardview"
-                        android:backgroundTint="#6495ED">
-
-                        <ImageView
-                            android:id="@+id/ivExpense"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="30dp"
-                            android:src="@drawable/waitexpenses"
-                            android:tint="@color/white"
-                            tools:ignore="UseAppTint" />
+                        android:backgroundTint="#fdfff5 ">
 
                         <TextView
+                            android:id="@+id/tvWaitingApproved"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="20dp"
-                            android:id="@+id/tvExpenseName"
-                            android:layout_toRightOf="@+id/ivExpense"
-                            android:fontFamily="@font/semibold"
-                            android:text="Expenses"
-                            android:textColor="@color/white"
-                            android:textSize="18dp" />
-
-
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="10dp"
-                            android:id="@+id/tvCountExpensestart"
-                            android:layout_toRightOf="@+id/tvExpenseName"
-                            android:fontFamily="@font/semibold"
-                            android:text="("
-                            android:textColor="#C0C0C0"
-                            android:textSize="18dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="10dp"
-                            android:id="@+id/tvwaitingCountExpense"
-                            android:layout_toRightOf="@+id/tvCountExpensestart"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="20dp"
                             android:fontFamily="@font/bold"
-                            android:textColor="#FF0000"
-                            android:textSize="18dp" />
+                            android:text="Waiting for  Approval"
+                            android:textColor="@color/black"
+                            android:textSize="20dp" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="10dp"
-                            android:id="@+id/tvCountExpenseend"
-                            android:layout_toRightOf="@+id/tvwaitingCountExpense"
-                            android:fontFamily="@font/semibold"
-                            android:text=")"
-                            android:textColor="#C0C0C0"
-                            android:textSize="18dp" />
 
+                        <RelativeLayout
+                            android:id="@+id/rlWaitingExpense"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:layout_below="@id/tvWaitingApproved"
+                            android:layout_marginTop="20dp"
+                            android:background="@drawable/cardview"
+                            android:backgroundTint="#6495ED">
+
+                            <ImageView
+                                android:id="@+id/ivExpense"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="30dp"
+                                android:src="@drawable/waitexpenses"
+                                android:tint="@color/white"
+                                tools:ignore="UseAppTint" />
+
+                            <TextView
+                                android:id="@+id/tvExpenseName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="20dp"
+                                android:layout_toRightOf="@+id/ivExpense"
+                                android:fontFamily="@font/semibold"
+                                android:text="Expenses"
+                                android:textColor="@color/white"
+                                android:textSize="18dp" />
+
+
+                            <TextView
+                                android:id="@+id/tvCountExpensestart"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="10dp"
+                                android:layout_toRightOf="@+id/tvExpenseName"
+                                android:fontFamily="@font/semibold"
+                                android:text="("
+                                android:textColor="#C0C0C0"
+                                android:textSize="18dp" />
+
+                            <TextView
+                                android:id="@+id/tvwaitingCountExpense"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="10dp"
+                                android:layout_toRightOf="@+id/tvCountExpensestart"
+                                android:fontFamily="@font/bold"
+                                android:textColor="#FF0000"
+                                android:textSize="18dp" />
+
+                            <TextView
+                                android:id="@+id/tvCountExpenseend"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="10dp"
+                                android:layout_toRightOf="@+id/tvwaitingCountExpense"
+                                android:fontFamily="@font/semibold"
+                                android:text=")"
+                                android:textColor="#C0C0C0"
+                                android:textSize="18dp" />
+
+
+                        </RelativeLayout>
+
+
+                        <RelativeLayout
+                            android:id="@+id/rlWaitingLeaveRequest"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:layout_below="@id/rlWaitingExpense"
+                            android:layout_marginTop="20dp"
+                            android:background="@drawable/cardview"
+                            android:backgroundTint="#6495ED">
+
+                            <ImageView
+                                android:id="@+id/ivLeaveRequest"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="30dp"
+                                android:src="@drawable/leavereques"
+                                android:tint="@color/white"
+                                tools:ignore="UseAppTint" />
+
+                            <TextView
+                                android:id="@+id/tvLeaveReqName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="20dp"
+                                android:layout_toRightOf="@+id/ivLeaveRequest"
+                                android:fontFamily="@font/semibold"
+                                android:text="Leave Request"
+                                android:textColor="@color/white"
+                                android:textSize="18dp" />
+
+
+                            <TextView
+                                android:id="@+id/tvCountLeaveReqstart"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="10dp"
+                                android:layout_toRightOf="@+id/tvLeaveReqName"
+                                android:fontFamily="@font/semibold"
+                                android:text="("
+                                android:textColor="#C0C0C0"
+                                android:textSize="18dp" />
+
+                            <TextView
+                                android:id="@+id/tvCountLeaveReq"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="10dp"
+                                android:layout_toRightOf="@+id/tvCountLeaveReqstart"
+                                android:fontFamily="@font/bold"
+                                android:textColor="#FF0000"
+                                android:textSize="18dp" />
+
+                            <TextView
+                                android:id="@+id/tvCountLeaveReqEnd"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="10dp"
+                                android:layout_toRightOf="@+id/tvCountLeaveReq"
+                                android:fontFamily="@font/semibold"
+                                android:text=")"
+                                android:textColor="#C0C0C0"
+                                android:textSize="18dp" />
+
+                        </RelativeLayout>
+
+
+                        <RelativeLayout
+                            android:id="@+id/rlWaitingCompOFfRequest"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:layout_below="@id/rlWaitingLeaveRequest"
+                            android:layout_marginTop="20dp"
+                            android:background="@drawable/cardview"
+                            android:backgroundTint="#6495ED">
+
+                            <ImageView
+                                android:id="@+id/ivCompOffRequest"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="30dp"
+                                android:src="@drawable/compoff"
+                                android:tint="@color/white"
+                                tools:ignore="UseAppTint" />
+
+                            <TextView
+                                android:id="@+id/ivCompOffRequestName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="20dp"
+                                android:layout_toRightOf="@+id/ivCompOffRequest"
+                                android:fontFamily="@font/semibold"
+                                android:text="CompOff Request"
+                                android:textColor="@color/white"
+                                android:textSize="18dp" />
+
+
+                            <TextView
+                                android:id="@+id/tvCountCompOffReqstart"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="10dp"
+                                android:layout_toRightOf="@+id/ivCompOffRequestName"
+                                android:fontFamily="@font/semibold"
+                                android:text="("
+                                android:textColor="#C0C0C0"
+                                android:textSize="18dp" />
+
+                            <TextView
+                                android:id="@+id/tvCountCompOffReq"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="10dp"
+                                android:layout_toRightOf="@+id/tvCountCompOffReqstart"
+                                android:fontFamily="@font/bold"
+                                android:textColor="#FF0000"
+                                android:textSize="18dp" />
+
+                            <TextView
+                                android:id="@+id/tvCountCompOffReqEnd"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="10dp"
+                                android:layout_toRightOf="@+id/tvCountCompOffReq"
+                                android:fontFamily="@font/semibold"
+                                android:text=")"
+                                android:textColor="#C0C0C0"
+                                android:textSize="18dp" />
+
+                        </RelativeLayout>
 
                     </RelativeLayout>
-
-
-                    <RelativeLayout
-                        android:id="@+id/rlWaitingLeaveRequest"
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:layout_below="@id/rlWaitingExpense"
-                        android:layout_marginTop="20dp"
-                        android:background="@drawable/cardview"
-                        android:backgroundTint="#6495ED">
-
-                        <ImageView
-                            android:id="@+id/ivLeaveRequest"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="30dp"
-                            android:src="@drawable/leavereques"
-                            android:tint="@color/white"
-                            tools:ignore="UseAppTint" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="20dp"
-                            android:id="@+id/tvLeaveReqName"
-                            android:layout_toRightOf="@+id/ivLeaveRequest"
-                            android:fontFamily="@font/semibold"
-                            android:text="Leave Request"
-                            android:textColor="@color/white"
-                            android:textSize="18dp" />
-
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="10dp"
-                            android:id="@+id/tvCountLeaveReqstart"
-                            android:layout_toRightOf="@+id/tvLeaveReqName"
-                            android:fontFamily="@font/semibold"
-                            android:text="("
-                            android:textColor="#C0C0C0"
-                            android:textSize="18dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="10dp"
-                            android:id="@+id/tvCountLeaveReq"
-                            android:layout_toRightOf="@+id/tvCountLeaveReqstart"
-                            android:fontFamily="@font/bold"
-                            android:textColor="#FF0000"
-                            android:textSize="18dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="10dp"
-                            android:id="@+id/tvCountLeaveReqEnd"
-                            android:layout_toRightOf="@+id/tvCountLeaveReq"
-                            android:fontFamily="@font/semibold"
-                            android:text=")"
-                            android:textColor="#C0C0C0"
-                            android:textSize="18dp" />
-
-                    </RelativeLayout>
-
-
-
-
-                    <RelativeLayout
-                        android:id="@+id/rlWaitingCompOFfRequest"
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:layout_below="@id/rlWaitingLeaveRequest"
-                        android:layout_marginTop="20dp"
-                        android:background="@drawable/cardview"
-                        android:backgroundTint="#6495ED">
-
-                        <ImageView
-                            android:id="@+id/ivCompOffRequest"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="30dp"
-                            android:src="@drawable/compoff"
-                            android:tint="@color/white"
-                            tools:ignore="UseAppTint" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="20dp"
-                            android:id="@+id/ivCompOffRequestName"
-                            android:layout_toRightOf="@+id/ivCompOffRequest"
-                            android:fontFamily="@font/semibold"
-                            android:text="CompOff Request"
-                            android:textColor="@color/white"
-                            android:textSize="18dp" />
-
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="10dp"
-                            android:id="@+id/tvCountCompOffReqstart"
-                            android:layout_toRightOf="@+id/ivCompOffRequestName"
-                            android:fontFamily="@font/semibold"
-                            android:text="("
-                            android:textColor="#C0C0C0"
-                            android:textSize="18dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="10dp"
-                            android:id="@+id/tvCountCompOffReq"
-                            android:layout_toRightOf="@+id/tvCountCompOffReqstart"
-                            android:fontFamily="@font/bold"
-                            android:textColor="#FF0000"
-                            android:textSize="18dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="10dp"
-                            android:id="@+id/tvCountCompOffReqEnd"
-                            android:layout_toRightOf="@+id/tvCountCompOffReq"
-                            android:fontFamily="@font/semibold"
-                            android:text=")"
-                            android:textColor="#C0C0C0"
-                            android:textSize="18dp" />
-
-                    </RelativeLayout>
-
                 </RelativeLayout>
-            </RelativeLayout>
 
-<!--                Report-->
-
-
-
+                <!--                Report-->
 
 
                 <RelativeLayout
-                    android:layout_width="match_parent"
                     android:id="@+id/rlReport"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginBottom="30dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_below="@id/rlWaitingApproval"
-                    android:layout_height="wrap_content">
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="30dp">
 
 
                     <RelativeLayout
@@ -588,16 +583,13 @@
                         </RelativeLayout>
 
 
-
-
-
                         <RelativeLayout
                             android:id="@+id/rlrlLeaveReport"
                             android:layout_width="match_parent"
                             android:layout_height="60dp"
-                            android:layout_marginBottom="20dp"
                             android:layout_below="@id/rlrlAttendaceReport"
                             android:layout_marginTop="20dp"
+                            android:layout_marginBottom="20dp"
                             android:background="@drawable/cardview"
                             android:backgroundTint="#6495ED">
 
@@ -625,9 +617,9 @@
                         </RelativeLayout>
 
 
-
-
                     </RelativeLayout>
+
+                </RelativeLayout>
 
 
             </RelativeLayout>
@@ -642,18 +634,18 @@
         android:id="@+id/rltopcard"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:visibility="visible"
         android:layout_alignParentBottom="true"
         android:background="@drawable/bottomcard"
-        android:backgroundTint="#6495ED">
+        android:backgroundTint="#6495ED"
+        android:visibility="visible">
 
         <TextView
             android:id="@+id/lWebview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/bold"
             android:layout_centerInParent="true"
             android:clickable="true"
+            android:fontFamily="@font/bold"
             android:text="@string/weblink"
             android:textColor="@color/white"
             android:textSize="20dp" />

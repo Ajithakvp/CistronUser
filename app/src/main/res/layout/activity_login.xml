@@ -76,7 +76,7 @@
             android:id="@+id/login_btn"
             style="@style/textInput"
             android:layout_height="60dp"
-            android:background="@drawable/design"
+            android:background="@drawable/backdesign"
             android:layout_below="@+id/tvfailed"
             android:backgroundTint="#6495ED"
             android:fontFamily="@font/bold"

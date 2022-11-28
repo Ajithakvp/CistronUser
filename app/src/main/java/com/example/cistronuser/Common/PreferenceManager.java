@@ -201,16 +201,16 @@ public class PreferenceManager {
 
     //Emply
 
-    public static void setEmpType(Context context, String empid) {
+    public static void setEmpUser(Context context, String empid) {
         SharedPreferences preferences;
         preferences = context.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
-        preferences.edit().putString("photo", empid).apply();
+        preferences.edit().putString("user", empid).apply();
     }
 
-    public static String getEmpType(Context activity) {
+    public static String getEmpuser(Context activity) {
         SharedPreferences preferences;
         preferences = activity.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
-        return preferences.getString("photo", "");
+        return preferences.getString("user", "");
 
     }
 

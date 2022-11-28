@@ -16,7 +16,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:id="@+id/rltoolbar"
-        android:background="#6495ED"
+        android:background="@drawable/headerdesign"
         android:layout_height="50dp">
 
         <TextView
@@ -51,8 +51,8 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_below="@+id/rltoolbar"
-        android:background="@drawable/card_design"
-        android:backgroundTint="#6495ED" />
+        android:background="@drawable/design"
+         />
 
 
 <!--    <androidx.recyclerview.widget.RecyclerView-->
