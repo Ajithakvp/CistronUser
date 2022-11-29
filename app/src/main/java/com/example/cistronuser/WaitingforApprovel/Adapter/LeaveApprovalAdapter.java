@@ -45,7 +45,7 @@ public class LeaveApprovalAdapter extends RecyclerView.Adapter<LeaveApprovalAdap
     public ArrayList<LeaveApprovelModel> leaveApprovelModels;
     Activity activity;
     String baseUrl;
-    String Attachfile;
+
 
     public LeaveApprovalAdapter(ArrayList<LeaveApprovelModel> leaveApprovelModels, Activity activity) {
         this.leaveApprovelModels = leaveApprovelModels;
@@ -78,7 +78,7 @@ public class LeaveApprovalAdapter extends RecyclerView.Adapter<LeaveApprovalAdap
         holder.tvFDHD.setText(leaveApprovelModels.get(position).getFdhd());
 
 
-        Attachfile = leaveApprovelModels.get(position).getMedattach();
+        String Attachfile = leaveApprovelModels.get(position).getMedattach();
 
 
 
@@ -288,8 +288,8 @@ public class LeaveApprovalAdapter extends RecyclerView.Adapter<LeaveApprovalAdap
             @Override
             public void onClick(View v) {
 
-                Callfile(baseUrl + Attachfile);
-                Log.e(TAG, "onClick: "+baseUrl + Attachfile );
+                Callfile(baseUrl+Attachfile);
+                Log.e(TAG, "onClick: "+baseUrl+Attachfile );
             }
         });
 

@@ -409,6 +409,7 @@ public class ExpenseReportWM extends AppCompatActivity {
             public void onClick(View v) {
 
 
+                rlfilter.setVisibility(View.GONE);
                 final ProgressDialog progressDialog = new ProgressDialog(ExpenseReportWM.this);
                 progressDialog.setMessage("Loading...");
                 progressDialog.setCancelable(false);

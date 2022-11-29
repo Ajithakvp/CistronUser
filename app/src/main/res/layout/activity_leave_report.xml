@@ -41,7 +41,7 @@
 
 
             <ImageView
-                android:id="@+id/ivMore"
+                android:id="@+id/ivfilter"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_centerInParent="true"
@@ -49,13 +49,377 @@
                 android:layout_marginRight="10dp"
                 android:layout_toRightOf="@id/tvHeader"
                 android:backgroundTint="@color/white"
-                android:src="@drawable/ic_baseline_view_list_24"
+                android:src="@drawable/filtericon"
                 android:tint="@color/white"
-                android:visibility="gone"
+                android:visibility="visible"
                 tools:ignore="UseAppTint" />
 
 
         </RelativeLayout>
-    </RelativeLayout>
 
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rltoolbar">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:id="@+id/rlfilter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/edittext"
+                        android:backgroundTint="#6495ED"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="10dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <RelativeLayout
+                                android:id="@+id/rlReport"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:id="@+id/tvreportTypeTag"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginTop="30dp"
+                                    android:fontFamily="@font/bold"
+                                    android:text="Leave  Type  :"
+                                    android:textColor="@color/white"
+                                    android:textSize="18dp" />
+
+                                <Spinner
+                                    android:id="@+id/spreportType"
+                                    android:layout_width="200dp"
+                                    android:layout_height="50dp"
+                                    android:layout_marginLeft="8dp"
+                                    android:layout_marginTop="20dp"
+                                    android:layout_toRightOf="@id/tvreportTypeTag"
+                                    android:background="@drawable/edittext"
+                                    android:backgroundTint="@color/white" />
+
+
+                                <TextView
+                                    android:id="@+id/tvDateTag"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/spreportType"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginTop="30dp"
+                                    android:fontFamily="@font/bold"
+                                    android:text=" Date                :"
+                                    android:textColor="@color/white"
+                                    android:textSize="18dp"
+                                    android:visibility="gone" />
+
+
+                                <TextView
+                                    android:id="@+id/tvDate"
+                                    android:layout_width="200dp"
+                                    android:layout_height="50dp"
+                                    android:layout_below="@id/spreportType"
+                                    android:layout_marginLeft="8dp"
+                                    android:layout_marginTop="20dp"
+                                    android:layout_toRightOf="@id/tvDateTag"
+                                    android:background="@drawable/edittext"
+                                    android:backgroundTint="@color/white"
+                                    android:fontFamily="@font/semibold"
+                                    android:gravity="center"
+                                    android:textColor="@color/black"
+                                    android:textSize="17dp"
+                                    android:visibility="gone" />
+
+
+                                <TextView
+                                    android:id="@+id/tvMonthyearTag"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/spreportType"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginTop="30dp"
+                                    android:fontFamily="@font/bold"
+                                    android:text="Month year    :"
+                                    android:textColor="@color/white"
+                                    android:textSize="18dp"
+                                    android:visibility="gone" />
+
+
+                                <TextView
+                                    android:id="@+id/tvMonthyear"
+                                    android:layout_width="200dp"
+                                    android:layout_height="50dp"
+                                    android:layout_below="@id/spreportType"
+                                    android:layout_marginLeft="8dp"
+                                    android:layout_marginTop="20dp"
+                                    android:layout_toRightOf="@id/tvMonthyearTag"
+                                    android:background="@drawable/edittext"
+                                    android:backgroundTint="@color/white"
+                                    android:fontFamily="@font/semibold"
+                                    android:gravity="center"
+                                    android:textColor="@color/black"
+                                    android:textSize="17dp"
+                                    android:visibility="gone" />
+
+
+                            </RelativeLayout>
+
+                            <View
+                                android:id="@+id/view1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="0.5dp"
+                                android:layout_below="@+id/rlReport"
+                                android:layout_marginTop="10dp" />
+
+                            <RelativeLayout
+                                android:id="@+id/rluser"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/view1"
+                                android:layout_marginBottom="15dp">
+
+                                <TextView
+                                    android:id="@+id/tvUserTag"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginTop="30dp"
+                                    android:fontFamily="@font/bold"
+                                    android:text="User                  :"
+                                    android:textColor="@color/white"
+                                    android:textSize="18dp"
+                                    android:visibility="gone" />
+
+                                <Spinner
+                                    android:id="@+id/spUser"
+                                    android:layout_width="200dp"
+                                    android:layout_height="50dp"
+                                    android:layout_marginLeft="8dp"
+                                    android:layout_marginTop="20dp"
+                                    android:layout_toRightOf="@id/tvUserTag"
+                                    android:background="@drawable/edittext"
+                                    android:backgroundTint="@color/white"
+                                    android:visibility="gone" />
+
+                                <TextView
+                                    android:id="@+id/tvMonthlyUserTag"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginTop="30dp"
+                                    android:fontFamily="@font/bold"
+                                    android:text="User                  :"
+                                    android:textColor="@color/white"
+                                    android:textSize="18dp"
+                                    android:visibility="gone" />
+
+                                <Spinner
+                                    android:id="@+id/spUserMonthy"
+                                    android:layout_width="200dp"
+                                    android:layout_height="50dp"
+                                    android:layout_marginLeft="8dp"
+                                    android:layout_marginTop="20dp"
+                                    android:layout_toRightOf="@id/tvMonthlyUserTag"
+                                    android:background="@drawable/edittext"
+                                    android:backgroundTint="@color/white"
+                                    android:visibility="gone" />
+
+
+                            </RelativeLayout>
+
+
+                            <TextView
+                                android:id="@+id/tvMonthlySubmit"
+                                android:layout_width="200dp"
+                                android:layout_height="50dp"
+                                android:layout_below="@id/rluser"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="20dp"
+                                android:background="@drawable/edittext"
+                                android:backgroundTint="@color/Radio"
+                                android:fontFamily="@font/semibold"
+                                android:gravity="center"
+                                android:text="Submit"
+                                android:textColor="@color/white"
+                                android:textSize="19dp"
+                                android:visibility="gone" />
+
+
+                            <TextView
+                                android:id="@+id/tvWeellySubmit"
+                                android:layout_width="200dp"
+                                android:layout_height="50dp"
+                                android:layout_below="@id/rluser"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="20dp"
+                                android:background="@drawable/edittext"
+                                android:backgroundTint="@color/Radio"
+                                android:fontFamily="@font/semibold"
+                                android:gravity="center"
+                                android:text="Submit"
+                                android:textColor="@color/white"
+                                android:textSize="19dp"
+                                android:visibility="gone" />
+
+                        </RelativeLayout>
+
+                    </androidx.cardview.widget.CardView>
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/rlfilter"
+                    android:visibility="visible">
+
+                    <TableLayout
+                        android:id="@+id/tbview"
+                        android:background="@color/blue"
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:weightSum="4">
+
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginTop="8dp"
+                                android:fontFamily="@font/bold"
+                                android:gravity="center"
+                                android:text="S.no"
+                                android:textColor="@color/white"
+                                android:textSize="17dp" />
+
+                            <TextView
+                                android:layout_width="60dp"
+                                android:layout_height="40dp"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginTop="8dp"
+                                android:fontFamily="@font/bold"
+                                android:gravity="center"
+                                android:text="Date"
+                                android:textColor="@color/white"
+                                android:textSize="17dp" />
+
+                            <TextView
+                                android:layout_width="50dp"
+                                android:layout_height="40dp"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginTop="8dp"
+                                android:fontFamily="@font/bold"
+                                android:gravity="center"
+                                android:text="Day"
+                                android:textColor="@color/white"
+                                android:textSize="17dp" />
+
+
+                            <TextView
+                                android:layout_width="240dp"
+                                android:layout_height="40dp"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginTop="8dp"
+                                android:fontFamily="@font/bold"
+                                android:gravity="center"
+                                android:text="Reason"
+                                android:textColor="@color/white"
+                                android:textSize="17dp" />
+
+
+                        </TableRow>
+
+                    </TableLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_below="@+id/tbview"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/latest"
+                            android:textColor="@color/Radio"
+                            android:textSize="15dp"
+                            android:visibility="gone"
+                            android:text="2022-12-22-"
+                           android:layout_toLeftOf="@id/tvDailySpace"
+                            android:id="@+id/tvDailyDate"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/latest"
+                            android:textColor="@color/blue"
+                            android:textSize="15dp"
+                            android:text="-"
+                            android:visibility="gone"
+                            android:layout_centerHorizontal="true"
+                            android:id="@+id/tvDailySpace"/>
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/latest"
+                            android:textColor="@color/blue"
+                            android:layout_toRightOf="@id/tvDailySpace"
+                            android:textSize="15dp"
+                            android:visibility="gone"
+                            android:text="Sunday"
+                            android:id="@+id/tvDailyDay"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rvLeaveReport"
+                        android:visibility="gone"
+                       android:layout_below="@id/tvDailyDate"
+                        android:layout_marginLeft="5dp"/>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:id="@+id/rvLeaveReportMonthly"
+                            android:layout_below="@id/tvDailyDate"
+                            android:layout_marginLeft="5dp"/>
+
+
+
+
+                </RelativeLayout>
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
 </RelativeLayout>
