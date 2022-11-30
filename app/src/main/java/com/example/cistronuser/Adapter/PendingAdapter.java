@@ -4,6 +4,7 @@ import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
@@ -106,6 +107,10 @@ public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.ViewHold
                 builder.setPositiveButton("yes", (new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        final ProgressDialog progressDialog = new ProgressDialog(activity);
+                        progressDialog.setMessage("Loading...");
+                        progressDialog.setCancelable(false);
+                        progressDialog.show();
                         DeletedAPIInterface deletedAPIInterface = APIClient.getClient().create(DeletedAPIInterface.class);
                         deletedAPIInterface.CallDetails("deleteLeave", PreferenceManager.getEmpID(activity), leavedetailsModels.get(position).getId()).enqueue(new Callback<DeleteResponse>() {
                             @Override
@@ -113,6 +118,7 @@ public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.ViewHold
 
                                 try {
                                     if (response.isSuccessful()){
+                                        progressDialog.dismiss();
 
                                         Toast.makeText(activity, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                                         activity.finish();

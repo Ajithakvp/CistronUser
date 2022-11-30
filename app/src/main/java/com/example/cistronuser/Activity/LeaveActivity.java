@@ -1020,12 +1020,12 @@ public class LeaveActivity extends Activity {
                 int rb3 = rbGroup3.indexOfChild(gb3);
                 switch (rb3) {
                     case 0:
-                        Toast.makeText(LeaveActivity.this, "full day", Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(LeaveActivity.this, "full day", Toast.LENGTH_SHORT).show();
                         day = 0;
                         break;
 
                     case 1:
-                        Toast.makeText(LeaveActivity.this, "Half day", Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(LeaveActivity.this, "Half day", Toast.LENGTH_SHORT).show();
                         day = 1;
                         break;
                 }
@@ -1041,11 +1041,11 @@ public class LeaveActivity extends Activity {
                 switch (rb2) {
                     case 0:
 
-                        Toast.makeText(LeaveActivity.this, "CompOff", Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(LeaveActivity.this, "CompOff", Toast.LENGTH_SHORT).show();
                         break;
                     case 1:
 
-                        Toast.makeText(LeaveActivity.this, "Lop", Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(LeaveActivity.this, "Lop", Toast.LENGTH_SHORT).show();
                         break;
 
                 }
@@ -1062,15 +1062,15 @@ public class LeaveActivity extends Activity {
                 switch (rb) {
                     case 0:
                         typeid = 1;
-                        Toast.makeText(LeaveActivity.this, "Cl", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(LeaveActivity.this, "Cl", Toast.LENGTH_SHORT).show();
                         break;
                     case 1:
                         typeid = 3;
-                        Toast.makeText(LeaveActivity.this, "ML", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(LeaveActivity.this, "ML", Toast.LENGTH_SHORT).show();
                         break;
                     case 2:
                         typeid = 2;
-                        Toast.makeText(LeaveActivity.this, "PL", Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(LeaveActivity.this, "PL", Toast.LENGTH_SHORT).show();
                         break;
                 }
 
@@ -1279,6 +1279,9 @@ public class LeaveActivity extends Activity {
                         spReson.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             @Override
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                                if (! leave.get(position).trim().equals("----Select----"))
+                                    
                                 Toast.makeText(LeaveActivity.this, leave.get(position), Toast.LENGTH_SHORT).show();
                                 // reason = Integer.parseInt(leave.get(position));
                                 reason = position;

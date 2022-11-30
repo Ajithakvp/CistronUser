@@ -116,7 +116,7 @@ public class ExpensesActivity extends Activity {
     //ViewExpenses
     String BaseExpenseUrl, WebviewConvency, WebViewOther, WebViewLodging, WebViewTicket;
     String fillconv, fileot, filelod, filetic;
-    TextView tvViewWeeklyreport,tvViewWeeklyreportSubmit;
+    TextView tvViewWeeklyreport, tvViewWeeklyreportSubmit;
 
     //Policy
     RelativeLayout rlmsg, rlExpenseLayout;
@@ -125,22 +125,26 @@ public class ExpensesActivity extends Activity {
     //WeeklyExpense
     ExpensesViewWeeklyAdapter weeklyAdapter;
     RelativeLayout rlUploadWeekAll;
-    TextView tvWeekDoc,tvGrandsumDoc;
-    File fileWeek;
+    TextView tvWeekDoc, tvGrandsumDoc;
+    File fileWeek=null;
     String strWeekall;
-    ArrayList<WeeklyExpensesModel>weeklyExpensesModels=new ArrayList<>();
+    ArrayList<WeeklyExpensesModel> weeklyExpensesModels = new ArrayList<>();
 
     //CheckWeekExpensesmsg
     RelativeLayout rlErrormsg;
-    TextView tvExtraMsg,tvCheckWeekReportMsg;
+    TextView tvExtraMsg, tvCheckWeekReportMsg;
     ImageView ivWeekPreview;
-    String WeekBaseurl,Filename_r;
+    TextView tvGrandsumDocTag;
+    String WeekBaseurl, Filename_r;
+
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_expenses);
+
+
 
 
         ivBack = findViewById(R.id.ivBack);
@@ -163,12 +167,12 @@ public class ExpensesActivity extends Activity {
         tvEnddate = findViewById(R.id.tvEnddate);
         tvSubmit = findViewById(R.id.tvSubmit);
         ivMore = findViewById(R.id.ivMore);
-        tvViewWeeklyreport=findViewById(R.id.tvViewWeeklyreport);
+        tvViewWeeklyreport = findViewById(R.id.tvViewWeeklyreport);
 
 
-        rlErrormsg=findViewById(R.id.rlErrormsg);
-        tvExtraMsg=findViewById(R.id.tvExtraMsg);
-        tvCheckWeekReportMsg=findViewById(R.id.tvCheckWeekReportMsg);
+        rlErrormsg = findViewById(R.id.rlErrormsg);
+        tvExtraMsg = findViewById(R.id.tvExtraMsg);
+        tvCheckWeekReportMsg = findViewById(R.id.tvCheckWeekReportMsg);
 
         rlExpenseLayout = findViewById(R.id.rlExpenseLayout);
         rlmsg = findViewById(R.id.rlmsg);
@@ -196,7 +200,6 @@ public class ExpensesActivity extends Activity {
         tvOtherEmptyDoc = findViewById(R.id.tvOtherEmptyDoc);
 
 
-
         edConveyance.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -210,16 +213,15 @@ public class ExpensesActivity extends Activity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (edConveyance.getText().toString().trim().length()==0){
-                   rlUpload.setVisibility(View.GONE);
+                if (edConveyance.getText().toString().trim().length() == 0) {
+                    rlUpload.setVisibility(View.GONE);
 
-                }else {
-                   rlUpload.setVisibility(View.VISIBLE);
+                } else {
+                    rlUpload.setVisibility(View.VISIBLE);
                 }
 
             }
         });
-
 
 
         edOther.addTextChangedListener(new TextWatcher() {
@@ -235,10 +237,10 @@ public class ExpensesActivity extends Activity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (edOther.getText().toString().trim().length()==0){
+                if (edOther.getText().toString().trim().length() == 0) {
                     rlUploadother.setVisibility(View.GONE);
 
-                }else {
+                } else {
                     rlUploadother.setVisibility(View.VISIBLE);
                 }
 
@@ -259,16 +261,15 @@ public class ExpensesActivity extends Activity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (tvTicket.getText().toString().trim().length()==0){
+                if (tvTicket.getText().toString().trim().length() == 0) {
                     rlUploadTicket.setVisibility(View.GONE);
 
-                }else {
+                } else {
                     rlUploadTicket.setVisibility(View.VISIBLE);
                 }
 
             }
         });
-
 
 
         tvLodging.addTextChangedListener(new TextWatcher() {
@@ -284,17 +285,15 @@ public class ExpensesActivity extends Activity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (tvLodging.getText().toString().trim().length()==0){
+                if (tvLodging.getText().toString().trim().length() == 0) {
                     rlUploadLodging.setVisibility(View.GONE);
 
-                }else {
+                } else {
                     rlUploadLodging.setVisibility(View.VISIBLE);
                 }
 
             }
         });
-
-
 
 
         //internet
@@ -316,6 +315,8 @@ public class ExpensesActivity extends Activity {
         tvDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 CallDate();
             }
         });
@@ -398,16 +399,26 @@ public class ExpensesActivity extends Activity {
             public void onClick(View v) {
 
 
-                if (tvDate.getText().toString().isEmpty()){
+                boolean isfilled = true, focus = false;
+
+                if (tvDate.getText().toString().isEmpty()) {
                     tvDate.setError("Please Select Date");
-                    Toast.makeText(ExpensesActivity.this, "Please select Date ", Toast.LENGTH_SHORT).show();
                     tvDate.requestFocus();
-                }else if (edWorkReport.getText().toString().trim().length()==0){
+                    focus = true;
+                    isfilled = false;
+                }
+                if (edWorkReport.getText().toString().trim().length() == 0) {
                     edWorkReport.setError("Please Enter Report");
-                    edWorkReport.requestFocus();
-                }else if(edConveyance.getText().toString().isEmpty() || edOther.getText().toString().isEmpty() || tvTicket.getText().toString().isEmpty() || tvLodging.getText().toString().isEmpty() ){
+                    if (!focus)
+                        edWorkReport.requestFocus();
+                    isfilled = false;
+                }
+                if (edConveyance.getText().toString().isEmpty() && edOther.getText().toString().isEmpty() && tvTicket.getText().toString().isEmpty() && tvLodging.getText().toString().isEmpty()) {
                     Toast.makeText(ExpensesActivity.this, "Please enter any one of the expenses", Toast.LENGTH_SHORT).show();
-                }else {
+                    isfilled = false;
+
+                }
+                if (isfilled) {
 
                     Log.e(TAG, "onClick: 5");
                     Callsubmitexpense();
@@ -423,6 +434,7 @@ public class ExpensesActivity extends Activity {
                     if (fileticket != null) {
                         Log.e(TAG, "onClick: 3");
 
+
                         Callsaveticket();
                     }
                     if (fileOther != null) {
@@ -430,14 +442,13 @@ public class ExpensesActivity extends Activity {
 
                         Callsaveother();
                     }
+
+
                 }
-
-
 
 
             }
         });
-
 
 
         ivConvencyDelete.setOnClickListener(new View.OnClickListener() {
@@ -476,7 +487,6 @@ public class ExpensesActivity extends Activity {
             public void onClick(View v) {
 
 
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(ExpensesActivity.this);
                 builder.setMessage("Are you sure you want to Delete ?");
                 builder.setTitle("Delete!");
@@ -500,14 +510,12 @@ public class ExpensesActivity extends Activity {
                 alertDialog.show();
 
 
-
             }
         });
 
         ivDeleteTicket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
 
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(ExpensesActivity.this);
@@ -531,9 +539,6 @@ public class ExpensesActivity extends Activity {
                 }));
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
-
-
-
 
 
             }
@@ -566,8 +571,6 @@ public class ExpensesActivity extends Activity {
                 }));
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
-
-
 
 
             }
@@ -621,8 +624,8 @@ public class ExpensesActivity extends Activity {
 
                 if (tvDate.getText().toString().isEmpty()) {
                     Toast.makeText(ExpensesActivity.this, "Please select Date ", Toast.LENGTH_SHORT).show();
-                    tvDate.requestFocus();
-                }else {
+                } else {
+
                     callExpenseList();
                 }
             }
@@ -631,11 +634,13 @@ public class ExpensesActivity extends Activity {
         tvCheckWeekReportMsg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // callExpenseList();
+
+
+                // callExpenseList();
+
                 callcheckWeekList();
             }
         });
-
 
 
         //Policy check
@@ -668,7 +673,6 @@ public class ExpensesActivity extends Activity {
                             rlmsg.setVisibility(View.GONE);
 
 
-
                             checkboxtextview.setText(response.body().getPolicy());
                             //tvHeader.setText(response.body().getCategory());
 
@@ -683,11 +687,11 @@ public class ExpensesActivity extends Activity {
                                         button.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
-                                                ExpensePolicyInterface expensePolicyaccpted=APIClient.getClient().create(ExpensePolicyInterface.class);
-                                                expensePolicyaccpted.CallPolicyExpenses("acceptExpPolicy",PreferenceManager.getEmpID(ExpensesActivity.this)).enqueue(new Callback<ExpensePolicyResponse>() {
+                                                ExpensePolicyInterface expensePolicyaccpted = APIClient.getClient().create(ExpensePolicyInterface.class);
+                                                expensePolicyaccpted.CallPolicyExpenses("acceptExpPolicy", PreferenceManager.getEmpID(ExpensesActivity.this)).enqueue(new Callback<ExpensePolicyResponse>() {
                                                     @Override
                                                     public void onResponse(Call<ExpensePolicyResponse> call, Response<ExpensePolicyResponse> response) {
-                                                        if (response.isSuccessful()){
+                                                        if (response.isSuccessful()) {
                                                             dialog.dismiss();
                                                             rlExpenseLayout.setVisibility(View.VISIBLE);
                                                             Toast.makeText(ExpensesActivity.this, "Accepted", Toast.LENGTH_SHORT).show();
@@ -722,10 +726,7 @@ public class ExpensesActivity extends Activity {
                             });
 
 
-
-
-
-                                    } else if (response.body().getMessage().trim().equals("accepted")) {
+                        } else if (response.body().getMessage().trim().equals("accepted")) {
                             rlExpenseLayout.setVisibility(View.VISIBLE);
                             rlmsg.setVisibility(View.GONE);
 
@@ -759,17 +760,17 @@ public class ExpensesActivity extends Activity {
         bottomSheetDialog.show();
         ivBottomBack = bottomSheetDialog.findViewById(R.id.ivBottomBack);
         rvExpense = bottomSheetDialog.findViewById(R.id.rvExpense);
-        tvViewWeeklyreportSubmit=bottomSheetDialog.findViewById(R.id.tvViewWeeklyreportSubmit);
-        rlUploadWeekAll=bottomSheetDialog.findViewById(R.id.rlUploadWeekAll);
-        tvWeekDoc=bottomSheetDialog.findViewById(R.id.tvWeekDoc);
-        tvGrandsumDoc=bottomSheetDialog.findViewById(R.id.tvGrandsumDoc);
-        ivWeekPreview=bottomSheetDialog.findViewById(R.id.ivWeekPreview);
+        tvViewWeeklyreportSubmit = bottomSheetDialog.findViewById(R.id.tvViewWeeklyreportSubmit);
+        rlUploadWeekAll = bottomSheetDialog.findViewById(R.id.rlUploadWeekAll);
+        tvWeekDoc = bottomSheetDialog.findViewById(R.id.tvWeekDoc);
+        tvGrandsumDoc = bottomSheetDialog.findViewById(R.id.tvGrandsumDoc);
+        ivWeekPreview = bottomSheetDialog.findViewById(R.id.ivWeekPreview);
+        TextView tvGrandsumDocTag = bottomSheetDialog.findViewById(R.id.tvGrandsumDocTag);
+        TextView tvWeeklyPreviewTag=bottomSheetDialog.findViewById(R.id.tvWeeklyPreviewTag);
 
 
-
-
-        weeklyAdapter=new ExpensesViewWeeklyAdapter(ExpensesActivity.this,BaseExpenseUrl,weeklyExpensesModels);
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(ExpensesActivity .this);
+        weeklyAdapter = new ExpensesViewWeeklyAdapter(ExpensesActivity.this, BaseExpenseUrl, weeklyExpensesModels);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ExpensesActivity.this);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         rvExpense.setLayoutManager(linearLayoutManager);
         rvExpense.setAdapter(weeklyAdapter);
@@ -777,28 +778,36 @@ public class ExpensesActivity extends Activity {
         ivWeekPreview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                previewattache(WeekBaseurl+Filename_r);
+                previewattache(WeekBaseurl + Filename_r);
             }
         });
 
 
-
-        ViewExpenseListInterface viewExpenseListInterface=APIClient.getClient().create(ViewExpenseListInterface.class);
-        viewExpenseListInterface.CallSelectWeek("viewWeeklyExpenses",tvDate.getText().toString(),PreferenceManager.getEmpID(this)).enqueue(new Callback<ViewExpenseResponse>() {
+        ViewExpenseListInterface viewExpenseListInterface = APIClient.getClient().create(ViewExpenseListInterface.class);
+        viewExpenseListInterface.CallSelectWeek("viewWeeklyExpenses", tvDate.getText().toString(), PreferenceManager.getEmpID(this)).enqueue(new Callback<ViewExpenseResponse>() {
             @Override
             public void onResponse(Call<ViewExpenseResponse> call, Response<ViewExpenseResponse> response) {
-                try{
-                    if (response.isSuccessful()){
+                try {
+                    if (response.isSuccessful()) {
                         progressDialog.dismiss();
+                        tvGrandsumDocTag.setVisibility(View.VISIBLE);
                         tvGrandsumDoc.setText(response.body().getGrandSum());
-                        Filename_r=response.body().getFilename_r();
-                        WeekBaseurl=response.body().getAttachBaseUrl();
-                        weeklyAdapter.weeklyExpensesModels=response.body().getWeeklyExpensesModels();
+
+                        if(response.body().getFilename_r().trim().equals("")){
+                            ivWeekPreview.setVisibility(View.GONE);
+                            tvWeeklyPreviewTag.setVisibility(View.GONE);
+                        }else {
+                            ivWeekPreview.setVisibility(View.VISIBLE);
+                            tvWeeklyPreviewTag.setVisibility(View.VISIBLE);
+                        }
+                        Filename_r = response.body().getFilename_r();
+                        WeekBaseurl = response.body().getAttachBaseUrl();
+                        weeklyAdapter.weeklyExpensesModels = response.body().getWeeklyExpensesModels();
                         weeklyAdapter.notifyDataSetChanged();
 
                     }
 
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
             }
@@ -950,6 +959,11 @@ public class ExpensesActivity extends Activity {
 
     private void Callsaveother() {
 
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Please Wait...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
         ExpenseInterface convency = APIClient.getClient().create(ExpenseInterface.class);
         RequestBody action = RequestBody.create(MediaType.parse("text/plain"), "saveExpensesFile");
         RequestBody active = RequestBody.create(MediaType.parse("text/plain"), "0");
@@ -970,9 +984,25 @@ public class ExpensesActivity extends Activity {
         convency.CallOther(action, EmpId, Date, OtherFile).enqueue(new Callback<ExpenseResponse>() {
             @Override
             public void onResponse(Call<ExpenseResponse> call, Response<ExpenseResponse> response) {
-                Log.e(TAG, "onResponse: 4");
-                Toast.makeText(ExpensesActivity.this, "Submited", Toast.LENGTH_SHORT).show();
 
+                progressDialog.dismiss();
+                Log.e(TAG, "onResponse: 4");
+                AlertDialog.Builder alert = new AlertDialog.Builder(ExpensesActivity.this);
+                alert.setMessage("Expense Saved Successfully");
+                alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        clearoldForm();
+                        tvDate.setText("");
+                        tvStartdate.setText("");
+                        tvto.setText("");
+                        tvEnddate.setText("");
+
+                    }
+                });
+
+                AlertDialog alertDialog = alert.create();
+                alertDialog.show();
             }
 
             @Override
@@ -984,6 +1014,11 @@ public class ExpensesActivity extends Activity {
     }
 
     private void Callsaveticket() {
+
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Please Wait...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
 
         ExpenseInterface convency = APIClient.getClient().create(ExpenseInterface.class);
         RequestBody action = RequestBody.create(MediaType.parse("text/plain"), "saveExpensesFile");
@@ -1005,8 +1040,26 @@ public class ExpensesActivity extends Activity {
         convency.CallTicket(action, EmpId, Date, TicketFile).enqueue(new Callback<ExpenseResponse>() {
             @Override
             public void onResponse(Call<ExpenseResponse> call, Response<ExpenseResponse> response) {
+                progressDialog.dismiss();
                 Log.e(TAG, "onResponse: 3");
-                Toast.makeText(ExpensesActivity.this, "Submited", Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+                AlertDialog.Builder alert = new AlertDialog.Builder(ExpensesActivity.this);
+                alert.setMessage("Expense Saved Successfully");
+                alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        clearoldForm();
+                        tvDate.setText("");
+                        tvStartdate.setText("");
+                        tvto.setText("");
+                        tvEnddate.setText("");
+
+                    }
+                });
+
+                AlertDialog alertDialog = alert.create();
+                alertDialog.show();
+
 
             }
 
@@ -1019,6 +1072,10 @@ public class ExpensesActivity extends Activity {
     }
 
     private void Callsavelodging() {
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Please Wait...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
         ExpenseInterface convency = APIClient.getClient().create(ExpenseInterface.class);
         RequestBody action = RequestBody.create(MediaType.parse("text/plain"), "saveExpensesFile");
         RequestBody active = RequestBody.create(MediaType.parse("text/plain"), "0");
@@ -1041,7 +1098,24 @@ public class ExpensesActivity extends Activity {
             public void onResponse(Call<ExpenseResponse> call, Response<ExpenseResponse> response) {
                 Log.e(TAG, "onResponse: 2");
 
-                Toast.makeText(ExpensesActivity.this, "Submited", Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+
+                AlertDialog.Builder alert = new AlertDialog.Builder(ExpensesActivity.this);
+                alert.setMessage("Expense Saved Successfully");
+                alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        clearoldForm();
+                        tvDate.setText("");
+                        tvStartdate.setText("");
+                        tvto.setText("");
+                        tvEnddate.setText("");
+
+                    }
+                });
+
+                AlertDialog alertDialog = alert.create();
+                alertDialog.show();
 
             }
 
@@ -1055,6 +1129,11 @@ public class ExpensesActivity extends Activity {
     }
 
     private void Callsaveconvency() {
+
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Please Wait...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
         ExpenseInterface convency = APIClient.getClient().create(ExpenseInterface.class);
 
         RequestBody action = RequestBody.create(MediaType.parse("text/plain"), "saveExpensesFile");
@@ -1076,7 +1155,23 @@ public class ExpensesActivity extends Activity {
             @Override
             public void onResponse(Call<ExpenseResponse> call, Response<ExpenseResponse> response) {
                 Log.e(TAG, "onResponse: 1");
-                Toast.makeText(ExpensesActivity.this, "Submited", Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+                AlertDialog.Builder alert = new AlertDialog.Builder(ExpensesActivity.this);
+                alert.setMessage("Expense Saved Successfully");
+                alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        clearoldForm();
+                        tvDate.setText("");
+                        tvStartdate.setText("");
+                        tvto.setText("");
+                        tvEnddate.setText("");
+
+                    }
+                });
+
+                AlertDialog alertDialog = alert.create();
+                alertDialog.show();
 
             }
 
@@ -1128,70 +1223,44 @@ public class ExpensesActivity extends Activity {
     }
 
     private void callExpenseList() {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Loading...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
+
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
         bottomSheetDialog.setContentView(R.layout.expense_list_recycleview);
         bottomSheetDialog.show();
+
         ivBottomBack = bottomSheetDialog.findViewById(R.id.ivBottomBack);
         rvExpense = bottomSheetDialog.findViewById(R.id.rvExpense);
-        tvViewWeeklyreportSubmit=bottomSheetDialog.findViewById(R.id.tvViewWeeklyreportSubmit);
-        rlUploadWeekAll=bottomSheetDialog.findViewById(R.id.rlUploadWeekAll);
-        tvWeekDoc=bottomSheetDialog.findViewById(R.id.tvWeekDoc);
-        tvGrandsumDoc=bottomSheetDialog.findViewById(R.id.tvGrandsumDoc);
+        tvViewWeeklyreportSubmit = bottomSheetDialog.findViewById(R.id.tvViewWeeklyreportSubmit);
+        rlUploadWeekAll = bottomSheetDialog.findViewById(R.id.rlUploadWeekAll);
+        tvWeekDoc = bottomSheetDialog.findViewById(R.id.tvWeekDoc);
+        tvGrandsumDoc = bottomSheetDialog.findViewById(R.id.tvGrandsumDoc);
+         tvGrandsumDocTag = bottomSheetDialog.findViewById(R.id.tvGrandsumDocTag);
 
 
-
-
-        weeklyAdapter=new ExpensesViewWeeklyAdapter(ExpensesActivity.this,BaseExpenseUrl,weeklyExpensesModels);
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(ExpensesActivity .this);
+        callExp();
+        weeklyAdapter = new ExpensesViewWeeklyAdapter(ExpensesActivity.this, BaseExpenseUrl, weeklyExpensesModels);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ExpensesActivity.this);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         rvExpense.setLayoutManager(linearLayoutManager);
         rvExpense.setAdapter(weeklyAdapter);
 
 
 
-       ViewExpenseListInterface viewExpenseListInterface=APIClient.getClient().create(ViewExpenseListInterface.class);
-       viewExpenseListInterface.CallSelectWeek("viewWeeklyExpenses",tvDate.getText().toString(),PreferenceManager.getEmpID(this)).enqueue(new Callback<ViewExpenseResponse>() {
-           @Override
-           public void onResponse(Call<ViewExpenseResponse> call, Response<ViewExpenseResponse> response) {
-               try{
-                   if (response.isSuccessful()){
-                       progressDialog.dismiss();
-                       tvGrandsumDoc.setText(response.body().getGrandSum());
-                       weeklyAdapter.weeklyExpensesModels=response.body().getWeeklyExpensesModels();
-                       weeklyAdapter.notifyDataSetChanged();
 
-                   }
+        rlUploadWeekAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-               }catch (Exception e){
+                try {
+                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                    intent.setType("*/*");
+                    startActivityForResult(intent, 5);
+                } catch (Exception e) {
 
-               }
-           }
+                }
 
-           @Override
-           public void onFailure(Call<ViewExpenseResponse> call, Throwable t) {
-               progressDialog.dismiss();
-
-           }
-       });
-
-       rlUploadWeekAll.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-
-               try {
-                   Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                   intent.setType("*/*");
-                   startActivityForResult(intent, 5);
-               } catch (Exception e) {
-
-               }
-
-           }
-       });
+            }
+        });
 
 
         ivBottomBack.setOnClickListener(new View.OnClickListener() {
@@ -1203,8 +1272,13 @@ public class ExpensesActivity extends Activity {
         tvViewWeeklyreportSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                callWeekallSubmit();
-                bottomSheetDialog.dismiss();
+
+
+                if (fileWeek != null) {
+                    CallWeeklyFileSubmit();
+                }else {
+                    callWeeklySubmit();
+                }
 
 
             }
@@ -1212,24 +1286,113 @@ public class ExpensesActivity extends Activity {
 
     }
 
-    private void callWeekallSubmit() {
-        WeeklySubmitExpensesInterface weeklySubmitExpensesInterface=APIClient.getClient().create(WeeklySubmitExpensesInterface.class);
-        RequestBody Action=RequestBody.create(MediaType.parse("text/plain"),"submitExpenses");
-        RequestBody EmpID=RequestBody.create(MediaType.parse("text/plain"),PreferenceManager.getEmpID(this));
-        RequestBody StartDate=RequestBody.create(MediaType.parse("text/plain"),tvStartdate.getText().toString());
-        RequestBody EndDate=RequestBody.create(MediaType.parse("text/plain"),tvEnddate.getText().toString());
-        RequestBody WeekAllrequest = create(MediaType.parse("multipart/form-data"), fileWeek);
-        MultipartBody.Part WeekFile = MultipartBody.Part.createFormData("filename_r", fileWeek.getName(), WeekAllrequest);
-        weeklySubmitExpensesInterface.CallConvency(Action,EmpID,StartDate,EndDate,WeekFile).enqueue(new Callback<WeeklySubmitExpensesResponse>() {
+    private void callExp() {
+        ViewExpenseListInterface viewExpenseListInterface = APIClient.getClient().create(ViewExpenseListInterface.class);
+        viewExpenseListInterface.CallSelectWeek("viewWeeklyExpenses", tvDate.getText().toString(), PreferenceManager.getEmpID(this)).enqueue(new Callback<ViewExpenseResponse>() {
             @Override
-            public void onResponse(Call<WeeklySubmitExpensesResponse> call, Response<WeeklySubmitExpensesResponse> response) {
-                try{
-                    if (response.isSuccessful()){
-                        Toast.makeText(ExpensesActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+            public void onResponse(Call<ViewExpenseResponse> call, Response<ViewExpenseResponse> response) {
+                try {
+                    if (response.isSuccessful()) {
+
+
+                        tvGrandsumDoc.setText(response.body().getGrandSum());
+                        tvGrandsumDocTag.setVisibility(View.VISIBLE);
+                        weeklyAdapter.weeklyExpensesModels = response.body().getWeeklyExpensesModels();
+                        weeklyAdapter.notifyDataSetChanged();
 
                     }
 
-                }catch (Exception e){
+                } catch (Exception e) {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ViewExpenseResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void callWeeklySubmit() {
+        final ProgressDialog progressDialog = new ProgressDialog(ExpensesActivity.this);
+        progressDialog.setMessage("Please Wait...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        WeeklySubmitExpensesInterface weeklySubmitExpensesInterface = APIClient.getClient().create(WeeklySubmitExpensesInterface.class);
+        RequestBody Action = RequestBody.create(MediaType.parse("text/plain"), "submitExpenses");
+        RequestBody EmpID = RequestBody.create(MediaType.parse("text/plain"), PreferenceManager.getEmpID(ExpensesActivity.this));
+        RequestBody StartDate = RequestBody.create(MediaType.parse("text/plain"), tvStartdate.getText().toString());
+        RequestBody EndDate = RequestBody.create(MediaType.parse("text/plain"), tvEnddate.getText().toString());
+      weeklySubmitExpensesInterface.CallConvencynofile(Action,EmpID,StartDate,EndDate).enqueue(new Callback<WeeklySubmitExpensesResponse>() {
+          @Override
+          public void onResponse(Call<WeeklySubmitExpensesResponse> call, Response<WeeklySubmitExpensesResponse> response) {
+              try {
+                  if (response.isSuccessful()) {
+                      progressDialog.dismiss();
+                      AlertDialog.Builder alert = new AlertDialog.Builder(ExpensesActivity.this);
+                      alert.setMessage("Expense Saved Successfully");
+                      alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                          @Override
+                          public void onClick(DialogInterface dialog, int which) {
+                             finish();
+                          }
+                      });
+
+                      AlertDialog alertDialog = alert.create();
+                      alertDialog.show();
+
+                  }
+
+              } catch (Exception e) {
+
+              }
+          }
+
+          @Override
+          public void onFailure(Call<WeeklySubmitExpensesResponse> call, Throwable t) {
+
+          }
+      });
+
+    }
+
+    private void CallWeeklyFileSubmit() {
+
+        final ProgressDialog progressDialog = new ProgressDialog(ExpensesActivity.this);
+        progressDialog.setMessage("Please Wait...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        WeeklySubmitExpensesInterface weeklySubmitExpensesInterface = APIClient.getClient().create(WeeklySubmitExpensesInterface.class);
+        RequestBody Action = RequestBody.create(MediaType.parse("text/plain"), "submitExpenses");
+        RequestBody EmpID = RequestBody.create(MediaType.parse("text/plain"), PreferenceManager.getEmpID(ExpensesActivity.this));
+        RequestBody StartDate = RequestBody.create(MediaType.parse("text/plain"), tvStartdate.getText().toString());
+        RequestBody EndDate = RequestBody.create(MediaType.parse("text/plain"), tvEnddate.getText().toString());
+        RequestBody WeekAllrequest = create(MediaType.parse("multipart/form-data"), fileWeek);
+        MultipartBody.Part WeekFile = MultipartBody.Part.createFormData("filename_r", fileWeek.getName(), WeekAllrequest);
+        weeklySubmitExpensesInterface.CallConvency(Action, EmpID, StartDate, EndDate, WeekFile).enqueue(new Callback<WeeklySubmitExpensesResponse>() {
+            @Override
+            public void onResponse(Call<WeeklySubmitExpensesResponse> call, Response<WeeklySubmitExpensesResponse> response) {
+                try {
+                    if (response.isSuccessful()) {
+                        progressDialog.dismiss();
+                        AlertDialog.Builder alert = new AlertDialog.Builder(ExpensesActivity.this);
+                        alert.setMessage("Expense Saved Successfully");
+                        alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                               finish();
+
+                            }
+                        });
+
+                        AlertDialog alertDialog = alert.create();
+                        alertDialog.show();
+
+                    }
+
+                } catch (Exception e) {
 
                 }
             }
@@ -1243,7 +1406,14 @@ public class ExpensesActivity extends Activity {
 
     }
 
+
     private void Callsubmitexpense() {
+
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Please Wait...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
         ExpenseInterface expenseInterface = APIClient.getClient().create(ExpenseInterface.class);
 
         RequestBody action = RequestBody.create(MediaType.parse("text/plain"), "saveExpensesData");
@@ -1266,7 +1436,22 @@ public class ExpensesActivity extends Activity {
                 try {
                     if (response.isSuccessful()) {
                         Log.e(TAG, "onResponse: All");
-                        Toast.makeText(ExpensesActivity.this, "Submited", Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
+                        AlertDialog.Builder alert = new AlertDialog.Builder(ExpensesActivity.this);
+                        alert.setMessage("Expense Saved Successfully");
+                        alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                clearoldForm();
+                                tvDate.setText("");
+                                tvStartdate.setText("");
+                                tvto.setText("");
+                                tvEnddate.setText("");
+                            }
+                        });
+
+                        AlertDialog alertDialog = alert.create();
+                        alertDialog.show();
                     }
 
                 } catch (Exception e) {
@@ -1285,6 +1470,7 @@ public class ExpensesActivity extends Activity {
     }
 
     private void CallDate() {
+        clearoldForm();
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
@@ -1301,40 +1487,48 @@ public class ExpensesActivity extends Activity {
 
 
                         String strDate = year + "-" + moth + "-" + dt;
+                        tvDate.setError(null);
                         tvDate.setText(strDate);
 
-                        callselectdateViewExpenses();
 
                         final ProgressDialog progressDialog = new ProgressDialog(ExpensesActivity.this);
                         progressDialog.setMessage("Loading...");
                         progressDialog.setCancelable(false);
                         progressDialog.show();
                         SelectWeekDateInterface selectWeekDateInterface = APIClient.getClient().create(SelectWeekDateInterface.class);
-                        selectWeekDateInterface.CallSelectWeek("viewWeeklyExpenses", tvDate.getText().toString(),PreferenceManager.getEmpID(ExpensesActivity.this)).enqueue(new Callback<SelectWeekResponse>() {
+                        selectWeekDateInterface.CallSelectWeek("viewWeeklyExpenses", tvDate.getText().toString(), PreferenceManager.getEmpID(ExpensesActivity.this)).enqueue(new Callback<SelectWeekResponse>() {
                             @Override
                             public void onResponse(Call<SelectWeekResponse> call, Response<SelectWeekResponse> response) {
                                 try {
                                     if (response.isSuccessful()) {
 
+                                        if(Integer.parseInt(response.body().getGrandSum().trim())==0){
+                                            tvViewWeeklyreport.setVisibility(View.GONE);
+                                        }else {
+                                            tvViewWeeklyreport.setVisibility(View.VISIBLE);
+                                        }
+
+
                                         progressDialog.dismiss();
-                                        if (response.body().getError().trim().equals("1")){
+                                        if (response.body().getError().trim().equals("1")) {
                                             rlExpenseLayout.setVisibility(View.GONE);
                                             rlErrormsg.setVisibility(View.VISIBLE);
                                             tvExtraMsg.setText(response.body().getExtra());
 
-                                        }else {
+                                        } else {
                                             rlExpenseLayout.setVisibility(View.VISIBLE);
                                             rlErrormsg.setVisibility(View.GONE);
                                             rlmsg.setVisibility(View.GONE);
 
                                         }
-                                        Log.e(TAG, "onResponse: "+response.body().getError() );
+                                        Log.e(TAG, "onResponse: " + response.body().getError());
+
                                         tvStartdate.setText(response.body().getStartdate());
                                         tvEnddate.setText(response.body().getEnddate());
                                         tvEnddate.setVisibility(View.VISIBLE);
                                         tvto.setVisibility(View.VISIBLE);
                                         tvStartdate.setVisibility(View.VISIBLE);
-
+                                        callselectdateViewExpenses();
 
                                     }
 
@@ -1358,9 +1552,52 @@ public class ExpensesActivity extends Activity {
         datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis() - 1000);
 
 
-
         datePickerDialog.show();
     }
+
+    private void clearoldForm() {
+
+        edWorkReport.setText("");
+        edConveyance.setText("");
+        tvTicket.setText("");
+        tvLodging.setText("");
+        edOther.setText("");
+        tvConveyanceDoc.setText("");
+        tvLodgingDoc.setText("");
+        tvTicketDoc.setText("");
+        tvOtherDoc.setText("");
+
+        tvViewWeeklyreport.setVisibility(View.GONE);
+
+        ivConvencyDelete.setVisibility(View.GONE);
+        ivConvencydoc.setVisibility(View.VISIBLE);
+        tvConveyanceEmptyDoc.setVisibility(View.VISIBLE);
+        tvConveyanceDoc.setVisibility(View.GONE);
+        ivConvencypreview.setVisibility(View.GONE);
+
+        ivpreviewtTicket.setVisibility(View.GONE);
+        ivTicketDoc.setVisibility(View.VISIBLE);
+        tvTicketEmptyDoc.setVisibility(View.VISIBLE);
+        tvTicketDoc.setVisibility(View.GONE);
+        ivDeleteTicket.setVisibility(View.GONE);
+
+
+        ivpreviewOther.setVisibility(View.GONE);
+        ivotherDoc.setVisibility(View.VISIBLE);
+        tvOtherEmptyDoc.setVisibility(View.VISIBLE);
+        tvOtherDoc.setVisibility(View.GONE);
+        ivDeleteOther.setVisibility(View.GONE);
+
+
+        ivDeletelodging.setVisibility(View.GONE);
+        ivLodgingDoc.setVisibility(View.VISIBLE);
+        tvLodgingEmptyDoc.setVisibility(View.VISIBLE);
+        tvLodgingDoc.setVisibility(View.GONE);
+        ivpreviewtlodging.setVisibility(View.GONE);
+
+
+    }
+
 
     private void callselectdateViewExpenses() {
         ViewExpenseListInterface viewExpenseListInterface = APIClient.getClient().create(ViewExpenseListInterface.class);
@@ -1369,6 +1606,16 @@ public class ExpensesActivity extends Activity {
             public void onResponse(Call<ViewExpenseResponse> call, Response<ViewExpenseResponse> response) {
                 try {
                     if (response.isSuccessful()) {
+
+
+
+
+
+
+
+                        if (!response.body().getSelecteddtExpenses().getWorkreport().trim().equals("")) {
+                            edWorkReport.setError(null);
+                        }
 
                         edWorkReport.setText(response.body().getSelecteddtExpenses().getWorkreport());
                         edConveyance.setText(response.body().getSelecteddtExpenses().getC_amo());
@@ -1391,10 +1638,6 @@ public class ExpensesActivity extends Activity {
                         filelod = response.body().getSelecteddtExpenses().getFilename_l();
                         fileot = response.body().getSelecteddtExpenses().getFilename_o();
                         filetic = response.body().getSelecteddtExpenses().getFilename_t();
-
-
-
-
 
 
                         if (response.body().getSelecteddtExpenses().getFilename_all().trim().equals("")) {
@@ -1462,7 +1705,6 @@ public class ExpensesActivity extends Activity {
 
 
                         }
-
 
 
                     }
@@ -1623,7 +1865,6 @@ public class ExpensesActivity extends Activity {
                 break;
 
 
-
             case 5:
 
                 if (resultCode == RESULT_OK) {
@@ -1653,12 +1894,7 @@ public class ExpensesActivity extends Activity {
                 break;
 
 
-
         }
-
-
-
-
 
 
     }

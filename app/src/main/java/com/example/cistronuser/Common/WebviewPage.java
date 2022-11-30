@@ -46,7 +46,7 @@ public class WebviewPage extends AppCompatActivity {
 
 
             webview.requestFocus();
-            urladdress = getResources().getString(R.string.Localhost) + web;
+            urladdress = getResources().getString(R.string.cistron) + web;
             // Log.e(TAG, "onCreate: " + urladdress);
 
 

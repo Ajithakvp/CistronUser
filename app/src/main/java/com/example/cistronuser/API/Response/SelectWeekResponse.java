@@ -19,6 +19,19 @@ public class SelectWeekResponse {
     @SerializedName("extra")
     private String extra;
 
+
+
+    @SerializedName("grandSum")
+    private String  grandSum;
+
+    public String getGrandSum() {
+        return grandSum;
+    }
+
+    public void setGrandSum(String grandSum) {
+        this.grandSum = grandSum;
+    }
+
     public String getExtra() {
         return extra;
     }

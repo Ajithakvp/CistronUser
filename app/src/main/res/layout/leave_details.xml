@@ -220,6 +220,7 @@
                 android:layout_below="@id/tvfullday"
                 android:layout_alignParentEnd="true"
                 android:layout_marginRight="10dp"
+                android:visibility="visible"
                 android:layout_marginBottom="10dp"
                 android:src="@drawable/ic_baseline_cancel_24" />
 

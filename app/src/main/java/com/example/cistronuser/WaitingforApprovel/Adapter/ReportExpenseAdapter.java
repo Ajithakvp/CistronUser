@@ -150,6 +150,7 @@ public class ReportExpenseAdapter extends RecyclerView.Adapter<ReportExpenseAdap
                 spOperator = bottomSheetDialog.findViewById(R.id.spOperator);
                 edAmt = bottomSheetDialog.findViewById(R.id.edAmt);
                 edReason = bottomSheetDialog.findViewById(R.id.edReason);
+                TextView tvWeeklyPreviewTag=bottomSheetDialog.findViewById(R.id.tvWeeklyPreviewTag);
 
 
                 //Reset
@@ -531,6 +532,14 @@ public class ReportExpenseAdapter extends RecyclerView.Adapter<ReportExpenseAdap
                                 weekpreview = response.body().getFilename_r();
                                 reportViewWeeklyAdapter.weeklyExpensesModels = response.body().getReportExpensesViewModels();
                                 reportViewWeeklyAdapter.notifyDataSetChanged();
+
+                                if (response.body().getFilename_r().trim().equals("")){
+                                    ivWeekPreview.setVisibility(View.GONE);
+                                    tvWeeklyPreviewTag.setVisibility(View.GONE);
+                                }else {
+                                    ivWeekPreview.setVisibility(View.VISIBLE);
+                                    tvWeeklyPreviewTag.setVisibility(View.VISIBLE);
+                                }
 
                                 if (response.body().getAdj_op().trim().equals("0")) {
 

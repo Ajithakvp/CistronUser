@@ -34,6 +34,17 @@ public class LeavedetailsModel {
     @SerializedName("attachment")
     private String attachment;
 
+    @SerializedName("cancel")
+    private String cancel;
+
+    public String getCancel() {
+        return cancel;
+    }
+
+    public void setCancel(String cancel) {
+        this.cancel = cancel;
+    }
+
     public String getId() {
         return id;
     }

@@ -122,7 +122,23 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
 
 
-                CallLogin(EmpID, Pass, Latitude, Longtitude, AddressLine,ip);
+                if (edName.getText().toString().trim().length() == 0) {
+                    edName.setError("Enter the Employee ID");
+                    edName.requestFocus();
+                    tvfailed.setVisibility(View.GONE);
+
+
+                } else if (edPass.getText().toString().trim().length() == 0) {
+                    edPass.setError("Enter the Password");
+                    edPass.requestFocus();
+                    tvfailed.setVisibility(View.GONE);
+                }else {
+                    CallLogin(EmpID, Pass, Latitude, Longtitude, AddressLine,ip);
+                    // Toast.makeText(LoginActivity.this, "Incorrect Employee ID and Password", Toast.LENGTH_SHORT).show();
+                }
+
+
+
 
             }
         });
@@ -246,23 +262,10 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<LoginuserModel> call, Throwable t) {
                 progressDialog.dismiss();
+                tvfailed.setVisibility(View.VISIBLE);
 
 
 
-                if (edName.getText().toString().trim().length() == 0) {
-                    edName.setError("Enter the Employee ID");
-                    edName.requestFocus();
-                    tvfailed.setVisibility(View.GONE);
-
-
-                } else if (edPass.getText().toString().trim().length() == 0) {
-                    edPass.setError("Enter the Password");
-                    edPass.requestFocus();
-                    tvfailed.setVisibility(View.GONE);
-                }else {
-                    tvfailed.setVisibility(View.VISIBLE);
-                   // Toast.makeText(LoginActivity.this, "Incorrect Employee ID and Password", Toast.LENGTH_SHORT).show();
-                }
 
 
 

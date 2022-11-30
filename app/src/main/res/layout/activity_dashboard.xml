@@ -17,9 +17,10 @@
         <ImageView
             android:id="@+id/ivName"
             android:layout_width="wrap_content"
+            android:layout_marginTop="10dp"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:src="@drawable/logo_top" />
+            android:src="@drawable/cis" />
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/ivLogout"

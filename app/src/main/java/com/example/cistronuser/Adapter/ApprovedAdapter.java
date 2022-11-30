@@ -4,6 +4,7 @@ import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -66,6 +67,14 @@ public class ApprovedAdapter extends RecyclerView.Adapter<ApprovedAdapter.ViewHo
         holder.tvReason.setText(leavedetailsModels.get(position).getReason());
         holder.tvattach.setText(leavedetailsModels.get(position).getAttachment());
 
+        if (leavedetailsModels.get(position).getCancel().trim().equals("")){
+
+            holder.ivCancel.setVisibility(View.GONE);
+
+        }else {
+            holder.ivCancel.setVisibility(View.VISIBLE);
+        }
+
 
         holder.ivfile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,12 +114,17 @@ public class ApprovedAdapter extends RecyclerView.Adapter<ApprovedAdapter.ViewHo
                 builder.setPositiveButton("yes", (new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        final ProgressDialog progressDialog = new ProgressDialog(activity);
+                        progressDialog.setMessage("Loading...");
+                        progressDialog.setCancelable(false);
+                        progressDialog.show();
                         DeletedAPIInterface deletedAPIInterface= APIClient.getClient().create(DeletedAPIInterface.class);
                         deletedAPIInterface.CallDetails("cancelLeave", PreferenceManager.getEmpID(activity),leavedetailsModels.get(position).getId()).enqueue(new Callback<DeleteResponse>() {
                             @Override
                             public void onResponse(Call<DeleteResponse> call, Response<DeleteResponse> response) {
                                 try {
                                     if (response.isSuccessful()){
+                                        progressDialog.dismiss();
                                         Toast.makeText(activity, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                                         activity.finish();
                                         activity.overridePendingTransition(0, 0);
