@@ -9,6 +9,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -113,6 +114,22 @@ public class LeaveReport extends AppCompatActivity {
         tvDailySpace=findViewById(R.id.tvDailySpace);
 
 
+        Date d = new Date();
+        CharSequence s = DateFormat.format("yyyy-MM-dd ", d.getTime());
+        tvDate.setText(s);
+
+
+        //Month
+        String myFormat = "MMMM yyyy";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat);
+        Calendar mcurrentDate = Calendar.getInstance();
+        mYear = mcurrentDate.get(Calendar.YEAR);
+        mMonth = mcurrentDate.get(Calendar.MONTH);
+        mcurrentDate.set(Calendar.YEAR, mYear);
+        mcurrentDate.set(Calendar.MONTH, mMonth);
+        tvMonthyear.setText(sdf.format(mcurrentDate.getTime()));
+
+
         //Recycleview
         leaveReportDailyAdapter=new LeaveReportDailyAdapter(this,leaveReportDailyModels);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
@@ -132,8 +149,10 @@ public class LeaveReport extends AppCompatActivity {
 
 
 
-        //Dailyuser
 
+
+        //Dailyuser
+        CallDailyUser();
         DailyUserAdapter = new ArrayAdapter(this, R.layout.spinner_item, strDailyUser);
         DailyUserAdapter.setDropDownViewResource(R.layout.spinner_dropdown);
         spUser.setAdapter(DailyUserAdapter);
@@ -141,6 +160,10 @@ public class LeaveReport extends AppCompatActivity {
         spUser.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                rvLeaveReport.setVisibility(View.GONE);
+                tvDailySpace.setVisibility(View.GONE);
+                tvDailyDate.setVisibility(View.GONE);
+                tvDailyDay.setVisibility(View.GONE);
 
             }
 
@@ -151,6 +174,7 @@ public class LeaveReport extends AppCompatActivity {
         });
 
        //Monthly
+        callMonthlyUser();
         monthlyuserAdapter = new ArrayAdapter(this, R.layout.spinner_item, strmonthlyUser);
         monthlyuserAdapter.setDropDownViewResource(R.layout.spinner_dropdown);
         spUserMonthy.setAdapter(monthlyuserAdapter);
@@ -158,6 +182,7 @@ public class LeaveReport extends AppCompatActivity {
         spUserMonthy.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                rvLeaveReportMonthly.setVisibility(View.GONE);
 
             }
 
@@ -280,6 +305,11 @@ public class LeaveReport extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                rvLeaveReport.setVisibility(View.GONE);
+                tvDailySpace.setVisibility(View.GONE);
+                tvDailyDate.setVisibility(View.GONE);
+                tvDailyDay.setVisibility(View.GONE);
+
                 Calendar calendar = Calendar.getInstance();
                 int year = calendar.get(Calendar.YEAR);
                 int month = calendar.get(Calendar.MONTH);
@@ -299,7 +329,7 @@ public class LeaveReport extends AppCompatActivity {
                         String strDate = year + "-" + moth + "-" + dt;
                         tvDate.setText(strDate);
 
-                        CallDailyUser();
+
 
                     }
 
@@ -315,6 +345,8 @@ public class LeaveReport extends AppCompatActivity {
         tvMonthyear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                rvLeaveReportMonthly.setVisibility(View.GONE);
                 Calendar mcurrentDate = Calendar.getInstance();
 
                 mYear = mcurrentDate.get(Calendar.YEAR);
@@ -335,7 +367,7 @@ public class LeaveReport extends AppCompatActivity {
                         mMonth = month;
                         mYear = year;
 
-                        callMonthlyUser();
+                       // callMonthlyUser();
                         //callMonthlyReport();
 
 
@@ -371,6 +403,7 @@ public class LeaveReport extends AppCompatActivity {
                 try {
                     if (response.isSuccessful()){
 
+                        rvLeaveReportMonthly.setVisibility(View.VISIBLE);
                         leaveReportAdapter.leaveReportMonthlyModels=response.body().getLeaveReportMonthlyModels();
                         leaveReportAdapter.notifyDataSetChanged();
                         progressDialog.dismiss();
@@ -408,6 +441,7 @@ public class LeaveReport extends AppCompatActivity {
                             tvDailyDay.setVisibility(View.VISIBLE);
                             tvDailyDate.setVisibility(View.VISIBLE);
                             tvDailySpace.setVisibility(View.VISIBLE);
+                            rvLeaveReport.setVisibility(View.VISIBLE);
                             Baseurl = response.body().getAttachBaseUrl();
                             leaveReportDailyAdapter.leaveReportDailyModels = response.body().getLeaveReportDailyModels();
                             leaveReportDailyAdapter.notifyDataSetChanged();
@@ -431,6 +465,10 @@ public class LeaveReport extends AppCompatActivity {
 
 
     private void callMonthlyUser() {
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
         DailyAttendanceUserInterface dailyAttendanceUserInterface = APIClient.getClient().create(DailyAttendanceUserInterface.class);
         dailyAttendanceUserInterface.callDailyUser("getEmployeeRecord", PreferenceManager.getEmpuser(this), PreferenceManager.getEmpID(this)).enqueue(new Callback<DailyReportUserAttendanceResponse>() {
             @Override
@@ -443,6 +481,7 @@ public class LeaveReport extends AppCompatActivity {
                             strmonthlyUser.add(dailyReportUserAttendanceModels.get(i).getEmployee());
                         }
                         monthlyuserAdapter.notifyDataSetChanged();
+                        progressDialog.dismiss();
                     }
 
                 } catch (Exception e) {
@@ -459,6 +498,10 @@ public class LeaveReport extends AppCompatActivity {
 
 
     private void CallDailyUser() {
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
         DailyAttendanceUserInterface dailyAttendanceUserInterface = APIClient.getClient().create(DailyAttendanceUserInterface.class);
         dailyAttendanceUserInterface.callDailyUser("getEmployeeRecord", PreferenceManager.getEmpuser(this), PreferenceManager.getEmpID(this)).enqueue(new Callback<DailyReportUserAttendanceResponse>() {
             @Override
@@ -471,6 +514,7 @@ public class LeaveReport extends AppCompatActivity {
                             strDailyUser.add(dailyReportUserAttendanceModels.get(i).getEmployee());
                         }
                         DailyUserAdapter.notifyDataSetChanged();
+                        progressDialog.dismiss();
                     }
 
                 } catch (Exception e) {

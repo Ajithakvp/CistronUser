@@ -99,7 +99,7 @@
                                     android:layout_marginLeft="10dp"
                                     android:layout_marginTop="30dp"
                                     android:fontFamily="@font/bold"
-                                    android:text="Leave  Type  :"
+                                    android:text="Report  Type  :"
                                     android:textColor="@color/white"
                                     android:textSize="18dp" />
 

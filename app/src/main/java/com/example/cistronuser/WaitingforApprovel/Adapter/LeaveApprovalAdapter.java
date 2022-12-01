@@ -4,6 +4,7 @@ import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -63,14 +64,14 @@ public class LeaveApprovalAdapter extends RecyclerView.Adapter<LeaveApprovalAdap
     public void onBindViewHolder(@NonNull LeaveApprovalAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
         holder.tvName.setText(leaveApprovelModels.get(position).getEmpname());
-        holder.tvEmpId.setText("EmpID-" + leaveApprovelModels.get(position).getEmpid());
+        holder.tvEmpId.setText(  leaveApprovelModels.get(position).getEmpid());
         holder.tvLeaveDate.setText(leaveApprovelModels.get(position).getLeavedate());
-        holder.tvCL.setText(leaveApprovelModels.get(position).getCl());
-        holder.tvPL.setText(leaveApprovelModels.get(position).getPl());
-        holder.tvML.setText(leaveApprovelModels.get(position).getMl());
-        holder.tvProb.setText(leaveApprovelModels.get(position).getProbl());
-        holder.tvCompOff.setText(leaveApprovelModels.get(position).getCompoff());
-        holder.tvReason.setText(leaveApprovelModels.get(position).getReason());
+//        holder.tvCL.setText(leaveApprovelModels.get(position).getCl());
+//        holder.tvPL.setText(leaveApprovelModels.get(position).getPl());
+//        holder.tvML.setText(leaveApprovelModels.get(position).getMl());
+//        holder.tvProb.setText(leaveApprovelModels.get(position).getProbl());
+//        holder.tvCompOff.setText(leaveApprovelModels.get(position).getCompoff());
+//        holder.tvReason.setText(leaveApprovelModels.get(position).getReason());
         holder.tvLeaveType.setText(leaveApprovelModels.get(position).getLeavetype());
         holder.tvAppliedDate.setText(leaveApprovelModels.get(position).getApplied_date());
         holder.tvAppliedTime.setText(leaveApprovelModels.get(position).getApplied_time());
@@ -109,12 +110,17 @@ public class LeaveApprovalAdapter extends RecyclerView.Adapter<LeaveApprovalAdap
         holder.tvApproved.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final ProgressDialog progressDialog = new ProgressDialog(activity);
+                progressDialog.setMessage("Please Wait...");
+                progressDialog.setCancelable(false);
+                progressDialog.show();
                 ApprovalLeaveReqInterface approvalLeaveReqInterface=APIClient.getClient().create(ApprovalLeaveReqInterface.class);
                 approvalLeaveReqInterface.CallApproval("approveLeaveRequest",leaveApprovelModels.get(position).getLeaveid(),leaveApprovelModels.get(position).getLop(),leaveApprovelModels.get(position).getCompoff()).enqueue(new Callback<ApprovalleaveRequestResponse>() {
                     @Override
                     public void onResponse(Call<ApprovalleaveRequestResponse> call, Response<ApprovalleaveRequestResponse> response) {
                         try {
                             if (response.isSuccessful()){
+                                progressDialog.dismiss();
                                 if (response.body().getSuccess().trim().equals("1")){
                                     Toast.makeText(activity, response.body().getMessage() ,Toast.LENGTH_SHORT).show();
                                     activity.finish();
@@ -149,6 +155,11 @@ public class LeaveApprovalAdapter extends RecyclerView.Adapter<LeaveApprovalAdap
             @Override
             public void onClick(View v) {
 
+                final ProgressDialog progressDialog = new ProgressDialog(activity);
+                progressDialog.setMessage("Please Wait...");
+                progressDialog.setCancelable(false);
+                progressDialog.show();
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(activity);
                 builder.setMessage("Are you sure you want to Reject this leave request?");
                 builder.setTitle("Rejected!");
@@ -165,6 +176,7 @@ public class LeaveApprovalAdapter extends RecyclerView.Adapter<LeaveApprovalAdap
 
                                 try {
                                     if (response.isSuccessful()){
+                                        progressDialog.dismiss();
 
                                         if (response.body().getSuccess().trim().equals("1")){
                                             Toast.makeText(activity, response.body().getMessage() ,Toast.LENGTH_SHORT).show();
@@ -220,6 +232,10 @@ public class LeaveApprovalAdapter extends RecyclerView.Adapter<LeaveApprovalAdap
         holder.tvDeleted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final ProgressDialog progressDialog = new ProgressDialog(activity);
+                progressDialog.setMessage("Please Wait...");
+                progressDialog.setCancelable(false);
+                progressDialog.show();
                 AlertDialog.Builder builder = new AlertDialog.Builder(activity);
                 builder.setMessage("Are you sure you want to delete this leave request?");
                 builder.setTitle("Deleted!");
@@ -234,6 +250,7 @@ public class LeaveApprovalAdapter extends RecyclerView.Adapter<LeaveApprovalAdap
                             public void onResponse(Call<LeaveApprovalDeletedResponse> call, Response<LeaveApprovalDeletedResponse> response) {
                                 try {
                                     if (response.isSuccessful()){
+                                        progressDialog.dismiss();
 
                                         if (response.body().getSuccess().trim().equals("1")){
                                             Toast.makeText(activity, response.body().getMessage() ,Toast.LENGTH_SHORT).show();
@@ -294,55 +311,55 @@ public class LeaveApprovalAdapter extends RecyclerView.Adapter<LeaveApprovalAdap
         });
 
 
-        if (leaveApprovelModels.get(position).getEmptype().trim().equals("3")) {
-            holder.tvCL.setVisibility(View.GONE);
-            holder.tvML.setVisibility(View.GONE);
-            holder.tvPL.setVisibility(View.GONE);
-            holder.tvClTag.setVisibility(View.GONE);
-            holder.tvMLTag.setVisibility(View.GONE);
-            holder.tvPLTag.setVisibility(View.GONE);
-            holder.view1.setVisibility(View.GONE);
-            holder.view2.setVisibility(View.GONE);
-            holder.view3.setVisibility(View.GONE);
-
-            holder.view4.setVisibility(View.VISIBLE);
-            holder.tvProb.setVisibility(View.VISIBLE);
-            holder.tvCompOff.setVisibility(View.VISIBLE);
-            holder.tvProbTag.setVisibility(View.VISIBLE);
-            holder.tvCompOffTag.setVisibility(View.VISIBLE);
-        } else {
-            holder.tvCL.setVisibility(View.VISIBLE);
-            holder.tvML.setVisibility(View.VISIBLE);
-            holder.tvPL.setVisibility(View.VISIBLE);
-            holder.tvClTag.setVisibility(View.VISIBLE);
-            holder.tvMLTag.setVisibility(View.VISIBLE);
-            holder.tvPLTag.setVisibility(View.VISIBLE);
-
-            holder.tvProb.setVisibility(View.GONE);
-            holder.tvProbTag.setVisibility(View.GONE);
-            holder.tvCompOff.setVisibility(View.VISIBLE);
-            holder.tvCompOffTag.setVisibility(View.VISIBLE);
-
-            holder.view1.setVisibility(View.VISIBLE);
-            holder.view2.setVisibility(View.VISIBLE);
-            holder.view3.setVisibility(View.VISIBLE);
-            holder.view4.setVisibility(View.GONE);
-        }
+//        if (leaveApprovelModels.get(position).getEmptype().trim().equals("3")) {
+//            holder.tvCL.setVisibility(View.GONE);
+//            holder.tvML.setVisibility(View.GONE);
+//            holder.tvPL.setVisibility(View.GONE);
+//            holder.tvClTag.setVisibility(View.GONE);
+//            holder.tvMLTag.setVisibility(View.GONE);
+//            holder.tvPLTag.setVisibility(View.GONE);
+//            holder.view1.setVisibility(View.GONE);
+//            holder.view2.setVisibility(View.GONE);
+//            holder.view3.setVisibility(View.GONE);
+//
+//            holder.view4.setVisibility(View.VISIBLE);
+//            holder.tvProb.setVisibility(View.VISIBLE);
+//            holder.tvCompOff.setVisibility(View.VISIBLE);
+//            holder.tvProbTag.setVisibility(View.VISIBLE);
+//            holder.tvCompOffTag.setVisibility(View.VISIBLE);
+//        } else {
+//            holder.tvCL.setVisibility(View.VISIBLE);
+//            holder.tvML.setVisibility(View.VISIBLE);
+//            holder.tvPL.setVisibility(View.VISIBLE);
+//            holder.tvClTag.setVisibility(View.VISIBLE);
+//            holder.tvMLTag.setVisibility(View.VISIBLE);
+//            holder.tvPLTag.setVisibility(View.VISIBLE);
+//
+//            holder.tvProb.setVisibility(View.GONE);
+//            holder.tvProbTag.setVisibility(View.GONE);
+//            holder.tvCompOff.setVisibility(View.VISIBLE);
+//            holder.tvCompOffTag.setVisibility(View.VISIBLE);
+//
+//            holder.view1.setVisibility(View.VISIBLE);
+//            holder.view2.setVisibility(View.VISIBLE);
+//            holder.view3.setVisibility(View.VISIBLE);
+//            holder.view4.setVisibility(View.GONE);
+//        }
 
         if (leaveApprovelModels.get(position).getMedattach().trim().equals("")) {
-            holder.tvFileAttachTag.setVisibility(View.GONE);
+            //holder.tvFileAttachTag.setVisibility(View.GONE);
             holder.ivAttch.setVisibility(View.GONE);
         } else {
-            holder.tvFileAttachTag.setVisibility(View.VISIBLE);
+           // holder.tvFileAttachTag.setVisibility(View.VISIBLE);
             holder.ivAttch.setVisibility(View.VISIBLE);
         }
 
 
         if (leaveApprovelModels.get(position).getExpired().trim().equals("")) {
-            holder.tvexpiredTag.setVisibility(View.GONE);
+            //holder.tvexpiredTag.setVisibility(View.GONE);
             holder.tvexpired.setVisibility(View.GONE);
         } else {
-            holder.tvexpiredTag.setVisibility(View.VISIBLE);
+           // holder.tvexpiredTag.setVisibility(View.VISIBLE);
             holder.tvexpired.setVisibility(View.VISIBLE);
             holder.tvexpired.setText(leaveApprovelModels.get(position).getExpired());
         }
@@ -379,12 +396,12 @@ public class LeaveApprovalAdapter extends RecyclerView.Adapter<LeaveApprovalAdap
             tvexpired = itemView.findViewById(R.id.tvexpired);
             tvName = itemView.findViewById(R.id.tvName);
             tvEmpId = itemView.findViewById(R.id.tvEmpId);
-            tvCL = itemView.findViewById(R.id.tvCL);
-            tvML = itemView.findViewById(R.id.tvML);
+//            tvCL = itemView.findViewById(R.id.tvCL);
+//            tvML = itemView.findViewById(R.id.tvML);
             tvLeaveDate = itemView.findViewById(R.id.tvLeaveDate);
-            tvPL = itemView.findViewById(R.id.tvPL);
-            tvProb = itemView.findViewById(R.id.tvProb);
-            tvCompOff = itemView.findViewById(R.id.tvCompOff);
+//            tvPL = itemView.findViewById(R.id.tvPL);
+//            tvProb = itemView.findViewById(R.id.tvProb);
+//            tvCompOff = itemView.findViewById(R.id.tvCompOff);
             tvLeaveType = itemView.findViewById(R.id.tvLeaveType);
             tvReason = itemView.findViewById(R.id.tvReason);
             tvFDHD = itemView.findViewById(R.id.tvFDHD);
@@ -396,14 +413,14 @@ public class LeaveApprovalAdapter extends RecyclerView.Adapter<LeaveApprovalAdap
 
             view1 = itemView.findViewById(R.id.view1);
             view2 = itemView.findViewById(R.id.view2);
-            view3 = itemView.findViewById(R.id.view3);
-            view4 = itemView.findViewById(R.id.view4);
+//            view3 = itemView.findViewById(R.id.view3);
+//            view4 = itemView.findViewById(R.id.view4);
 
-            tvProbTag = itemView.findViewById(R.id.tvProbTag);
-            tvPLTag = itemView.findViewById(R.id.tvPLTag);
-            tvClTag = itemView.findViewById(R.id.tvClTag);
-            tvMLTag = itemView.findViewById(R.id.tvMLTag);
-            tvCompOffTag = itemView.findViewById(R.id.tvCompOffTag);
+//            tvProbTag = itemView.findViewById(R.id.tvProbTag);
+//            tvPLTag = itemView.findViewById(R.id.tvPLTag);
+//            tvClTag = itemView.findViewById(R.id.tvClTag);
+//            tvMLTag = itemView.findViewById(R.id.tvMLTag);
+//            tvCompOffTag = itemView.findViewById(R.id.tvCompOffTag);
 
 
         }

@@ -50,15 +50,15 @@ public class AttendanceActivity extends Activity {
     ImageView ivBack;
     TextInputLayout placeLayout;
     TextInputEditText edtPlace;
-    RadioButton rbLocal,rbOutstation,rbExstation,rbRegular,rbTraining,rbMeeting;
+    RadioButton rbLocal, rbOutstation, rbExstation, rbRegular, rbTraining, rbMeeting;
     Button btnSubmit;
     RadioGroup rbGroup;
     ProgressBar simpleProgressBar;
     int placeId;
-    TextView tvMsg,tvcat;
+    TextView tvMsg, tvcat;
     RelativeLayout rlmsg;
-       LinearLayout rlattendance;
-       SwipeRefreshLayout srRefresh;
+    LinearLayout rlattendance;
+    SwipeRefreshLayout srRefresh;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -66,23 +66,23 @@ public class AttendanceActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attendance);
 
-        ivBack=findViewById(R.id.ivBack);
-        edtPlace=findViewById(R.id.edtPlace);
-        rbLocal=findViewById(R.id.rbLocal);
-        rbOutstation=findViewById(R.id.rbOutstation);
-        rbExstation=findViewById(R.id.rbExstation);
-        rbRegular=findViewById(R.id.rbRegular);
-        rbTraining=findViewById(R.id.rbTraining);
-        rbMeeting=findViewById(R.id.rbMeeting);
-        btnSubmit=findViewById(R.id.btnSubmit);
-        placeLayout=findViewById(R.id.placeLayout);
-        rbGroup=findViewById(R.id.rbGroup);
-        tvMsg=findViewById(R.id.tvMsg);
-        tvcat=findViewById(R.id.tvcat);
-        rlmsg=findViewById(R.id.rlmsg);
-        rlattendance=findViewById(R.id.rlattendance);
-        simpleProgressBar=findViewById(R.id.simpleProgressBar);
-       // srRefresh=findViewById(R.id.srRefresh);
+        ivBack = findViewById(R.id.ivBack);
+        edtPlace = findViewById(R.id.edtPlace);
+        rbLocal = findViewById(R.id.rbLocal);
+        rbOutstation = findViewById(R.id.rbOutstation);
+        rbExstation = findViewById(R.id.rbExstation);
+        rbRegular = findViewById(R.id.rbRegular);
+        rbTraining = findViewById(R.id.rbTraining);
+        rbMeeting = findViewById(R.id.rbMeeting);
+        btnSubmit = findViewById(R.id.btnSubmit);
+        placeLayout = findViewById(R.id.placeLayout);
+        rbGroup = findViewById(R.id.rbGroup);
+        tvMsg = findViewById(R.id.tvMsg);
+        tvcat = findViewById(R.id.tvcat);
+        rlmsg = findViewById(R.id.rlmsg);
+        rlattendance = findViewById(R.id.rlattendance);
+        simpleProgressBar = findViewById(R.id.simpleProgressBar);
+        // srRefresh=findViewById(R.id.srRefresh);
 //
 //        srRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 //            @Override
@@ -111,14 +111,27 @@ public class AttendanceActivity extends Activity {
             @Override
             public void onClick(View view) {
 
+                boolean isfilled=true;
+                if (rbGroup.getCheckedRadioButtonId() == -1) {
+                    isfilled=false;
+                    Toast.makeText(AttendanceActivity.this, "Please select Any one of the options ", Toast.LENGTH_SHORT).show();
+                } else if (rbRegular.isChecked()) {
+                    if (edtPlace.getText().toString().trim().equals("")){
+                        isfilled=false;
+                        edtPlace.setError("Enter the place");
+                        edtPlace.requestFocus();
+                    }
 
-                callAttendance();
-                simpleProgressBar.setVisibility(View.VISIBLE);
+                }
+                if (isfilled){
+                    btnSubmit.setEnabled(false);
+                    callAttendance();
+                    simpleProgressBar.setVisibility(View.VISIBLE);
+                }
 
 
             }
         });
-
 
 
 //RadioGroup
@@ -127,13 +140,13 @@ public class AttendanceActivity extends Activity {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
 
-                View view=rbGroup.findViewById(i);
+                View view = rbGroup.findViewById(i);
 
-                int rb=rbGroup.indexOfChild(view);
+                int rb = rbGroup.indexOfChild(view);
 
-                switch (rb){
+                switch (rb) {
                     case 0:
-                        placeId=1;
+                        placeId = 1;
 
 
                         placeLayout.setVisibility(View.GONE);
@@ -147,9 +160,8 @@ public class AttendanceActivity extends Activity {
                     case 1:
 
 
-
                         //Out Station
-                        placeId=2;
+                        placeId = 2;
 
                         placeLayout.setVisibility(View.GONE);
                         rbOutstation.setTextColor(Color.RED);
@@ -162,7 +174,7 @@ public class AttendanceActivity extends Activity {
                     case 2:
 
                         //Ex station
-                        placeId=11;
+                        placeId = 11;
 
                         placeLayout.setVisibility(View.GONE);
                         rbExstation.setTextColor(Color.RED);
@@ -175,7 +187,7 @@ public class AttendanceActivity extends Activity {
                     case 3:
 
                         //Office Regular
-                        placeId=4;
+                        placeId = 4;
 
                         placeLayout.setVisibility(View.VISIBLE);
                         rbRegular.setTextColor(Color.RED);
@@ -184,13 +196,13 @@ public class AttendanceActivity extends Activity {
                         rbLocal.setTextColor(Color.BLACK);
                         rbExstation.setTextColor(Color.BLACK);
                         rbOutstation.setTextColor(Color.BLACK);
-                        Toast.makeText(AttendanceActivity.this, "Enter The Place", Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(AttendanceActivity.this, "Enter The Place", Toast.LENGTH_SHORT).show();
                         break;
                     case 5:
 
                         //Training
 
-                        placeId=5;
+                        placeId = 5;
 
                         placeLayout.setVisibility(View.GONE);
                         rbTraining.setTextColor(Color.RED);
@@ -203,7 +215,7 @@ public class AttendanceActivity extends Activity {
                     case 6:
 
                         //Meeting
-                        placeId=6;
+                        placeId = 6;
 
                         placeLayout.setVisibility(View.GONE);
                         rbMeeting.setTextColor(Color.RED);
@@ -218,18 +230,17 @@ public class AttendanceActivity extends Activity {
         });
 
 
-
-
     }
 
     private void callAttendance() {
+
         simpleProgressBar.setVisibility(View.VISIBLE);
-        AttendanceInsert attendanceInsert=APIClient.getClient().create(AttendanceInsert.class);
-        attendanceInsert.callAttendInsert(PreferenceManager.getEmpID(this),placeId,edtPlace.getText().toString(),"new_attendance").enqueue(new Callback<AttendanceResponse>() {
+        AttendanceInsert attendanceInsert = APIClient.getClient().create(AttendanceInsert.class);
+        attendanceInsert.callAttendInsert(PreferenceManager.getEmpID(this), placeId, edtPlace.getText().toString(), "new_attendance").enqueue(new Callback<AttendanceResponse>() {
             @Override
             public void onResponse(Call<AttendanceResponse> call, Response<AttendanceResponse> response) {
                 try {
-                    if (response.isSuccessful()){
+                    if (response.isSuccessful()) {
                         callAttendmsgAPI();
                         simpleProgressBar.setVisibility(View.GONE);
                         rlattendance.setVisibility(View.GONE);
@@ -238,7 +249,7 @@ public class AttendanceActivity extends Activity {
 
                     }
 
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
             }
@@ -252,26 +263,26 @@ public class AttendanceActivity extends Activity {
 
 
     private void callAttendmsgAPI() {
-        AttendanceMessage attendanceMessage= APIClient.getClient().create(AttendanceMessage.class);
-        attendanceMessage.CallAttendMsg(PreferenceManager.getEmpID(this),"check_attend").enqueue(new Callback<AttendanceMessageModel>() {
+        AttendanceMessage attendanceMessage = APIClient.getClient().create(AttendanceMessage.class);
+        attendanceMessage.CallAttendMsg(PreferenceManager.getEmpID(this), "check_attend").enqueue(new Callback<AttendanceMessageModel>() {
             @Override
             public void onResponse(Call<AttendanceMessageModel> call, Response<AttendanceMessageModel> response) {
-                try{
-                    if (response.isSuccessful()){
+                try {
+                    if (response.isSuccessful()) {
 
-                       // Toast.makeText(AttendanceActivity.this,""+(response.body().getCategory()=="no attendance"), Toast.LENGTH_SHORT).show();
-                        if (response.body().getCategory().trim().equals("no attendance")){
-                        rlattendance.setVisibility(View.VISIBLE);
-                       rlmsg.setVisibility(View.GONE);
-                        simpleProgressBar.setVisibility(View.GONE);}
-                        else {
+                        // Toast.makeText(AttendanceActivity.this,""+(response.body().getCategory()=="no attendance"), Toast.LENGTH_SHORT).show();
+                        if (response.body().getCategory().trim().equals("no attendance")) {
+                            rlattendance.setVisibility(View.VISIBLE);
+                            rlmsg.setVisibility(View.GONE);
+                            simpleProgressBar.setVisibility(View.GONE);
+                        } else {
                             tvMsg.setText(response.body().getMessage());
                             tvcat.setText(response.body().getCategory());
                             rlattendance.setVisibility(View.GONE);
                             rlmsg.setVisibility(View.VISIBLE);
                         }
                     }
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -300,4 +311,4 @@ public class AttendanceActivity extends Activity {
     }
 
 
-    }
+}

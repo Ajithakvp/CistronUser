@@ -36,9 +36,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
                         android:layout_marginTop="10dp"
-                        android:layout_alignParentStart="true"
-                        android:layout_toLeftOf="@id/tvLeaveDateTag"
                         android:fontFamily="@font/bold"
+                        android:layout_toRightOf="@id/tvEmpId"
                         android:text="Cistron"
                         android:textColor="@color/blue"
                         android:textSize="18dp" />
@@ -49,9 +48,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
                         android:layout_marginTop="10dp"
-                       android:layout_below="@id/tvName"
-                        android:fontFamily="@font/latest"
-                        android:text="-E367"
+                        android:fontFamily="@font/bold"
+                        android:text="E367"
                         android:textColor="@color/Radio"
                         android:textSize="16dp" />
 
@@ -59,224 +57,225 @@
                     <TextView
                         android:id="@+id/tvLeaveDateTag"
                         android:layout_width="wrap_content"
+                        android:layout_below="@id/tvName"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
                         android:layout_marginTop="10dp"
-                        android:layout_toLeftOf="@id/tvLeaveDate"
                         android:fontFamily="@font/latest"
                         android:text="Leave Date :"
-                        android:textColor="@color/Radio"
-                        android:textSize="16dp" />
+                        android:textColor="@color/black"
+                        android:textSize="15dp" />
 
                     <TextView
                         android:id="@+id/tvLeaveDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
+                        android:layout_toRightOf="@id/tvLeaveDateTag"
                         android:layout_marginLeft="8dp"
+                        android:layout_below="@id/tvName"
                         android:layout_marginTop="10dp"
                         android:layout_marginRight="8dp"
-                        android:fontFamily="@font/latest"
+                        android:fontFamily="@font/semibold"
                         android:text="2022-12-22"
                         android:textColor="@color/Radio"
-                        android:textSize="16dp" />
+                        android:textSize="15dp" />
 
 
-                    <TextView
-                        android:id="@+id/tvClTag"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/tvEmpId"
-                        android:layout_marginLeft="8dp"
-                        android:visibility="visible"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/semibold"
-                        android:text="CL :"
-                        android:textColor="@color/black"
-                        android:textSize="14dp" />
+<!--                    <TextView-->
+<!--                        android:id="@+id/tvClTag"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_below="@id/tvEmpId"-->
+<!--                        android:layout_marginLeft="8dp"-->
+<!--                        android:visibility="visible"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        android:fontFamily="@font/semibold"-->
+<!--                        android:text="CL :"-->
+<!--                        android:textColor="@color/black"-->
+<!--                        android:textSize="14dp" />-->
 
-                    <TextView
-                        android:id="@+id/tvCL"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/tvEmpId"
-                        android:layout_marginLeft="5dp"
-                        android:visibility="visible"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginRight="2dp"
-                        android:layout_toRightOf="@id/tvClTag"
-                        android:fontFamily="@font/latest"
-                        android:text="10.5"
-                        android:textColor="@color/Radio"
-                        android:textSize="14dp" />
+<!--                    <TextView-->
+<!--                        android:id="@+id/tvCL"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_below="@id/tvEmpId"-->
+<!--                        android:layout_marginLeft="5dp"-->
+<!--                        android:visibility="visible"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        android:layout_marginRight="2dp"-->
+<!--                        android:layout_toRightOf="@id/tvClTag"-->
+<!--                        android:fontFamily="@font/latest"-->
+<!--                        android:text="10.5"-->
+<!--                        android:textColor="@color/Radio"-->
+<!--                        android:textSize="14dp" />-->
 
-                    <View
-                        android:layout_width="1dp"
-                        android:id="@+id/view1"
-                        android:visibility="visible"
-                        android:layout_height="20dp"
-                        android:layout_below="@id/tvEmpId"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_toRightOf="@id/tvCL"
-                        android:background="@color/black" />
-                    <TextView
-                        android:id="@+id/tvMLTag"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/tvEmpId"
-                        android:layout_toRightOf="@id/view1"
-                        android:layout_marginLeft="5dp"
-                        android:visibility="visible"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/semibold"
-                        android:text="ML :"
-                        android:textColor="@color/black"
-                        android:textSize="14dp" />
+<!--                    <View-->
+<!--                        android:layout_width="1dp"-->
+<!--                        android:id="@+id/view1"-->
+<!--                        android:visibility="visible"-->
+<!--                        android:layout_height="20dp"-->
+<!--                        android:layout_below="@id/tvEmpId"-->
+<!--                        android:layout_marginLeft="5dp"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        android:layout_toRightOf="@id/tvCL"-->
+<!--                        android:background="@color/black" />-->
+<!--                    <TextView-->
+<!--                        android:id="@+id/tvMLTag"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_below="@id/tvEmpId"-->
+<!--                        android:layout_toRightOf="@id/view1"-->
+<!--                        android:layout_marginLeft="5dp"-->
+<!--                        android:visibility="visible"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        android:fontFamily="@font/semibold"-->
+<!--                        android:text="ML :"-->
+<!--                        android:textColor="@color/black"-->
+<!--                        android:textSize="14dp" />-->
 
-                    <TextView
-                        android:id="@+id/tvML"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/tvEmpId"
-                        android:layout_marginLeft="5dp"
-                        android:visibility="visible"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginRight="2dp"
-                        android:layout_toRightOf="@id/tvMLTag"
-                        android:fontFamily="@font/latest"
-                        android:text="10.5"
-                        android:textColor="@color/Radio"
-                        android:textSize="14dp" />
+<!--                    <TextView-->
+<!--                        android:id="@+id/tvML"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_below="@id/tvEmpId"-->
+<!--                        android:layout_marginLeft="5dp"-->
+<!--                        android:visibility="visible"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        android:layout_marginRight="2dp"-->
+<!--                        android:layout_toRightOf="@id/tvMLTag"-->
+<!--                        android:fontFamily="@font/latest"-->
+<!--                        android:text="10.5"-->
+<!--                        android:textColor="@color/Radio"-->
+<!--                        android:textSize="14dp" />-->
 
-                    <View
-                        android:layout_width="1dp"
-                        android:id="@+id/view2"
-                        android:layout_height="20dp"
-                        android:visibility="visible"
-                        android:layout_below="@id/tvEmpId"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_toRightOf="@id/tvML"
-                        android:background="@color/black" />
-                    <TextView
-                        android:id="@+id/tvPLTag"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/tvEmpId"
-                        android:layout_toRightOf="@id/view2"
-                        android:layout_marginLeft="5dp"
-                        android:visibility="visible"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/semibold"
-                        android:text="PL :"
-                        android:textColor="@color/black"
-                        android:textSize="14dp" />
+<!--                    <View-->
+<!--                        android:layout_width="1dp"-->
+<!--                        android:id="@+id/view2"-->
+<!--                        android:layout_height="20dp"-->
+<!--                        android:visibility="visible"-->
+<!--                        android:layout_below="@id/tvEmpId"-->
+<!--                        android:layout_marginLeft="5dp"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        android:layout_toRightOf="@id/tvML"-->
+<!--                        android:background="@color/black" />-->
+<!--                    <TextView-->
+<!--                        android:id="@+id/tvPLTag"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_below="@id/tvEmpId"-->
+<!--                        android:layout_toRightOf="@id/view2"-->
+<!--                        android:layout_marginLeft="5dp"-->
+<!--                        android:visibility="visible"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        android:fontFamily="@font/semibold"-->
+<!--                        android:text="PL :"-->
+<!--                        android:textColor="@color/black"-->
+<!--                        android:textSize="14dp" />-->
 
-                    <TextView
-                        android:id="@+id/tvPL"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/tvEmpId"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginRight="2dp"
-                        android:visibility="visible"
-                        android:layout_toRightOf="@id/tvPLTag"
-                        android:fontFamily="@font/latest"
-                        android:text="10.5"
-                        android:textColor="@color/Radio"
-                        android:textSize="14dp" />
+<!--                    <TextView-->
+<!--                        android:id="@+id/tvPL"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_below="@id/tvEmpId"-->
+<!--                        android:layout_marginLeft="5dp"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        android:layout_marginRight="2dp"-->
+<!--                        android:visibility="visible"-->
+<!--                        android:layout_toRightOf="@id/tvPLTag"-->
+<!--                        android:fontFamily="@font/latest"-->
+<!--                        android:text="10.5"-->
+<!--                        android:textColor="@color/Radio"-->
+<!--                        android:textSize="14dp" />-->
 
-                    <View
-                        android:layout_width="1dp"
-                        android:id="@+id/view3"
-                        android:layout_height="20dp"
-                        android:layout_below="@id/tvEmpId"
-                        android:layout_marginLeft="5dp"
-                        android:visibility="visible"
-                        android:layout_marginTop="10dp"
-                        android:layout_toRightOf="@id/tvPL"
-                        android:background="@color/black" />
+<!--                    <View-->
+<!--                        android:layout_width="1dp"-->
+<!--                        android:id="@+id/view3"-->
+<!--                        android:layout_height="20dp"-->
+<!--                        android:layout_below="@id/tvEmpId"-->
+<!--                        android:layout_marginLeft="5dp"-->
+<!--                        android:visibility="visible"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        android:layout_toRightOf="@id/tvPL"-->
+<!--                        android:background="@color/black" />-->
 
-                    <TextView
-                        android:id="@+id/tvProbTag"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/tvEmpId"
-                        android:layout_toRightOf="@id/view3"
-                        android:layout_marginLeft="5dp"
-                        android:visibility="visible"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/semibold"
-                        android:text="Probl :"
-                        android:textColor="@color/black"
-                        android:textSize="14dp" />
+<!--                    <TextView-->
+<!--                        android:id="@+id/tvProbTag"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_below="@id/tvEmpId"-->
+<!--                        android:layout_toRightOf="@id/view3"-->
+<!--                        android:layout_marginLeft="5dp"-->
+<!--                        android:visibility="visible"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        android:fontFamily="@font/semibold"-->
+<!--                        android:text="Probl :"-->
+<!--                        android:textColor="@color/black"-->
+<!--                        android:textSize="14dp" />-->
 
-                    <TextView
-                        android:id="@+id/tvProb"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/tvEmpId"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="2dp"
-                        android:visibility="visible"
-                        android:layout_marginTop="10dp"
-                        android:layout_toRightOf="@id/tvProbTag"
-                        android:fontFamily="@font/latest"
-                        android:text="10.5"
-                        android:textColor="@color/Radio"
-                        android:textSize="14dp" />
-                    <View
-                        android:layout_width="1dp"
-                        android:id="@+id/view4"
-                        android:layout_height="20dp"
-                        android:layout_below="@id/tvEmpId"
-                        android:visibility="visible"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_toRightOf="@id/tvProb"
-                        android:background="@color/black" />
+<!--                    <TextView-->
+<!--                        android:id="@+id/tvProb"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_below="@id/tvEmpId"-->
+<!--                        android:layout_marginLeft="5dp"-->
+<!--                        android:layout_marginRight="2dp"-->
+<!--                        android:visibility="visible"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        android:layout_toRightOf="@id/tvProbTag"-->
+<!--                        android:fontFamily="@font/latest"-->
+<!--                        android:text="10.5"-->
+<!--                        android:textColor="@color/Radio"-->
+<!--                        android:textSize="14dp" />-->
+<!--                    <View-->
+<!--                        android:layout_width="1dp"-->
+<!--                        android:id="@+id/view4"-->
+<!--                        android:layout_height="20dp"-->
+<!--                        android:layout_below="@id/tvEmpId"-->
+<!--                        android:visibility="visible"-->
+<!--                        android:layout_marginLeft="5dp"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        android:layout_toRightOf="@id/tvProb"-->
+<!--                        android:background="@color/black" />-->
 
 
-                    <TextView
-                        android:id="@+id/tvCompOffTag"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/tvEmpId"
-                        android:layout_toRightOf="@id/view4"
-                        android:layout_marginLeft="5dp"
-                        android:visibility="visible"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/semibold"
-                        android:text="Comp Off :"
-                        android:textColor="@color/black"
-                        android:textSize="14dp" />
+<!--                    <TextView-->
+<!--                        android:id="@+id/tvCompOffTag"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_below="@id/tvEmpId"-->
+<!--                        android:layout_toRightOf="@id/view4"-->
+<!--                        android:layout_marginLeft="5dp"-->
+<!--                        android:visibility="visible"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        android:fontFamily="@font/semibold"-->
+<!--                        android:text="Comp Off :"-->
+<!--                        android:textColor="@color/black"-->
+<!--                        android:textSize="14dp" />-->
 
-                    <TextView
-                        android:id="@+id/tvCompOff"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/tvEmpId"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="2dp"
-                        android:visibility="visible"
-                        android:layout_marginTop="10dp"
-                        android:layout_toRightOf="@id/tvCompOffTag"
-                        android:fontFamily="@font/latest"
-                        android:text="10.5"
-                        android:textColor="@color/Radio"
-                        android:textSize="14dp" />
+<!--                    <TextView-->
+<!--                        android:id="@+id/tvCompOff"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_below="@id/tvEmpId"-->
+<!--                        android:layout_marginLeft="5dp"-->
+<!--                        android:layout_marginRight="2dp"-->
+<!--                        android:visibility="visible"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        android:layout_toRightOf="@id/tvCompOffTag"-->
+<!--                        android:fontFamily="@font/latest"-->
+<!--                        android:text="10.5"-->
+<!--                        android:textColor="@color/Radio"-->
+<!--                        android:textSize="14dp" />-->
 
 
                     <TextView
                         android:id="@+id/tvLeaveTypeTag"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/tvCompOff"
+                        android:layout_below="@id/tvLeaveDate"
                         android:layout_marginLeft="5dp"
                         android:layout_marginTop="10dp"
-                        android:fontFamily="@font/semibold"
+                        android:fontFamily="@font/latest"
                         android:text="Leave Type :"
                         android:textColor="@color/black"
                         android:textSize="15dp" />
@@ -285,12 +284,12 @@
                         android:id="@+id/tvLeaveType"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/tvCompOff"
+                        android:layout_below="@id/tvLeaveDate"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="2dp"
                         android:layout_marginTop="10dp"
                         android:layout_toRightOf="@id/tvLeaveTypeTag"
-                        android:fontFamily="@font/latest"
+                        android:fontFamily="@font/semibold"
                         android:text="Privilege Leave"
                         android:textColor="@color/Radio"
                         android:textSize="15dp" />
@@ -302,7 +301,7 @@
                         android:layout_below="@id/tvLeaveType"
                         android:layout_marginLeft="5dp"
                         android:layout_marginTop="10dp"
-                        android:fontFamily="@font/semibold"
+                        android:fontFamily="@font/latest"
                         android:text="Leave Reason :"
                         android:textColor="@color/black"
                         android:textSize="15dp" />
@@ -316,7 +315,7 @@
                         android:layout_marginRight="2dp"
                         android:layout_marginTop="10dp"
                         android:layout_toRightOf="@id/tvReasonTag"
-                        android:fontFamily="@font/latest"
+                        android:fontFamily="@font/semibold"
                         android:text="Not Feasible to travel"
                         android:textColor="@color/Radio"
                         android:textSize="15dp" />
@@ -329,6 +328,7 @@
                         android:layout_below="@id/tvReason"
                         android:layout_marginLeft="5dp"
                         android:layout_marginTop="10dp"
+                        android:visibility="gone"
                         android:fontFamily="@font/semibold"
                         android:text="FD,HD :"
                         android:textColor="@color/black"
@@ -338,14 +338,16 @@
                         android:id="@+id/tvFDHD"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/tvReason"
+                        android:layout_below="@id/tvEmpId"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginRight="2dp"
+                        android:layout_marginRight="5dp"
+                        android:padding="4dp"
+                        android:background="@color/Radio"
                         android:layout_marginTop="10dp"
-                        android:layout_toRightOf="@id/tvFDHDTag"
-                        android:fontFamily="@font/latest"
+                        android:layout_alignParentRight="true"
+                        android:fontFamily="@font/bold"
                         android:text="Half Day"
-                        android:textColor="@color/Radio"
+                        android:textColor="@color/white"
                         android:textSize="14dp" />
 
 
@@ -357,11 +359,10 @@
                         android:layout_below="@id/tvReason"
                         android:layout_marginLeft="5dp"
                         android:layout_marginTop="10dp"
-                        android:layout_toLeftOf="@id/tvAppliedDate"
-                        android:fontFamily="@font/semibold"
-                        android:text="Applied DateTime:"
+                        android:fontFamily="@font/latest"
+                        android:text="Applied On:"
                         android:textColor="@color/black"
-                        android:textSize="13dp" />
+                        android:textSize="15dp" />
 
                     <TextView
                         android:id="@+id/tvAppliedDate"
@@ -371,11 +372,11 @@
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="2dp"
                         android:layout_marginTop="10dp"
-                       android:layout_toLeftOf="@id/tvAppliedTime"
-                        android:fontFamily="@font/latest"
+                       android:layout_toRightOf="@id/tvAppliedDateTimeTag"
+                        android:fontFamily="@font/semibold"
                         android:text="2022-11-25, Fri"
                         android:textColor="@color/Radio"
-                        android:textSize="13dp" />
+                        android:textSize="15dp" />
 
                     <TextView
                         android:id="@+id/tvAppliedTime"
@@ -385,11 +386,11 @@
                         android:layout_marginLeft="3dp"
                         android:layout_marginRight="2dp"
                         android:layout_marginTop="10dp"
-                        android:layout_alignParentEnd="true"
-                        android:fontFamily="@font/latest"
+                        android:layout_toRightOf="@id/tvAppliedDate"
+                        android:fontFamily="@font/semibold"
                         android:text="2:25PM"
                         android:textColor="@color/Radio"
-                        android:textSize="13dp" />
+                        android:textSize="15dp" />
 
 
                     <TextView
@@ -410,12 +411,12 @@
                         android:id="@+id/tvexpired"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/tvFDHD"
+                        android:layout_below="@id/tvName"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="2dp"
                         android:layout_marginTop="10dp"
                         android:visibility="gone"
-                       android:layout_toRightOf="@id/tvexpiredTag"
+                       android:layout_toRightOf="@id/tvLeaveDate"
                         android:fontFamily="@font/latest"
                         android:text="Date Expired"
                         android:textColor="#454B1B"
@@ -439,13 +440,13 @@
                         android:id="@+id/ivAttch"
                         android:layout_width="30dp"
                         android:layout_height="20dp"
-                        android:visibility="gone"
-                        android:layout_below="@id/tvexpired"
+                        android:visibility="visible"
+                        android:layout_below="@id/tvLeaveDate"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="2dp"
                         android:src="@drawable/fileopen"
                         android:layout_marginTop="10dp"
-                        android:layout_toRightOf="@id/tvFileAttachTag"
+                        android:layout_toRightOf="@id/tvLeaveType"
                         />
 
 
@@ -466,7 +467,7 @@
                             android:layout_marginLeft="15dp"
                             android:text="LOP Approve"
                             android:textSize="13dp"
-                            android:backgroundTint="@color/blue"
+                            android:backgroundTint="#85C1E9"
                             android:fontFamily="@font/bold"
                             android:textColor="@color/white"
                             android:background="@drawable/edittext"
@@ -482,7 +483,7 @@
                             android:text="Reject"
                             android:textSize="15dp"
                            android:layout_centerHorizontal="true"
-                            android:backgroundTint="@color/Radio"
+                            android:backgroundTint="#F1948A"
                             android:fontFamily="@font/bold"
                             android:layout_marginRight="15dp"
                             android:textColor="@color/white"
@@ -498,7 +499,7 @@
                             android:text="Delete"
                             android:textSize="15dp"
                            android:layout_alignParentEnd="true"
-                            android:backgroundTint="#F47403"
+                            android:backgroundTint="#F8C471"
                             android:fontFamily="@font/bold"
                             android:layout_marginRight="15dp"
                             android:textColor="@color/white"

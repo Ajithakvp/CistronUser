@@ -82,7 +82,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:id="@+id/rlmsg"
-        android:visibility="visible"
+        android:visibility="gone"
         android:layout_below="@id/rltoolbar"
         android:layout_height="match_parent">
 

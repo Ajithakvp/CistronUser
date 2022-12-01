@@ -2,7 +2,9 @@ package com.example.cistronuser.API.Interface;
 
 import com.example.cistronuser.API.Response.SelectWeekResponse;
 import com.example.cistronuser.API.Response.ViewExpenseResponse;
+import com.example.cistronuser.API.Response.response;
 
+import okhttp3.Response;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -13,4 +15,7 @@ public interface ViewExpenseListInterface {
 
     @GET("expenses.php")
     Call<ViewExpenseResponse> CallSelectWeek(@Query("action")String action, @Query("date")String date, @Query("empid")String empid);
+
+    @GET("expenses.php")
+    Call<response> Callweek(@Query("action")String action, @Query("date")String date, @Query("empid")String empid);
 }

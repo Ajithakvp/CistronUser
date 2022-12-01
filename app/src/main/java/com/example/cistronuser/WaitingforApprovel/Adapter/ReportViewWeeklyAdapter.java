@@ -59,6 +59,51 @@ public class ReportViewWeeklyAdapter extends RecyclerView.Adapter<ReportViewWeek
         holder.tvLodgingamt.setText(weeklyExpensesModels.get(position).getL_amo());
         holder.tvTotalamt.setText(weeklyExpensesModels.get(position).getSum());
 
+
+
+        if (weeklyExpensesModels.get(position).getC_amo().trim().equals("0")){
+            weeklyExpensesModels.get(position).setC_amo("");
+            holder.tvConvencyamt.setVisibility(View.GONE);
+            holder.tvConvencyamtTag.setVisibility(View.GONE);
+            holder.ivConvencyView.setVisibility(View.GONE);
+        }else  if (!weeklyExpensesModels.get(position).getFilename_all().trim().equals("")){
+            holder.ivConvencyView.setVisibility(View.VISIBLE);
+        }
+
+
+
+
+        if (weeklyExpensesModels.get(position).getT_amo().trim().equals("0")){
+            weeklyExpensesModels.get(position).setT_amo("");
+            holder.tvTicketamt.setVisibility(View.GONE);
+            holder.ivTicketView.setVisibility(View.GONE);
+            holder.tvTicketamtTag.setVisibility(View.GONE);
+        }else  if (!weeklyExpensesModels.get(position).getFilename_t().trim().equals("")){
+            holder.ivTicketView.setVisibility(View.VISIBLE);
+        }
+
+
+        if (weeklyExpensesModels.get(position).getO_amo().trim().equals("0")){
+            weeklyExpensesModels.get(position).setO_amo("");
+            holder.tvOtheramt.setVisibility(View.GONE);
+            holder.ivOtherView.setVisibility(View.GONE);
+            holder.tvOtheramtTag.setVisibility(View.GONE);
+        }else  if (!weeklyExpensesModels.get(position).getFilename_o().trim().equals("")){
+            holder.ivOtherView.setVisibility(View.VISIBLE);
+        }
+
+        if (weeklyExpensesModels.get(position).getL_amo().trim().equals("0")){
+            weeklyExpensesModels.get(position).setL_amo("");
+            holder.tvLodgingamt.setVisibility(View.GONE);
+            holder.tvLodgingamtTag.setVisibility(View.GONE);
+            holder.ivLodgingView.setVisibility(View.GONE);
+        }else  if (!weeklyExpensesModels.get(position).getFilename_l().trim().equals("")){
+            holder.ivLodgingView.setVisibility(View.VISIBLE);
+        }
+
+
+
+
         String fileConvency=weeklyExpensesModels.get(position).getFilename_all();
         String Ticket=weeklyExpensesModels.get(position).getFilename_t();
         String Lodging=weeklyExpensesModels.get(position).getFilename_l();
@@ -66,37 +111,37 @@ public class ReportViewWeeklyAdapter extends RecyclerView.Adapter<ReportViewWeek
 
 
 
-        if (weeklyExpensesModels.get(position).getFilename_all().trim().equals("")){
-            holder.ivConvencyView.setVisibility(View.GONE);
-
-        }else {
-            holder.ivConvencyView.setVisibility(View.VISIBLE);
-
-        }
-
-        if (weeklyExpensesModels.get(position).getFilename_l().trim().equals("")){
-            holder.ivLodgingView.setVisibility(View.GONE);
-
-        }else {
-            holder.ivLodgingView.setVisibility(View.VISIBLE);
-
-        }
-
-        if (weeklyExpensesModels.get(position).getFilename_o().trim().equals("")){
-            holder.ivOtherView.setVisibility(View.GONE);
-
-        }else {
-            holder.ivOtherView.setVisibility(View.VISIBLE);
-
-        }
-
-        if (weeklyExpensesModels.get(position).getFilename_t().trim().equals("")){
-            holder.ivTicketView.setVisibility(View.GONE);
-
-        }else {
-            holder.ivTicketView.setVisibility(View.VISIBLE);
-
-        }
+//        if (weeklyExpensesModels.get(position).getFilename_all().trim().equals("")){
+//            holder.ivConvencyView.setVisibility(View.GONE);
+//
+//        }else {
+//            holder.ivConvencyView.setVisibility(View.VISIBLE);
+//
+//        }
+//
+//        if (weeklyExpensesModels.get(position).getFilename_l().trim().equals("")){
+//            holder.ivLodgingView.setVisibility(View.GONE);
+//
+//        }else {
+//            holder.ivLodgingView.setVisibility(View.VISIBLE);
+//
+//        }
+//
+//        if (weeklyExpensesModels.get(position).getFilename_o().trim().equals("")){
+//            holder.ivOtherView.setVisibility(View.GONE);
+//
+//        }else {
+//            holder.ivOtherView.setVisibility(View.VISIBLE);
+//
+//        }
+//
+//        if (weeklyExpensesModels.get(position).getFilename_t().trim().equals("")){
+//            holder.ivTicketView.setVisibility(View.GONE);
+//
+//        }else {
+//            holder.ivTicketView.setVisibility(View.VISIBLE);
+//
+//        }
 
 
 
@@ -187,6 +232,7 @@ public class ReportViewWeeklyAdapter extends RecyclerView.Adapter<ReportViewWeek
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvDate,tvWorkreport,tvConvencyamt,tvTicketamt,tvLodgingamt,tvOtheramt,tvTotalamt;
+        TextView tvOtheramtTag,tvLodgingamtTag,tvTicketamtTag,tvConvencyamtTag;
         ImageView ivConvencyView,ivTicketView ,ivLodgingView,ivOtherView;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -202,6 +248,11 @@ public class ReportViewWeeklyAdapter extends RecyclerView.Adapter<ReportViewWeek
             ivLodgingView=itemView.findViewById(R.id.ivLodgingView);
             ivOtherView=itemView.findViewById(R.id.ivOtherView);
             tvTotalamt=itemView.findViewById(R.id.tvTotalamt);
+
+            tvConvencyamtTag=itemView.findViewById(R.id.tvConvencyamtTag);
+            tvOtheramtTag=itemView.findViewById(R.id.tvOtheramtTag);
+            tvLodgingamtTag=itemView.findViewById(R.id.tvLodgingamtTag);
+            tvTicketamtTag=itemView.findViewById(R.id.tvTicketamtTag);
         }
     }
 }

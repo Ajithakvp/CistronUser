@@ -22,6 +22,7 @@ import com.example.cistronuser.API.Interface.ExpenseInterface;
 import com.example.cistronuser.API.Interface.ViewExpenseListInterface;
 import com.example.cistronuser.API.Model.WeeklyExpensesModel;
 import com.example.cistronuser.API.Response.ViewExpenseResponse;
+import com.example.cistronuser.API.Response.response;
 import com.example.cistronuser.Common.PreferenceManager;
 import com.example.cistronuser.R;
 
@@ -37,9 +38,8 @@ public class ExpensesViewWeeklyAdapter extends RecyclerView.Adapter<ExpensesView
     String baseurl;
     public ArrayList<WeeklyExpensesModel>weeklyExpensesModels;
 
-    public ExpensesViewWeeklyAdapter(Activity activity, String baseurl, ArrayList<WeeklyExpensesModel> weeklyExpensesModels) {
+    public ExpensesViewWeeklyAdapter(Activity activity, ArrayList<WeeklyExpensesModel> weeklyExpensesModels) {
         this.activity = activity;
-        this.baseurl = baseurl;
         this.weeklyExpensesModels = weeklyExpensesModels;
     }
 
@@ -54,6 +54,46 @@ public class ExpensesViewWeeklyAdapter extends RecyclerView.Adapter<ExpensesView
     public void onBindViewHolder(@NonNull ExpensesViewWeeklyAdapter.ViewHolder holder, int position) {
         holder.tvDate.setText(weeklyExpensesModels.get(position).getDate());
         holder.tvWorkreport.setText(weeklyExpensesModels.get(position).getWorkreport());
+
+        if (weeklyExpensesModels.get(position).getC_amo().trim().equals("0")){
+            holder.tvConvencyamtTag.setVisibility(View.GONE);
+            holder.tvConvencyamt.setVisibility(View.GONE);
+            holder.ivConvencyView.setVisibility(View.GONE);
+        }else if (!weeklyExpensesModels.get(position).getFilename_all().trim().equals("")){
+
+            holder.ivConvencyView.setVisibility(View.VISIBLE);
+        }
+
+
+        if (weeklyExpensesModels.get(position).getT_amo().trim().equals("0")){
+            holder.ivTicketView.setVisibility(View.GONE);
+            holder.tvTicketamtTag.setVisibility(View.GONE);
+            holder.tvTicketamt.setVisibility(View.GONE);
+        }else  if (!weeklyExpensesModels.get(position).getFilename_t().trim().equals("")) {
+            holder.ivTicketView.setVisibility(View.VISIBLE);
+        }
+
+        if (weeklyExpensesModels.get(position).getL_amo().trim().equals("0")){
+            holder.ivLodgingView.setVisibility(View.GONE);
+            holder.tvLodgingamtTag.setVisibility(View.GONE);
+            holder.tvLodgingamt.setVisibility(View.GONE);
+        }else if (!weeklyExpensesModels.get(position).getFilename_l().trim().equals("")) {
+            holder.ivLodgingView.setVisibility(View.VISIBLE);
+        }
+
+
+        if (weeklyExpensesModels.get(position).getO_amo().trim().equals("0")){
+
+            holder.ivOtherView.setVisibility(View.GONE);
+            holder.tvOtheramtTag.setVisibility(View.GONE);
+            holder.tvOtheramt.setVisibility(View.GONE);
+        }else  if (!weeklyExpensesModels.get(position).getFilename_o().trim().equals("")) {
+            holder.ivOtherView.setVisibility(View.VISIBLE);
+        }
+
+
+
+
         holder.tvConvencyamt.setText(weeklyExpensesModels.get(position).getC_amo());
         holder.tvTicketamt.setText(weeklyExpensesModels.get(position).getT_amo());
         holder.tvOtheramt.setText(weeklyExpensesModels.get(position).getO_amo());
@@ -67,37 +107,54 @@ public class ExpensesViewWeeklyAdapter extends RecyclerView.Adapter<ExpensesView
 
 
 
-        if (weeklyExpensesModels.get(position).getFilename_all().trim().equals("")){
-            holder.ivConvencyView.setVisibility(View.GONE);
 
-        }else {
-            holder.ivConvencyView.setVisibility(View.VISIBLE);
+//
+//        if (weeklyExpensesModels.get(position).getFilename_all().trim().equals("")){
+//            holder.ivConvencyView.setVisibility(View.GONE);
+//
+//        }else {
+//            holder.ivConvencyView.setVisibility(View.VISIBLE);
+//
+//        }
+//
+//        if (weeklyExpensesModels.get(position).getFilename_l().trim().equals("")){
+//            holder.ivLodgingView.setVisibility(View.GONE);
+//
+//        }else {
+//            holder.ivLodgingView.setVisibility(View.VISIBLE);
+//
+//        }
+//
+//        if (weeklyExpensesModels.get(position).getFilename_o().trim().equals("")){
+//            holder.ivOtherView.setVisibility(View.GONE);
+//
+//        }else {
+//            holder.ivOtherView.setVisibility(View.VISIBLE);
+//
+//        }
+//
+//        if (weeklyExpensesModels.get(position).getFilename_t().trim().equals("")){
+//            holder.ivTicketView.setVisibility(View.GONE);
+//
+//        }else {
+//            holder.ivTicketView.setVisibility(View.VISIBLE);
+//
+//        }
 
-        }
 
-        if (weeklyExpensesModels.get(position).getFilename_l().trim().equals("")){
-            holder.ivLodgingView.setVisibility(View.GONE);
 
-        }else {
-            holder.ivLodgingView.setVisibility(View.VISIBLE);
+        ViewExpenseListInterface viewExpenseListInterface = APIClient.getClient().create(ViewExpenseListInterface.class);
+        viewExpenseListInterface.Callweek("viewWeeklyExpenses","", PreferenceManager.getEmpID(activity)).enqueue(new Callback<response>() {
+            @Override
+            public void onResponse(Call<response> call, Response<response> response) {
+                baseurl=response.body().getAttachBaseUrl();
+            }
 
-        }
+            @Override
+            public void onFailure(Call<response> call, Throwable t) {
 
-        if (weeklyExpensesModels.get(position).getFilename_o().trim().equals("")){
-            holder.ivOtherView.setVisibility(View.GONE);
-
-        }else {
-            holder.ivOtherView.setVisibility(View.VISIBLE);
-
-        }
-
-        if (weeklyExpensesModels.get(position).getFilename_t().trim().equals("")){
-            holder.ivTicketView.setVisibility(View.GONE);
-
-        }else {
-            holder.ivTicketView.setVisibility(View.VISIBLE);
-
-        }
+            }
+        });
 
 
 
@@ -167,6 +224,7 @@ public class ExpensesViewWeeklyAdapter extends RecyclerView.Adapter<ExpensesView
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvDate,tvWorkreport,tvConvencyamt,tvTicketamt,tvLodgingamt,tvOtheramt,tvTotalamt;
+        TextView tvOtheramtTag,tvLodgingamtTag,tvTicketamtTag,tvConvencyamtTag;
         ImageView ivConvencyView,ivTicketView ,ivLodgingView,ivOtherView;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -182,6 +240,11 @@ public class ExpensesViewWeeklyAdapter extends RecyclerView.Adapter<ExpensesView
             ivLodgingView=itemView.findViewById(R.id.ivLodgingView);
             ivOtherView=itemView.findViewById(R.id.ivOtherView);
             tvTotalamt=itemView.findViewById(R.id.tvTotalamt);
+
+            tvConvencyamtTag=itemView.findViewById(R.id.tvConvencyamtTag);
+            tvOtheramtTag=itemView.findViewById(R.id.tvOtheramtTag);
+            tvLodgingamtTag=itemView.findViewById(R.id.tvLodgingamtTag);
+            tvTicketamtTag=itemView.findViewById(R.id.tvTicketamtTag);
 
         }
     }

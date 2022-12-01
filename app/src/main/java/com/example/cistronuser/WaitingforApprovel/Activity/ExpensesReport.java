@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,6 +14,7 @@ import com.example.cistronuser.API.APIClient;
 import com.example.cistronuser.API.Interface.ReportExpensesInterface;
 import com.example.cistronuser.API.Model.ReportExpensesModel;
 import com.example.cistronuser.API.Response.ReportExpensesResponse;
+import com.example.cistronuser.Activity.ExpensesActivity;
 import com.example.cistronuser.R;
 import com.example.cistronuser.WaitingforApprovel.Adapter.ReportExpenseAdapter;
 
@@ -57,6 +59,10 @@ public class ExpensesReport extends AppCompatActivity {
     }
 
     private void callReportExpenses() {
+        final ProgressDialog progressDialog = new ProgressDialog(ExpensesReport.this);
+        progressDialog.setMessage("Please Wait...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
         ReportExpensesInterface reportExpensesInterface= APIClient.getClient().create(ReportExpensesInterface.class);
         reportExpensesInterface.callSubmittedOn("submittedExpensesReport").enqueue(new Callback<ReportExpensesResponse>() {
             @Override
@@ -65,6 +71,7 @@ public class ExpensesReport extends AppCompatActivity {
                     if (response.isSuccessful()){
                         reportExpenseAdapter.reportExpensesModels=response.body().getReportExpensesModels();
                         reportExpenseAdapter.notifyDataSetChanged();
+                        progressDialog.dismiss();
                     }
 
                 }catch (Exception e){
@@ -76,6 +83,7 @@ public class ExpensesReport extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ReportExpensesResponse> call, Throwable t) {
+                progressDialog.dismiss();
 
             }
         });

@@ -18,6 +18,7 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -234,7 +235,7 @@ public class LeaveActivity extends Activity {
         //*********************No leave ***************//
 
 
-        CalPolicy();
+
         try {
             simpleProgressBar.setVisibility(View.VISIBLE);
             LeavePolicyInterface leavePolicyInterface = APIClient.getClient().create(LeavePolicyInterface.class);
@@ -776,7 +777,7 @@ public class LeaveActivity extends Activity {
                                                         if (response.isSuccessful()) {
 
 
-                                                            //  Toast.makeText(LeaveActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                                              Toast.makeText(LeaveActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
 
                                                             dialog.dismiss();
 
@@ -1016,6 +1017,7 @@ public class LeaveActivity extends Activity {
         rbGroup3.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
+                rbHalfday.setError(null);
                 View gb3 = rbGroup3.findViewById(checkedId);
                 int rb3 = rbGroup3.indexOfChild(gb3);
                 switch (rb3) {
@@ -1114,12 +1116,35 @@ public class LeaveActivity extends Activity {
             public void onClick(View v) {
 
                 try {
-                    if (filename==null) {
-                        Callsubmit();
-                        bottomSheetDialog.dismiss();
-                    }else {
-                        calluploadsubmit();
-                        bottomSheetDialog.dismiss();
+                    boolean isfilled=true;
+                    if (tvDate.getText().toString().trim().equals("")){
+                        tvDate.setError("Select a date");
+                        tvDate.requestFocus();
+                        isfilled=false;
+                    } else if (spReson .getSelectedItemPosition()==0){
+                       // ((TextView)spReson.getSelectedView()).setError("Select a Reason");
+                        setSpinnerError(spReson,"Select a Reason");
+                        tvDate.requestFocus();
+                        isfilled=false;
+                    } else if (rbGroup.getCheckedRadioButtonId() ==-1 && rbGroup2.getCheckedRadioButtonId()==-1){
+                        Toast.makeText(LeaveActivity.this, "Select leave type", Toast.LENGTH_SHORT).show();
+                        isfilled=false;
+                        rbGroup.requestFocus();
+                    }
+                    else if (rbGroup3.getCheckedRadioButtonId()==-1){
+                        Toast.makeText(LeaveActivity.this, "Select half day or full day", Toast.LENGTH_SHORT).show();
+                        rbHalfday.requestFocus();
+                        isfilled=false;
+                    }
+                    if (isfilled) {
+
+                        if (filename == null) {
+                            Callsubmit(bottomSheetDialog);
+                            //bottomSheetDialog.dismiss();
+                        } else {
+                            calluploadsubmit(bottomSheetDialog);
+                            bottomSheetDialog.dismiss();
+                        }
                     }
                 } catch (Exception e) {
                     Log.e(TAG, "onClick: " + e.getMessage());
@@ -1127,11 +1152,27 @@ public class LeaveActivity extends Activity {
             }
         });
 
+
+
+
     }
 
-    private void calluploadsubmit() {
+    private void setSpinnerError(Spinner spinner, String error){
+        View selectedView = spinner.getSelectedView();
+        if (selectedView != null && selectedView instanceof TextView) {
+            spinner.requestFocus();
+            TextView selectedTextView = (TextView) selectedView;
+            selectedTextView.setError("error"); // any name of the error will do
+            selectedTextView.setTextColor(Color.RED); //text color in which you want your error message to be displayed
+            selectedTextView.setText(error); // actual error message
+            spinner.performClick(); // to open the spinner list if error is found.
+
+        }
+    }
+
+    private void calluploadsubmit(BottomSheetDialog bottomSheetDialog) {
         final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Waiting...");
+        progressDialog.setMessage("Leave Request is processing...");
         progressDialog.setCancelable(false);
         progressDialog.show();
         LeaveSubmitForm leaveSubmitForm = APIClient.getClient().create(LeaveSubmitForm.class);
@@ -1164,8 +1205,11 @@ public class LeaveActivity extends Activity {
 
                     try {
                         if (response.isSuccessful()) {
+
+                            Toast.makeText(LeaveActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                             progressDialog.dismiss();
-                            Toast.makeText(LeaveActivity.this, "Submited", Toast.LENGTH_SHORT).show();
+                            bottomSheetDialog.dismiss();
+
                         }
                     } catch (Exception e) {
                         Log.e(TAG, "onResponse: " + e.getMessage());
@@ -1186,7 +1230,12 @@ public class LeaveActivity extends Activity {
 
     }
 
-    private void Callsubmit() {
+    private void Callsubmit(BottomSheetDialog bottomSheetDialog) {
+
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Leave Request is processing...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
         LeaveSubmitForm leaveSubmitForm = APIClient.getClient().create(LeaveSubmitForm.class);
         int lop = rblop.isChecked() ? 1 : 0;
         int compoff = rbCompOff.isChecked() ? 1 : 0;
@@ -1201,7 +1250,10 @@ public class LeaveActivity extends Activity {
             public void onResponse(Call<leavesubmitresponse> call, Response<leavesubmitresponse> response) {
                 try {
                     if (response.isSuccessful()) {
-                        Toast.makeText(LeaveActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LeaveActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
+                        bottomSheetDialog.dismiss();
+
                     }
 
                 } catch (Exception e) {
@@ -1212,6 +1264,7 @@ public class LeaveActivity extends Activity {
 
             @Override
             public void onFailure(Call<leavesubmitresponse> call, Throwable t) {
+                progressDialog.dismiss();
 
             }
         });
@@ -1282,7 +1335,7 @@ public class LeaveActivity extends Activity {
 
                                 if (! leave.get(position).trim().equals("----Select----"))
                                     
-                                Toast.makeText(LeaveActivity.this, leave.get(position), Toast.LENGTH_SHORT).show();
+                               // Toast.makeText(LeaveActivity.this, leave.get(position), Toast.LENGTH_SHORT).show();
                                 // reason = Integer.parseInt(leave.get(position));
                                 reason = position;
                                 //reasonName=leave.get(position);
@@ -1373,6 +1426,7 @@ public class LeaveActivity extends Activity {
                     }
                 } else
                     date = selectedDt;
+                tvDate.setError(null);
                 tvDate.setText(date);
                 int count = date.split(",", -1).length;
                 if (count == 0)

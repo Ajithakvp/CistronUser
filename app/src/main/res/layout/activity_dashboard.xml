@@ -276,7 +276,7 @@
                             android:id="@+id/rlWaitingExpense"
                             android:layout_width="match_parent"
                             android:layout_height="60dp"
-                            android:layout_below="@id/tvWaitingApproved"
+                            android:layout_below="@id/rlWaitingCompOFfRequest"
                             android:layout_marginTop="20dp"
                             android:background="@drawable/cardview"
                             android:backgroundTint="#6495ED">
@@ -417,7 +417,7 @@
                             android:id="@+id/rlWaitingCompOFfRequest"
                             android:layout_width="match_parent"
                             android:layout_height="60dp"
-                            android:layout_below="@id/rlWaitingLeaveRequest"
+                            android:layout_below="@id/tvWaitingApproved"
                             android:layout_marginTop="20dp"
                             android:background="@drawable/cardview"
                             android:backgroundTint="#6495ED">
@@ -500,7 +500,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
+                        android:layout_centerHorizontal="true"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
                         android:background="@drawable/cardview"
@@ -522,7 +522,7 @@
                             android:id="@+id/rlExpenseReport"
                             android:layout_width="match_parent"
                             android:layout_height="60dp"
-                            android:layout_below="@id/tvExpenseReportTag"
+                            android:layout_below="@id/rlrlAttendaceReport"
                             android:layout_marginTop="20dp"
                             android:background="@drawable/cardview"
                             android:backgroundTint="#6495ED">
@@ -555,7 +555,7 @@
                             android:id="@+id/rlrlAttendaceReport"
                             android:layout_width="match_parent"
                             android:layout_height="60dp"
-                            android:layout_below="@id/rlExpenseReport"
+                            android:layout_below="@id/tvExpenseReportTag"
                             android:layout_marginTop="20dp"
                             android:background="@drawable/cardview"
                             android:backgroundTint="#6495ED">
@@ -588,7 +588,7 @@
                             android:id="@+id/rlrlLeaveReport"
                             android:layout_width="match_parent"
                             android:layout_height="60dp"
-                            android:layout_below="@id/rlrlAttendaceReport"
+                            android:layout_below="@id/rlExpenseReport"
                             android:layout_marginTop="20dp"
                             android:layout_marginBottom="20dp"
                             android:background="@drawable/cardview"

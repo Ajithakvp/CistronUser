@@ -5,6 +5,7 @@ import androidx.cardview.widget.CardView;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -196,6 +197,10 @@ public class DashboardActivity extends Activity {
         lottieAnimationView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                final ProgressDialog progressDialog = new ProgressDialog(DashboardActivity.this);
+                progressDialog.setMessage("Log out...");
+                progressDialog.setCancelable(false);
+                progressDialog.show();
                 AlertDialog.Builder builder = new AlertDialog.Builder(DashboardActivity.this);
                 builder.setMessage("Do you want to LogOut");
                 builder.setTitle("Log Out!");
@@ -214,6 +219,7 @@ public class DashboardActivity extends Activity {
 
                                     if (response.isSuccessful()) {
 
+
                                         PreferenceManager.setLoggedStatus(DashboardActivity.this, false);
 
                                         PreferenceManager.setUserModelData(DashboardActivity.this, loginuserModel);
@@ -221,6 +227,7 @@ public class DashboardActivity extends Activity {
                                         Intent intent = new Intent(DashboardActivity.this, LoginActivity.class);
                                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                         startActivity(intent);
+                                        progressDialog.dismiss();
                                     }
 
                                 } catch (Exception e) {
@@ -240,6 +247,7 @@ public class DashboardActivity extends Activity {
                 builder.setNegativeButton("No", (new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        progressDialog.dismiss();
                         dialogInterface.cancel();
                     }
                 }));
@@ -601,6 +609,11 @@ public class DashboardActivity extends Activity {
         btnpasssubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final ProgressDialog progressDialog = new ProgressDialog(DashboardActivity.this);
+                progressDialog.setMessage("Password changing...");
+                progressDialog.setCancelable(false);
+                progressDialog.show();
+
                 ChangePasswordInterface changePasswordInterface = APIClient.getClient().create(ChangePasswordInterface.class);
                 changePasswordInterface.callchangepasswor("changePassword", PreferenceManager.getEmpID(DashboardActivity.this), edRetypePass.getText().toString()).enqueue(new Callback<ChangePasswordResponse>() {
                     @Override
@@ -608,8 +621,10 @@ public class DashboardActivity extends Activity {
 
                         try {
                             if (response.isSuccessful()) {
+                                progressDialog.dismiss();
                                 Toast.makeText(DashboardActivity.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
                                 bottomSheetDialog.dismiss();
+
                             }
 
                         } catch (Exception e) {

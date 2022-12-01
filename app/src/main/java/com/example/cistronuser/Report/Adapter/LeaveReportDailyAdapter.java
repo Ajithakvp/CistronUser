@@ -52,9 +52,27 @@ public class LeaveReportDailyAdapter extends RecyclerView.Adapter<LeaveReportDai
 
         holder.tvName.setText(leaveReportDailyModels.get(position).getEmployee());
         holder.tvleavetype.setText(leaveReportDailyModels.get(position).getLeavetype());
-        holder.tvFDHD.setText(leaveReportDailyModels.get(position).getFdhd());
-        holder.tvReason.setText("-"+leaveReportDailyModels.get(position).getReason());
+
+
         String File=leaveReportDailyModels.get(position).getMedicalattach();
+
+
+        if (leaveReportDailyModels.get(position).getReason().trim().equals("")){
+            holder.tvReason.setVisibility(View.GONE);
+            holder.tvStatusTag.setVisibility(View.GONE);
+        }else {
+            holder.tvStatusTag.setVisibility(View.VISIBLE);
+            holder.tvReason.setText("-"+leaveReportDailyModels.get(position).getReason());
+        }
+
+        if (leaveReportDailyModels.get(position).getFdhd().trim().equals("")){
+            holder.tvDay.setVisibility(View.GONE);
+            holder.tvFDHD.setVisibility(View.GONE);
+
+        }else {
+            holder.tvDay.setVisibility(View.VISIBLE);
+            holder.tvFDHD.setText(leaveReportDailyModels.get(position).getFdhd());
+        }
 
 
 
@@ -103,7 +121,7 @@ public class LeaveReportDailyAdapter extends RecyclerView.Adapter<LeaveReportDai
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvName,tvleavetype,tvReason,tvFDHD,tvFileAttachTag;
+        TextView tvName,tvleavetype,tvReason,tvFDHD,tvFileAttachTag,tvStatusTag,tvDay;
         ImageView ivFileAttach;
 
         public ViewHolder(@NonNull View itemView) {
@@ -115,6 +133,8 @@ public class LeaveReportDailyAdapter extends RecyclerView.Adapter<LeaveReportDai
             tvFDHD=itemView.findViewById(R.id.tvFDHD);
             tvFileAttachTag=itemView.findViewById(R.id.tvFileAttachTag);
             ivFileAttach=itemView.findViewById(R.id.ivFileAttach);
+            tvStatusTag=itemView.findViewById(R.id.tvStatusTag);
+            tvDay=itemView.findViewById(R.id.tvCityTag);
 
         }
     }

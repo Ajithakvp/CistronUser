@@ -37,7 +37,6 @@ import com.example.cistronuser.API.Model.ReportExpensesViewModel;
 import com.example.cistronuser.API.Response.AdjustmentExpensesResponse;
 import com.example.cistronuser.API.Response.OperatorModel;
 import com.example.cistronuser.API.Response.ReportExpensesViewResponses;
-import com.example.cistronuser.Activity.DashboardActivity;
 import com.example.cistronuser.R;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
@@ -72,6 +71,7 @@ public class ReportExpenseAdapter extends RecyclerView.Adapter<ReportExpenseAdap
 
     //Reset
     TextView tvResetTag;
+    TextView tvWeeklyPreviewTag;
     SwitchCompat stReset;
 
     //Hardcopy
@@ -121,10 +121,7 @@ public class ReportExpenseAdapter extends RecyclerView.Adapter<ReportExpenseAdap
             public void onClick(View v) {
 
 
-                final ProgressDialog progressDialog = new ProgressDialog(activity);
-                progressDialog.setMessage("Loading...");
-                progressDialog.setCancelable(false);
-                progressDialog.show();
+
                 BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(activity);
                 bottomSheetDialog.setContentView(R.layout.expenses_viewweekly_report);
                 bottomSheetDialog.show();
@@ -133,6 +130,7 @@ public class ReportExpenseAdapter extends RecyclerView.Adapter<ReportExpenseAdap
                 tvGrandsumDoc = bottomSheetDialog.findViewById(R.id.tvGrandsumDoc);
                 ivBack = bottomSheetDialog.findViewById(R.id.ivBack);
                 ivWeekPreview = bottomSheetDialog.findViewById(R.id.ivWeekPreview);
+                tvWeeklyPreviewTag = bottomSheetDialog.findViewById(R.id.tvWeeklyPreviewTag);
 
 
                 strOperator.clear();
@@ -150,7 +148,6 @@ public class ReportExpenseAdapter extends RecyclerView.Adapter<ReportExpenseAdap
                 spOperator = bottomSheetDialog.findViewById(R.id.spOperator);
                 edAmt = bottomSheetDialog.findViewById(R.id.edAmt);
                 edReason = bottomSheetDialog.findViewById(R.id.edReason);
-                TextView tvWeeklyPreviewTag=bottomSheetDialog.findViewById(R.id.tvWeeklyPreviewTag);
 
 
                 //Reset
@@ -228,6 +225,7 @@ public class ReportExpenseAdapter extends RecyclerView.Adapter<ReportExpenseAdap
 //                tvPaidDate.setText(paids);
 
 
+                callExpenseView(reportExpensesModels.get(position).getEmpid(), reportExpensesModels.get(position).getStartdate(), reportExpensesModels.get(position).getEnddate());
                 reportViewWeeklyAdapter = new ReportViewWeeklyAdapter(activity, BaseUrl, reportExpensesViewModels);
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity);
                 linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
@@ -304,20 +302,29 @@ public class ReportExpenseAdapter extends RecyclerView.Adapter<ReportExpenseAdap
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                        if (isChecked){
-                            ResetExpensesReportInterface resetExpensesReportInterface=APIClient.getClient().create(ResetExpensesReportInterface.class);
-                            resetExpensesReportInterface.callReset("resetSubmittedExpenses",reportExpensesModels.get(position).getEmpid(),reportExpensesModels.get(position).getStartdate(),reportExpensesModels.get(position).getEnddate()).enqueue(new Callback<AdjustmentExpensesResponse>() {
+                        if (isChecked) {
+
+                            final ProgressDialog progressDialog = new ProgressDialog(activity);
+                            progressDialog.setMessage("Reset...");
+                            progressDialog.setCancelable(false);
+                            progressDialog.show();
+
+                            ResetExpensesReportInterface resetExpensesReportInterface = APIClient.getClient().create(ResetExpensesReportInterface.class);
+                            resetExpensesReportInterface.callReset("resetSubmittedExpenses", reportExpensesModels.get(position).getEmpid(), reportExpensesModels.get(position).getStartdate(), reportExpensesModels.get(position).getEnddate()).enqueue(new Callback<AdjustmentExpensesResponse>() {
                                 @Override
                                 public void onResponse(Call<AdjustmentExpensesResponse> call, Response<AdjustmentExpensesResponse> response) {
                                     try {
-                                        if (response.isSuccessful()){
+                                        if (response.isSuccessful()) {
+                                            progressDialog.dismiss();
                                             Toast.makeText(activity, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                                             //bottomSheetDialog.dismiss();
-                                            Intent intent=new Intent(activity, DashboardActivity.class);
-                                            activity.startActivity(intent);
+                                            activity.finish();
+                                            activity.overridePendingTransition(0, 0);
+                                            activity.startActivity(activity.getIntent());
+                                            activity.overridePendingTransition(0, 0);
                                         }
 
-                                    }catch (Exception e){
+                                    } catch (Exception e) {
 
                                     }
                                 }
@@ -328,11 +335,9 @@ public class ReportExpenseAdapter extends RecyclerView.Adapter<ReportExpenseAdap
                                 }
                             });
 
-                        }else {
+                        } else {
 
                         }
-
-
 
 
                     }
@@ -355,8 +360,6 @@ public class ReportExpenseAdapter extends RecyclerView.Adapter<ReportExpenseAdap
                         }
 
 
-
-
                     }
                 });
 
@@ -375,7 +378,6 @@ public class ReportExpenseAdapter extends RecyclerView.Adapter<ReportExpenseAdap
                             tvPaySubmit.setVisibility(View.GONE);
 
                         }
-
 
 
                     }
@@ -402,13 +404,16 @@ public class ReportExpenseAdapter extends RecyclerView.Adapter<ReportExpenseAdap
                         }
 
 
-
                     }
                 });
 
                 tvhcSubmit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        final ProgressDialog progressDialog = new ProgressDialog(activity);
+                        progressDialog.setMessage("Loading...");
+                        progressDialog.setCancelable(false);
+                        progressDialog.show();
 
                         HardcopyExpensesReportInterface hardcopyExpensesReportInterface = APIClient.getClient().create(HardcopyExpensesReportInterface.class);
                         hardcopyExpensesReportInterface.callhardcopy("expHardcopyReceived", reportExpensesModels.get(position).getEmpid(), reportExpensesModels.get(position).getStartdate(), reportExpensesModels.get(position).getEnddate(), tvDate.getText().toString(), tvRp.getText().toString()).enqueue(new Callback<AdjustmentExpensesResponse>() {
@@ -416,11 +421,12 @@ public class ReportExpenseAdapter extends RecyclerView.Adapter<ReportExpenseAdap
                             public void onResponse(Call<AdjustmentExpensesResponse> call, Response<AdjustmentExpensesResponse> response) {
 
                                 try {
-                                    if (response.isSuccessful()){
+                                    if (response.isSuccessful()) {
+                                        progressDialog.dismiss();
                                         Toast.makeText(activity, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                                     }
 
-                                }catch (Exception e){
+                                } catch (Exception e) {
 
                                 }
 
@@ -439,6 +445,10 @@ public class ReportExpenseAdapter extends RecyclerView.Adapter<ReportExpenseAdap
                 tvUpdate.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        final ProgressDialog progressDialog = new ProgressDialog(activity);
+                        progressDialog.setMessage("Loading...");
+                        progressDialog.setCancelable(false);
+                        progressDialog.show();
 
                         AdjustmentExpensesInterface adjustmentExpensesInterface = APIClient.getClient().create(AdjustmentExpensesInterface.class);
                         adjustmentExpensesInterface.callAdjustment("expSaveAdjustment", reportExpensesModels.get(position).getEmpid(), reportExpensesModels.get(position).getStartdate(), reportExpensesModels.get(position).getEnddate(), OperatorID, edAmt.getText().toString(), edReason.getText().toString()).enqueue(new Callback<AdjustmentExpensesResponse>() {
@@ -447,6 +457,7 @@ public class ReportExpenseAdapter extends RecyclerView.Adapter<ReportExpenseAdap
 
                                 try {
                                     if (response.isSuccessful()) {
+                                        progressDialog.dismiss();
                                         Toast.makeText(activity, response.body().getMessage(), Toast.LENGTH_LONG).show();
                                     }
 
@@ -467,6 +478,10 @@ public class ReportExpenseAdapter extends RecyclerView.Adapter<ReportExpenseAdap
                 tvPaidSubmit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        final ProgressDialog progressDialog = new ProgressDialog(activity);
+                        progressDialog.setMessage("Loading...");
+                        progressDialog.setCancelable(false);
+                        progressDialog.show();
 
                         PaidReportExpensesInterface paidReportExpensesInterface = APIClient.getClient().create(PaidReportExpensesInterface.class);
                         paidReportExpensesInterface.callPaid("expPaymentPaid", reportExpensesModels.get(position).getEmpid(), reportExpensesModels.get(position).getStartdate(), reportExpensesModels.get(position).getEnddate(), tvPaidDate.getText().toString()).enqueue(new Callback<AdjustmentExpensesResponse>() {
@@ -474,6 +489,7 @@ public class ReportExpenseAdapter extends RecyclerView.Adapter<ReportExpenseAdap
                             public void onResponse(Call<AdjustmentExpensesResponse> call, Response<AdjustmentExpensesResponse> response) {
                                 try {
                                     if (response.isSuccessful()) {
+                                        progressDialog.dismiss();
                                         Toast.makeText(activity, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                                     }
 
@@ -495,12 +511,18 @@ public class ReportExpenseAdapter extends RecyclerView.Adapter<ReportExpenseAdap
                     @Override
                     public void onClick(View v) {
 
+                        final ProgressDialog progressDialog = new ProgressDialog(activity);
+                        progressDialog.setMessage("Loading...");
+                        progressDialog.setCancelable(false);
+                        progressDialog.show();
+
                         PaymentProcessedExpensesInterface paymentProcessedExpensesInterface = APIClient.getClient().create(PaymentProcessedExpensesInterface.class);
                         paymentProcessedExpensesInterface.callPay("expPaymentProcessed", reportExpensesModels.get(position).getEmpid(), reportExpensesModels.get(position).getStartdate(), reportExpensesModels.get(position).getEnddate(), tvPayDate.getText().toString()).enqueue(new Callback<AdjustmentExpensesResponse>() {
                             @Override
                             public void onResponse(Call<AdjustmentExpensesResponse> call, Response<AdjustmentExpensesResponse> response) {
                                 try {
                                     if (response.isSuccessful()) {
+                                        progressDialog.dismiss();
                                         Toast.makeText(activity, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                                     }
 
@@ -519,105 +541,121 @@ public class ReportExpenseAdapter extends RecyclerView.Adapter<ReportExpenseAdap
                 });
 
 
-                ReportExpensesViewInterface reportExpensesViewInterface = APIClient.getClient().create(ReportExpensesViewInterface.class);
-                reportExpensesViewInterface.callreportviewexpenses("viewsubmittedExpenses", reportExpensesModels.get(position).getEmpid(), reportExpensesModels.get(position).getStartdate(), reportExpensesModels.get(position).getEnddate()).enqueue(new Callback<ReportExpensesViewResponses>() {
-                    @Override
-                    public void onResponse(Call<ReportExpensesViewResponses> call, Response<ReportExpensesViewResponses> response) {
+            }
+        });
 
-                        try {
-                            if (response.isSuccessful()) {
-                                progressDialog.dismiss();
-                                tvGrandsumDoc.setText(response.body().getGrandSum());
-                                BaseUrl = response.body().getAttachBaseUrl();
-                                weekpreview = response.body().getFilename_r();
-                                reportViewWeeklyAdapter.weeklyExpensesModels = response.body().getReportExpensesViewModels();
-                                reportViewWeeklyAdapter.notifyDataSetChanged();
+    }
 
-                                if (response.body().getFilename_r().trim().equals("")){
-                                    ivWeekPreview.setVisibility(View.GONE);
-                                    tvWeeklyPreviewTag.setVisibility(View.GONE);
-                                }else {
-                                    ivWeekPreview.setVisibility(View.VISIBLE);
-                                    tvWeeklyPreviewTag.setVisibility(View.VISIBLE);
-                                }
-
-                                if (response.body().getAdj_op().trim().equals("0")) {
+    private void callExpenseView(String empid, String startdate, String enddate) {
 
 
-                                    tvOperterTag.setVisibility(View.GONE);
-                                    tvAmtTag.setVisibility(View.GONE);
-                                    tvReasoTag.setVisibility(View.GONE);
-                                    tvUpdate.setVisibility(View.GONE);
-                                    spOperator.setVisibility(View.GONE);
-                                    edAmt.setVisibility(View.GONE);
-                                    edReason.setVisibility(View.GONE);
-                                    ivDown.setVisibility(View.VISIBLE);
+        final ProgressDialog progressDialog = new ProgressDialog(activity);
+        progressDialog.setMessage("Loading...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        ReportExpensesViewInterface reportExpensesViewInterface = APIClient.getClient().create(ReportExpensesViewInterface.class);
+        reportExpensesViewInterface.callreportviewexpenses("viewsubmittedExpenses", empid, startdate, enddate).enqueue(new Callback<ReportExpensesViewResponses>() {
+            @Override
+            public void onResponse(Call<ReportExpensesViewResponses> call, Response<ReportExpensesViewResponses> response) {
+
+                try {
+                    if (response.isSuccessful()) {
+                        progressDialog.dismiss();
+
+                        tvGrandsumDoc.setText(response.body().getGrandSum());
+                        BaseUrl = response.body().getAttachBaseUrl();
+                        weekpreview = response.body().getFilename_r();
+                        reportViewWeeklyAdapter.weeklyExpensesModels = response.body().getReportExpensesViewModels();
+                        reportViewWeeklyAdapter.notifyDataSetChanged();
+
+                        if (response.body().getFilename_r().trim().equals("")) {
+                            ivWeekPreview.setVisibility(View.GONE);
+                            tvWeeklyPreviewTag.setVisibility(View.GONE);
+                        } else {
+                            ivWeekPreview.setVisibility(View.VISIBLE);
+                            tvWeeklyPreviewTag.setVisibility(View.VISIBLE);
+                        }
+
+                        if (response.body().getAdj_op().trim().equals("0")) {
 
 
-                                } else {
+                            tvOperterTag.setVisibility(View.GONE);
+                            tvAmtTag.setVisibility(View.GONE);
+                            tvReasoTag.setVisibility(View.GONE);
+                            tvUpdate.setVisibility(View.GONE);
+                            spOperator.setVisibility(View.GONE);
+                            edAmt.setVisibility(View.GONE);
+                            edReason.setVisibility(View.GONE);
+                            ivDown.setVisibility(View.VISIBLE);
 
-                                    edAmt.setText(response.body().getAdj_amt());
-                                    edReason.setText(response.body().getAdj_reason());
-                                    ivUp.setVisibility(View.VISIBLE);
-                                    tvOperterTag.setVisibility(View.VISIBLE);
-                                    tvAmtTag.setVisibility(View.VISIBLE);
-                                    tvReasoTag.setVisibility(View.VISIBLE);
-                                    tvUpdate.setVisibility(View.VISIBLE);
-                                    spOperator.setVisibility(View.VISIBLE);
-                                    edAmt.setVisibility(View.VISIBLE);
-                                    edReason.setVisibility(View.VISIBLE);
-                                    ivDown.setVisibility(View.GONE);
 
-                                }
+                        } else {
 
-                                if (response.body().getChk_paid().trim().equals("0")) {
-                                    stPaid.setChecked(false);
-                                    tvPaidDateTag.setVisibility(View.GONE);
-                                    tvPaidDate.setVisibility(View.GONE);
-                                    tvPaidSubmit.setVisibility(View.GONE);
-                                } else {
-                                    stPaid.setChecked(true);
-                                    tvPaidDate.setText(response.body().getDate_paid());
-                                    tvPaidDateTag.setVisibility(View.VISIBLE);
-                                    tvPaidDate.setVisibility(View.VISIBLE);
-                                    tvPaidSubmit.setVisibility(View.VISIBLE);
-                                }
+                            String oper=response.body().getAdj_op();
+                            spOperator.setSelection(Integer.parseInt(oper));
+                            edAmt.setText(response.body().getAdj_amt());
+                            edReason.setText(response.body().getAdj_reason());
+                            ivUp.setVisibility(View.VISIBLE);
+                            tvOperterTag.setVisibility(View.VISIBLE);
+                            tvAmtTag.setVisibility(View.VISIBLE);
+                            tvReasoTag.setVisibility(View.VISIBLE);
+                            tvUpdate.setVisibility(View.VISIBLE);
+                            spOperator.setVisibility(View.VISIBLE);
+                            edAmt.setVisibility(View.VISIBLE);
+                            edReason.setVisibility(View.VISIBLE);
+                            ivDown.setVisibility(View.GONE);
 
-                                if (response.body().getChk_hardcopy().trim().equals("0")) {
+                        }
 
-                                    sthardcopy.setChecked(false);
-                                    tvhcSubmit.setVisibility(View.GONE);
-                                    tvDateTag.setVisibility(View.GONE);
-                                    tvDate.setVisibility(View.GONE);
-                                    tvRpTag.setVisibility(View.GONE);
-                                    tvRp.setVisibility(View.GONE);
+                        if (response.body().getChk_paid().trim().equals("0")) {
+                            stPaid.setChecked(false);
+                            tvPaidDateTag.setVisibility(View.GONE);
+                            tvPaidDate.setVisibility(View.GONE);
+                            tvPaidSubmit.setVisibility(View.GONE);
+                        } else {
+                            stPaid.setChecked(true);
+                            tvPaidDate.setText(response.body().getDate_paid());
+                            tvPaidDateTag.setVisibility(View.VISIBLE);
+                            tvPaidDate.setVisibility(View.VISIBLE);
+                            tvPaidSubmit.setVisibility(View.VISIBLE);
+                        }
 
-                                } else {
-                                    sthardcopy.setChecked(true);
-                                    tvDate.setText(response.body().getDate_hardcopy());
-                                    tvRp.setText(response.body().getHardcopy_person());
-                                    tvhcSubmit.setVisibility(View.VISIBLE);
-                                    tvDateTag.setVisibility(View.VISIBLE);
-                                    tvDate.setVisibility(View.VISIBLE);
-                                    tvRpTag.setVisibility(View.VISIBLE);
-                                    tvRp.setVisibility(View.VISIBLE);
+                        if (response.body().getChk_hardcopy().trim().equals("0")) {
 
-                                }
-                                if (response.body().getChk_pay().trim().equals("0")) {
+                            sthardcopy.setChecked(false);
+                            tvhcSubmit.setVisibility(View.GONE);
+                            tvDateTag.setVisibility(View.GONE);
+                            tvDate.setVisibility(View.GONE);
+                            tvRpTag.setVisibility(View.GONE);
+                            tvRp.setVisibility(View.GONE);
 
-                                    stPay.setChecked(false);
-                                    tvPayDateTag.setVisibility(View.GONE);
-                                    tvPayDate.setVisibility(View.GONE);
-                                    tvPaySubmit.setVisibility(View.GONE);
+                        } else {
+                            sthardcopy.setChecked(true);
+                            tvDate.setText(response.body().getDate_hardcopy());
+                            tvRp.setText(response.body().getHardcopy_person());
+                            tvhcSubmit.setVisibility(View.VISIBLE);
+                            tvDateTag.setVisibility(View.VISIBLE);
+                            tvDate.setVisibility(View.VISIBLE);
+                            tvRpTag.setVisibility(View.VISIBLE);
+                            tvRp.setVisibility(View.VISIBLE);
 
-                                } else {
-                                    stPay.setChecked(true);
-                                    tvPayDate.setText(response.body().getDate_pay());
-                                    tvPayDateTag.setVisibility(View.VISIBLE);
-                                    tvPayDate.setVisibility(View.VISIBLE);
-                                    tvPaySubmit.setVisibility(View.VISIBLE);
+                        }
+                        if (response.body().getChk_pay().trim().equals("0")) {
 
-                                }
+                            stPay.setChecked(false);
+                            tvPayDateTag.setVisibility(View.GONE);
+                            tvPayDate.setVisibility(View.GONE);
+                            tvPaySubmit.setVisibility(View.GONE);
+
+                        } else {
+                            stPay.setChecked(true);
+                            tvPayDate.setText(response.body().getDate_pay());
+                            tvPayDateTag.setVisibility(View.VISIBLE);
+                            tvPayDate.setVisibility(View.VISIBLE);
+                            tvPaySubmit.setVisibility(View.VISIBLE);
+
+                        }
 
 //                                if (response.body().getActive().trim().equals("0")){
 //
@@ -626,26 +664,21 @@ public class ReportExpenseAdapter extends RecyclerView.Adapter<ReportExpenseAdap
 //                                }else {
 //                                    stReset.setChecked(false);
 //                                }
-                            }
-
-                        } catch (Exception e) {
-
-                        }
-
                     }
 
-                    @Override
-                    public void onFailure(Call<ReportExpensesViewResponses> call, Throwable t) {
-                        progressDialog.dismiss();
+                } catch (Exception e) {
 
+                }
 
-                    }
-                });
+            }
 
+            @Override
+            public void onFailure(Call<ReportExpensesViewResponses> call, Throwable t) {
+
+                progressDialog.dismiss();
 
             }
         });
-
     }
 
     private void callPaydate() {

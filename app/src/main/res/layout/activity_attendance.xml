@@ -55,7 +55,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:id="@+id/rlmsg"
-        android:visibility="visible"
+        android:visibility="gone"
         android:layout_below="@id/rltoolbar"
         android:layout_height="match_parent">
 
@@ -204,7 +204,7 @@
             android:layout_height="wrap_content"
             android:textColor="#FF0000"
             android:layout_marginLeft="10dp"
-            android:fontFamily="@font/extralight"
+            android:fontFamily="@font/semibold"
             android:layout_marginBottom="5dp"
             android:text="&#8226; Attendance entered before 11am will be considered full working day."/>
         <TextView
@@ -212,7 +212,7 @@
             android:layout_height="wrap_content"
             android:textColor="#FF0000"
             android:layout_marginLeft="10dp"
-            android:fontFamily="@font/extralight"
+            android:fontFamily="@font/semibold"
             android:layout_marginBottom="5dp"
             android:text="&#8226; Attendance entered between 11.01am to 1.00pm will be considered as 1/2 day leave."/>
         <TextView
@@ -220,7 +220,7 @@
             android:layout_height="wrap_content"
             android:textColor="#FF0000"
             android:layout_marginLeft="10dp"
-            android:fontFamily="@font/extralight"
+            android:fontFamily="@font/semibold"
             android:layout_marginBottom="5dp"
             android:text="&#8226; Attendance entered after 1.00pm will be considered as full day leave."/>
 

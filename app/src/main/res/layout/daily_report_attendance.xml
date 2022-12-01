@@ -20,6 +20,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
+                android:layout_marginBottom="10dp"
                 android:layout_height="wrap_content">
 
 
@@ -30,7 +31,7 @@
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="8dp"
                     android:fontFamily="@font/semibold"
-                    android:text="S.no :"
+                    android:text="#"
                     android:textColor="@color/Radio"
                     android:textSize="16dp" />
 
@@ -53,7 +54,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
-                    android:layout_below="@id/tvsNo"
+                    android:layout_toRightOf="@id/tvsNo"
                     android:layout_marginTop="8dp"
                     android:fontFamily="@font/bold"
                     android:text="Cistron System"
@@ -73,7 +74,7 @@
                     android:layout_marginTop="8dp"
                     android:fontFamily="@font/semibold"
                     android:text="status :"
-                    android:textColor="@color/black"
+                    android:textColor="@color/Radio"
                     android:textSize="16dp" />
 
                 <TextView
@@ -100,7 +101,8 @@
                     android:layout_marginTop="8dp"
                     android:fontFamily="@font/semibold"
                     android:text="City :"
-                    android:textColor="@color/black"
+                    android:visibility="visible"
+                    android:textColor="@color/Radio"
                     android:textSize="15dp" />
 
                 <TextView
@@ -110,6 +112,7 @@
                     android:layout_below="@id/tvStatus"
                     android:layout_marginBottom="10dp"
                     android:layout_marginLeft="8dp"
+                    android:visibility="visible"
                     android:layout_marginTop="8dp"
                     android:layout_toRightOf="@id/tvCityTag"
                     android:fontFamily="@font/semibold"

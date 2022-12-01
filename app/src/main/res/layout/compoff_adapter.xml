@@ -36,9 +36,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
                             android:layout_marginTop="10dp"
-                            android:layout_alignParentStart="true"
                             android:fontFamily="@font/bold"
                             android:text="Cistron"
+                            android:layout_toRightOf="@id/tvEmpId"
                             android:textColor="@color/blue"
                             android:textSize="18dp" />
 
@@ -48,11 +48,10 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
                             android:layout_marginTop="10dp"
-                            android:layout_toRightOf="@id/tvName"
-                            android:fontFamily="@font/latest"
-                            android:text="-E367"
+                            android:fontFamily="@font/bold"
+                            android:text="E367"
                             android:textColor="@color/Radio"
-                            android:textSize="16dp" />
+                            android:textSize="18dp" />
 
 
 
@@ -61,10 +60,10 @@
                             android:id="@+id/tvLeaveTypeTag"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/tvEmpId"
+                            android:layout_below="@id/tvName"
                             android:layout_marginLeft="5dp"
                             android:layout_marginTop="10dp"
-                            android:fontFamily="@font/semibold"
+                            android:fontFamily="@font/latest"
                             android:text="Applied Date :"
                             android:textColor="@color/black"
                             android:textSize="15dp" />
@@ -73,12 +72,12 @@
                             android:id="@+id/tvLeaveType"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/tvEmpId"
+                            android:layout_below="@id/tvName"
                             android:layout_marginLeft="5dp"
                             android:layout_marginRight="2dp"
                             android:layout_marginTop="10dp"
                             android:layout_toRightOf="@id/tvLeaveTypeTag"
-                            android:fontFamily="@font/latest"
+                            android:fontFamily="@font/semibold"
                             android:text="2022-12-22"
                             android:textColor="@color/Radio"
                             android:textSize="15dp" />
@@ -90,7 +89,7 @@
                             android:layout_below="@id/tvLeaveType"
                             android:layout_marginLeft="5dp"
                             android:layout_marginTop="10dp"
-                            android:fontFamily="@font/semibold"
+                            android:fontFamily="@font/latest"
                             android:text="Applied Time :"
                             android:textColor="@color/black"
                             android:textSize="15dp" />
@@ -104,7 +103,7 @@
                             android:layout_marginRight="2dp"
                             android:layout_marginTop="10dp"
                             android:layout_toRightOf="@id/tvReasonTag"
-                            android:fontFamily="@font/latest"
+                            android:fontFamily="@font/semibold"
                             android:text="Not Feasible to travel"
                             android:textColor="@color/Radio"
                             android:textSize="15dp" />
@@ -117,7 +116,7 @@
                             android:layout_below="@id/tvReason"
                             android:layout_marginLeft="5dp"
                             android:layout_marginTop="10dp"
-                            android:fontFamily="@font/semibold"
+                            android:fontFamily="@font/latest"
                             android:text="Status:"
                             android:textColor="@color/black"
                             android:textSize="14dp" />
@@ -132,7 +131,7 @@
                             android:layout_marginTop="10dp"
                             android:layout_toRightOf="@id/tvFDHDTag"
                             android:layout_toLeftOf="@id/tvAppliedDateTimeTag"
-                            android:fontFamily="@font/latest"
+                            android:fontFamily="@font/semibold"
                             android:text="Half Day"
                             android:textColor="@color/Radio"
                             android:textSize="14dp" />
@@ -143,12 +142,13 @@
                             android:id="@+id/tvAppliedDateTimeTag"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/tvEmpId"
+                            android:layout_below="@id/tvName"
                             android:layout_marginLeft="5dp"
                             android:layout_marginTop="10dp"
                             android:layout_toLeftOf="@id/tvAppliedDate"
                             android:fontFamily="@font/semibold"
                             android:text="Day:"
+                            android:visibility="gone"
                             android:textColor="@color/black"
                             android:textSize="13dp" />
 
@@ -156,13 +156,13 @@
                             android:id="@+id/tvAppliedDate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/tvEmpId"
+                            android:layout_below="@id/tvName"
                             android:layout_marginLeft="5dp"
                             android:layout_marginRight="15dp"
                             android:layout_marginTop="10dp"
-                            android:layout_alignParentEnd="true"
-                            android:fontFamily="@font/latest"
-                            android:text="2022-11-25, Fri"
+                            android:layout_toRightOf="@id/tvLeaveType"
+                            android:fontFamily="@font/semibold"
+                            android:text="sunday"
                             android:textColor="@color/Radio"
                             android:textSize="13dp" />
 
@@ -190,7 +190,7 @@
                             android:layout_marginLeft="15dp"
                             android:text="Approve"
                             android:textSize="13dp"
-                            android:backgroundTint="@color/blue"
+                            android:backgroundTint="#85C1E9"
                             android:fontFamily="@font/bold"
                             android:textColor="@color/white"
                             android:background="@drawable/edittext"
@@ -206,7 +206,7 @@
                             android:text="Reject"
                             android:textSize="15dp"
                             android:layout_centerHorizontal="true"
-                            android:backgroundTint="@color/Radio"
+                            android:backgroundTint="#F1948A"
                             android:fontFamily="@font/bold"
                             android:layout_marginRight="15dp"
                             android:textColor="@color/white"
@@ -222,7 +222,7 @@
                             android:text="Delete"
                             android:textSize="15dp"
                             android:layout_alignParentEnd="true"
-                            android:backgroundTint="#F47403"
+                            android:backgroundTint="#F8C471"
                             android:fontFamily="@font/bold"
                             android:layout_marginRight="15dp"
                             android:textColor="@color/white"

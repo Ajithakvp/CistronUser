@@ -39,6 +39,22 @@ public class DailyReportAdapter extends RecyclerView.Adapter<DailyReportAdapter.
         holder.tvStatus.setText(dailyReportAttendanceModels.get(position).getStatus());
         holder.tvCity.setText(dailyReportAttendanceModels.get(position).getCity());
 
+//        if (holder.tvStatus.getText().toString().trim().equals("Not Applied")){
+//            holder.tvCity.setVisibility(View.GONE);
+//            holder.tvCityTag.setVisibility(View.GONE);
+//        }else {
+//            holder.tvCity.setVisibility(View.VISIBLE);
+//            holder.tvCityTag.setVisibility(View.VISIBLE);
+//
+//        }
+        if (dailyReportAttendanceModels.get(position).getCity().trim().equals("")){
+            holder.tvCity.setVisibility(View.GONE);
+            holder.tvCityTag.setVisibility(View.GONE);
+        }else {
+            holder.tvCity.setVisibility(View.VISIBLE);
+            holder.tvCityTag.setVisibility(View.VISIBLE);
+        }
+
 
     }
 
@@ -49,7 +65,7 @@ public class DailyReportAdapter extends RecyclerView.Adapter<DailyReportAdapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvsNo,tvName,tvStatus,tvCity;
+        TextView tvsNo,tvName,tvStatus,tvCity,tvCityTag;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -58,6 +74,7 @@ public class DailyReportAdapter extends RecyclerView.Adapter<DailyReportAdapter.
             tvStatus=itemView.findViewById(R.id.tvStatus);
             tvName=itemView.findViewById(R.id.tvName);
             tvsNo=itemView.findViewById(R.id.tvsNo);
+            tvCityTag=itemView.findViewById(R.id.tvCityTag);
 
         }
     }

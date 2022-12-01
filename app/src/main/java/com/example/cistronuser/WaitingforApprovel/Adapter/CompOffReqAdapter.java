@@ -2,7 +2,9 @@ package com.example.cistronuser.WaitingforApprovel.Adapter;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +57,7 @@ public class CompOffReqAdapter extends RecyclerView.Adapter<CompOffReqAdapter.Vi
 
         holder.tvName.setText(compOffRequestModels.get(position).getEmpname());
         holder.tvAppliedDate.setText(compOffRequestModels.get(position).getAppliedDt());
-        holder.tvEmpId.setText("-" + compOffRequestModels.get(position).getEmpid());
+        holder.tvEmpId.setText(compOffRequestModels.get(position).getEmpid());
         holder.tvAppliedTime.setText(compOffRequestModels.get(position).getAppliedTime());
         holder.tvStatus.setText(compOffRequestModels.get(position).getStatus());
         holder.tvDay.setText(compOffRequestModels.get(position).getDay());
@@ -65,6 +67,12 @@ public class CompOffReqAdapter extends RecyclerView.Adapter<CompOffReqAdapter.Vi
         holder.tvDelected.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+                final ProgressDialog progressDialog = new ProgressDialog(activity);
+                progressDialog.setMessage("Please Wait...");
+                progressDialog.setCancelable(false);
+                progressDialog.show();
 
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(activity);
@@ -84,6 +92,7 @@ public class CompOffReqAdapter extends RecyclerView.Adapter<CompOffReqAdapter.Vi
 
                                 try {
                                     if (response.isSuccessful()){
+                                        progressDialog.dismiss();
 
                                         if (response.body().getSuccess().trim().equals("1")){
                                             Toast.makeText(activity, response.body().getMessage() ,Toast.LENGTH_SHORT).show();
@@ -139,6 +148,10 @@ public class CompOffReqAdapter extends RecyclerView.Adapter<CompOffReqAdapter.Vi
             @Override
             public void onClick(View v) {
 
+                final ProgressDialog progressDialog = new ProgressDialog(activity);
+                progressDialog.setMessage("Please Wait...");
+                progressDialog.setCancelable(false);
+                progressDialog.show();
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(activity);
                 builder.setMessage("Are you sure you want to Reject this leave request?");
@@ -156,6 +169,7 @@ public class CompOffReqAdapter extends RecyclerView.Adapter<CompOffReqAdapter.Vi
 
                                 try {
                                     if (response.isSuccessful()){
+                                        progressDialog.dismiss();
 
                                         if (response.body().getSuccess().trim().equals("1")){
                                             Toast.makeText(activity, response.body().getMessage() ,Toast.LENGTH_SHORT).show();
@@ -211,12 +225,18 @@ public class CompOffReqAdapter extends RecyclerView.Adapter<CompOffReqAdapter.Vi
         holder.tvApproval.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final ProgressDialog progressDialog = new ProgressDialog(activity);
+                progressDialog.setMessage("Please Wait...");
+                progressDialog.setCancelable(false);
+                progressDialog.show();
+
                 CompoffReqApprovalInterface compoffReqApprovalInterface = APIClient.getClient().create(CompoffReqApprovalInterface.class);
                 compoffReqApprovalInterface.CalApprovalReq("approveCompoffForApproval", compOffRequestModels.get(position).getCompoffId(), compOffRequestModels.get(position).getEmpid()).enqueue(new Callback<CompOffreqApporvalResponse>() {
                     @Override
                     public void onResponse(Call<CompOffreqApporvalResponse> call, Response<CompOffreqApporvalResponse> response) {
                         try {
                             if (response.isSuccessful()) {
+                                progressDialog.dismiss();
 
                                 if (response.body().getSuccess().trim().equals("1")) {
                                     Toast.makeText(activity, response.body().getMessage(), Toast.LENGTH_SHORT).show();
