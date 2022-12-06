@@ -294,7 +294,7 @@
                         android:fontFamily="@font/bold"
                         android:text="User                  :"/>
 
-                        <Spinner
+                        <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                             android:id="@+id/spUser"
                             android:layout_width="200dp"
                             android:layout_height="50dp"
@@ -318,7 +318,7 @@
                             android:fontFamily="@font/bold"
                             android:text="User                  :"/>
 
-                        <Spinner
+                        <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                             android:id="@+id/spUserMonthy"
                             android:layout_width="200dp"
                             android:layout_height="50dp"
@@ -510,24 +510,44 @@
                 </RelativeLayout>
 
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_below="@id/rlweekreport"
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/rlrecycleview"
+                    android:layout_height="wrap_content">
+
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:visibility="gone"
+                        android:layout_marginLeft="8dp"
+                        android:id="@+id/rvuserMonthlyExpense"
+                        android:layout_height="wrap_content"
+                        />
+
 
 
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     android:layout_marginLeft="8dp"
-                    android:layout_below="@id/rlweekreport"
-                    android:layout_marginTop="10dp"
+
+
                     android:id="@+id/rvuserDailyweekExpense"
                     android:layout_height="wrap_content"
                     />
 
 
+                </RelativeLayout>
+
+
             <TextView
                 android:id="@+id/tvGrandsumDocTag"
                 android:layout_width="150dp"
-                android:layout_below="@id/rvuserDailyweekExpense"
+                android:layout_below="@id/rlrecycleview"
                 android:layout_height="40dp"
                 android:textColor="@color/Radio"
                 android:fontFamily="@font/semibold"
@@ -541,7 +561,7 @@
             <TextView
                 android:id="@+id/tvGrandsumDoc"
                 android:layout_width="wrap_content"
-                android:layout_below="@id/rvuserDailyweekExpense"
+                android:layout_below="@id/rlrecycleview"
                 android:layout_height="40dp"
                 android:textColor="@color/Radio"
                 android:layout_toRightOf="@id/tvGrandsumDocTag"

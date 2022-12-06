@@ -61,6 +61,7 @@ public class CompOffReqAdapter extends RecyclerView.Adapter<CompOffReqAdapter.Vi
         holder.tvAppliedTime.setText(compOffRequestModels.get(position).getAppliedTime());
         holder.tvStatus.setText(compOffRequestModels.get(position).getStatus());
         holder.tvDay.setText(compOffRequestModels.get(position).getDay());
+        holder.tvcisorsuki.setText(compOffRequestModels.get(position).getOpt_user());
 
 
 
@@ -85,7 +86,7 @@ public class CompOffReqAdapter extends RecyclerView.Adapter<CompOffReqAdapter.Vi
                     public void onClick(DialogInterface dialogInterface, int i) {
 
                         CompOffDeletedReqinterface compOffDeletedReqinterface=APIClient.getClient().create(CompOffDeletedReqinterface.class);
-                        compOffDeletedReqinterface.CalDeleteReq("deleteCompoffForApproval",compOffRequestModels.get(position).getCompoffId()).enqueue(new Callback<CompOffDeleteReqResponse>() {
+                        compOffDeletedReqinterface.CalDeleteReq("deleteCompoffForApproval",compOffRequestModels.get(position).getCompoffId(),compOffRequestModels.get(position).getEmpid()).enqueue(new Callback<CompOffDeleteReqResponse>() {
                             @Override
                             public void onResponse(Call<CompOffDeleteReqResponse> call, Response<CompOffDeleteReqResponse> response) {
 
@@ -281,7 +282,7 @@ public class CompOffReqAdapter extends RecyclerView.Adapter<CompOffReqAdapter.Vi
 
     public class Viewholder extends RecyclerView.ViewHolder {
 
-        TextView tvName, tvEmpId, tvAppliedDate, tvAppliedTime, tvStatus, tvDay, tvApproval, tvRejected, tvDelected;
+        TextView tvName, tvEmpId, tvAppliedDate, tvAppliedTime, tvStatus, tvDay, tvApproval, tvRejected, tvDelected,tvcisorsuki;
 
         public Viewholder(@NonNull View itemView) {
             super(itemView);
@@ -295,6 +296,7 @@ public class CompOffReqAdapter extends RecyclerView.Adapter<CompOffReqAdapter.Vi
             tvApproval = itemView.findViewById(R.id.tvApproved);
             tvRejected = itemView.findViewById(R.id.tvRejected);
             tvDelected = itemView.findViewById(R.id.tvDeleted);
+            tvcisorsuki=itemView.findViewById(R.id.tvcisorsuki);
 
         }
     }

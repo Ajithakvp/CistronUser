@@ -14,5 +14,5 @@ public interface MonthlyReportAttendanceInterFace {
     @GET("attendance_leave.php")
     Call<MonthlyReportAttendanceResponse> callMonthlyReport(@Query("action")String action,
                                                             @Query("monthYear")String monthYear, @Query("empid")String empid,
-                                                            @Query("report")String report);
+                                                            @Query("reportFor")String report);
 }

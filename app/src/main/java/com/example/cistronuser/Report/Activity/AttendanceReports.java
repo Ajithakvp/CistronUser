@@ -48,7 +48,8 @@ import retrofit2.Response;
 
 public class AttendanceReports extends AppCompatActivity {
 
-    Spinner spUser, spreportType, spUserMonthy;
+//    Spinner spUser, spreportType, spreportFor, spUserMonthy;
+Spinner spUser, spreportType, spreportFor;
     TextView tvStartDateTag, tvStartDate, tvMonthyearTag, tvMonthyear, tvMonthlySubmit, tvWeellySubmit, tvMonthlyUserTag, tvUserTag;
     ImageView ivfilter, ivBack;
     RelativeLayout rlfilter;
@@ -59,7 +60,7 @@ public class AttendanceReports extends AppCompatActivity {
     //ReportType
     ArrayList<String> strType = new ArrayList<>();
     ArrayList<ReportTypeWMselectedModel> reportTypeWMselectedModels = new ArrayList<>();
-    ArrayAdapter typeAdapter;
+    ArrayAdapter typeAdapter,reportForAdapter;
     String ReportTyee;
     int mDay, mMonth, mYear;
 
@@ -70,7 +71,8 @@ public class AttendanceReports extends AppCompatActivity {
 
     //DailyUser
     ArrayList<DailyReportUserAttendanceModel> dailyReportUserAttendanceModels = new ArrayList<>();
-    ArrayAdapter DailyUserAdapter, monthlyuserAdapter;
+//    ArrayAdapter DailyUserAdapter, monthlyuserAdapter;
+ArrayAdapter DailyUserAdapter;
     ArrayList<String> strDailyUser = new ArrayList<>();
     String Dailyuser;
 
@@ -90,11 +92,12 @@ public class AttendanceReports extends AppCompatActivity {
         tvMonthlySubmit = findViewById(R.id.tvMonthlySubmit);
         spUser = findViewById(R.id.spUser);
         spreportType = findViewById(R.id.spreportType);
+        spreportFor = findViewById(R.id.spreportFor);
         tvStartDateTag = findViewById(R.id.tvStartDateTag);
         tvStartDate = findViewById(R.id.tvStartDate);
         tvMonthyearTag = findViewById(R.id.tvMonthyearTag);
         tvMonthyear = findViewById(R.id.tvMonthyear);
-        spUserMonthy = findViewById(R.id.spUserMonthy);
+//        spUserMonthy = findViewById(R.id.spUserMonthy);
         tvUserTag = findViewById(R.id.tvUserTag);
         tvMonthlyUserTag = findViewById(R.id.tvMonthlyUserTag);
         rlMonthly = findViewById(R.id.rlMonthly);
@@ -113,6 +116,7 @@ public class AttendanceReports extends AppCompatActivity {
         Date d = new Date();
         CharSequence s = DateFormat.format("yyyy-MM-dd ", d.getTime());
         tvStartDate.setText(s);
+
 
 
         //Month
@@ -139,9 +143,34 @@ public class AttendanceReports extends AppCompatActivity {
         linearLayoutManager1.setOrientation(RecyclerView.VERTICAL);
         rvMonthlyattendanceReport.setAdapter(monthlyReportAdapter);
         rvMonthlyattendanceReport.setLayoutManager(linearLayoutManager1);
+        String company= PreferenceManager.getEmpCompany(this).toLowerCase();
+        if(company.equals("all")){
+            String[] reportType={"Cistron","Sukimos"};
+            reportForAdapter = new ArrayAdapter(this, R.layout.spinner_item, reportType);
+        }else if(company.equals("cistron")){
+            String[] reportType={"Cistron"};
+            reportForAdapter = new ArrayAdapter(this, R.layout.spinner_item, reportType);
+        }else if(company.equals("sukimos")){
+            String[] reportType={"Sukimos"};
+            reportForAdapter = new ArrayAdapter(this, R.layout.spinner_item, reportType);
+        }
 
+        reportForAdapter.setDropDownViewResource(R.layout.spinner_dropdown);
+        spreportFor.setAdapter(reportForAdapter);
+        spreportFor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                callMonthlyUser(spreportFor.getSelectedItem().toString());
+                CallDailyUser(spreportFor.getSelectedItem().toString());
+            }
 
-        CallDailyUser();
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        CallDailyUser(spreportFor.getSelectedItem().toString());
         DailyUserAdapter = new ArrayAdapter(this, R.layout.spinner_item, strDailyUser);
         DailyUserAdapter.setDropDownViewResource(R.layout.spinner_dropdown);
         spUser.setAdapter(DailyUserAdapter);
@@ -161,33 +190,33 @@ public class AttendanceReports extends AppCompatActivity {
             }
         });
 
-        callMonthlyUser();
-        monthlyuserAdapter = new ArrayAdapter(this, R.layout.spinner_item, strmonthlyUser);
-        monthlyuserAdapter.setDropDownViewResource(R.layout.spinner_dropdown);
-        spUserMonthy.setAdapter(monthlyuserAdapter);
+//        callMonthlyUser(spreportFor.getSelectedItem().toString());
+//        monthlyuserAdapter = new ArrayAdapter(this, R.layout.spinner_item, strmonthlyUser);
+//        monthlyuserAdapter.setDropDownViewResource(R.layout.spinner_dropdown);
+//        spUserMonthy.setAdapter(monthlyuserAdapter);
 
 
-        spUserMonthy.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                rvMonthlyattendanceReport.setVisibility(View.GONE);
-                tvName.setVisibility(View.GONE);
-                tvEmpId.setVisibility(View.GONE);
-                tvspace.setVisibility(View.GONE);
-                // Dailyuser=dailyReportUserAttendanceModels.get(position).getEmployee();
-
-//                if (position>0){
-//                callMonthlyReport();}else {
-//                    callMonthlyReport();
-//                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+//        spUserMonthy.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//
+//                rvMonthlyattendanceReport.setVisibility(View.GONE);
+//                tvName.setVisibility(View.GONE);
+//                tvEmpId.setVisibility(View.GONE);
+//                tvspace.setVisibility(View.GONE);
+//                // Dailyuser=dailyReportUserAttendanceModels.get(position).getEmployee();
+//
+////                if (position>0){
+////                callMonthlyReport();}else {
+////                    callMonthlyReport();
+////                }
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
 
 
         ReportTypeWMselectedModel week = new ReportTypeWMselectedModel();
@@ -203,6 +232,8 @@ public class AttendanceReports extends AppCompatActivity {
         for (int i = 0; i < reportTypeWMselectedModels.size(); i++) {
             strType.add(reportTypeWMselectedModels.get(i).getReporttype());
         }
+
+
 
         typeAdapter = new ArrayAdapter(this, R.layout.spinner_item, strType);
         typeAdapter.setDropDownViewResource(R.layout.spinner_dropdown);
@@ -225,7 +256,7 @@ public class AttendanceReports extends AppCompatActivity {
 
                     tvMonthyearTag.setVisibility(View.GONE);
                     tvMonthyear.setVisibility(View.GONE);
-                    spUserMonthy.setVisibility(View.GONE);
+//                    spUserMonthy.setVisibility(View.GONE);
                     tvName.setVisibility(View.GONE);
                     tvEmpId.setVisibility(View.GONE);
                     tvspace.setVisibility(View.GONE);
@@ -239,15 +270,15 @@ public class AttendanceReports extends AppCompatActivity {
 
                     tvMonthyearTag.setVisibility(View.VISIBLE);
                     tvMonthyear.setVisibility(View.VISIBLE);
-                    spUserMonthy.setVisibility(View.VISIBLE);
-                    tvMonthlyUserTag.setVisibility(View.VISIBLE);
+//                    spUserMonthy.setVisibility(View.VISIBLE);
+//                    tvMonthlyUserTag.setVisibility(View.VISIBLE);
                     rvMonthlyattendanceReport.setVisibility(View.VISIBLE);
                     tvMonthlySubmit.setVisibility(View.VISIBLE);
 
                     tvStartDateTag.setVisibility(View.GONE);
                     tvStartDate.setVisibility(View.GONE);
-                    tvUserTag.setVisibility(View.GONE);
-                    spUser.setVisibility(View.GONE);
+//                    tvUserTag.setVisibility(View.GONE);
+//                    spUser.setVisibility(View.GONE);
                     rvDailyattendanceReport.setVisibility(View.GONE);
                     tvWeellySubmit.setVisibility(View.GONE);
 
@@ -276,7 +307,7 @@ public class AttendanceReports extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (spUserMonthy.getSelectedItem().toString().trim().equals("All")) {
+                if (spUser.getSelectedItem().toString().trim().equals("All")) {
                     Toast.makeText(AttendanceReports.this, "Please select user", Toast.LENGTH_SHORT).show();
                 } else {
                     callMonthlyReport();
@@ -390,37 +421,37 @@ public class AttendanceReports extends AppCompatActivity {
         });
     }
 
-    private void callMonthlyUser() {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Loading...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
-        DailyAttendanceUserInterface dailyAttendanceUserInterface = APIClient.getClient().create(DailyAttendanceUserInterface.class);
-        dailyAttendanceUserInterface.callDailyUser("getEmployeeRecord", PreferenceManager.getEmpuser(this), PreferenceManager.getEmpID(this)).enqueue(new Callback<DailyReportUserAttendanceResponse>() {
-            @Override
-            public void onResponse(Call<DailyReportUserAttendanceResponse> call, Response<DailyReportUserAttendanceResponse> response) {
-                try {
-                    if (response.body().getDailyReportUserAttendanceModels().size() > 0) {
-                        dailyReportUserAttendanceModels = response.body().getDailyReportUserAttendanceModels();
-                        strmonthlyUser.clear();
-                        for (int i = 0; i < dailyReportUserAttendanceModels.size(); i++) {
-                            strmonthlyUser.add(dailyReportUserAttendanceModels.get(i).getEmployee());
-                        }
-                        monthlyuserAdapter.notifyDataSetChanged();
-                        progressDialog.dismiss();
-                    }
-
-                } catch (Exception e) {
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<DailyReportUserAttendanceResponse> call, Throwable t) {
-
-            }
-        });
-    }
+//    private void callMonthlyUser(String category) {
+//        final ProgressDialog progressDialog = new ProgressDialog(this);
+//        progressDialog.setMessage("Loading...");
+//        progressDialog.setCancelable(false);
+//        progressDialog.show();
+//        DailyAttendanceUserInterface dailyAttendanceUserInterface = APIClient.getClient().create(DailyAttendanceUserInterface.class);
+//        dailyAttendanceUserInterface.callDailyUser("getEmployeeRecord", PreferenceManager.getEmpuser(this), PreferenceManager.getEmpID(this),category).enqueue(new Callback<DailyReportUserAttendanceResponse>() {
+//            @Override
+//            public void onResponse(Call<DailyReportUserAttendanceResponse> call, Response<DailyReportUserAttendanceResponse> response) {
+//                try {
+//                    if (response.body().getDailyReportUserAttendanceModels().size() > 0) {
+//                        dailyReportUserAttendanceModels = response.body().getDailyReportUserAttendanceModels();
+//                        strmonthlyUser.clear();
+//                        for (int i = 0; i < dailyReportUserAttendanceModels.size(); i++) {
+//                            strmonthlyUser.add(dailyReportUserAttendanceModels.get(i).getEmployee());
+//                        }
+//                        monthlyuserAdapter.notifyDataSetChanged();
+//                        progressDialog.dismiss();
+//                    }
+//
+//                } catch (Exception e) {
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<DailyReportUserAttendanceResponse> call, Throwable t) {
+//
+//            }
+//        });
+//    }
 
     private void callMonthlyReport() {
         final ProgressDialog progressDialog = new ProgressDialog(this);
@@ -428,9 +459,9 @@ public class AttendanceReports extends AppCompatActivity {
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        ReportTyee = spreportType.getSelectedItem().toString();
-        Dailyuser = spUserMonthy.getSelectedItem().toString();
-
+//        ReportTyee = spreportType.getSelectedItem().toString();
+        ReportTyee = spreportFor.getSelectedItem().toString();
+        Dailyuser = spUser.getSelectedItem().toString();
 
         MonthlyReportAttendanceInterFace monthlyReportAttendanceInterFace = APIClient.getClient().create(MonthlyReportAttendanceInterFace.class);
         monthlyReportAttendanceInterFace.callMonthlyReport("monthlyAttendanceReport", tvMonthyear.getText().toString(), Dailyuser, ReportTyee).enqueue(new Callback<MonthlyReportAttendanceResponse>() {
@@ -462,13 +493,13 @@ public class AttendanceReports extends AppCompatActivity {
         });
     }
 
-    private void CallDailyUser() {
+    private void CallDailyUser(String category) {
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();
         DailyAttendanceUserInterface dailyAttendanceUserInterface = APIClient.getClient().create(DailyAttendanceUserInterface.class);
-        dailyAttendanceUserInterface.callDailyUser("getEmployeeRecord", PreferenceManager.getEmpuser(this), PreferenceManager.getEmpID(this)).enqueue(new Callback<DailyReportUserAttendanceResponse>() {
+        dailyAttendanceUserInterface.callDailyUser("getEmployeeRecord", PreferenceManager.getEmpuser(this), PreferenceManager.getEmpID(this), category).enqueue(new Callback<DailyReportUserAttendanceResponse>() {
             @Override
             public void onResponse(Call<DailyReportUserAttendanceResponse> call, Response<DailyReportUserAttendanceResponse> response) {
                 try {
@@ -500,7 +531,8 @@ public class AttendanceReports extends AppCompatActivity {
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        ReportTyee = spreportType.getSelectedItem().toString();
+//        ReportTyee = spreportType.getSelectedItem().toString();
+        ReportTyee = spreportFor.getSelectedItem().toString();
         Dailyuser = spUser.getSelectedItem().toString();
         DailyReportAttendanceInterFace dailyReportAttendanceInterFace = APIClient.getClient().create(DailyReportAttendanceInterFace.class);
         dailyReportAttendanceInterFace.callDailyReport("dailyAttendanceReport", tvStartDate.getText().toString(), Dailyuser, ReportTyee).enqueue(new Callback<DailyReportAttendanceResponse>() {

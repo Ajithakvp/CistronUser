@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SalesAndservice.Activity.VisitEntry">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/rltoolbar"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="#6495ED">
+
+            <TextView
+                android:id="@+id/tvHeader"
+                style="@style/header"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/bold"
+                android:text="Visit Entry"
+                android:textColor="@color/white"
+                android:textSize="20dp" />
+
+            <ImageView
+                android:id="@+id/ivBack"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="35dp"
+                android:layout_toLeftOf="@id/tvHeader"
+                android:backgroundTint="@color/white"
+                android:src="@drawable/ic_baseline_arrow_left_24"
+                android:tint="@color/white"
+                tools:ignore="UseAppTint" />
+
+
+            <ImageView
+                android:id="@+id/ivfilter"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="35dp"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@id/tvHeader"
+                android:backgroundTint="@color/white"
+                android:src="@drawable/filtericon"
+                android:tint="@color/white"
+                android:visibility="gone"
+                tools:ignore="UseAppTint" />
+
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/rltoolbar"
+            android:background="#6495ED">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/textInput"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/edittext">
+
+                        <TextView
+                            android:id="@+id/tvDate"
+                            style="@style/textviewLabel"
+                            android:fontFamily="@font/latest"
+                            android:hint="Select a date">
+
+                        </TextView>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/textInput"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/edittext">
+
+                        <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                            android:id="@+id/spState"
+                            style="@style/textviewLabel"
+                            android:layout_gravity="center"
+                            app:hintText="Select a State">
+
+                        </com.toptoche.searchablespinnerlibrary.SearchableSpinner>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/textInput"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/edittext"
+
+                        >
+
+                        <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                            android:id="@+id/spDistrict"
+                            style="@style/textviewLabel"
+                            android:layout_gravity="center"
+                            app:hintText="Select a District">
+
+                        </com.toptoche.searchablespinnerlibrary.SearchableSpinner>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/textInput"
+                        android:layout_margin="10dp"
+
+                        android:background="@drawable/edittext">
+
+                        <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                            android:id="@+id/spDoctor"
+                            style="@style/textviewLabel"
+                            android:layout_gravity="center"
+                            app:hintText="Select a Doctor">
+
+                        </com.toptoche.searchablespinnerlibrary.SearchableSpinner>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/textInput"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/edittext"
+
+                        >
+
+                        <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                            android:id="@+id/spProduct"
+                            style="@style/textviewLabel"
+                            android:layout_gravity="center"
+                            app:hintText="Select a Products">
+
+                        </com.toptoche.searchablespinnerlibrary.SearchableSpinner>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/textInput"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/edittext"
+                        android:padding="10dp"
+                        >
+                        <EditText
+                            android:id="@+id/EdComment"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:backgroundTint="@color/white"
+                            android:hint="Comments">
+
+                        </EditText>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <TextView
+                        android:layout_width="200dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/backdesign"
+                        android:backgroundTint="@color/Radio"
+                        android:fontFamily="@font/semibold"
+                        android:gravity="center"
+                        android:text="Add"
+                        android:textColor="@color/white"
+                        android:textSize="20dp" />
+
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

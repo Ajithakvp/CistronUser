@@ -22,6 +22,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -216,7 +217,7 @@ public class ExpensesActivity extends Activity {
                     rlUpload.setVisibility(View.GONE);
 
                 } else {
-                    rlUpload.setVisibility(View.VISIBLE);
+                    //rlUpload.setVisibility(View.VISIBLE);
                 }
 
             }
@@ -407,10 +408,15 @@ public class ExpensesActivity extends Activity {
                     isfilled = false;
                 }
                 if (edWorkReport.getText().toString().trim().length() == 0) {
-                    edWorkReport.setError("Please Enter Report");
-                    if (!focus)
-                        edWorkReport.requestFocus();
-                    isfilled = false;
+
+                    if (edConveyance.getText().toString().trim().length()>0){
+                        edWorkReport.setError(" WorkReport for Conveyance is Required");
+                        if (!focus)
+                            edWorkReport.requestFocus();
+                        isfilled = false;
+                    }
+
+
                 }
                 if (edConveyance.getText().toString().isEmpty() && edOther.getText().toString().isEmpty() && tvTicket.getText().toString().isEmpty() && tvLodging.getText().toString().isEmpty()) {
                     Toast.makeText(ExpensesActivity.this, "Please enter any one of the expenses", Toast.LENGTH_SHORT).show();
@@ -1468,6 +1474,10 @@ public class ExpensesActivity extends Activity {
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+
+
+
+
         DatePickerDialog datePickerDialog = new DatePickerDialog(this,
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
@@ -1651,25 +1661,25 @@ public class ExpensesActivity extends Activity {
                             rlUpload.setVisibility(View.GONE);
 
                         } else {
-                            rlUpload.setVisibility(View.VISIBLE);
+                            //rlUpload.setVisibility(View.VISIBLE);
                         }
 
 
-                        if (response.body().getSelecteddtExpenses().getFilename_all().trim().equals("")) {
-
-                            ivConvencyDelete.setVisibility(View.GONE);
-                            ivConvencydoc.setVisibility(View.VISIBLE);
-                            tvConveyanceEmptyDoc.setVisibility(View.VISIBLE);
-                            tvConveyanceDoc.setVisibility(View.GONE);
-                            ivConvencypreview.setVisibility(View.GONE);
-                        } else {
-                            ivConvencyDelete.setVisibility(View.VISIBLE);
-                            ivConvencydoc.setVisibility(View.GONE);
-                            tvConveyanceEmptyDoc.setVisibility(View.GONE);
-                            tvConveyanceDoc.setVisibility(View.VISIBLE);
-                            ivConvencypreview.setVisibility(View.VISIBLE);
-
-                        }
+//                        if (response.body().getSelecteddtExpenses().getFilename_all().trim().equals("")) {
+//
+//                            ivConvencyDelete.setVisibility(View.GONE);
+//                            ivConvencydoc.setVisibility(View.VISIBLE);
+//                            tvConveyanceEmptyDoc.setVisibility(View.VISIBLE);
+//                            tvConveyanceDoc.setVisibility(View.GONE);
+//                            ivConvencypreview.setVisibility(View.GONE);
+//                        } else {
+//                            ivConvencyDelete.setVisibility(View.VISIBLE);
+//                            ivConvencydoc.setVisibility(View.GONE);
+//                            tvConveyanceEmptyDoc.setVisibility(View.GONE);
+//                            tvConveyanceDoc.setVisibility(View.VISIBLE);
+//                            ivConvencypreview.setVisibility(View.VISIBLE);
+//
+//                        }
 
                         if (response.body().getSelecteddtExpenses().getFilename_t().trim().equals("")) {
 

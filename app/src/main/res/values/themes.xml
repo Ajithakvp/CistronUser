@@ -13,8 +13,16 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
 
-        
 
+    </style>
+
+    <style name="reportLabel">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#fff</item>
+        <item name="android:textSize">18dp</item>
+        <item name="android:fontFamily">@font/bold</item>
+        <item name="android:layout_gravity">center_vertical</item>
     </style>
 
     <style name="textInput">
@@ -42,5 +50,53 @@
         <item name="android:paddingLeft">10dp</item>
         <item name="android:layout_height">30dp</item>
     </style>
+
+
+    <style name="EditText">
+        <item name="android:textSize">14dp</item>
+        <item name="background">@drawable/edittext</item>
+        <item name="android:fontFamily">@font/semibold</item>
+        <item name="android:textColor">@color/black</item>
+
+
+    </style>
+
+
+
+    <style name="textviewLabel">
+
+        <item name="android:textSize">20dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:fontFamily">@font/semibold</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:textColor">@color/black</item>
+
+
+    </style>
+
+
+    <style name="textviewLabel2">
+
+        <item name="android:textSize">16dp</item>
+        <item name="android:fontFamily">@font/latest</item>
+        <item name="android:textColor">@color/black</item>
+
+
+    </style>
+
+
+    <style name="textviewKey">
+
+        <item name="android:textSize">16dp</item>
+        <item name="android:fontFamily">@font/bold</item>
+        <item name="android:textColor">@color/black</item>
+
+
+    </style>
+
+
+
 
 </resources>

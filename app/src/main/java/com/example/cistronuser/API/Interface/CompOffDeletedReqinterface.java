@@ -12,5 +12,5 @@ public interface CompOffDeletedReqinterface {
 
     //http://192.168.29.173/beta1/app/attendance_leave.php?action=deleteCompoffForApproval&compoffId=123
     @GET("attendance_leave.php")
-    Call<CompOffDeleteReqResponse> CalDeleteReq(@Query("action")String action, @Query("compoffId")String compoffId);
+    Call<CompOffDeleteReqResponse> CalDeleteReq(@Query("action")String action, @Query("compoffId")String compoffId, @Query("empid")String empid);
 }

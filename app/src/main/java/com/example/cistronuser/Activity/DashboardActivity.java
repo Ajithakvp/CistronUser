@@ -51,6 +51,7 @@ import com.example.cistronuser.R;
 import com.example.cistronuser.Report.Activity.AttendanceReports;
 import com.example.cistronuser.Report.Activity.ExpenseReportWM;
 import com.example.cistronuser.Report.Activity.LeaveReport;
+import com.example.cistronuser.SalesAndservice.Activity.VisitEntry;
 import com.example.cistronuser.WaitingforApprovel.Activity.CompOffRequest;
 import com.example.cistronuser.WaitingforApprovel.Activity.ExpensesReport;
 import com.example.cistronuser.WaitingforApprovel.Activity.LeaveRequest;
@@ -89,11 +90,12 @@ public class DashboardActivity extends Activity {
     String strPhoto;
 
 
+    RelativeLayout rlWaitingExpense;
     //Admin Dashboard
 
-    RelativeLayout rlAdmin,rlWaitingApproval;
+    RelativeLayout rlAdmin, rlWaitingApproval;
 
-    RelativeLayout rlExpenseReport, rlrlAttendaceReport, rlrlLeaveReport, rlWaitingLeaveRequest, rlWaitingCompOFfRequest;
+    RelativeLayout rlExpenseReport, rlrlAttendaceReport, rlrlLeaveReport, rlWaitingLeaveRequest, rlWaitingCompOFfRequest,rlVisitEntryReport;
     TextView tvwaitingCountExpense, tvCountLeaveReq, tvCountCompOffReq;
 
     Context context;
@@ -139,7 +141,6 @@ public class DashboardActivity extends Activity {
         setContentView(R.layout.activity_dashboard);
 
 
-        PreferenceManager.setLoggedStatus(this, true);
         cvLeave = findViewById(R.id.cvLeave);
         cvExpense = findViewById(R.id.cvExpense);
         cvAttendance = findViewById(R.id.cvAttendance);
@@ -149,7 +150,7 @@ public class DashboardActivity extends Activity {
         lWebview = findViewById(R.id.lWebview);
         tvProfilename = findViewById(R.id.tvProfilename);
         rlExpenseReport = findViewById(R.id.rlExpenseReport);
-        RelativeLayout rlWaitingExpense = findViewById(R.id.rlWaitingExpense);
+        rlWaitingExpense = findViewById(R.id.rlWaitingExpense);
         tvwaitingCountExpense = findViewById(R.id.tvwaitingCountExpense);
         rlrlAttendaceReport = findViewById(R.id.rlrlAttendaceReport);
         rlrlLeaveReport = findViewById(R.id.rlrlLeaveReport);
@@ -158,7 +159,8 @@ public class DashboardActivity extends Activity {
         rlWaitingCompOFfRequest = findViewById(R.id.rlWaitingCompOFfRequest);
         tvCountCompOffReq = findViewById(R.id.tvCountCompOffReq);
         rlAdmin = findViewById(R.id.rlAdmin);
-        rlWaitingApproval=findViewById(R.id.rlWaitingApproval);
+        rlWaitingApproval = findViewById(R.id.rlWaitingApproval);
+        rlVisitEntryReport=findViewById(R.id.rlVisitEntryReport);
 
 
         tvProfilename.setText(PreferenceManager.getEmpName(this));
@@ -166,11 +168,11 @@ public class DashboardActivity extends Activity {
         lWebview.setMovementMethod(LinkMovementMethod.getInstance());
         lWebview.setLinkTextColor(getResources().getColor(R.color.white));
 
-       // Log.e(TAG, "onCreate: user :" + PreferenceManager.getEmpuser(this));
+        // Log.e(TAG, "onCreate: user :" + PreferenceManager.getEmpuser(this));
 
-        String user=PreferenceManager.getEmpuser(this);
+        String user = PreferenceManager.getEmpuser(this);
 
-        switch (user){
+        switch (user) {
             case "user":
                 rlWaitingApproval.setVisibility(View.GONE);
                 break;
@@ -180,13 +182,20 @@ public class DashboardActivity extends Activity {
 
         }
 
+        String company=PreferenceManager.getEmpCompany(this).toLowerCase();
+        switch (company){
+            case "sukimos":
+                rlExpenseReport.setVisibility(View.GONE);
+                break;
+        }
+
 
         //internet
         broadcastReceiver = new ConnectionRecevier();
         registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 
 
-       //IP Address
+        //IP Address
         context = getApplicationContext();
         WifiManager wifiMan = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
         WifiInfo wifiInf = wifiMan.getConnectionInfo();
@@ -341,6 +350,14 @@ public class DashboardActivity extends Activity {
             }
         });
 
+        rlVisitEntryReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(DashboardActivity.this, VisitEntry.class);
+                startActivity(intent);
+            }
+        });
+
 
         //LeaveApprovalCount
         CallLeaveApprovalCount();
@@ -363,6 +380,14 @@ public class DashboardActivity extends Activity {
                 try {
                     if (response.isSuccessful()) {
                         tvCountLeaveReq.setText(response.body().getCount());
+
+                        if (response.body().getCount().trim().equals("0")) {
+                            rlWaitingLeaveRequest.setVisibility(View.GONE);
+
+                        } else {
+                            rlWaitingLeaveRequest.setVisibility(View.VISIBLE);
+                        }
+
                     }
 
                 } catch (Exception e) {
@@ -384,6 +409,13 @@ public class DashboardActivity extends Activity {
                 try {
                     if (response.isSuccessful()) {
                         tvwaitingCountExpense.setText(response.body().getCount());
+                        if (response.body().getCount().trim().equals("0")) {
+
+                            rlWaitingExpense.setVisibility(View.GONE);
+
+                        } else {
+                            rlWaitingExpense.setVisibility(View.VISIBLE);
+                        }
                     }
 
                 } catch (Exception e) {
@@ -407,6 +439,13 @@ public class DashboardActivity extends Activity {
                 try {
                     if (response.isSuccessful()) {
                         tvCountCompOffReq.setText(response.body().getCount());
+
+                        if (response.body().getCount().trim().equals("0")) {
+                            rlWaitingCompOFfRequest.setVisibility(View.GONE);
+
+                        } else {
+                            rlWaitingCompOFfRequest.setVisibility(View.VISIBLE);
+                        }
                     }
 
                 } catch (Exception e) {

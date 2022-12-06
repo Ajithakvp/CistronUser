@@ -2,6 +2,12 @@ package com.example.cistronuser.Activity;
 
 import static okhttp3.RequestBody.create;
 
+
+import com.example.cistronuser.API.Interface.DateDisableInterface;
+import com.example.cistronuser.API.Model.DateDisableModel;
+import com.example.cistronuser.API.Response.DateDisableResponse;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
+
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -10,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
@@ -163,6 +168,16 @@ public class LeaveActivity extends Activity {
     TextView tvNomsg;
 
     ProgressBar simpleProgressBar;
+
+
+
+
+    //DisableDate
+    ArrayList<String>strDisbleDate=new ArrayList<>();
+    ArrayList<DateDisableModel>dateDisableModels=new ArrayList<>();
+    String DisbleDate;
+    int Disableyear,DisableMonth,DisableDay;
+
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -342,6 +357,46 @@ public class LeaveActivity extends Activity {
                 CallleaveDetails();
             }
         });
+
+
+
+        //DisableDate
+//        DateDisableInterface dateDisableInterface=APIClient.getClient().create(DateDisableInterface.class);
+//        dateDisableInterface.calldisble(PreferenceManager.getEmpID(this),"getDisabledDates").enqueue(new Callback<DateDisableResponse>() {
+//            @Override
+//            public void onResponse(Call<DateDisableResponse> call, Response<DateDisableResponse> response) {
+//
+//
+//                try {
+//                    if (response.body().getDateDisableModels().size()>0){
+//                        dateDisableModels=response.body().getDateDisableModels();
+//                        for (int i=0;i<dateDisableModels.size();i++){
+//                            strDisbleDate.add(dateDisableModels.get(i).getDate());
+//
+//                            Calendar disableDt = Calendar.getInstance();
+//                            disableDt.set(year,month,dayOfMonth);
+//                            Calendar[] disabledDays = new Calendar[1];
+//                            disabledDays[0] = disableDt;
+//                            datePickerDialog.setDisabledDays(disabledDays);
+//                        }
+//                    }
+//
+//
+//                }catch (Exception e){
+//
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<DateDisableResponse> call, Throwable t) {
+//
+//            }
+//        });
+
+
+
+
 
 
         //        *********
@@ -987,7 +1042,7 @@ public class LeaveActivity extends Activity {
         tvview = bottomSheetDialog.findViewById(R.id.tvview);
 
 
-        if ((avCompOff + avMl + avCl + avPl + avProbl) == 0) {
+        if ((avCompOff + avCl + avPl + avProbl) == 0) {
 
             tvview.setVisibility(View.VISIBLE);
             rblop.setChecked(true);
@@ -1106,6 +1161,8 @@ public class LeaveActivity extends Activity {
             public void onClick(View view) {
                 callDate();
                 //  date();
+
+
 
 
             }
@@ -1330,6 +1387,7 @@ public class LeaveActivity extends Activity {
 
 
                         spReson.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @SuppressLint("SuspiciousIndentation")
                             @Override
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
@@ -1356,15 +1414,26 @@ public class LeaveActivity extends Activity {
                                         if (clpl[i].trim().equals("CL")) {
                                             if (avCl > 0 || avProbl > 0){
                                                 rbLcl.setEnabled(true);
-                                            rlUpload.setVisibility(View.GONE);
+                                                rlUpload.setVisibility(View.GONE);
+                                            }else {
+                                                rblop.setEnabled(true);
                                             }
 
                                         } else if (clpl[i].trim().equals("PL")) {
-                                            if (avPl > 0 || avProbl > 0) {rbPl.setEnabled(true);
+                                            if (avPl > 0 || avProbl > 0) {
+                                                rbPl.setEnabled(true);
                                             rlUpload.setVisibility(View.GONE);}
+                                            else {
+                                                rblop.setEnabled(true);
+                                            }
                                         } else if (clpl[i].trim().equals("ML")) {
-                                            if (avMl > 0 || avProbl > 0){ rbMl.setEnabled(true);
+                                            if (avMl > 0 || avProbl > 0){
+                                                rblop.setEnabled(false);
+                                                rbMl.setEnabled(true);
                                             rlUpload.setVisibility(View.VISIBLE);}
+                                            else {
+                                                rblop.setEnabled(true);
+                                            }
                                         }
 
                                     }
@@ -1400,17 +1469,75 @@ public class LeaveActivity extends Activity {
 
 
     private void callDate() {
+        datePickerDialog=new DatePickerDialog();
 
         Calendar calendar = Calendar.getInstance();
+
         year = calendar.get(Calendar.YEAR);
         month = calendar.get(Calendar.MONTH);
         dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-        calendar.add(Calendar.MONTH, 3);
-        datePickerDialog = new DatePickerDialog(LeaveActivity.this, new DatePickerDialog.OnDateSetListener() {
+        //calendar.add(Calendar.MONTH, 3);
+        Calendar min_date_c = Calendar.getInstance();
+        datePickerDialog.setMinDate(min_date_c);
+
+        Calendar max_date_c = Calendar.getInstance();
+        max_date_c.set(Calendar.YEAR, year+2);
+        datePickerDialog.setMaxDate(max_date_c);
+
+        for (Calendar loopdate = min_date_c; min_date_c.before(max_date_c); min_date_c.add(Calendar.DATE, 1), loopdate = min_date_c) {
+            int dayOfWeek = loopdate.get(Calendar.DAY_OF_WEEK);
+            if (dayOfWeek == Calendar.SUNDAY) {
+                Calendar[] disabledDays = new Calendar[1];
+                disabledDays[0] = loopdate;
+                datePickerDialog.setDisabledDays(disabledDays);
+            }
+        }
+
+        DateDisableInterface dateDisableInterface=APIClient.getClient().create(DateDisableInterface.class);
+        dateDisableInterface.calldisble(PreferenceManager.getEmpID(this),"getDisabledDates").enqueue(new Callback<DateDisableResponse>() {
             @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+            public void onResponse(Call<DateDisableResponse> call, Response<DateDisableResponse> response) {
+
+
+                try {
+                    Log.e(TAG, "onResponse: "+response.body().getDateDisableModels().size() );
+                    if (response.body().getDateDisableModels().size()>0){
+                        dateDisableModels=response.body().getDateDisableModels();
+
+
+                        for (int i=0;i<dateDisableModels.size();i++){
+                            String[] dt=dateDisableModels.get(i).getDate().split("-");
+                            Disableyear= Integer.parseInt(dt[0]);
+                            DisableMonth= Integer.parseInt(dt[1])-1;
+                            DisableDay= Integer.parseInt(dt[2]);
+
+                            Calendar disableDt = Calendar.getInstance();
+                            disableDt.set(Disableyear,DisableMonth,DisableDay);
+                            Calendar[] disabledDays = new Calendar[1];
+                            disabledDays[0] = disableDt;
+                            datePickerDialog.setDisabledDays(disabledDays);
+                        }
+                    }
+
+
+                }catch (Exception e){
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<DateDisableResponse> call, Throwable t) {
+
+            }
+        });
+
+        datePickerDialog.setOnDateSetListener(new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+
                 String date = tvDate.getText().toString();
-                String selectedDt = year + "-" + (month + 1) + "-" + day;
+                String selectedDt = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
                 if (!date.isEmpty()) {
                     if (date.contains(", " + selectedDt)) {
                         System.out.println("1\n");
@@ -1434,13 +1561,16 @@ public class LeaveActivity extends Activity {
                 else if (count == 1)
                     tvselectDate.setText("One day is selected");
                 else
+
                     tvselectDate.setText(count + " days are selected");
             }
-        }, year, month, dayOfMonth);
-        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
+
+        });
+
+        datePickerDialog.show(getFragmentManager(),"Leave Date");
 
 
-        datePickerDialog.show();
+
 
     }
 
@@ -1487,6 +1617,7 @@ public class LeaveActivity extends Activity {
         MimeTypeMap mime = MimeTypeMap.getSingleton();
         return mime.getExtensionFromMimeType(c.getType(contentUri));
     }
+
 
 
 }

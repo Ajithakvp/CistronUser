@@ -41,7 +41,14 @@ public class ExpensesWeeklyAdapter extends RecyclerView.Adapter<ExpensesWeeklyAd
         holder.tvEmpIDTag.setText("EmpID -"+userDailyExpensesWMModels.get(position).getEmpid());
         holder.tvNameTag.setText(userDailyExpensesWMModels.get(position).getName());
         holder.tvDateTag.setText(userDailyExpensesWMModels.get(position).getDate());
-        holder.tvReportTag.setText(userDailyExpensesWMModels.get(position).getWorkreport());
+
+
+        if (userDailyExpensesWMModels.get(position).getWorkreport().trim().equals("")){
+            holder.tvReportTag.setVisibility(View.GONE);
+        }else {
+            holder.tvReportTag.setVisibility(View.VISIBLE);
+            holder.tvReportTag.setText(userDailyExpensesWMModels.get(position).getWorkreport());
+        }
 
 
 

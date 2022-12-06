@@ -11,6 +11,6 @@ public interface LeaveReportDailyInterface {
 
 
     @GET("attendance_leave.php")
-    Call<LeaveReportDailyResponse> callDaily(@Query("action")String action,@Query("date")String date,@Query("empid")String empid);
+    Call<LeaveReportDailyResponse> callDaily(@Query("action")String action,@Query("date")String date,@Query("empid")String empid,@Query("opt_user")String opt_user);
 
 }

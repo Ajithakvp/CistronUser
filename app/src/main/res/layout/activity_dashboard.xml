@@ -14,13 +14,24 @@
         android:background="@color/skyblue"
         android:backgroundTint="#6495ED">
 
+
+        <ImageView
+            android:id="@+id/tvR"
+            android:layout_width="20dp"
+            android:layout_height="10dp"
+            android:layout_marginTop="2dp"
+            android:src="@drawable/registered"
+            android:layout_marginLeft="260dp"
+            android:tint="@color/Radio"
+            tools:ignore="UseAppTint" />
+
         <ImageView
             android:id="@+id/ivName"
             android:layout_width="wrap_content"
-            android:layout_marginTop="10dp"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:src="@drawable/cis" />
+            android:layout_marginTop="8dp"
+            android:src="@drawable/logo_top" />
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/ivLogout"
@@ -276,6 +287,7 @@
                             android:id="@+id/rlWaitingExpense"
                             android:layout_width="match_parent"
                             android:layout_height="60dp"
+                            android:visibility="visible"
                             android:layout_below="@id/rlWaitingCompOFfRequest"
                             android:layout_marginTop="20dp"
                             android:background="@drawable/cardview"
@@ -347,6 +359,7 @@
                             android:id="@+id/rlWaitingLeaveRequest"
                             android:layout_width="match_parent"
                             android:layout_height="60dp"
+                            android:visibility="visible"
                             android:layout_below="@id/rlWaitingExpense"
                             android:layout_marginTop="20dp"
                             android:background="@drawable/cardview"
@@ -417,6 +430,7 @@
                             android:id="@+id/rlWaitingCompOFfRequest"
                             android:layout_width="match_parent"
                             android:layout_height="60dp"
+                            android:visibility="visible"
                             android:layout_below="@id/tvWaitingApproved"
                             android:layout_marginTop="20dp"
                             android:background="@drawable/cardview"
@@ -494,7 +508,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/rlWaitingApproval"
                     android:layout_marginTop="30dp"
-                    android:layout_marginBottom="30dp">
+                   >
 
 
                     <RelativeLayout
@@ -619,6 +633,74 @@
 
 
                     </RelativeLayout>
+
+
+                </RelativeLayout>
+
+
+
+
+        <RelativeLayout
+            android:id="@+id/rlSalesService"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rlReport"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/cardview"
+                android:backgroundTint="#fdfff5 ">
+
+                <TextView
+                    android:id="@+id/tvSalesserviceTag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/bold"
+                    android:text="@string/Sales"
+                    android:textColor="@color/black"
+                    android:textSize="20dp" />
+
+
+                <RelativeLayout
+                    android:id="@+id/rlVisitEntryReport"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_below="@id/tvSalesserviceTag"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/cardview"
+                    android:backgroundTint="#6495ED">
+
+                    <ImageView
+                        android:id="@+id/ivVisitEntryReport"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="30dp"
+                        android:src="@drawable/expensereport"
+                        android:tint="@color/white"
+                        tools:ignore="UseAppTint" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="20dp"
+                        android:layout_toRightOf="@+id/ivVisitEntryReport"
+                        android:fontFamily="@font/semibold"
+                        android:text="Visit Entry"
+                        android:textColor="@color/white"
+                        android:textSize="18dp" />
+                </RelativeLayout>
+            </RelativeLayout>
 
                 </RelativeLayout>
 

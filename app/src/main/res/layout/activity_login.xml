@@ -48,12 +48,11 @@
             android:layout_height="wrap_content">
 
 
-        <com.airbnb.lottie.LottieAnimationView
+        <ImageView
             android:id="@+id/imageView"
             android:layout_width="100dp"
             android:layout_height="100dp"
-          app:lottie_autoPlay="true"
-           app:lottie_rawRes="@raw/logotop"
+            android:src="@drawable/cis"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_centerHorizontal="true"
             app:layout_constraintHorizontal_bias="0.498"
@@ -121,6 +120,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/bold"
                 android:hint="Password"
+                android:text="cist1234"
                 android:inputType="textPassword"
                 />
         </com.google.android.material.textfield.TextInputLayout>

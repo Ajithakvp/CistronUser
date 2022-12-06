@@ -29,6 +29,7 @@ import com.example.cistronuser.API.Model.LeaveReportDailyModel;
 import com.example.cistronuser.API.Model.LeaveReportMonthlyModel;
 import com.example.cistronuser.API.Model.MonthlyReportAttendanceModel;
 import com.example.cistronuser.API.Model.ReportTypeWMselectedModel;
+import com.example.cistronuser.API.Model.ReportforModel;
 import com.example.cistronuser.API.Response.DailyReportUserAttendanceResponse;
 import com.example.cistronuser.API.Response.LeaveReportDailyResponse;
 import com.example.cistronuser.API.Response.LeaveReportMonthlyResponse;
@@ -50,7 +51,7 @@ import retrofit2.Response;
 public class LeaveReport extends AppCompatActivity {
 
 
-    Spinner spUser, spreportType, spUserMonthy;
+    Spinner spUser, spreportType, spUserMonthy,spreportfor;
     TextView tvDateTag, tvDate, tvMonthyearTag, tvMonthyear, tvMonthlySubmit, tvDailySubmit, tvMonthlyUserTag, tvUserTag;
     ImageView ivfilter, ivBack;
     RelativeLayout rlfilter;
@@ -61,6 +62,13 @@ public class LeaveReport extends AppCompatActivity {
     ArrayAdapter typeAdapter;
     String ReportTyee;
     int mDay, mMonth, mYear;
+
+    //Reportfor
+
+    ArrayList<ReportforModel>reportforModels=new ArrayList<>();
+    ArrayList<String>strReportfor=new ArrayList<>();
+    ArrayAdapter reportfor;
+    String ReportForId;
 
     //Daily User
     ArrayList<DailyReportUserAttendanceModel> dailyReportUserAttendanceModels = new ArrayList<>();
@@ -105,6 +113,7 @@ public class LeaveReport extends AppCompatActivity {
         rvLeaveReport=findViewById(R.id.rvLeaveReport);
         tvDailySubmit = findViewById(R.id.tvWeellySubmit);
         rvLeaveReportMonthly=findViewById(R.id.rvLeaveReportMonthly);
+        spreportfor=findViewById(R.id.spreportfor);
 
 
 
@@ -148,11 +157,46 @@ public class LeaveReport extends AppCompatActivity {
 
 
 
+        //Report for
+
+        String company= PreferenceManager.getEmpCompany(this).toLowerCase();
+        if(company.equals("all")){
+            String[] reportType={"Cistron","Sukimos"};
+            reportfor = new ArrayAdapter(this, R.layout.spinner_item, reportType);
+        }else if(company.equals("cistron")){
+            String[] reportType={"Cistron"};
+            reportfor = new ArrayAdapter(this, R.layout.spinner_item, reportType);
+        }else if(company.equals("sukimos")){
+            String[] reportType={"Sukimos"};
+            reportfor = new ArrayAdapter(this, R.layout.spinner_item, reportType);
+        }
+
+        reportfor.setDropDownViewResource(R.layout.spinner_dropdown);
+        spreportfor.setAdapter(reportfor);
+        spreportfor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                callMonthlyUser(spreportFor.getSelectedItem().toString());
+                CallDailyUser(spreportfor.getSelectedItem().toString());
+                callMonthlyUser(spreportfor.getSelectedItem().toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+
+
+
+
 
 
 
         //Dailyuser
-        CallDailyUser();
+        CallDailyUser(spreportfor.getSelectedItem().toString());
         DailyUserAdapter = new ArrayAdapter(this, R.layout.spinner_item, strDailyUser);
         DailyUserAdapter.setDropDownViewResource(R.layout.spinner_dropdown);
         spUser.setAdapter(DailyUserAdapter);
@@ -174,7 +218,7 @@ public class LeaveReport extends AppCompatActivity {
         });
 
        //Monthly
-        callMonthlyUser();
+        callMonthlyUser(spreportfor.getSelectedItem().toString());
         monthlyuserAdapter = new ArrayAdapter(this, R.layout.spinner_item, strmonthlyUser);
         monthlyuserAdapter.setDropDownViewResource(R.layout.spinner_dropdown);
         spUserMonthy.setAdapter(monthlyuserAdapter);
@@ -395,9 +439,10 @@ public class LeaveReport extends AppCompatActivity {
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();
+        ReportForId=spreportfor.getSelectedItem().toString();
         Monthlyuser=spUserMonthy.getSelectedItem().toString();
         LeaveReportMonthlyInterface leaveReportMonthlyInterface=APIClient.getClient().create(LeaveReportMonthlyInterface.class);
-        leaveReportMonthlyInterface.callMonthly("getMonthlyLeaveRecord",tvMonthyear.getText().toString(),Monthlyuser).enqueue(new Callback<LeaveReportMonthlyResponse>() {
+        leaveReportMonthlyInterface.callMonthly("getMonthlyLeaveRecord",tvMonthyear.getText().toString(),Monthlyuser,ReportForId).enqueue(new Callback<LeaveReportMonthlyResponse>() {
             @Override
             public void onResponse(Call<LeaveReportMonthlyResponse> call, Response<LeaveReportMonthlyResponse> response) {
                 try {
@@ -428,9 +473,12 @@ public class LeaveReport extends AppCompatActivity {
         progressDialog.setCancelable(false);
         progressDialog.show();
 
+
+        ReportForId=spreportfor.getSelectedItem().toString();
+
         Dailyuser=spUser.getSelectedItem().toString();
         LeaveReportDailyInterface leaveReportDailyInterface=APIClient.getClient().create(LeaveReportDailyInterface.class);
-        leaveReportDailyInterface.callDaily("getDailyLeaveRecord",tvDate.getText().toString(),Dailyuser).enqueue(new Callback<LeaveReportDailyResponse>() {
+        leaveReportDailyInterface.callDaily("getDailyLeaveRecord",tvDate.getText().toString(),Dailyuser,ReportForId).enqueue(new Callback<LeaveReportDailyResponse>() {
             @Override
             public void onResponse(Call<LeaveReportDailyResponse> call, Response<LeaveReportDailyResponse> response) {
                 try {
@@ -464,13 +512,13 @@ public class LeaveReport extends AppCompatActivity {
     }
 
 
-    private void callMonthlyUser() {
+    private void callMonthlyUser(String  category) {
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();
         DailyAttendanceUserInterface dailyAttendanceUserInterface = APIClient.getClient().create(DailyAttendanceUserInterface.class);
-        dailyAttendanceUserInterface.callDailyUser("getEmployeeRecord", PreferenceManager.getEmpuser(this), PreferenceManager.getEmpID(this)).enqueue(new Callback<DailyReportUserAttendanceResponse>() {
+        dailyAttendanceUserInterface.callDailyUser("getEmployeeRecord", PreferenceManager.getEmpuser(this), PreferenceManager.getEmpID(this), category).enqueue(new Callback<DailyReportUserAttendanceResponse>() {
             @Override
             public void onResponse(Call<DailyReportUserAttendanceResponse> call, Response<DailyReportUserAttendanceResponse> response) {
                 try {
@@ -497,13 +545,13 @@ public class LeaveReport extends AppCompatActivity {
     }
 
 
-    private void CallDailyUser() {
+    private void CallDailyUser(String category) {
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();
         DailyAttendanceUserInterface dailyAttendanceUserInterface = APIClient.getClient().create(DailyAttendanceUserInterface.class);
-        dailyAttendanceUserInterface.callDailyUser("getEmployeeRecord", PreferenceManager.getEmpuser(this), PreferenceManager.getEmpID(this)).enqueue(new Callback<DailyReportUserAttendanceResponse>() {
+        dailyAttendanceUserInterface.callDailyUser("getEmployeeRecord", PreferenceManager.getEmpuser(this), PreferenceManager.getEmpID(this), category).enqueue(new Callback<DailyReportUserAttendanceResponse>() {
             @Override
             public void onResponse(Call<DailyReportUserAttendanceResponse> call, Response<DailyReportUserAttendanceResponse> response) {
                 try {

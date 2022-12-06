@@ -13,5 +13,5 @@ public interface ApprovalLeaveReqInterface {
 
 
     @GET("attendance_leave.php")
-    Call<ApprovalleaveRequestResponse> CallApproval(@Query("action")String action, @Query("leaveId")String leaveId, @Query("lop")String lop, @Query("compoff")String compoff);
+    Call<ApprovalleaveRequestResponse> CallApproval(@Query("action")String action, @Query("leaveId")String leaveId, @Query("lop")String lop, @Query("compoff")String compoff,@Query("empid")String empid);
 }

@@ -12,5 +12,5 @@ public interface LeaveReportMonthlyInterface {
   //192.168.29.173/beta1/app/sample.php?action=getMonthlyLeaveRecord&monthYear=October 2022&empid=e367
 
     @GET("attendance_leave.php")
-    Call<LeaveReportMonthlyResponse> callMonthly(@Query("action")String action, @Query("monthYear")String monthYear, @Query("empid")String empid);
+    Call<LeaveReportMonthlyResponse> callMonthly(@Query("action")String action, @Query("monthYear")String monthYear, @Query("empid")String empid, @Query("opt_user")String opt_user);
 }

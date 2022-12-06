@@ -23,6 +23,7 @@ public class LeaveApprovelModel {
 //             "reason": "Sick and not Hospitalized",
 //             "fdhd": "Full Day",
 //             "medattach": "",
+
 //             "btn_txt": "LOP Approve",
 //             "expired": "Date Expired"
 
@@ -87,6 +88,16 @@ public class LeaveApprovelModel {
     @SerializedName("expired")
     private String expired;
 
+    @SerializedName("opt_user")
+    private String opt_user;
+
+    public String getOpt_user() {
+        return opt_user;
+    }
+
+    public void setOpt_user(String opt_user) {
+        this.opt_user = opt_user;
+    }
 
     public String getLop() {
         return lop;

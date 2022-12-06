@@ -77,7 +77,7 @@ public class LeaveReportDailyAdapter extends RecyclerView.Adapter<LeaveReportDai
 
 
         LeaveReportDailyInterface leaveReportDailyInterface= APIClient.getClient().create(LeaveReportDailyInterface.class);
-        leaveReportDailyInterface.callDaily("getDailyLeaveRecord","","").enqueue(new Callback<LeaveReportDailyResponse>() {
+        leaveReportDailyInterface.callDaily("getDailyLeaveRecord","2022-12-18","","Cistron").enqueue(new Callback<LeaveReportDailyResponse>() {
             @Override
             public void onResponse(Call<LeaveReportDailyResponse> call, Response<LeaveReportDailyResponse> response) {
                 Baseurl=response.body().getAttachBaseUrl();

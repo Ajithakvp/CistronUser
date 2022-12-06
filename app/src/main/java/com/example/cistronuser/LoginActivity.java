@@ -225,7 +225,6 @@ public class LoginActivity extends AppCompatActivity {
                try {
                    if (response.isSuccessful()){
                        progressDialog.dismiss();
-                       PreferenceManager.setLoggedStatus(LoginActivity.this,true);
                        PreferenceManager.saveData(LoginActivity.this,loginuserModel);
                        PreferenceManager.setEmpID(LoginActivity.this,response.body().getEmpid());
                        PreferenceManager.setEmpName(LoginActivity.this,response.body().getName());
@@ -238,6 +237,7 @@ public class LoginActivity extends AppCompatActivity {
                        PreferenceManager.setEmpemail(LoginActivity.this,response.body().getEmail());
                        PreferenceManager.setEmpteamleader(LoginActivity.this,response.body().getTeamleader());
                        PreferenceManager.setEmpUser(LoginActivity.this,response.body().getUser());
+                       PreferenceManager.setEmpCompany(LoginActivity.this,response.body().getCompany());
                        Intent intent=new Intent(LoginActivity.this,DashboardActivity.class);
                        intent.putExtra("Pass",pass);
                        intent.putExtra("EmpID",response.body().getEmpid());

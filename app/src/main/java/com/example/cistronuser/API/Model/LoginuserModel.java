@@ -16,6 +16,8 @@ public class LoginuserModel {
 //              "designation": "Software Developer",
 //              "branch": "Tamilnadu",
 //              "teamleader": "Gomathi (e327)"
+//              "user":admin/user
+//              "company":Cistron/Sukimos/all
 
 
     @SerializedName("empid")
@@ -46,12 +48,21 @@ public class LoginuserModel {
     @SerializedName("user")
     private String user;
 
+    @SerializedName("company")
+    private String company;
+
     public String getUser() {
         return user;
     }
-
     public void setUser(String user) {
         this.user = user;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+    public void setCompany(String company) {
+        this.company = company;
     }
 
     public String getPhoto() {

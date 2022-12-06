@@ -21,8 +21,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CistronUser"
         android:usesCleartextTraffic="true"
-        tools:replace="android:label"
+        tools:replace="android:allowBackup"
         tools:targetApi="31">
+        <activity
+            android:name=".SalesAndservice.Activity.VisitEntry"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name=".WaitingforApprovel.Activity.CompOffRequest"
             android:exported="false">

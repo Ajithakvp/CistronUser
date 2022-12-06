@@ -28,11 +28,7 @@ public class ReportExpenseWeeklyResponse {
     @SerializedName("expenses_sum")
     private String expenses_sum;
 
-    @SerializedName("week_range")
-    private WeekRangeWmModel weekRangeWmModel;
 
-    @SerializedName("users_weekly_exp")
-    private WeeklyUserWMModel weeklyUserWMModel;
 
     @SerializedName("users_daily_expenses")
     private ArrayList<UserDailyExpensesWMModel> userDailyExpensesWMModels;
@@ -86,21 +82,7 @@ public class ReportExpenseWeeklyResponse {
         this.expenses_sum = expenses_sum;
     }
 
-    public WeekRangeWmModel getWeekRangeWmModel() {
-        return weekRangeWmModel;
-    }
 
-    public void setWeekRangeWmModel(WeekRangeWmModel weekRangeWmModel) {
-        this.weekRangeWmModel = weekRangeWmModel;
-    }
-
-    public WeeklyUserWMModel getWeeklyUserWMModel() {
-        return weeklyUserWMModel;
-    }
-
-    public void setWeeklyUserWMModel(WeeklyUserWMModel weeklyUserWMModel) {
-        this.weeklyUserWMModel = weeklyUserWMModel;
-    }
 
     public ArrayList<UserDailyExpensesWMModel> getUserDailyExpensesWMModels() {
         return userDailyExpensesWMModels;

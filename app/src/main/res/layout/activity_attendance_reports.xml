@@ -77,11 +77,44 @@
                     app:cardElevation="10dp">
 
                     <RelativeLayout
+                        android:paddingHorizontal="5dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
+                        <LinearLayout
+                            android:id="@+id/rlReportFor"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="5">
+
+                            <TextView
+                                android:id="@+id/tvreportFor"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="30dp"
+                                android:layout_weight="2"
+                                android:fontFamily="@font/bold"
+                                android:text="Report For     :"
+                                android:textColor="@color/white"
+                                android:textSize="18dp" />
+
+                            <Spinner
+                                android:id="@+id/spreportFor"
+                                android:layout_width="200dp"
+                                android:layout_height="50dp"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginTop="20dp"
+                                android:layout_toRightOf="@id/tvreportTypeTag"
+                                android:layout_weight="2.5"
+                                android:background="@drawable/edittext"
+                                android:backgroundTint="@color/white" />
+
+                        </LinearLayout>
 
                         <LinearLayout
+                            android:layout_below="@+id/rlReportFor"
                             android:id="@+id/rlReport"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -124,7 +157,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:weightSum="5"
-
                             android:orientation="horizontal">
 
 
@@ -234,22 +266,19 @@
                                 android:textSize="18dp"
                                 android:visibility="gone" />
 
-
-
-
-
-
-                            <Spinner
+                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                                 android:id="@+id/spUser"
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
                                 android:layout_marginLeft="8dp"
-                                android:layout_marginRight="5dp"
                                 android:layout_marginTop="20dp"
+                                android:layout_marginRight="5dp"
                                 android:layout_toRightOf="@id/tvUserTag"
                                 android:background="@drawable/edittext"
                                 android:backgroundTint="@color/white"
-                                android:visibility="gone" />
+                                android:visibility="gone">
+
+                            </com.toptoche.searchablespinnerlibrary.SearchableSpinner>
 
                             <TextView
                                 android:id="@+id/tvMonthlyUserTag"
@@ -268,13 +297,13 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
                                 android:layout_marginLeft="8dp"
-                                android:layout_marginRight="5dp"
                                 android:layout_marginTop="20dp"
+                                android:layout_marginRight="5dp"
                                 android:layout_toRightOf="@id/tvMonthlyUserTag"
                                 android:background="@drawable/edittext"
                                 android:backgroundTint="@color/white"
                                 android:visibility="gone" />
-                            </LinearLayout>
+                        </LinearLayout>
 
 
 

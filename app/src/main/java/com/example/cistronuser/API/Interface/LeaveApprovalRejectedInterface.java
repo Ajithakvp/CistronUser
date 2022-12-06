@@ -13,5 +13,5 @@ public interface LeaveApprovalRejectedInterface {
 
 
     @GET("attendance_leave.php")
-    Call<LeaveApprovalRejectedResponse> CallRejected(@Query("action")String action,@Query("leaveId")String leaveId);
+    Call<LeaveApprovalRejectedResponse> CallRejected(@Query("action")String action,@Query("leaveId")String leaveId,@Query("empid")String empid);
 }

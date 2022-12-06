@@ -29,6 +29,18 @@ public class CompOffRequestModel {
     @SerializedName("status")
     private String status;
 
+    @SerializedName("opt_user")
+    private String opt_user;
+
+
+    public String getOpt_user() {
+        return opt_user;
+    }
+
+    public void setOpt_user(String opt_user) {
+        this.opt_user = opt_user;
+    }
+
     public String getCompoffId() {
         return compoffId;
     }

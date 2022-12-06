@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">CistronUser</string>
 
+    <string name="Sales">Sales &amp; services</string>
 
     <string name="weblink">
 <a href="https://cistronsystems.in">Cistron Systems Private Ltd</a>

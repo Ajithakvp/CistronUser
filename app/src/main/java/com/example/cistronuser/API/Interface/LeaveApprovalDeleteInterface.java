@@ -11,5 +11,5 @@ public interface LeaveApprovalDeleteInterface {
     //http://192.168.29.173/beta1/app/attendance_leave.php?action=deleteLeaveRequestByAdmin&leaveId=16
 
     @GET("attendance_leave.php")
-    Call<LeaveApprovalDeletedResponse> CallDeleted(@Query("action")String action, @Query("leaveId")String leaveId);
+    Call<LeaveApprovalDeletedResponse> CallDeleted(@Query("action")String action, @Query("leaveId")String leaveId, @Query("empid")String empid);
 }

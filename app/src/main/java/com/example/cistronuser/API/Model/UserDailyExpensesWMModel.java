@@ -57,7 +57,6 @@ public class UserDailyExpensesWMModel {
     @SerializedName("exp_sum")
     private String exp_sum;
 
-
     public String getEmpid() {
         return empid;
     }

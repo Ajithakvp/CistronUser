@@ -77,6 +77,7 @@ public class LeaveApprovalAdapter extends RecyclerView.Adapter<LeaveApprovalAdap
         holder.tvAppliedTime.setText(leaveApprovelModels.get(position).getApplied_time());
         holder.tvApproved.setText(leaveApprovelModels.get(position).getBtn_txt());
         holder.tvFDHD.setText(leaveApprovelModels.get(position).getFdhd());
+        holder.tvcisorsuki.setText(leaveApprovelModels.get(position).getOpt_user());
 
 
         String Attachfile = leaveApprovelModels.get(position).getMedattach();
@@ -115,7 +116,7 @@ public class LeaveApprovalAdapter extends RecyclerView.Adapter<LeaveApprovalAdap
                 progressDialog.setCancelable(false);
                 progressDialog.show();
                 ApprovalLeaveReqInterface approvalLeaveReqInterface=APIClient.getClient().create(ApprovalLeaveReqInterface.class);
-                approvalLeaveReqInterface.CallApproval("approveLeaveRequest",leaveApprovelModels.get(position).getLeaveid(),leaveApprovelModels.get(position).getLop(),leaveApprovelModels.get(position).getCompoff()).enqueue(new Callback<ApprovalleaveRequestResponse>() {
+                approvalLeaveReqInterface.CallApproval("approveLeaveRequest",leaveApprovelModels.get(position).getLeaveid(),leaveApprovelModels.get(position).getLop(),leaveApprovelModels.get(position).getCompoff(),leaveApprovelModels.get(position).getEmpid()).enqueue(new Callback<ApprovalleaveRequestResponse>() {
                     @Override
                     public void onResponse(Call<ApprovalleaveRequestResponse> call, Response<ApprovalleaveRequestResponse> response) {
                         try {
@@ -169,7 +170,7 @@ public class LeaveApprovalAdapter extends RecyclerView.Adapter<LeaveApprovalAdap
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         LeaveApprovalRejectedInterface leaveApprovalRejectedInterface=APIClient.getClient().create(LeaveApprovalRejectedInterface.class);
-                        leaveApprovalRejectedInterface.CallRejected("rejectLeaveRequest",leaveApprovelModels.get(position).getLeaveid()).enqueue(new Callback<LeaveApprovalRejectedResponse>() {
+                        leaveApprovalRejectedInterface.CallRejected("rejectLeaveRequest",leaveApprovelModels.get(position).getLeaveid(),leaveApprovelModels.get(position).getEmpid()).enqueue(new Callback<LeaveApprovalRejectedResponse>() {
                             @SuppressLint("ResourceType")
                             @Override
                             public void onResponse(Call<LeaveApprovalRejectedResponse> call, Response<LeaveApprovalRejectedResponse> response) {
@@ -245,7 +246,7 @@ public class LeaveApprovalAdapter extends RecyclerView.Adapter<LeaveApprovalAdap
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         LeaveApprovalDeleteInterface leaveApprovalDeleteInterface=APIClient.getClient().create(LeaveApprovalDeleteInterface.class);
-                        leaveApprovalDeleteInterface.CallDeleted("deleteLeaveRequestByAdmin",leaveApprovelModels.get(position).getLeaveid()).enqueue(new Callback<LeaveApprovalDeletedResponse>() {
+                        leaveApprovalDeleteInterface.CallDeleted("deleteLeaveRequestByAdmin",leaveApprovelModels.get(position).getLeaveid(),leaveApprovelModels.get(position).getEmpid()).enqueue(new Callback<LeaveApprovalDeletedResponse>() {
                             @Override
                             public void onResponse(Call<LeaveApprovalDeletedResponse> call, Response<LeaveApprovalDeletedResponse> response) {
                                 try {
@@ -380,7 +381,7 @@ public class LeaveApprovalAdapter extends RecyclerView.Adapter<LeaveApprovalAdap
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvName, tvEmpId, tvLeaveDate, tvCL, tvML, tvPL, tvProb, tvCompOff, tvLeaveType,
+        TextView tvName, tvEmpId, tvLeaveDate, tvCL, tvML, tvPL, tvProb, tvCompOff, tvLeaveType,tvcisorsuki,
                 tvReason, tvFDHD, tvAppliedDate, tvAppliedTime, tvexpired, tvApproved, tvRejected, tvFileAttachTag, tvexpiredTag, tvProbTag, tvPLTag, tvClTag, tvMLTag, tvCompOffTag, tvDeleted;
 
         ImageView ivAttch;
@@ -413,7 +414,7 @@ public class LeaveApprovalAdapter extends RecyclerView.Adapter<LeaveApprovalAdap
 
             view1 = itemView.findViewById(R.id.view1);
             view2 = itemView.findViewById(R.id.view2);
-//            view3 = itemView.findViewById(R.id.view3);
+            tvcisorsuki = itemView.findViewById(R.id.tvcisorsuki);
 //            view4 = itemView.findViewById(R.id.view4);
 
 //            tvProbTag = itemView.findViewById(R.id.tvProbTag);
