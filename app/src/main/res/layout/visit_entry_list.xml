@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="8dp"
+            app:cardCornerRadius="10dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp">
+
+                <RelativeLayout
+                    android:id="@+id/rlsn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tvSno"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:visibility="visible"
+                        android:layout_below="@+id/tvHospital"
+                        android:fontFamily="@font/latest"
+                        android:text="Chef Doctor :"
+                        android:textColor="@color/black"
+                        android:textSize="18dp" />
+
+                    <TextView
+                        android:id="@+id/tvChefDoctor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_toLeftOf="@id/ivDelete"
+                        android:layout_toRightOf="@id/tvSno"
+                        android:layout_below="@+id/tvHospital"
+                        android:fontFamily="@font/semibold"
+                        android:text="Mr.  KANTHAMARI\nMBBS"
+                        android:textColor="@color/blue"
+                        android:textSize="18dp" />
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_below="@id/tvHospital"
+                        android:src="@drawable/ic_baseline_delete_24"
+                        android:layout_alignParentRight="true"
+                       android:layout_marginRight="10dp"
+                        android:id="@+id/ivDelete"/>
+
+
+
+                    <TextView
+                        android:id="@+id/tvHospitalTag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="8dp"
+                        android:visibility="gone"
+                        android:fontFamily="@font/latest"
+                        android:text="Hospital         :"
+                        android:textColor="@color/black"
+                        android:textSize="18dp" />
+
+
+                    <TextView
+                        android:id="@+id/tvHospital"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                       android:layout_centerHorizontal="true"
+                        android:background="#F76A47"
+                        android:padding="5dp"
+                        android:textAlignment="center"
+                        android:layout_marginBottom="4dp"
+                        android:fontFamily="@font/bold"
+                        android:text="Test Hospital / Chennai\n19TN139667"
+                        android:textColor="@color/white"
+                        android:textSize="20dp" />
+
+
+                </RelativeLayout>
+
+
+
+
+                <TextView
+                    android:id="@+id/tvDateTag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/rlsn"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/latest"
+                    android:text="Date            :"
+                    android:textColor="@color/black"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:id="@+id/tvDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/rlsn"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_toRightOf="@id/tvDateTag"
+                    android:fontFamily="@font/semibold"
+                    android:text="12-12-2222"
+                    android:textColor="@color/blue"
+                    android:textSize="18dp" />
+
+
+                <TextView
+                    android:id="@+id/tvproductTag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvDate"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+
+                    android:fontFamily="@font/latest"
+                    android:text="Product     :"
+                    android:textColor="@color/black"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:id="@+id/tvproduct"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvDate"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_toRightOf="@id/tvproductTag"
+                    android:fontFamily="@font/semibold"
+                    android:text="Cistron Harmony Plus with ISOFLURANE / HAR06"
+                    android:textColor="@color/blue"
+                    android:textSize="18dp" />
+
+
+                <TextView
+                    android:id="@+id/tvCommentTag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvproduct"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/latest"
+                    android:text="Comment :"
+                    android:textColor="@color/black"
+                    android:textSize="18dp"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tvComment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvproduct"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_toRightOf="@id/tvCommentTag"
+                    android:fontFamily="@font/semibold"
+                    android:text="Cistron Harmony Plus with ISOFLURANE / HAR06"
+                    android:textColor="@color/blue"
+                    android:textSize="18dp"
+                    android:visibility="gone" />
+
+
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

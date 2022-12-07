@@ -1179,7 +1179,6 @@ public class LeaveActivity extends Activity {
                         tvDate.requestFocus();
                         isfilled=false;
                     } else if (spReson .getSelectedItemPosition()==0){
-                       // ((TextView)spReson.getSelectedView()).setError("Select a Reason");
                         setSpinnerError(spReson,"Select a Reason");
                         tvDate.requestFocus();
                         isfilled=false;

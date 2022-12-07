@@ -41,7 +41,7 @@
 
 
             <ImageView
-                android:id="@+id/ivfilter"
+                android:id="@+id/ivList"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_centerInParent="true"
@@ -49,9 +49,9 @@
                 android:layout_marginRight="10dp"
                 android:layout_toRightOf="@id/tvHeader"
                 android:backgroundTint="@color/white"
-                android:src="@drawable/filtericon"
+                android:src="@drawable/ic_baseline_view_list_24"
                 android:tint="@color/white"
-                android:visibility="gone"
+                android:visibility="visible"
                 tools:ignore="UseAppTint" />
 
 
@@ -80,7 +80,12 @@
 
                         <TextView
                             android:id="@+id/tvDate"
-                            style="@style/textviewLabel"
+                         android:layout_height="40dp"
+                            android:layout_width="match_parent"
+                            android:textColor="@color/black"
+                            android:textAlignment="center"
+                            android:textSize="20dp"
+                            style="@android:style/Widget.EditText"
                             android:fontFamily="@font/latest"
                             android:hint="Select a date">
 
@@ -122,6 +127,23 @@
 
                     </com.google.android.material.textfield.TextInputLayout>
 
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/textInput"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/edittext">
+
+                    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                        android:id="@+id/sphospital"
+                        style="@style/textviewLabel"
+                        android:padding="3dp"
+                        android:layout_gravity="center"
+                        app:hintText="Select a Hospital">
+
+                    </com.toptoche.searchablespinnerlibrary.SearchableSpinner>
+
+                    </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
                         style="@style/textInput"
@@ -185,6 +207,7 @@
                         android:backgroundTint="@color/Radio"
                         android:fontFamily="@font/semibold"
                         android:gravity="center"
+                        android:id="@+id/tvAdd"
                         android:text="Add"
                         android:textColor="@color/white"
                         android:textSize="20dp" />

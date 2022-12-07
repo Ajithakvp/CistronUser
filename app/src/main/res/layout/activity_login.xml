@@ -99,6 +99,7 @@
                 android:id="@+id/edName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="e367"
                 android:fontFamily="@font/bold"
                 android:hint="Employee ID"
                  />
