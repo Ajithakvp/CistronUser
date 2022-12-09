@@ -11,6 +11,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -43,6 +44,7 @@ import com.example.cistronuser.Report.Adapter.ExpensesWeeklyAdapter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -121,6 +123,21 @@ public class ExpenseReportWM extends AppCompatActivity {
         tvGrandsumDocTag=findViewById(R.id.tvGrandsumDocTag);
 
 
+
+//        Date d = new Date();
+//        CharSequence s = DateFormat.format("yyyy-MM-dd ", d.getTime());
+//        tvDate.setText(s);
+
+
+        //Month
+        String myFormat = "MMMM yyyy";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat);
+        Calendar mcurrentDate = Calendar.getInstance();
+        mYear = mcurrentDate.get(Calendar.YEAR);
+        mMonth = mcurrentDate.get(Calendar.MONTH);
+        mcurrentDate.set(Calendar.YEAR, mYear);
+        mcurrentDate.set(Calendar.MONTH, mMonth);
+        tvMonthyear.setText(sdf.format(mcurrentDate.getTime()));
 
 
 

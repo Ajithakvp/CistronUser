@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:backgroundTint="#ECF0F1 "
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+
+            app:cardCornerRadius="10dp">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+               >
+
+
+                <RelativeLayout
+                    android:id="@+id/rlEmployee"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/blue"
+                    android:padding="10dp"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:id="@+id/tvEmpId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/bold"
+                        android:text="E032"
+                        android:textColor="@color/white"
+                        android:textSize="20dp" />
+
+                    <TextView
+                        android:id="@+id/tvName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_toRightOf="@id/tvEmpId"
+                        android:fontFamily="@font/bold"
+                        android:text="-S P Jain"
+                        android:textColor="@color/white"
+                        android:textSize="20dp" />
+
+
+                </RelativeLayout>
+
+
+                <TextView
+                    android:id="@+id/tvDateTag"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvHospital"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/latest"
+                    android:text="Date         :"
+                    android:textColor="@color/black"
+                    android:textSize="15dp" />
+
+                <TextView
+                    android:id="@+id/tvDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvHospital"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/tvDateTag"
+                    android:fontFamily="@font/semibold"
+                    android:text="12-22-2222"
+                    android:textColor="#2874A6"
+                    android:textSize="15dp" />
+
+
+                <TextView
+                    android:id="@+id/tvHospital"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/rlEmployee"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="4dp"
+                    android:fontFamily="@font/bold"
+                    android:padding="5dp"
+                    android:text="Test Hospital / Chennai\n19TN139667"
+                    android:textAlignment="center"
+                    android:textColor="#F76A47"
+                    android:textSize="18dp" />
+
+
+                <TextView
+                    android:id="@+id/tvProductTag"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvDate"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/latest"
+                    android:text="Product   :"
+                    android:textColor="@color/black"
+                    android:textSize="15dp" />
+
+                <TextView
+                    android:id="@+id/tvProduct"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvDate"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/tvProductTag"
+                    android:fontFamily="@font/semibold"
+                    android:text="Rectangular High Pressure Steam Sterilizer Single Door (SS 316) 2 X 2 X 4 / RHS03"
+                    android:textColor="#2874A6"
+                    android:textSize="15dp" />
+
+
+                <RelativeLayout
+                    android:id="@+id/rlQuote"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvProduct"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:id="@+id/tvQuoteTag"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/latest"
+                        android:text="Quote       :"
+                        android:textColor="@color/black"
+                        android:textSize="15dp" />
+
+
+                    <ImageView
+                        android:id="@+id/ivQuotePdf"
+                        android:layout_width="40dp"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_toRightOf="@id/tvQuoteTag"
+                        android:src="@drawable/fileopen" />
+
+                    <TextView
+                        android:id="@+id/tvQuote"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="13dp"
+                        android:layout_toRightOf="@+id/ivQuotePdf"
+
+                        android:fontFamily="@font/semibold"
+                        android:text="12-22-2222"
+                        android:textColor="#2874A6"
+                        android:textSize="15dp" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlOA"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rlQuote"
+                    android:visibility="visible">
+
+
+                    <TextView
+                        android:id="@+id/tvOATag"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="15dp"
+                        android:fontFamily="@font/latest"
+                        android:text="OA             :"
+                        android:textColor="@color/black"
+                        android:textSize="15dp" />
+
+
+                    <ImageView
+                        android:id="@+id/ivOAPdf"
+                        android:layout_width="40dp"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_toRightOf="@id/tvOATag"
+                        android:src="@drawable/fileopen" />
+
+                    <TextView
+                        android:id="@+id/tvOA"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="13dp"
+                        android:layout_toRightOf="@+id/ivOAPdf"
+                        android:fontFamily="@font/semibold"
+                        android:text="12-22-2222"
+                        android:textColor="#2874A6"
+                        android:textSize="15dp" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tvCommentTag"
+                    android:layout_width="110dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/rlOA"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/latest"
+                    android:text="Comment  :"
+                    android:textColor="@color/black"
+                    android:textSize="15dp"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/tvComment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvCommentTag"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:fontFamily="@font/semibold"
+                    android:text="Rectangular High Pressure Steam Sterilizer Single Door (SS 316) 2 X 2 X 4 / RHS03"
+                    android:textColor="#2874A6"
+                    android:textSize="15dp"
+                    android:visibility="visible" />
+
+
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+
+</RelativeLayout>

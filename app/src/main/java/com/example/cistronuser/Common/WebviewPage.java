@@ -45,6 +45,7 @@ public class WebviewPage extends AppCompatActivity {
             String web = getIntent().getStringExtra("pdf");
 
 
+
             webview.requestFocus();
             urladdress = getResources().getString(R.string.cistron) + web;
             // Log.e(TAG, "onCreate: " + urladdress);
@@ -72,6 +73,8 @@ public class WebviewPage extends AppCompatActivity {
             webview.getSettings().setJavaScriptEnabled(true);
 
             webview.loadUrl(urladdress);
+
+
 
 
         } catch (Exception e) {

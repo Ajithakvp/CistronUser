@@ -151,7 +151,7 @@ public class VisitEntry extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 callDistrict(spState.getSelectedItem().toString());
-
+                callHospital(spState.getSelectedItem().toString(),"District");
 
             }
 
@@ -171,8 +171,8 @@ public class VisitEntry extends AppCompatActivity {
         spDistrict.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
                 callHospital(spState.getSelectedItem().toString(),spDistrict.getSelectedItem().toString());
+
 
             }
 
@@ -309,9 +309,6 @@ public class VisitEntry extends AppCompatActivity {
                 }else if (spState.getSelectedItemPosition()==-1){
                     setSpinnerError(spState,"Please Select the State");
                     Log.e(TAG, "onClick: state" );
-                    isfilled=false;
-                }else if (spDistrict.getSelectedItemPosition()==-1){
-                    setSpinnerError(spDistrict,"Please Select the District");
                     isfilled=false;
                 }else if (sphospital.getSelectedItemPosition()==-1){
                     setSpinnerError(sphospital,"Please Select the Hospital");
