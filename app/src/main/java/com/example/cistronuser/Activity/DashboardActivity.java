@@ -27,6 +27,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,6 +53,7 @@ import com.example.cistronuser.Report.Activity.AttendanceReports;
 import com.example.cistronuser.Report.Activity.ExpenseReportWM;
 import com.example.cistronuser.Report.Activity.LeaveReport;
 import com.example.cistronuser.Report.Activity.VisitEntryReport;
+import com.example.cistronuser.SalesAndservice.Activity.SalesQuote;
 import com.example.cistronuser.SalesAndservice.Activity.VisitEntry;
 import com.example.cistronuser.WaitingforApprovel.Activity.CompOffRequest;
 import com.example.cistronuser.WaitingforApprovel.Activity.ExpensesReport;
@@ -73,9 +75,10 @@ public class DashboardActivity extends Activity {
 
     ImageView ivBack;
 
+    LinearLayout llview3;
     CircleImageView ivProfilePhoto;
     RelativeLayout rlProfile;
-    CardView cvAttendance, cvExpense, cvLeave,cvVisitEntry;
+    CardView cvAttendance, cvExpense, cvLeave, cvVisitEntry,cvQuote;
     LoginuserModel loginuserModel;
 
 
@@ -91,10 +94,10 @@ public class DashboardActivity extends Activity {
     String strPhoto;
 
 
-    RelativeLayout rlWaitingExpense,rlSalesService;
+    RelativeLayout rlWaitingExpense, rlSalesService;
     //Admin Dashboard
 
-    RelativeLayout rlAdmin, rlWaitingApproval,rlVisitEntryReportLayout;
+    RelativeLayout rlAdmin, rlWaitingApproval, rlVisitEntryReportLayout;
 
     RelativeLayout rlExpenseReport, rlrlAttendaceReport, rlrlLeaveReport, rlWaitingLeaveRequest, rlWaitingCompOFfRequest;
     TextView tvwaitingCountExpense, tvCountLeaveReq, tvCountCompOffReq;
@@ -162,8 +165,10 @@ public class DashboardActivity extends Activity {
         rlAdmin = findViewById(R.id.rlAdmin);
         rlWaitingApproval = findViewById(R.id.rlWaitingApproval);
 
-        rlVisitEntryReportLayout=findViewById(R.id.rlVisitEntryReportLayout);
-        cvVisitEntry=findViewById(R.id.cvVisitEntry);
+        rlVisitEntryReportLayout = findViewById(R.id.rlVisitEntryReportLayout);
+        cvVisitEntry = findViewById(R.id.cvVisitEntry);
+        cvQuote=findViewById(R.id.cvQuote);
+        llview3 = findViewById(R.id.llview3);
 
 
         tvProfilename.setText(PreferenceManager.getEmpName(this));
@@ -187,12 +192,13 @@ public class DashboardActivity extends Activity {
 
         }
 
-        String company=PreferenceManager.getEmpCompany(this).toLowerCase();
-        switch (company){
+        String company = PreferenceManager.getEmpCompany(this).toLowerCase();
+        switch (company) {
             case "sukimos":
                 cvVisitEntry.setVisibility(View.GONE);
-               rlExpenseReport.setVisibility(View.GONE);
+                rlExpenseReport.setVisibility(View.GONE);
                 rlVisitEntryReportLayout.setVisibility(View.GONE);
+                llview3.setVisibility(View.GONE);
                 break;
         }
 
@@ -236,7 +242,7 @@ public class DashboardActivity extends Activity {
                                     if (response.isSuccessful()) {
 
 
-                                       // PreferenceManager.setLoggedStatus(DashboardActivity.this, false);
+                                        // PreferenceManager.setLoggedStatus(DashboardActivity.this, false);
 
                                         PreferenceManager.setUserModelData(DashboardActivity.this, loginuserModel);
                                         finish();
@@ -360,7 +366,7 @@ public class DashboardActivity extends Activity {
         cvVisitEntry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(DashboardActivity.this, VisitEntry.class);
+                Intent intent = new Intent(DashboardActivity.this, VisitEntry.class);
                 startActivity(intent);
             }
         });
@@ -368,7 +374,15 @@ public class DashboardActivity extends Activity {
         rlVisitEntryReportLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(DashboardActivity.this, VisitEntryReport.class);
+                Intent intent = new Intent(DashboardActivity.this, VisitEntryReport.class);
+                startActivity(intent);
+            }
+        });
+
+        cvQuote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DashboardActivity.this, SalesQuote.class);
                 startActivity(intent);
             }
         });

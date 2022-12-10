@@ -24,6 +24,13 @@
         tools:replace="android:allowBackup"
         tools:targetApi="31">
         <activity
+            android:name=".SalesAndservice.Activity.SalesQuote"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".Report.Activity.VisitEntryReport"
             android:exported="false">
             <meta-data
