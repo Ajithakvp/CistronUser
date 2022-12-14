@@ -18,16 +18,24 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cistronuser.API.Model.SalesQuoteProductsAddonModel;
+import com.example.cistronuser.Common.PreferenceManager;
 import com.example.cistronuser.R;
+import com.example.cistronuser.SalesAndservice.Activity.SalesQuote;
 
 import java.util.ArrayList;
 
 public class SalesQuoteAddonAdapter extends RecyclerView.Adapter<SalesQuoteAddonAdapter.ViewHolder> {
 
-    Activity activity;
-    public ArrayList<SalesQuoteProductsAddonModel>salesQuoteProductsAddonModels;
+    public  ArrayList<String>strCheckedproduct=new ArrayList<>();
 
-    public SalesQuoteAddonAdapter(Activity activity, ArrayList<SalesQuoteProductsAddonModel> salesQuoteProductsAddonModels) {
+    public ArrayList<SalesQuoteProductsAddonModel> salesQuoteProductsAddonModels;
+    Activity activity;
+
+    @NonNull
+    private OnItemCheckListener onItemClick;
+
+    public SalesQuoteAddonAdapter(@NonNull OnItemCheckListener onItemClick, Activity activity, ArrayList<SalesQuoteProductsAddonModel> salesQuoteProductsAddonModels) {
+        this.onItemClick = onItemClick;
         this.activity = activity;
         this.salesQuoteProductsAddonModels = salesQuoteProductsAddonModels;
     }
@@ -37,40 +45,60 @@ public class SalesQuoteAddonAdapter extends RecyclerView.Adapter<SalesQuoteAddon
     public SalesQuoteAddonAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.quote_product_list, parent, false);
         return new SalesQuoteAddonAdapter.ViewHolder(itemView);
+
+
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SalesQuoteAddonAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull SalesQuoteAddonAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
         holder.tvAddon.setText(salesQuoteProductsAddonModels.get(position).getAddonName());
+        SalesQuoteProductsAddonModel id = salesQuoteProductsAddonModels.get(position);
+        holder.checkbox.setChecked(salesQuoteProductsAddonModels.get(position).isSelected());
+        holder.checkbox.setTag(salesQuoteProductsAddonModels.get(position));
 
-        String Postion=salesQuoteProductsAddonModels.get(position).getAddonId();
 
-
-
-
-        holder.checkbox.setOnClickListener(new View.OnClickListener() {
+        holder.checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-                boolean checked = ((CheckBox) v).isChecked();
-                if (checked) {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                   // Log.e(TAG, "onClick: "+salesQuoteProductsAddonModels.get(position).getAddonId() );
+                if (buttonView.isChecked()) {
+
+                    onItemClick.onItemCheck(id);
+
+                   strCheckedproduct.add(id.getAddonId());
+                    PreferenceManager.setAddOn(activity,strCheckedproduct.toString().replace("[","").replace("]",""));
+
+
+
+
+                } else {
+
+                    onItemClick.onItemUncheck(id);
+                    strCheckedproduct.remove(id.getAddonId());
 
                 }
+
+
             }
         });
 
 
     }
 
-
     @Override
     public int getItemCount() {
-        return salesQuoteProductsAddonModels.size();
+
+        return (salesQuoteProductsAddonModels == null) ? 0 : salesQuoteProductsAddonModels.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public interface OnItemCheckListener {
+        void onItemCheck(SalesQuoteProductsAddonModel item);
+
+        void onItemUncheck(SalesQuoteProductsAddonModel item);
+    }
+
+    static class ViewHolder extends RecyclerView.ViewHolder {
 
 
         CheckBox checkbox;
@@ -79,10 +107,12 @@ public class SalesQuoteAddonAdapter extends RecyclerView.Adapter<SalesQuoteAddon
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            checkbox=itemView.findViewById(R.id.checkbox);
-            tvAddon=itemView.findViewById(R.id.tvAddon);
+            checkbox = itemView.findViewById(R.id.checkbox);
+            tvAddon = itemView.findViewById(R.id.tvAddon);
 
 
         }
+
+
     }
 }

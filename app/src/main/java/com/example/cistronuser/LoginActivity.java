@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -17,8 +18,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.location.Address;
+import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.wifi.WifiInfo;
@@ -65,16 +68,15 @@ public class LoginActivity extends AppCompatActivity {
 
     //Map
     FusedLocationProviderClient fusedLocationProviderClient;
-    private final static int REQUEST_CODE = 100;
+    LocationManager locationManager;
+
     String strDeviceName, AddressLine;
     double Latitude;
     double Longtitude;
     ArrayList<LoginuserModel> loginuserModel = new ArrayList<>();
 
 
-
-
-    @SuppressLint("MissingInflatedId")
+    @SuppressLint({"MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,22 +84,32 @@ public class LoginActivity extends AppCompatActivity {
 
         edPass = findViewById(R.id.edPass);
         edName = findViewById(R.id.edName);
-        tvfailed=findViewById(R.id.tvfailed);
+        tvfailed = findViewById(R.id.tvfailed);
         login_btn = findViewById(R.id.login_btn);
         String EmpID = edName.getText().toString();
         String Pass = edPass.getText().toString();
 
 
 
-        context=getApplicationContext();
+
+
+
+
+        context = getApplicationContext();
         WifiManager wifiMan = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
         WifiInfo wifiInf = wifiMan.getConnectionInfo();
         int ipAddress = wifiInf.getIpAddress();
-        String ip = String.format("%d.%d.%d.%d", (ipAddress & 0xff),(ipAddress >> 8 & 0xff),(ipAddress >> 16 & 0xff),(ipAddress >> 24 & 0xff));
-       //  Log.e(TAG, "onCreate: "+ip );
+        String ip = String.format("%d.%d.%d.%d", (ipAddress & 0xff), (ipAddress >> 8 & 0xff), (ipAddress >> 16 & 0xff), (ipAddress >> 24 & 0xff));
+        //  Log.e(TAG, "onCreate: "+ip );
 
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        Map();
+        if (ContextCompat.checkSelfPermission(LoginActivity.this,Manifest.permission.ACCESS_FINE_LOCATION)!=PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(LoginActivity.this,new String[]{
+                    Manifest.permission.ACCESS_FINE_LOCATION
+            },100);
+        }
+
+
+
 
 
         //network
@@ -114,7 +126,10 @@ public class LoginActivity extends AppCompatActivity {
 
         }
 
-        EnableGPSIfPossible();
+       // EnableGPSIfPossible();
+
+
+
 
 
         login_btn.setOnClickListener(new View.OnClickListener() {
@@ -132,12 +147,10 @@ public class LoginActivity extends AppCompatActivity {
                     edPass.setError("Enter the Password");
                     edPass.requestFocus();
                     tvfailed.setVisibility(View.GONE);
-                }else {
-                    CallLogin(EmpID, Pass, Latitude, Longtitude, AddressLine,ip);
+                } else {
+                    CallLogin(EmpID, Pass, Latitude, Longtitude, AddressLine, ip);
                     // Toast.makeText(LoginActivity.this, "Incorrect Employee ID and Password", Toast.LENGTH_SHORT).show();
                 }
-
-
 
 
             }
@@ -145,49 +158,28 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    public void Map() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                requestPermissions(new String[]{
-                        Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION
-                }, 100);
-            }
-        } else {
-            fusedLocationProviderClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
-                @Override
-                public void onSuccess(Location location) {
-
-                    Geocoder geocoder = new Geocoder(LoginActivity.this, Locale.getDefault());
-                    try {
-                        List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-
-                        AddressLine=addresses.get(0).getAddressLine(0);
-                        Latitude=addresses.get(0).getLatitude();
-                        Longtitude=addresses.get(0).getLongitude();
-                        
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-
-                }
-            });
-
-        }
-    }
 
 
     private void EnableGPSIfPossible() {
         final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             buildAlertMessageNoGps();
+        }else{
+
+            Toast.makeText(context, "GPS Enabled", Toast.LENGTH_SHORT).show();
+
         }
 
     }
+
+
+
+
+
+
+
+
+
 
     private void buildAlertMessageNoGps() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -291,20 +283,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onDestroy();
         unregBroadcast();
     }
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if (requestCode == 100) {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                    != PackageManager.PERMISSION_GRANTED &&
-                    ActivityCompat.checkSelfPermission(this,
-                            Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            } else {
-                Map();
-               // Toast.makeText(LoginActivity.this, "not Access", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
+
 
 }

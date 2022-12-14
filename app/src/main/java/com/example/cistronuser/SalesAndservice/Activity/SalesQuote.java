@@ -2,29 +2,45 @@ package com.example.cistronuser.SalesAndservice.Activity;
 
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.net.Uri;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.cistronuser.API.APIClient;
 import com.example.cistronuser.API.Interface.SalesQuoteAddInterface;
 import com.example.cistronuser.API.Interface.SalesQuoteCategoryInterface;
 import com.example.cistronuser.API.Interface.SalesQuoteProductsInterFace;
+import com.example.cistronuser.API.Interface.SalesQuoteSubmitedInterface;
 import com.example.cistronuser.API.Interface.VisitEntryDoctorInterface;
 import com.example.cistronuser.API.Interface.VisitEntryGetDistrictInterface;
 import com.example.cistronuser.API.Interface.VisitEntryHospitalInterface;
@@ -39,6 +55,7 @@ import com.example.cistronuser.API.Model.VisitEntryStateModel;
 import com.example.cistronuser.API.Response.SalesQuoteAddResponse;
 import com.example.cistronuser.API.Response.SalesQuoteCategoryResponse;
 import com.example.cistronuser.API.Response.SalesQuoteProductsResponse;
+import com.example.cistronuser.API.Response.SalesQuoteSubmitedResponse;
 import com.example.cistronuser.API.Response.VisitEntryDoctorResponse;
 import com.example.cistronuser.API.Response.VisitEntryGetDistrictResponse;
 import com.example.cistronuser.API.Response.VisitEntryModelResponse;
@@ -46,18 +63,29 @@ import com.example.cistronuser.API.Response.VisityEntryStateResponse;
 import com.example.cistronuser.Common.PreferenceManager;
 import com.example.cistronuser.R;
 import com.example.cistronuser.SalesAndservice.Adapter.SalesQuoteAddonAdapter;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+
 public class SalesQuote extends AppCompatActivity {
+
 
     TextView tvDate, tvAdd, tvSubmit;
     ImageView ivBack, ivList;
+    CheckBox cbSms;
     Spinner spDistrict, spState, spDoctor, spProduct, sphospital, spCategory;
 
 
@@ -97,13 +125,28 @@ public class SalesQuote extends AppCompatActivity {
     ArrayList<SalesQuoteProductsModel> salesQuoteProductsModels = new ArrayList<>();
     ArrayList<SalesQuoteProductsAddonModel> salesQuoteProductsAddonModels = new ArrayList<>();
     ArrayList<String> strAddon = new ArrayList<>();
+    ArrayList<Integer> AddOnprice = new ArrayList<>();
     SalesQuoteAddonAdapter salesQuoteAddonAdapter;
     TextView tvPrice;
     ArrayList<String> strProduct = new ArrayList<>();
     ArrayAdapter ProductAdapter;
     RecyclerView rvProducts;
     String ProductID;
-    String AddOnID;
+    String MobileNo;
+
+    int Product;
+
+
+
+    //Address
+    double Latitude;
+    double Longtitude;
+    String AddressLine;
+    FusedLocationProviderClient fusedLocationProviderClient;
+
+    //IpAddress
+    Context context;
+    String ip;
 
 
     @Override
@@ -125,7 +168,22 @@ public class SalesQuote extends AppCompatActivity {
         tvPrice = findViewById(R.id.tvPrice);
         edAnotherMail = findViewById(R.id.edAnotherMail);
         edMail = findViewById(R.id.edMail);
+        tvSubmit = findViewById(R.id.tvSubmit);
+        cbSms=findViewById(R.id.cbSms);
 
+
+
+        //Ip Address
+        context = getApplicationContext();
+        WifiManager wifiMan = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        WifiInfo wifiInf = wifiMan.getConnectionInfo();
+        int ipAddress = wifiInf.getIpAddress();
+        ip = String.format("%d.%d.%d.%d", (ipAddress & 0xff), (ipAddress >> 8 & 0xff), (ipAddress >> 16 & 0xff), (ipAddress >> 24 & 0xff));
+
+
+        //Locations
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        //Map();
 
         //State
 
@@ -197,7 +255,11 @@ public class SalesQuote extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 ChefDocID = visitEntryDoctorModels.get(position).getId();
+                MobileNo = visitEntryDoctorModels.get(position).getMobile();
                 edMail.setText(visitEntryDoctorModels.get(position).getMail());
+
+
+
 
             }
 
@@ -206,6 +268,7 @@ public class SalesQuote extends AppCompatActivity {
 
             }
         });
+
 
         //Category
         CallCategory();
@@ -229,11 +292,6 @@ public class SalesQuote extends AppCompatActivity {
 
         //Product'
 
-        salesQuoteAddonAdapter = new SalesQuoteAddonAdapter(this, salesQuoteProductsAddonModels);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
-        rvProducts.setLayoutManager(linearLayoutManager);
-        rvProducts.setAdapter(salesQuoteAddonAdapter);
 
         ProductAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, strProduct);
         ProductAdapter.setDropDownViewResource(R.layout.spinner_dropdown);
@@ -241,33 +299,54 @@ public class SalesQuote extends AppCompatActivity {
         spProduct.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                ProductID = salesQuoteProductsModels.get(position).getProdId();
-
-                String Price;
-                Double Product = Double.valueOf(salesQuoteProductsModels.get(position).getPrice());
-                Double AddOnprice = Double.valueOf(salesQuoteProductsModels.get(position).getSalesQuoteProductsAddonModels().get(0).getPrice());
-                Price = String.valueOf(Product + AddOnprice);
-                tvPrice.setText(Price);
 
 
+                salesQuoteAddonAdapter = new SalesQuoteAddonAdapter(new SalesQuoteAddonAdapter.OnItemCheckListener() {
+                    @Override
+                    public void onItemCheck(SalesQuoteProductsAddonModel item) {
+                        strAddon.add(item.getAddonId());
+                        android.text.TextUtils.join(",", strAddon);
+                        AddOnprice.add(Integer.valueOf(item.getPrice()));
+                        Product = Integer.parseInt(salesQuoteProductsModels.get(position).getPrice());
+
+                        calcQuotePrice(AddOnprice, Product);
+
+                    }
+
+                    @Override
+                    public void onItemUncheck(SalesQuoteProductsAddonModel item) {
+
+                        strAddon.remove(item.getAddonId());
+                        android.text.TextUtils.join(",", strAddon);
+                        AddOnprice.remove(Integer.valueOf(item.getPrice()));
+                        Product = Integer.parseInt(salesQuoteProductsModels.get(position).getPrice());
+                        calcQuotePrice(AddOnprice, Product);
+
+
+                    }
+                }, SalesQuote.this, salesQuoteProductsAddonModels);
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(SalesQuote.this);
+                linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
+                rvProducts.setLayoutManager(linearLayoutManager);
+                rvProducts.setAdapter(salesQuoteAddonAdapter);
 
 
                 if (salesQuoteProductsModels.get(position).getSalesQuoteProductsAddonModels().size() > 0) {
                     rvProducts.setVisibility(View.VISIBLE);
                     salesQuoteAddonAdapter.salesQuoteProductsAddonModels = salesQuoteProductsModels.get(position).getSalesQuoteProductsAddonModels();
-                    salesQuoteProductsAddonModels = salesQuoteProductsModels.get(position).getSalesQuoteProductsAddonModels();
-                    for (int i=0;i<salesQuoteProductsAddonModels.size();i++){
-                        SalesQuoteProductsAddonModel salesQuoteProductsAddonModel=salesQuoteProductsAddonModels.get(i);
-                        AddOnID=salesQuoteProductsAddonModel.getAddonId();
-                        Log.e(TAG, "onItemSelected: "+AddOnID );
-                    }
+
 
                     salesQuoteAddonAdapter.notifyDataSetChanged();
+
                 } else {
                     rvProducts.setVisibility(View.GONE);
                 }
 
+                ProductID = salesQuoteProductsModels.get(position).getProdId();
+
+
             }
+
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -315,6 +394,19 @@ public class SalesQuote extends AppCompatActivity {
             }
         });
 
+        cbSms.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    Toast.makeText(context, MobileNo, Toast.LENGTH_SHORT).show();
+
+
+                }else {
+
+                }
+            }
+        });
+
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -324,21 +416,185 @@ public class SalesQuote extends AppCompatActivity {
         tvAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CallPreview();
+                CallPreview(android.text.TextUtils.join(",", strAddon));
+            }
+        });
+
+        tvSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+//                try {
+//
+//
+//                    boolean isfilled = true;
+//
+//                    if (tvDate.getText().toString().trim().length() == 0) {
+//                        tvDate.setError("Please Select the Date");
+//                        tvDate.requestFocus();
+//                        isfilled = false;
+//                    } else if (spState.getSelectedItemPosition() == -1) {
+//                        setSpinnerError(spState, "Please Select the State");
+//                        Log.e(TAG, "onClick: state");
+//                        isfilled = false;
+//                    } else if (sphospital.getSelectedItemPosition() == -1) {
+//                        setSpinnerError(sphospital, "Please Select the Hospital");
+//                        isfilled = false;
+//                    } else if (spDoctor.getSelectedItemPosition() == -1) {
+//                        setSpinnerError(spDoctor, "Please Select the Chef.Doctor");
+//                        isfilled = false;
+//                    } else if (spCategory.getSelectedItemPosition() == -1) {
+//                        setSpinnerError(spCategory, "Please Select the Category");
+//                        isfilled = false;
+//                    } else if (spProduct.getSelectedItemPosition() == -1) {
+//                        setSpinnerError(spProduct, "Please Select the Product");
+//                        isfilled = false;
+//                    }
+//                    if (isfilled) {
+//                        CallSalesQuoteSubmitted(android.text.TextUtils.join(",", strAddon), Latitude, Longtitude);
+//                    }
+//                } catch (Exception e) {
+//
+//                }
+                CallSalesQuoteSubmitted(android.text.TextUtils.join(",", strAddon), Latitude, Longtitude);
+
             }
         });
 
     }
 
-    private void CallPreview() {
+    private void setSpinnerError(Spinner spinner, String error) {
+        View selectedView = spinner.getSelectedView();
+        if (selectedView != null && selectedView instanceof TextView) {
+            spinner.requestFocus();
+            TextView selectedTextView = (TextView) selectedView;
+            selectedTextView.setError("error"); // any name of the error will do
+            selectedTextView.setTextColor(Color.RED); //text color in which you want your error message to be displayed
+            selectedTextView.setText(error); // actual error message
+            spinner.performClick(); // to open the spinner list if error is found.
+
+        }
+    }
+
+    private void CallSalesQuoteSubmitted(String join, double latitude, double longtitude) {
+
+
+
+        String[] str=PreferenceManager.getAddon(this).split(".");
+        Log.e(TAG, " Submit  "+str.toString()) ;
+        List addonList = Arrays.asList(str);
+
+        Log.e(TAG, " Submit  "+addonList.indexOf("565")) ;
+
+        if (addonList.contains("565")){
+            Log.e(TAG, "CallSalesQuoteSubmitted: "+addonList.contains("565") );
+            if (!addonList.contains("564")){
+                Log.e(TAG, "Please select Vaccum Pump Upgradeable Kit ") ;
+            }
+        }else {
+            Log.e(TAG, "else "+PreferenceManager.getAddon(this)) ;
+        }
+
+//        final ProgressDialog progressDialog = new ProgressDialog(this);
+//
+//        progressDialog.setMessage("Sales Quote...");
+//        progressDialog.setCancelable(false);
+//        progressDialog.show();
+//        int sms=cbSms.isChecked() ? 1:0;
+//        SalesQuoteSubmitedInterface salesQuoteSubmitedInterface = APIClient.getClient().create(SalesQuoteSubmitedInterface.class);
+//        salesQuoteSubmitedInterface.salesQuoteSubmit("generateSalesQuote", PreferenceManager.getEmpID(this), HospitalID, ChefDocID, CategoryID, ProductID, tvPrice.getText().toString(), edMail.getText().toString(),
+//                edAnotherMail.getText().toString(), sms, MobileNo, join, latitude, longtitude, ip, AddressLine).enqueue(new Callback<SalesQuoteSubmitedResponse>() {
+//            @Override
+//            public void onResponse(Call<SalesQuoteSubmitedResponse> call, Response<SalesQuoteSubmitedResponse> response) {
+//                try {
+//                    if (response.isSuccessful()) {
+//                        progressDialog.dismiss();
+//                        Toast.makeText(SalesQuote.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+//                        String Quote = response.body().getQuote();
+//                        Uri uri = Uri.parse(Quote);
+//                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+//                        startActivity(intent);
+//
+//                    }
+//
+//                } catch (Exception e) {
+//
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<SalesQuoteSubmitedResponse> call, Throwable t) {
+//
+//            }
+//        });
+
+
+    }
+
+    private void Map() {
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(new String[]{
+                        Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION
+                }, 100);
+            }
+        } else {
+            fusedLocationProviderClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
+                @Override
+                public void onSuccess(Location location) {
+
+                    Geocoder geocoder = new Geocoder(SalesQuote.this, Locale.getDefault());
+                    try {
+                        List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+
+                        AddressLine = addresses.get(0).getAddressLine(0);
+                        Latitude = addresses.get(0).getLatitude();
+                        Longtitude = addresses.get(0).getLongitude();
+
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+
+                }
+            });
+
+        }
+    }
+
+    private void calcQuotePrice(ArrayList<Integer> addOnprice, int product) {
+        int sum = 0;
+        for (int i = 0; i < addOnprice.size(); i++) {
+            sum += addOnprice.get(i);
+        }
+        sum += product;
+        String Price = String.valueOf(sum);
+        tvPrice.setText(Price);
+    }
+
+
+    private void CallPreview(String join) {
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Preview...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
 
 
         SalesQuoteAddInterface salesQuoteAddInterface = APIClient.getClient().create(SalesQuoteAddInterface.class);
-        salesQuoteAddInterface.CallPreview("salesQuotePreview", CategoryID, ProductID, HospitalID, AddOnID).enqueue(new Callback<SalesQuoteAddResponse>() {
+        salesQuoteAddInterface.CallPreview("salesQuotePreview", CategoryID, ProductID, HospitalID, join).enqueue(new Callback<SalesQuoteAddResponse>() {
             @Override
             public void onResponse(Call<SalesQuoteAddResponse> call, Response<SalesQuoteAddResponse> response) {
                 try {
                     if (response.isSuccessful()) {
+                        progressDialog.dismiss();
                         String Preview = response.body().getPreviewUrl();
                         Uri uri = Uri.parse(Preview);
                         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
@@ -382,15 +638,16 @@ public class SalesQuote extends AppCompatActivity {
 //
 //                                if (salesQuoteProductsModels.get(i).getSalesQuoteProductsAddonModels().size()>0){
 //                                    rvProducts.setVisibility(View.VISIBLE);
-//                                    Log.e(TAG, "onResponse: "+salesQuoteProductsModels.get(i).getSalesQuoteProductsAddonModels().size());
 //                                    salesQuoteAddonAdapter.salesQuoteProductsAddonModels =salesQuoteProductsModels.get(i).getSalesQuoteProductsAddonModels();
 //
-//                                    AddOnID=salesQuoteProductsModels.get(i).getSalesQuoteProductsAddonModels().get(i).getAddonId();
-//                                    Log.e(TAG, "onResponse: ", );
+//
+//
+//
 //                                    salesQuoteAddonAdapter.notifyDataSetChanged();
 //                                }else {
 //                                    rvProducts.setVisibility(View.GONE);
 //                                }
+
 
                             }
 
@@ -459,15 +716,16 @@ public class SalesQuote extends AppCompatActivity {
             @Override
             public void onResponse(Call<VisitEntryDoctorResponse> call, Response<VisitEntryDoctorResponse> response) {
                 try {
-                    if (response.body().getVisitEntryDoctorModels().size() > 0) {
+                    if (response.body().getVisitEntryDoctorModels().size()>0) {
+                        progressDialog.dismiss();
                         visitEntryDoctorModels = response.body().getVisitEntryDoctorModels();
                         strDoctor.clear();
                         for (int i = 0; i < visitEntryDoctorModels.size(); i++) {
                             strDoctor.add(visitEntryDoctorModels.get(i).getChiefDr());
                         }
                         chefDocAdapter.notifyDataSetChanged();
-                        progressDialog.dismiss();
                     } else {
+                        chefDocAdapter.notifyDataSetChanged();
                         progressDialog.dismiss();
                     }
 
@@ -592,5 +850,6 @@ public class SalesQuote extends AppCompatActivity {
             }
         });
     }
+
 
 }

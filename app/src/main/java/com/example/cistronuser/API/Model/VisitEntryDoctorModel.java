@@ -12,29 +12,15 @@ public class VisitEntryDoctorModel {
 
     @SerializedName("chiefDr")
     private String chiefDr;
+
     @SerializedName("id")
     private String id;
 
     @SerializedName("mobile")
     private String mobile;
+
     @SerializedName("mail")
     private String mail;
-
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
-
-    public String getMail() {
-        return mail;
-    }
-
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
 
     public String getChiefDr() {
         return chiefDr;
@@ -50,5 +36,21 @@ public class VisitEntryDoctorModel {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
     }
 }

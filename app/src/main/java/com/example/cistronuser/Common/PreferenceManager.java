@@ -7,7 +7,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.example.cistronuser.API.Model.LoginuserModel;
-import com.example.cistronuser.LoginActivity;
+import com.example.cistronuser.API.Model.SalesQuoteProductsAddonModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -220,6 +220,21 @@ public class PreferenceManager {
         preferences.edit().putString("company", company).apply();
     }
     public static String getEmpCompany(Context activity) {
+        SharedPreferences preferences;
+        preferences = activity.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
+        return preferences.getString("company", "");
+    }
+
+
+
+    //Category
+
+    public static void setAddOn(Activity activity, String Addon) {
+        SharedPreferences preferences;
+        preferences = activity.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
+        preferences.edit().putString("company", Addon).apply();
+    }
+    public static String getAddon(Context activity) {
         SharedPreferences preferences;
         preferences = activity.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
         return preferences.getString("company", "");

@@ -11,6 +11,8 @@ public class SalesQuoteProductsAddonModel {
 //            "addonName": "Vaccum Pump Upgradeable Kit"
 
 
+
+
     @SerializedName("addonId")
     private String addonId;
 
@@ -19,6 +21,16 @@ public class SalesQuoteProductsAddonModel {
 
     @SerializedName("price")
     private String price;
+
+    private boolean isSelected;
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
 
     public String getAddonId() {
         return addonId;
@@ -43,4 +55,6 @@ public class SalesQuoteProductsAddonModel {
     public void setPrice(String price) {
         this.price = price;
     }
+
+
 }

@@ -229,7 +229,7 @@
                             android:layout_gravity="center"
                             android:layout_margin="10dp"
                             android:background="@drawable/edittext"
-                            android:hint="E-Mail"
+                            android:hint="Mail To"
                             app:hintText="Select a Products">
 
                         </EditText>
@@ -242,10 +242,21 @@
                             android:layout_gravity="center"
                             android:layout_margin="10dp"
                             android:background="@drawable/edittext"
-                            android:hint="E-Mail"
+                            android:hint="Mail CC"
                             app:hintText="Select a Products">
 
                         </EditText>
+
+                        <CheckBox
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="30dp"
+                            android:textColor="@color/white"
+                            android:id="@+id/cbSms"
+                            android:textSize="15dp"
+                            android:fontFamily="@font/semibold"
+                            android:text="Send SMS"
+                            />
 
 
                         <RelativeLayout
@@ -261,7 +272,7 @@
                                 android:layout_marginTop="10dp"
                                 android:layout_marginBottom="20dp"
                                 android:background="@drawable/backdesign"
-                                android:backgroundTint="@color/Radio"
+                                android:backgroundTint="#C4B803"
                                 android:fontFamily="@font/semibold"
                                 android:gravity="center"
                                 android:text="Preview"
@@ -278,10 +289,10 @@
                                 android:layout_marginBottom="20dp"
                                 android:layout_marginLeft="20dp"
                                 android:background="@drawable/backdesign"
-                                android:backgroundTint="#C4B803"
                                 android:fontFamily="@font/semibold"
                                 android:gravity="center"
                                 android:text="Submit"
+                                android:backgroundTint="@color/Radio"
                                 android:textColor="@color/white"
                                 android:textSize="20dp" />
 

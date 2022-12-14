@@ -314,6 +314,7 @@
                         android:layout_marginTop="40dp"
                         android:layout_marginRight="20dp"
                         android:layout_weight="1"
+                        android:visibility="visible"
                         android:backgroundTint="#6495ED"
                         app:cardCornerRadius="20dp">
 
