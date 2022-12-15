@@ -3,8 +3,10 @@ package com.example.cistronuser.SalesAndservice.Activity;
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,17 +14,21 @@ import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -39,6 +45,7 @@ import android.widget.Toast;
 import com.example.cistronuser.API.APIClient;
 import com.example.cistronuser.API.Interface.SalesQuoteAddInterface;
 import com.example.cistronuser.API.Interface.SalesQuoteCategoryInterface;
+import com.example.cistronuser.API.Interface.SalesQuoteHospitalUpdateInterface;
 import com.example.cistronuser.API.Interface.SalesQuoteProductsInterFace;
 import com.example.cistronuser.API.Interface.SalesQuoteSubmitedInterface;
 import com.example.cistronuser.API.Interface.VisitEntryDoctorInterface;
@@ -46,6 +53,7 @@ import com.example.cistronuser.API.Interface.VisitEntryGetDistrictInterface;
 import com.example.cistronuser.API.Interface.VisitEntryHospitalInterface;
 import com.example.cistronuser.API.Interface.VisitEntryStateInterface;
 import com.example.cistronuser.API.Model.SalesQuoteCategoryModel;
+import com.example.cistronuser.API.Model.SalesQuoteHospitalUpdateModel;
 import com.example.cistronuser.API.Model.SalesQuoteProductsAddonModel;
 import com.example.cistronuser.API.Model.SalesQuoteProductsModel;
 import com.example.cistronuser.API.Model.VisitEntryDoctorModel;
@@ -54,6 +62,7 @@ import com.example.cistronuser.API.Model.VisitEntryHospitalModel;
 import com.example.cistronuser.API.Model.VisitEntryStateModel;
 import com.example.cistronuser.API.Response.SalesQuoteAddResponse;
 import com.example.cistronuser.API.Response.SalesQuoteCategoryResponse;
+import com.example.cistronuser.API.Response.SalesQuoteHospitalUpdateResponse;
 import com.example.cistronuser.API.Response.SalesQuoteProductsResponse;
 import com.example.cistronuser.API.Response.SalesQuoteSubmitedResponse;
 import com.example.cistronuser.API.Response.VisitEntryDoctorResponse;
@@ -61,12 +70,15 @@ import com.example.cistronuser.API.Response.VisitEntryGetDistrictResponse;
 import com.example.cistronuser.API.Response.VisitEntryModelResponse;
 import com.example.cistronuser.API.Response.VisityEntryStateResponse;
 import com.example.cistronuser.Common.PreferenceManager;
+import com.example.cistronuser.LoginActivity;
 import com.example.cistronuser.R;
 import com.example.cistronuser.SalesAndservice.Adapter.SalesQuoteAddonAdapter;
+import com.example.cistronuser.SalesAndservice.Adapter.SalesQuoteHospitalUpdateAdapter;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -80,7 +92,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class SalesQuote extends AppCompatActivity {
+public class SalesQuote extends AppCompatActivity implements LocationListener {
 
 
     TextView tvDate, tvAdd, tvSubmit;
@@ -133,20 +145,25 @@ public class SalesQuote extends AppCompatActivity {
     RecyclerView rvProducts;
     String ProductID;
     String MobileNo;
-
     int Product;
-
-
 
     //Address
     double Latitude;
     double Longtitude;
     String AddressLine;
-    FusedLocationProviderClient fusedLocationProviderClient;
+    LocationManager locationManager;
 
     //IpAddress
     Context context;
     String ip;
+
+    //SalesHospitalUpdateBottom
+    RecyclerView rvSalesQuoteHospitalUpdate;
+    TextView tvNodata;
+    ImageView ivBottomBack;
+    SalesQuoteHospitalUpdateAdapter salesQuoteHospitalUpdateAdapter;
+    ArrayList<SalesQuoteHospitalUpdateModel>salesQuoteHospitalUpdateModels=new ArrayList<>();
+
 
 
     @Override
@@ -173,6 +190,20 @@ public class SalesQuote extends AppCompatActivity {
 
 
 
+
+        //LocationPermission
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(getApplicationContext(),
+                android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION,
+                    android.Manifest.permission.ACCESS_COARSE_LOCATION}, 101);
+        }
+
+        //Location
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        locationEnabled();
+        getLocation();
+
         //Ip Address
         context = getApplicationContext();
         WifiManager wifiMan = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
@@ -181,12 +212,7 @@ public class SalesQuote extends AppCompatActivity {
         ip = String.format("%d.%d.%d.%d", (ipAddress & 0xff), (ipAddress >> 8 & 0xff), (ipAddress >> 16 & 0xff), (ipAddress >> 24 & 0xff));
 
 
-        //Locations
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        //Map();
-
         //State
-
         CallState();
         stateAdapter = new ArrayAdapter(this, R.layout.spinner_item, strState);
         stateAdapter.setDropDownViewResource(R.layout.spinner_dropdown);
@@ -425,43 +451,119 @@ public class SalesQuote extends AppCompatActivity {
             public void onClick(View v) {
 
 
-//                try {
-//
-//
-//                    boolean isfilled = true;
-//
-//                    if (tvDate.getText().toString().trim().length() == 0) {
-//                        tvDate.setError("Please Select the Date");
-//                        tvDate.requestFocus();
-//                        isfilled = false;
-//                    } else if (spState.getSelectedItemPosition() == -1) {
-//                        setSpinnerError(spState, "Please Select the State");
-//                        Log.e(TAG, "onClick: state");
-//                        isfilled = false;
-//                    } else if (sphospital.getSelectedItemPosition() == -1) {
-//                        setSpinnerError(sphospital, "Please Select the Hospital");
-//                        isfilled = false;
-//                    } else if (spDoctor.getSelectedItemPosition() == -1) {
-//                        setSpinnerError(spDoctor, "Please Select the Chef.Doctor");
-//                        isfilled = false;
-//                    } else if (spCategory.getSelectedItemPosition() == -1) {
-//                        setSpinnerError(spCategory, "Please Select the Category");
-//                        isfilled = false;
-//                    } else if (spProduct.getSelectedItemPosition() == -1) {
-//                        setSpinnerError(spProduct, "Please Select the Product");
-//                        isfilled = false;
-//                    }
-//                    if (isfilled) {
-//                        CallSalesQuoteSubmitted(android.text.TextUtils.join(",", strAddon), Latitude, Longtitude);
-//                    }
-//                } catch (Exception e) {
-//
-//                }
-                CallSalesQuoteSubmitted(android.text.TextUtils.join(",", strAddon), Latitude, Longtitude);
+                try {
+
+
+                    boolean isfilled = true;
+
+                    if (tvDate.getText().toString().trim().length() == 0) {
+                        tvDate.setError("Please Select the Date");
+                        tvDate.requestFocus();
+                        isfilled = false;
+                    } else if (spState.getSelectedItemPosition() == -1) {
+                        setSpinnerError(spState, "Please Select the State");
+                        Log.e(TAG, "onClick: state");
+                        isfilled = false;
+                    } else if (sphospital.getSelectedItemPosition() == -1) {
+                        setSpinnerError(sphospital, "Please Select the Hospital");
+                        isfilled = false;
+                    } else if (spDoctor.getSelectedItemPosition() == -1) {
+                        setSpinnerError(spDoctor, "Please Select the Chef.Doctor");
+                        isfilled = false;
+                    } else if (spCategory.getSelectedItemPosition() == -1) {
+                        setSpinnerError(spCategory, "Please Select the Category");
+                        isfilled = false;
+                    } else if (spProduct.getSelectedItemPosition() == -1) {
+                        setSpinnerError(spProduct, "Please Select the Product");
+                        isfilled = false;
+                    }
+                    if (isfilled) {
+                        CallSalesQuoteSubmitted(android.text.TextUtils.join(",", strAddon), Latitude, Longtitude);
+                    }
+                } catch (Exception e) {
+
+                }
 
             }
         });
 
+        ivList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CallHospitalUpdateList();
+            }
+        });
+
+    }
+
+    private void CallHospitalUpdateList() {
+        BottomSheetDialog bottomSheetDialog=new BottomSheetDialog(this);
+        bottomSheetDialog.setContentView(R.layout.sales_quote_hospital_recycleview);
+        bottomSheetDialog.setCancelable(false);
+        bottomSheetDialog.show();
+
+        rvSalesQuoteHospitalUpdate=bottomSheetDialog.findViewById(R.id.rvSalesQuoteHospitalUpdate);
+        ivBottomBack=bottomSheetDialog.findViewById(R.id.ivBack);
+        tvNodata=bottomSheetDialog.findViewById(R.id.tvNodata);
+
+
+        CallHospitalUpdateView();
+        salesQuoteHospitalUpdateAdapter=new SalesQuoteHospitalUpdateAdapter(this,salesQuoteHospitalUpdateModels);
+        LinearLayoutManager SaleQuoteUpdate=new LinearLayoutManager(this);
+        SaleQuoteUpdate.setOrientation(RecyclerView.VERTICAL);
+        rvSalesQuoteHospitalUpdate.setAdapter(salesQuoteHospitalUpdateAdapter);
+        rvSalesQuoteHospitalUpdate.setLayoutManager(SaleQuoteUpdate);
+
+        ivBottomBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bottomSheetDialog.dismiss();
+            }
+        });
+
+
+
+
+
+
+
+
+    }
+
+    private void CallHospitalUpdateView() {
+
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Sales Quote...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        SalesQuoteHospitalUpdateInterface salesQuoteHospitalUpdateInterface=APIClient.getClient().create(SalesQuoteHospitalUpdateInterface.class);
+        salesQuoteHospitalUpdateInterface.CallHospitalUpdateList("viewAvailableSalesQuote",HospitalID).enqueue(new Callback<SalesQuoteHospitalUpdateResponse>() {
+            @Override
+            public void onResponse(Call<SalesQuoteHospitalUpdateResponse> call, Response<SalesQuoteHospitalUpdateResponse> response) {
+                try {
+                    if (response.isSuccessful()){
+                        progressDialog.dismiss();
+                        if (response.body().getSalesQuoteHospitalUpdateModels()==null){
+                           tvNodata.setVisibility(View.VISIBLE);
+                           rvSalesQuoteHospitalUpdate.setVisibility(View.GONE);
+                        }else {
+                            rvSalesQuoteHospitalUpdate.setVisibility(View.VISIBLE);
+                            tvNodata.setVisibility(View.GONE);
+                            salesQuoteHospitalUpdateAdapter.salesQuoteHospitalUpdateModels = response.body().getSalesQuoteHospitalUpdateModels();
+                            salesQuoteHospitalUpdateAdapter.notifyDataSetChanged();
+                        }
+                    }
+
+                }catch (Exception e){
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SalesQuoteHospitalUpdateResponse> call, Throwable t) {
+
+            }
+        });
     }
 
     private void setSpinnerError(Spinner spinner, String error) {
@@ -478,97 +580,57 @@ public class SalesQuote extends AppCompatActivity {
     }
 
     private void CallSalesQuoteSubmitted(String join, double latitude, double longtitude) {
-
-
-
-        String[] str=PreferenceManager.getAddon(this).split(".");
-        Log.e(TAG, " Submit  "+str.toString()) ;
-        List addonList = Arrays.asList(str);
-
-        Log.e(TAG, " Submit  "+addonList.indexOf("565")) ;
-
-        if (addonList.contains("565")){
-            Log.e(TAG, "CallSalesQuoteSubmitted: "+addonList.contains("565") );
-            if (!addonList.contains("564")){
-                Log.e(TAG, "Please select Vaccum Pump Upgradeable Kit ") ;
-            }
-        }else {
-            Log.e(TAG, "else "+PreferenceManager.getAddon(this)) ;
-        }
-
-//        final ProgressDialog progressDialog = new ProgressDialog(this);
+//        String[] str=PreferenceManager.getAddon(this).split(".");
+//        Log.e(TAG, " Submit  "+str.toString()) ;
+//        List addonList = Arrays.asList(str);
 //
-//        progressDialog.setMessage("Sales Quote...");
-//        progressDialog.setCancelable(false);
-//        progressDialog.show();
-//        int sms=cbSms.isChecked() ? 1:0;
-//        SalesQuoteSubmitedInterface salesQuoteSubmitedInterface = APIClient.getClient().create(SalesQuoteSubmitedInterface.class);
-//        salesQuoteSubmitedInterface.salesQuoteSubmit("generateSalesQuote", PreferenceManager.getEmpID(this), HospitalID, ChefDocID, CategoryID, ProductID, tvPrice.getText().toString(), edMail.getText().toString(),
-//                edAnotherMail.getText().toString(), sms, MobileNo, join, latitude, longtitude, ip, AddressLine).enqueue(new Callback<SalesQuoteSubmitedResponse>() {
-//            @Override
-//            public void onResponse(Call<SalesQuoteSubmitedResponse> call, Response<SalesQuoteSubmitedResponse> response) {
-//                try {
-//                    if (response.isSuccessful()) {
-//                        progressDialog.dismiss();
-//                        Toast.makeText(SalesQuote.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-//                        String Quote = response.body().getQuote();
-//                        Uri uri = Uri.parse(Quote);
-//                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-//                        startActivity(intent);
+//        Log.e(TAG, " Submit  "+addonList.indexOf("565")) ;
 //
-//                    }
-//
-//                } catch (Exception e) {
-//
-//                }
-//
+//        if (addonList.contains("565")){
+//            Log.e(TAG, "CallSalesQuoteSubmitted: "+addonList.contains("565") );
+//            if (!addonList.contains("564")){
+//                Log.e(TAG, "Please select Vaccum Pump Upgradeable Kit ") ;
 //            }
-//
-//            @Override
-//            public void onFailure(Call<SalesQuoteSubmitedResponse> call, Throwable t) {
-//
-//            }
-//        });
+//        }else {
+//            Log.e(TAG, "else "+PreferenceManager.getAddon(this)) ;
+//        }
 
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Sales Quote...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        int sms=cbSms.isChecked() ? 1:0;
+        SalesQuoteSubmitedInterface salesQuoteSubmitedInterface = APIClient.getClient().create(SalesQuoteSubmitedInterface.class);
+        salesQuoteSubmitedInterface.salesQuoteSubmit("generateSalesQuote", PreferenceManager.getEmpID(this), HospitalID, ChefDocID, CategoryID, ProductID, tvPrice.getText().toString(), edMail.getText().toString(),
+                edAnotherMail.getText().toString(), sms, MobileNo, join, latitude, longtitude, ip, AddressLine).enqueue(new Callback<SalesQuoteSubmitedResponse>() {
+            @Override
+            public void onResponse(Call<SalesQuoteSubmitedResponse> call, Response<SalesQuoteSubmitedResponse> response) {
+                try {
+                    if (response.isSuccessful()) {
+                        progressDialog.dismiss();
+                        Toast.makeText(SalesQuote.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        String Quote = response.body().getQuote();
+                        Uri uri = Uri.parse(Quote);
+                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                        startActivity(intent);
 
-    }
-
-    private void Map() {
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                requestPermissions(new String[]{
-                        Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION
-                }, 100);
-            }
-        } else {
-            fusedLocationProviderClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
-                @Override
-                public void onSuccess(Location location) {
-
-                    Geocoder geocoder = new Geocoder(SalesQuote.this, Locale.getDefault());
-                    try {
-                        List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-
-                        AddressLine = addresses.get(0).getAddressLine(0);
-                        Latitude = addresses.get(0).getLatitude();
-                        Longtitude = addresses.get(0).getLongitude();
-
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
                     }
 
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
+                } catch (Exception e) {
 
                 }
-            });
 
-        }
+            }
+
+            @Override
+            public void onFailure(Call<SalesQuoteSubmitedResponse> call, Throwable t) {
+
+            }
+        });
+
+
     }
+
 
     private void calcQuotePrice(ArrayList<Integer> addOnprice, int product) {
         int sum = 0;
@@ -852,4 +914,73 @@ public class SalesQuote extends AppCompatActivity {
     }
 
 
+    private void locationEnabled() {
+        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        boolean gps_enabled = false;
+        boolean network_enabled = false;
+        try {
+            gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            network_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (!gps_enabled && !network_enabled) {
+            new AlertDialog.Builder(SalesQuote.this)
+                    .setTitle("Enable GPS Service")
+                    .setIcon(R.drawable.ic_baseline_location_on_24)
+                    .setMessage("Allow Cistron App to Access this device's location?")
+                    .setCancelable(false)
+                    .setPositiveButton("ALLOW", new
+                            DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                                    startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                                }
+                            })
+                    .setNegativeButton("DENY", null)
+                    .show();
+        }
+    }
+
+    void getLocation() {
+        try {
+            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 500, 5, (LocationListener) this);
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onLocationChanged(@NonNull Location location) {
+        try {
+            Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+            Latitude=addresses.get(0).getLatitude();
+            Longtitude=addresses.get(0).getLongitude();
+            AddressLine=addresses.get(0).getAddressLine(0);
+          //  Log.e(TAG, "Sales Quote onLocationChanged: "+Latitude+"--"+Longtitude+"--"+AddressLine );
+
+        } catch (Exception e) {
+        }
+    }
+
+    @Override
+    public void onLocationChanged(@NonNull List<Location> locations) {
+        LocationListener.super.onLocationChanged(locations);
+    }
+
+    @Override
+    public void onProviderEnabled(@NonNull String provider) {
+        LocationListener.super.onProviderEnabled(provider);
+    }
+
+    @Override
+    public void onProviderDisabled(@NonNull String provider) {
+        LocationListener.super.onProviderDisabled(provider);
+    }
 }

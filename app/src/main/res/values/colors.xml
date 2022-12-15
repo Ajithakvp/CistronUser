@@ -10,4 +10,28 @@
     <color name="skyblue">#87CEEB</color>
     <color name="Radio">#DD231A</color>
     <color name="blue">#083BF9</color>
+    <color name="Turquoise">#40E0D0</color>
+    <color name="yellow">#C4B803</color>
+    <color name="Ultramarine">#0437F2</color>
+
+    <color name="Burgundy">#800020</color>
+    <color name="DarkBrown">#5C4033</color>
+    <color name="DarkRed">#8B0000</color>
+    <color name="liteYellow">#F0E68C</color>
+
+    <color name="Wheat">#F5DEB3</color>
+    <color name="AshGray">#B2BEB5</color>
+    <color name="bluegray">#7393B3</color>
+    <color name="darkGreen">#023020</color>
+
+    <color name="BrightOrange">#FFAC1C</color>
+    <color name="GoldYellow">#FFC000</color>
+    <color name="RoseRed">#C21E56</color>
+    <color name="CreamWhite">#FFFDD0</color>
+
+    <color name="whiteLite1">#FAF9F6</color>
+    <color name="whiteLite2">#E2DFD2</color>
+    <color name="whiteLite3">#F3E5AB</color>
+    <color name="whiteLite4">#FFFFF0</color>
+
 </resources>

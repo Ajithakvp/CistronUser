@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/tvDateTag"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/latest"
+                    android:text="Date             :"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:id="@+id/tvDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/DarkRed"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/tvDateTag"
+                    android:fontFamily="@font/semibold"
+                    android:text="12-22-2222"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:id="@+id/tvStatusTag"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@id/tvDate"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/latest"
+                    android:text="Staus            :"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:id="@+id/tvStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/DarkRed"
+                    android:layout_below="@id/tvDate"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/tvStatusTag"
+                    android:fontFamily="@font/semibold"
+                    android:text="No-Requirement"
+                    android:textSize="16dp" />
+
+
+                <TextView
+                    android:id="@+id/tvRemarkTag"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@id/tvStatus"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/latest"
+                    android:text="Remark       :"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:id="@+id/tvRemark"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/DarkRed"
+                    android:layout_below="@id/tvStatus"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/tvRemarkTag"
+                    android:fontFamily="@font/semibold"
+                    android:text="No-Requirement"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:id="@+id/tvUpdateTag"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@id/tvRemark"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/latest"
+                    android:text="UpdateBy   :"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:id="@+id/tvUpdateby"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/DarkRed"
+                    android:layout_below="@id/tvRemark"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/tvUpdateTag"
+                    android:fontFamily="@font/semibold"
+                    android:text="VELMURUGAN P (E367)"
+                    android:textSize="16dp" />
+
+
+
+            </RelativeLayout>
+
+
+
+
+
+        </androidx.cardview.widget.CardView>
+
+
+
+    </RelativeLayout>
+
+
+
+
+</RelativeLayout>

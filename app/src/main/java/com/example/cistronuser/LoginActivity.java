@@ -56,7 +56,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements LocationListener{
 
 
     BroadcastReceiver broadcastReceiver;
@@ -91,8 +91,18 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
+        //LocationPermission
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(getApplicationContext(),
+                android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION,
+                    android.Manifest.permission.ACCESS_COARSE_LOCATION}, 101);
+        }
 
-
+        //Location
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        locationEnabled();
+        getLocation();
 
 
         context = getApplicationContext();
@@ -101,14 +111,6 @@ public class LoginActivity extends AppCompatActivity {
         int ipAddress = wifiInf.getIpAddress();
         String ip = String.format("%d.%d.%d.%d", (ipAddress & 0xff), (ipAddress >> 8 & 0xff), (ipAddress >> 16 & 0xff), (ipAddress >> 24 & 0xff));
         //  Log.e(TAG, "onCreate: "+ip );
-
-        if (ContextCompat.checkSelfPermission(LoginActivity.this,Manifest.permission.ACCESS_FINE_LOCATION)!=PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(LoginActivity.this,new String[]{
-                    Manifest.permission.ACCESS_FINE_LOCATION
-            },100);
-        }
-
-
 
 
 
@@ -126,7 +128,7 @@ public class LoginActivity extends AppCompatActivity {
 
         }
 
-       // EnableGPSIfPossible();
+
 
 
 
@@ -158,51 +160,48 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-
-
-    private void EnableGPSIfPossible() {
-        final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            buildAlertMessageNoGps();
-        }else{
-
-            Toast.makeText(context, "GPS Enabled", Toast.LENGTH_SHORT).show();
-
+    private void locationEnabled() {
+        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        boolean gps_enabled = false;
+        boolean network_enabled = false;
+        try {
+            gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        try {
+            network_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (!gps_enabled && !network_enabled) {
+            new AlertDialog.Builder(LoginActivity.this)
+                    .setTitle("Enable GPS Service")
+                    .setIcon(R.drawable.ic_baseline_location_on_24)
+                    .setMessage("Allow Cistron App to Access this device's location?")
+                    .setCancelable(false)
+                    .setPositiveButton("ALLOW", new
+                            DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                                    startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                                }
+                            })
+                    .setNegativeButton("DENY", null)
+                    .show();
+        }
+    }
 
+    void getLocation() {
+        try {
+            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 500, 5, (LocationListener) this);
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        }
     }
 
 
-
-
-
-
-
-
-
-
-    private void buildAlertMessageNoGps() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Yout GPS seems to be disabled, do you want to enable it?")
-                .setIcon(R.drawable.ic_baseline_location_on_24)
-                .setTitle(" Check Your GPS Services   ")
-                .setCancelable(false)
-
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
-                        Toast.makeText(LoginActivity.this, "GPS Enabled", Toast.LENGTH_SHORT).show();
-
-                        startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-                    }
-                })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
-                        dialog.cancel();
-                    }
-                });
-        final AlertDialog alert = builder.create();
-        alert.show();
-    }
 
 
     private void CallLogin(String empID, String pass, double latitude, double longtitude, String addressLine, String ip) {
@@ -210,6 +209,7 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setMessage("Employee Login...");
         progressDialog.setCancelable(false);
         progressDialog.show();
+        //Log.e(TAG, "Login: "+latitude+"--"+longtitude+"--"+addressLine );
         LoginInterFace loginInterFace=APIClient.getClient().create(LoginInterFace.class);
         loginInterFace.getUserLogin("login",edName.getText().toString(),edPass.getText().toString(),latitude,longtitude,addressLine,strDeviceName,ip).enqueue(new Callback<LoginuserModel>() {
             @Override
@@ -285,5 +285,32 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onLocationChanged(@NonNull Location location) {
+        try {
+            Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+            Latitude=addresses.get(0).getLatitude();
+            Longtitude=addresses.get(0).getLongitude();
+            AddressLine=addresses.get(0).getAddressLine(0);
+            //Log.e(TAG, "onLocationChanged: "+Latitude+"--"+Longtitude+"--"+AddressLine );
 
+        } catch (Exception e) {
+        }
+    }
+
+    @Override
+    public void onLocationChanged(@NonNull List<Location> locations) {
+        LocationListener.super.onLocationChanged(locations);
+    }
+
+    @Override
+    public void onProviderEnabled(@NonNull String provider) {
+        LocationListener.super.onProviderEnabled(provider);
+    }
+
+    @Override
+    public void onProviderDisabled(@NonNull String provider) {
+        LocationListener.super.onProviderDisabled(provider);
+    }
 }

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+
+        <RelativeLayout
+            android:id="@+id/rltoolbar"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="#6495ED">
+
+            <TextView
+                android:id="@+id/tvHeader"
+                style="@style/header"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/bold"
+                android:text="Sales Quote List"
+                android:textColor="@color/white"
+                android:textSize="20dp" />
+
+            <ImageView
+                android:id="@+id/ivBack"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="35dp"
+                android:layout_toLeftOf="@id/tvHeader"
+                android:backgroundTint="@color/white"
+                android:src="@drawable/ic_baseline_expand_circle_down_24"
+                android:tint="@color/white"
+                tools:ignore="UseAppTint" />
+
+
+            <ImageView
+                android:id="@+id/ivList"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="35dp"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@id/tvHeader"
+                android:backgroundTint="@color/white"
+                android:src="@drawable/ic_baseline_view_list_24"
+                android:tint="@color/white"
+                android:visibility="gone"
+                tools:ignore="UseAppTint" />
+
+
+        </RelativeLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:textSize="30dp"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="100dp"
+            android:layout_marginBottom="100dp"
+            android:text="No Data Found"
+            android:layout_below="@id/rltoolbar"
+            android:textColor="@color/Radio"
+            android:visibility="gone"
+            android:id="@+id/tvNodata"
+            android:layout_height="wrap_content">
+
+
+        </TextView>
+
+
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:id="@+id/rvSalesQuoteHospitalUpdate"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:visibility="gone"
+            android:layout_below="@id/rltoolbar"
+            android:layout_height="wrap_content">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:id="@+id/tvSubmit"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/backdesign"
+            android:text="Submit"
+            android:visibility="gone"
+            android:textColor="@color/white"
+            android:textSize="25dp"
+            android:fontFamily="@font/bold"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rvSalesQuoteHospitalUpdate"/>
+
+
+    </RelativeLayout>
+
+</androidx.core.widget.NestedScrollView>

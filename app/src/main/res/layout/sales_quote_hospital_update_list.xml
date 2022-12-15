@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:backgroundTint="@color/white"
+            app:cardCornerRadius="10dp">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp">
+
+
+                <RelativeLayout
+                    android:id="@+id/rlEmployee"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/blue"
+                    android:padding="10dp"
+                    android:visibility="visible">
+
+
+                    <TextView
+                        android:id="@+id/tvName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/bold"
+                        android:text="Velmurugan P(E367)"
+                        android:textColor="@color/CreamWhite"
+                        android:textSize="20dp" />
+
+
+                </RelativeLayout>
+
+
+                <TextView
+                    android:id="@+id/tvDateTag"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/rlEmployee"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/latest"
+                    android:text="Date        :"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:id="@+id/tvDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/rlEmployee"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/DarkRed"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/tvDateTag"
+                    android:fontFamily="@font/semibold"
+                    android:text="12-22-2222"
+                    android:textSize="16dp" />
+
+
+                <TextView
+                    android:id="@+id/tvQuoteTag"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvDate"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/latest"
+                    android:text="Quote     :"
+                    android:textSize="16dp" />
+
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:id="@+id/rlQuote"
+                    android:layout_toRightOf="@id/tvQuoteTag"
+                    android:layout_below="@id/tvDate"
+                    android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/fileopen"
+                    android:id="@+id/ivFile"/>
+
+                <TextView
+                    android:id="@+id/tvQuote"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="15dp"
+                    android:textColor="@color/DarkRed"
+                    android:layout_toRightOf="@id/ivFile"
+                    android:fontFamily="@font/semibold"
+                    android:text="CIS/TN/22L/0001"
+                    android:textSize="16dp" />
+
+                </RelativeLayout>
+                <TextView
+                    android:id="@+id/tvProductTag"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/rlQuote"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/latest"
+                    android:text="Product :"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:id="@+id/tvProduct"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/rlQuote"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/tvProductTag"
+                    android:fontFamily="@font/semibold"
+                    android:textColor="@color/DarkRed"
+                    android:text="B-Sterile : Automatic Steam Sterilizer - 16x24 Single Door | BST05"
+                    android:textSize="16dp" />
+
+
+                <TextView
+                    android:id="@+id/tvStatusTag"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvProduct"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/latest"
+                    android:text="Status    :"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:id="@+id/tvStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvProduct"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/tvStatusTag"
+                    android:fontFamily="@font/semibold"
+                    android:padding="5dp"
+                    android:text="Update"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16dp" />
+
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+</RelativeLayout>
