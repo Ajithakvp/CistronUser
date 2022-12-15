@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -9,19 +10,32 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+           android:padding="5dp"
+            app:cardCornerRadius="10dp">
             <RelativeLayout
                 android:layout_width="match_parent"
+                android:layout_marginBottom="10dp"
                 android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:id="@+id/rlDate"
+                    android:background="@color/Burgundy"
+
+                    android:layout_marginBottom="10dp"
+                    android:padding="10dp"
+                    android:layout_height="wrap_content">
                 <TextView
                     android:id="@+id/tvDateTag"
-                    android:layout_width="100dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:fontFamily="@font/latest"
-                    android:text="Date             :"
+                    android:text="Date : "
                     android:textSize="16dp" />
 
                 <TextView
@@ -29,12 +43,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:textColor="@color/DarkRed"
+                    android:textColor="@color/white"
                     android:layout_marginTop="10dp"
                     android:layout_toRightOf="@id/tvDateTag"
                     android:fontFamily="@font/semibold"
                     android:text="12-22-2222"
                     android:textSize="16dp" />
+                </RelativeLayout>
 
                 <TextView
                     android:id="@+id/tvStatusTag"
@@ -42,7 +57,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
-                    android:layout_below="@id/tvDate"
+                    android:layout_below="@id/rlDate"
                     android:textColor="@color/black"
                     android:fontFamily="@font/latest"
                     android:text="Staus            :"
@@ -54,7 +69,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:textColor="@color/DarkRed"
-                    android:layout_below="@id/tvDate"
+                    android:layout_below="@id/rlDate"
                     android:layout_marginTop="10dp"
                     android:layout_toRightOf="@id/tvStatusTag"
                     android:fontFamily="@font/semibold"
