@@ -33,6 +33,7 @@ import com.example.cistronuser.API.Response.SaleQuoteExistingUpdateResponse;
 import com.example.cistronuser.API.Response.SalesQuoteUpdateStatusResponse;
 import com.example.cistronuser.Common.PreferenceManager;
 import com.example.cistronuser.R;
+import com.example.cistronuser.SalesAndservice.Activity.FinalizeNow;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -157,8 +158,8 @@ public class SalesQuoteHospitalUpdateAdapter extends RecyclerView.Adapter<SalesQ
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             if (salesQuoteStausModels.get(position).getStatus().trim().equals("Finalize now")){
                                 Toast.makeText(activity,salesQuoteStausModels.get(position).getStatus(), Toast.LENGTH_SHORT).show();
-//                                Intent intent=new Intent(activity, LeaveReport.class);
-//                                activity.startActivity(intent);
+                                Intent intent=new Intent(activity, FinalizeNow.class);
+                                activity.startActivity(intent);
                             }
 
                         }
