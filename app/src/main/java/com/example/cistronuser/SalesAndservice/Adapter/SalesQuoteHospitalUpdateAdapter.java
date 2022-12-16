@@ -2,17 +2,22 @@ package com.example.cistronuser.SalesAndservice.Adapter;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,12 +25,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cistronuser.API.APIClient;
 import com.example.cistronuser.API.Interface.SaleQuoteExistingUpdateInterface;
+import com.example.cistronuser.API.Interface.SalesQuoteUpdateStatusInterface;
 import com.example.cistronuser.API.Model.SaleQuoteExistingUpdateModel;
 import com.example.cistronuser.API.Model.SalesQuoteHospitalUpdateModel;
+import com.example.cistronuser.API.Model.SalesQuoteStausModel;
 import com.example.cistronuser.API.Response.SaleQuoteExistingUpdateResponse;
+import com.example.cistronuser.API.Response.SalesQuoteUpdateStatusResponse;
+import com.example.cistronuser.Common.PreferenceManager;
 import com.example.cistronuser.R;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,6 +52,12 @@ public class SalesQuoteHospitalUpdateAdapter extends RecyclerView.Adapter<SalesQ
     EditText edRemark;
     SalesQuoteExistingAdapter salesQuoteExistingAdapter;
     ArrayList<SaleQuoteExistingUpdateModel>saleQuoteExistingUpdateModels=new ArrayList<>();
+
+    //Status
+    ArrayList<SalesQuoteStausModel>salesQuoteStausModels=new ArrayList<>();
+    ArrayList<String>strStatus=new ArrayList<>();
+    ArrayAdapter statusAdapter;
+    String StatusID;
     
     //Dialog End
     
@@ -106,15 +122,100 @@ public class SalesQuoteHospitalUpdateAdapter extends RecyclerView.Adapter<SalesQ
                     linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
                     rvExistingStatus.setAdapter(salesQuoteExistingAdapter);
                     rvExistingStatus.setLayoutManager(linearLayoutManager);
+
+
+
+                    //Status
+                    strStatus.clear();
+                    salesQuoteStausModels.clear();
+                    SalesQuoteStausModel Requirement=new SalesQuoteStausModel();
+                    Requirement.setStatus("No Requirement");
+                    salesQuoteStausModels.add(Requirement);
+
+                    SalesQuoteStausModel Recev=new SalesQuoteStausModel();
+                    Recev.setStatus("Received PO");
+                    salesQuoteStausModels.add(Recev);
+
+
+                    SalesQuoteStausModel Final=new SalesQuoteStausModel();
+                    Final.setStatus("Finalize now");
+                    salesQuoteStausModels.add(Final);
+
+
+                    for (int i=0;i<salesQuoteStausModels.size();i++){
+                        strStatus.add(salesQuoteStausModels.get(i).getStatus());
+                    }
+
+
+
+
+                    statusAdapter=new ArrayAdapter<>(activity,R.layout.spinner_item,strStatus);
+                    statusAdapter.setDropDownViewResource(R.layout.spinner_dropdown);
+                    spStatus.setAdapter(statusAdapter);
+                    spStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            if (salesQuoteStausModels.get(position).getStatus().trim().equals("Finalize now")){
+                                Toast.makeText(activity,salesQuoteStausModels.get(position).getStatus(), Toast.LENGTH_SHORT).show();
+//                                Intent intent=new Intent(activity, LeaveReport.class);
+//                                activity.startActivity(intent);
+                            }
+
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+
+                        }
+                    });
+
+
+
                     ivClose.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             dialog.dismiss();
                         }
                     });
-                    
-                    
-                    
+                    tvDate.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Calendar calendar = Calendar.getInstance();
+                            int year = calendar.get(Calendar.YEAR);
+                            int month = calendar.get(Calendar.MONTH);
+                            int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+                            DatePickerDialog datePickerDialog = new DatePickerDialog(activity, new DatePickerDialog.OnDateSetListener() {
+                                @Override
+                                public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                                    String moth, dt;
+
+                                    moth = ((month + 1) > 9) ? "" + (month + 1) : ("0" + (month + 1));
+
+                                    dt = (day > 9) ? "" + day : ("0" + day);
+
+
+                                    String strDate = year + "-" + moth + "-" + dt;
+                                    tvDate.setText(strDate);
+
+                                }
+
+                            }, year, month, dayOfMonth);
+
+                            datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis() - 1000);
+
+
+                            datePickerDialog.show();
+
+                        }
+                    });
+
+                    tvSubmit.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            CallUpdateStatus(salesQuoteHospitalUpdateModels.get(position).getQuoteId(),dialog);
+                        }
+                    });
+
                 }
             });
         }else {
@@ -122,6 +223,31 @@ public class SalesQuoteHospitalUpdateAdapter extends RecyclerView.Adapter<SalesQ
             holder.tvStatus.setBackgroundColor(R.color.Radio);
         }
 
+    }
+
+    private void CallUpdateStatus(String quoteId, Dialog dialog) {
+        StatusID=spStatus.getSelectedItem().toString();
+        SalesQuoteUpdateStatusInterface salesQuoteUpdateStatusInterface=APIClient.getClient().create(SalesQuoteUpdateStatusInterface.class);
+        salesQuoteUpdateStatusInterface.callUpdatestatus("updateStatus",quoteId,tvDate.getText().toString(),StatusID,edRemark.getText().toString(), PreferenceManager.getEmpID(activity)).enqueue(new Callback<SalesQuoteUpdateStatusResponse>() {
+            @Override
+            public void onResponse(Call<SalesQuoteUpdateStatusResponse> call, Response<SalesQuoteUpdateStatusResponse> response) {
+
+                try {
+                    if (response.isSuccessful()){
+                        Toast.makeText(activity, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                    }
+
+                }catch (Exception e){
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SalesQuoteUpdateStatusResponse> call, Throwable t) {
+
+            }
+        });
     }
 
     private void CallExistingList(String quoteId) {
