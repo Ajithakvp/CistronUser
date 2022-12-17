@@ -98,7 +98,7 @@
                         </com.google.android.material.textfield.TextInputLayout>
 
                         <TextView
-                            android:id="@+id/tvDate"
+                            android:id="@+id/tvPODate"
                             android:layout_width="match_parent"
                             android:layout_height="60dp"
                             android:layout_marginLeft="8dp"
@@ -128,13 +128,36 @@
                             android:textSize="18dp"
                             android:visibility="visible" />
 
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/tvSameAddress"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginTop="13dp"
+                                android:fontFamily="@font/semibold"
+                                android:text="Same Address :"
+                                android:textColor="@color/RoseRed"
+                                android:textSize="18dp" />
+
+                            <CheckBox
+                                android:id="@+id/cbSameAddress"
+                                android:layout_width="wrap_content"
+                                android:checked="true"
+                                android:layout_height="wrap_content"
+                                android:layout_toRightOf="@id/tvSameAddress" />
+                        </RelativeLayout>
+
 
                         <TextView
                             android:id="@+id/tvAddress"
                             android:layout_width="match_parent"
                             android:layout_height="60dp"
                             android:layout_marginLeft="8dp"
-                            android:layout_marginTop="18dp"
+                            android:layout_marginTop="1dp"
                             android:layout_marginRight="8dp"
                             android:background="@drawable/edittext"
                             android:backgroundTint="@color/whiteLite2"
@@ -317,7 +340,7 @@
                             android:hint="Deposited Date"
                             android:textColor="@color/black"
                             android:textSize="18dp"
-                            android:visibility="visible" />
+                            android:visibility="gone" />
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/tvpaymentBforeDispatch"
@@ -405,6 +428,16 @@
                                 android:layout_height="40dp"
                                 android:layout_toRightOf="@id/tvInstall"
                                 android:src="@drawable/ic_baseline_add_box_24" />
+                            <LinearLayout
+                                android:id="@+id/layout_list"
+                                android:layout_below="@id/ivAdd"
+                                android:layout_width="match_parent"
+                                android:layout_marginTop="10dp"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                            </LinearLayout>
+
                         </RelativeLayout>
 
 
@@ -448,20 +481,21 @@
                                 android:id="@+id/edWarrenty"
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
+                                android:layout_marginLeft="8dp"
+                                android:layout_toRightOf="@id/tvWarrenty"
                                 android:background="@drawable/edittext"
                                 android:backgroundTint="@color/whiteLite2"
                                 android:fontFamily="@font/semibold"
+                                android:gravity="center"
                                 android:textColor="@color/black"
-                                android:layout_marginLeft="8dp"
-                                android:textSize="15dp"
-                                android:layout_toRightOf="@id/tvWarrenty" />
+                                android:textSize="15dp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_below="@id/edWarrenty"
                                 android:layout_marginLeft="8dp"
                                 android:layout_marginTop="11dp"
-                                android:layout_below="@id/edWarrenty"
                                 android:fontFamily="@font/semibold"
                                 android:text="Months from the date of Installation / Supply-Whichever is earlier"
                                 android:textColor="@color/Radio"
@@ -472,8 +506,8 @@
 
                         <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_marginTop="10dp"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp">
 
 
                             <com.google.android.material.textfield.TextInputLayout
@@ -520,29 +554,24 @@
                             android:layout_height="wrap_content">
 
 
-
                             <TextView
                                 android:id="@+id/tvSubmit"
-                                android:layout_width="150dp"
+                                android:layout_width="200dp"
                                 android:layout_height="50dp"
+                                android:layout_centerHorizontal="true"
                                 android:layout_marginLeft="30dp"
                                 android:layout_marginTop="25dp"
+                                android:layout_marginBottom="30dp"
                                 android:background="@drawable/size"
                                 android:backgroundTint="#6495ED"
-                                android:layout_centerHorizontal="true"
                                 android:fontFamily="@font/bold"
                                 android:gravity="center"
                                 android:text="create order call"
-                                android:layout_marginBottom="30dp"
                                 android:textColor="@color/white"
                                 android:textSize="20dp" />
 
 
-
-
                         </RelativeLayout>
-
-
 
 
                     </LinearLayout>
