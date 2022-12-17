@@ -88,6 +88,8 @@ public class SalesQuoteHospitalUpdateAdapter extends RecyclerView.Adapter<SalesQ
         holder.tvProduct.setText(salesQuoteHospitalUpdateModels.get(position).getProduct());
         holder.tvStatus.setText(salesQuoteHospitalUpdateModels.get(position).getStatus());
         String QuotePdf=salesQuoteHospitalUpdateModels.get(position).getQuote();
+        String QuoteID=salesQuoteHospitalUpdateModels.get(position).getQuoteId();
+        String Product=salesQuoteHospitalUpdateModels.get(position).getProduct();
 
 
         holder.rlQuote.setOnClickListener(new View.OnClickListener() {
@@ -159,6 +161,9 @@ public class SalesQuoteHospitalUpdateAdapter extends RecyclerView.Adapter<SalesQ
                             if (salesQuoteStausModels.get(position).getStatus().trim().equals("Finalize now")){
                                 Toast.makeText(activity,salesQuoteStausModels.get(position).getStatus(), Toast.LENGTH_SHORT).show();
                                 Intent intent=new Intent(activity, FinalizeNow.class);
+                                intent.putExtra("QuoteID",QuoteID);
+                                intent.putExtra("QuotePDF",QuotePdf);
+                                intent.putExtra("Product",Product);
                                 activity.startActivity(intent);
                             }
 

@@ -1,7 +1,12 @@
 package com.example.cistronuser.SalesAndservice.Activity;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+import static okhttp3.RequestBody.create;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NavUtils;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -12,8 +17,10 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -25,25 +32,41 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.cistronuser.API.APIClient;
+import com.example.cistronuser.API.Interface.SalesQuoteContactPersonInterface;
+import com.example.cistronuser.API.Interface.SalesQuotesUpdateFinalizeInteface;
+import com.example.cistronuser.API.Model.EditTextModel;
+import com.example.cistronuser.API.Response.SalesQuoteContactPersonResponse;
+import com.example.cistronuser.API.Response.SalesQuotesUpdateFinalizeResponse;
+import com.example.cistronuser.Common.FileUtli;
+import com.example.cistronuser.Common.PreferenceManager;
 import com.example.cistronuser.R;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class FinalizeNow extends AppCompatActivity {
 
 
-    File file;
+    File filePdf;
     String filename;
-    CheckBox cbDeposited,cbSameAddress;
-    TextView tvDepositedDate, tvPODate, tvAttach, tvAddress, tvQty, tvDeliveySchedule, tvSubmit;
+    CheckBox cbDeposited, cbSameAddress;
+    TextView tvProduct, tvDepositedDate, tvPODate, tvDeliveryAddress, tvAttach, tvAddress, tvQty, tvDeliveySchedule, tvSubmit;
     EditText edPOR, edName, edMobile, edQus, edOrderValue, edAdvanceValue, edpaymentBforeDispatch, edpaymentaterDispatch, edpaymentOnInstalltion,
             edRemarkPayment, edWarrenty, edSpecialRemark;
     Spinner spPerson;
     LinearLayout layout_list;
-    ImageView ivAdd;
+    ImageView ivAdd, ivFileVIew;
 
     //AddEditText
     EditText edAmount;
@@ -51,6 +74,11 @@ public class FinalizeNow extends AppCompatActivity {
 
     //ContactPerson
     ArrayAdapter personContact;
+    String PersonId;
+    String QuotePDF;
+    String Product;
+    String quoteID;
+
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -81,7 +109,11 @@ public class FinalizeNow extends AppCompatActivity {
         ivAdd = findViewById(R.id.ivAdd);
         tvDeliveySchedule = findViewById(R.id.tvDeliveySchedule);
         tvSubmit = findViewById(R.id.tvSubmit);
-        cbSameAddress=findViewById(R.id.cbSameAddress);
+        cbSameAddress = findViewById(R.id.cbSameAddress);
+        ImageView ivBack = findViewById(R.id.ivBack);
+        ivFileVIew = findViewById(R.id.ivFileVIew);
+        tvDeliveryAddress = findViewById(R.id.tvDeliveryAddress);
+        tvProduct = findViewById(R.id.tvProduct);
 
 
         //File Access Permission
@@ -91,12 +123,60 @@ public class FinalizeNow extends AppCompatActivity {
                 PackageManager.PERMISSION_GRANTED);
 
 
+        //*********Contact person ********//
+        String QuoteID = getIntent().getStringExtra("QuoteID");
+        SalesQuoteContactPersonInterface contactPersonInterface = APIClient.getClient().create(SalesQuoteContactPersonInterface.class);
+        contactPersonInterface.callContact("viewSalesQuote", QuoteID).enqueue(new Callback<SalesQuoteContactPersonResponse>() {
+            @Override
+            public void onResponse(Call<SalesQuoteContactPersonResponse> call, Response<SalesQuoteContactPersonResponse> response) {
+                try {
+                    if (response.isSuccessful()) {
+                        QuotePDF = response.body().getQuote_pdf();
+                        Product = response.body().getProduct();
+                        Log.e(TAG, "onResponse: "+Product );
+                        quoteID = response.body().getQuoteId();
+                        String per=response.body().getCon_prefix();
+                        spPerson.setSelection(Integer.parseInt(per));
+                        edName.setText(response.body().getCon_person());
+                        edMobile.setText(response.body().getMobile());
+                        tvProduct.setText(Product);
+                        tvAddress.setText(response.body().getAddress());
+
+
+                    }
+
+                } catch (Exception e) {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SalesQuoteContactPersonResponse> call, Throwable t) {
+
+            }
+        });
+
+
+        //GetString
+        tvProduct.setText(Product);
+
         //Contact Person
 
         String[] contact = {"Dr", "Mr", "Ms", "Mrs"};
         personContact = new ArrayAdapter(this, R.layout.spinner_item, contact);
         personContact.setDropDownViewResource(R.layout.spinner_dropdown);
         spPerson.setAdapter(personContact);
+        spPerson.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                PersonId = spPerson.getSelectedItem().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
 
         cbDeposited.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -114,6 +194,15 @@ public class FinalizeNow extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AddEditText();
+            }
+        });
+
+        ivFileVIew.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri uri = Uri.parse(QuotePDF);
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
             }
         });
         tvDepositedDate.setOnClickListener(new View.OnClickListener() {
@@ -134,7 +223,7 @@ public class FinalizeNow extends AppCompatActivity {
 
 
                         String strDate = year + "-" + moth + "-" + dt;
-                        tvDeliveySchedule.setText(strDate);
+                        tvDepositedDate.setText(strDate);
 
                     }
 
@@ -144,6 +233,12 @@ public class FinalizeNow extends AppCompatActivity {
 
 
                 datePickerDialog.show();
+            }
+        });
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
             }
         });
 
@@ -212,10 +307,8 @@ public class FinalizeNow extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    String[] mimeTypes = {"image/*", "application/pdf"};
                     Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                    intent.setType("image/*|application/pdf");
-                    intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
+                    intent.setType("*/*");
                     startActivityForResult(intent, 1);
                 } catch (Exception e) {
 
@@ -225,18 +318,72 @@ public class FinalizeNow extends AppCompatActivity {
         cbSameAddress.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
+                if (isChecked) {
                     Toast.makeText(FinalizeNow.this, "Same Address", Toast.LENGTH_SHORT).show();
-                }else {
-                    Dialog dialog=new Dialog(FinalizeNow.this);
+                } else {
+                    Dialog dialog = new Dialog(FinalizeNow.this);
                     dialog.setContentView(R.layout.another_address_dialog);
-                    ImageView ivClose=dialog.findViewById(R.id.ivClose);
                     dialog.show();
 
-                    ivClose.setOnClickListener(new View.OnClickListener() {
+                }
+            }
+        });
+
+        tvSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (filePdf == null) {
+                    Toast.makeText(FinalizeNow.this, "Please Upload File", Toast.LENGTH_SHORT).show();
+                } else {
+                    int sameAddr = cbSameAddress.isChecked() ? 1 : 0;
+                    int Depos = cbDeposited.isChecked() ? 1 : 0;
+
+
+                    RequestBody Action = create(MediaType.parse("text/plain"), "finalSubmit");
+                    RequestBody EmpId = create(MediaType.parse("text/plain"), PreferenceManager.getEmpID(FinalizeNow.this));
+                    RequestBody QuoteId = create(MediaType.parse("text/plain"), quoteID);
+                    RequestBody PoRef = create(MediaType.parse("text/plain"), edPOR.getText().toString());
+                    RequestBody PoDate = create(MediaType.parse("text/plain"), tvPODate.getText().toString());
+                    RequestBody Billing_opt = create(MediaType.parse("text/plain"), String.valueOf(sameAddr));
+                    RequestBody BillingAddress = create(MediaType.parse("text/plain"), tvAddress.getText().toString());
+                    RequestBody BillingAnother = create(MediaType.parse("text/plain"), tvDeliveryAddress.getText().toString());
+                    RequestBody Con_pre = create(MediaType.parse("text/plain"), PersonId);
+                    RequestBody Con_name = create(MediaType.parse("text/plain"), edName.getText().toString());
+                    RequestBody Con_no = create(MediaType.parse("text/plain"), edMobile.getText().toString());
+                    RequestBody Pro_spec = create(MediaType.parse("text/plain"), edQus.getText().toString());
+                    RequestBody Order_value = create(MediaType.parse("text/plain"), edOrderValue.getText().toString());
+                    RequestBody Advance_value = create(MediaType.parse("text/plain"), edAdvanceValue.getText().toString());
+                    RequestBody Deposit = create(MediaType.parse("text/plain"), String.valueOf(Depos));
+                    RequestBody Deposit_date = create(MediaType.parse("text/plain"), tvDepositedDate.getText().toString());
+                    RequestBody Pay_bef_dispatch = create(MediaType.parse("text/plain"), edpaymentBforeDispatch.getText().toString());
+                    RequestBody Pay_aft_dispatch = create(MediaType.parse("text/plain"), edpaymentaterDispatch.getText().toString());
+                    RequestBody Pay_on_install = create(MediaType.parse("text/plain"), edpaymentOnInstalltion.getText().toString());
+                    RequestBody Installments = create(MediaType.parse("text/plain"), edAmount.getText().toString());
+                    RequestBody Install_terms = create(MediaType.parse("text/plain"), edRemarkPayment.getText().toString());
+                    RequestBody Spl_remarks = create(MediaType.parse("text/plain"), edSpecialRemark.getText().toString());
+                    RequestBody Warranty = create(MediaType.parse("text/plain"), edWarrenty.getText().toString());
+                    RequestBody Delivery_date = create(MediaType.parse("text/plain"), tvDeliveySchedule.getText().toString());
+                    RequestBody requestFile = create(MediaType.parse("multipart/form-data"), filePdf);
+                    MultipartBody.Part POPDF = MultipartBody.Part.createFormData("poPdf", filePdf.getName(), requestFile);
+
+                    SalesQuotesUpdateFinalizeInteface salesQuotesUpdateFinalizeInteface = APIClient.getClient().create(SalesQuotesUpdateFinalizeInteface.class);
+                    salesQuotesUpdateFinalizeInteface.callFinalSubmit(Action, EmpId, QuoteId, PoRef, PoDate, Billing_opt, BillingAddress, BillingAnother, Con_pre, Con_name, Con_no, Pro_spec, Order_value, Advance_value, Deposit, Deposit_date, Pay_bef_dispatch, Pay_aft_dispatch, Pay_on_install, Installments, Install_terms, Spl_remarks, Warranty, Delivery_date, POPDF).enqueue(new Callback<SalesQuotesUpdateFinalizeResponse>() {
                         @Override
-                        public void onClick(View v) {
-                            dialog.dismiss();
+                        public void onResponse(Call<SalesQuotesUpdateFinalizeResponse> call, Response<SalesQuotesUpdateFinalizeResponse> response) {
+                            try {
+                                if (response.isSuccessful()) {
+                                    Toast.makeText(FinalizeNow.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+
+                            } catch (Exception e) {
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<SalesQuotesUpdateFinalizeResponse> call, Throwable t) {
+
                         }
                     });
                 }
@@ -244,6 +391,7 @@ public class FinalizeNow extends AppCompatActivity {
         });
 
     }
+
 
     private void AddEditText() {
 
@@ -281,6 +429,12 @@ public class FinalizeNow extends AppCompatActivity {
 
                     } catch (Exception e) {
 
+                    }
+
+                    try {
+                        filePdf = FileUtli.from(this, contentUri);
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
 
                 }

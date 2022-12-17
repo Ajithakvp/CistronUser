@@ -76,6 +76,18 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
+
+                        <TextView
+                            android:id="@+id/tvPurchase"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/semibold"
+                            android:text="Purchase Order :"
+                            android:textColor="@color/RoseRed"
+                            android:textSize="18dp" />
+
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/tiPOR"
                             style="@style/textInput2"
@@ -106,7 +118,8 @@
                             android:background="@drawable/edittext"
                             android:backgroundTint="@color/whiteLite2"
                             android:fontFamily="@font/semibold"
-                            android:gravity="center"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="10dp"
                             android:hint="PO Date"
                             android:textColor="@color/black"
                             android:textSize="18dp"
@@ -122,7 +135,8 @@
                             android:background="@drawable/edittext"
                             android:backgroundTint="@color/whiteLite2"
                             android:fontFamily="@font/semibold"
-                            android:gravity="center"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="10dp"
                             android:hint="Attach PO"
                             android:textColor="@color/black"
                             android:textSize="18dp"
@@ -136,19 +150,13 @@
                                 android:id="@+id/tvSameAddress"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="8dp"
+                                android:layout_marginLeft="10dp"
                                 android:layout_marginTop="13dp"
                                 android:fontFamily="@font/semibold"
-                                android:text="Same Address :"
+                                android:text="Billing Address :"
                                 android:textColor="@color/RoseRed"
                                 android:textSize="18dp" />
 
-                            <CheckBox
-                                android:id="@+id/cbSameAddress"
-                                android:layout_width="wrap_content"
-                                android:checked="true"
-                                android:layout_height="wrap_content"
-                                android:layout_toRightOf="@id/tvSameAddress" />
                         </RelativeLayout>
 
 
@@ -157,16 +165,79 @@
                             android:layout_width="match_parent"
                             android:layout_height="60dp"
                             android:layout_marginLeft="8dp"
-                            android:layout_marginTop="1dp"
+                            android:layout_marginTop="10dp"
                             android:layout_marginRight="8dp"
                             android:background="@drawable/edittext"
                             android:backgroundTint="@color/whiteLite2"
                             android:fontFamily="@font/semibold"
-                            android:gravity="center"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="10dp"
                             android:hint="Billing Address"
                             android:textColor="@color/black"
                             android:textSize="18dp"
                             android:visibility="visible" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/tvOtherAddrss"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="13dp"
+                                android:fontFamily="@font/semibold"
+                                android:text="Delivery Address :"
+                                android:textColor="@color/RoseRed"
+                                android:textSize="18dp" />
+
+                            <CheckBox
+                                android:id="@+id/cbSameAddress"
+                                android:layout_width="wrap_content"
+                                android:checked="true"
+                                android:layout_marginLeft="5dp"
+                                android:layout_height="wrap_content"
+                                android:layout_toRightOf="@id/tvOtherAddrss" />
+
+                             <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                 android:layout_toRightOf="@+id/cbSameAddress"
+                                android:layout_marginTop="15dp"
+                                android:fontFamily="@font/semibold"
+                                android:text="same as Billing Address"
+                                android:textColor="@color/blue"
+                                android:textSize="14dp" />
+
+                        </RelativeLayout>
+
+                        <TextView
+                            android:id="@+id/tvDeliveryAddress"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginRight="8dp"
+                            android:background="@drawable/edittext"
+                            android:backgroundTint="@color/whiteLite2"
+                            android:fontFamily="@font/semibold"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="10dp"
+                            android:hint="Delivery Address"
+                            android:textColor="@color/black"
+                            android:textSize="18dp"
+                            android:visibility="visible" />
+                        <TextView
+                            android:id="@+id/tvContact"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/semibold"
+                            android:text="Contact Person :"
+                            android:textColor="@color/RoseRed"
+                            android:textSize="18dp" />
 
                         <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                             android:id="@+id/spPerson"
@@ -221,22 +292,59 @@
                                 android:backgroundTint="@color/whiteLite2"
                                 android:fontFamily="@font/semibold"
                                 android:hint="Contact Number"
+                                android:inputType="number"
                                 android:textColor="@color/black"
                                 android:textSize="18dp" />
                         </com.google.android.material.textfield.TextInputLayout>
 
+                        <TextView
+                            android:id="@+id/tvProductTag"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:fontFamily="@font/semibold"
+                            android:text="Sales Quotations :"
+                            android:textColor="@color/RoseRed"
+                            android:textSize="18dp" />
+
+                        <TextView
+                            android:id="@+id/tvProduct"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginRight="8dp"
+                            android:background="@drawable/edittext"
+                            android:backgroundTint="@color/whiteLite2"
+                            android:fontFamily="@font/semibold"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="10dp"
+                            android:hint="Product "
+                            android:textColor="@color/black"
+                            android:textSize="18dp"
+                            android:visibility="visible" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+
+
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/tvQus"
-                            style="@style/textInput2"
+                            android:layout_width="340dp"
+                            android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
+                            android:layout_marginTop="10dp"
                             android:layout_marginRight="8dp"
                             app:endIconMode="clear_text"
                             app:errorEnabled="true">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/edQus"
-                                android:layout_width="match_parent"
+                                android:layout_width="340dp"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
                                 android:background="@drawable/edittext"
                                 android:backgroundTint="@color/whiteLite2"
                                 android:fontFamily="@font/semibold"
@@ -246,6 +354,19 @@
                                 android:textSize="18dp" />
                         </com.google.android.material.textfield.TextInputLayout>
 
+
+                            <ImageView
+                                android:id="@+id/ivFileVIew"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:layout_centerInParent="true"
+                                android:layout_marginRight="8dp"
+                                android:layout_toRightOf="@id/tvQus"
+                                android:backgroundTint="@color/white"
+                                android:src="@drawable/fileopen"
+                                tools:ignore="UseAppTint" />
+
+                        </RelativeLayout>
                         <TextView
                             android:id="@+id/tvQty"
                             android:layout_width="match_parent"
@@ -259,7 +380,7 @@
                             android:hint="Qty"
                             android:textColor="@color/black"
                             android:textSize="18dp"
-                            android:visibility="visible" />
+                            android:visibility="gone" />
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/tvOrder"
@@ -274,19 +395,32 @@
                                 android:id="@+id/edOrderValue"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
                                 android:background="@drawable/edittext"
                                 android:backgroundTint="@color/whiteLite2"
                                 android:fontFamily="@font/semibold"
                                 android:hint="Order Value "
+                                android:inputType="number"
                                 android:textColor="@color/black"
                                 android:textSize="18dp" />
                         </com.google.android.material.textfield.TextInputLayout>
+
+
+                        <TextView
+                            android:id="@+id/tvPayment"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:fontFamily="@font/semibold"
+                            android:text="Payment :"
+                            android:textColor="@color/RoseRed"
+                            android:textSize="18dp" />
+
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/tvAdvanceValue"
                             style="@style/textInput2"
                             android:layout_marginLeft="8dp"
+                            android:layout_marginTop="10dp"
                             android:layout_marginRight="8dp"
                             app:endIconMode="clear_text"
                             app:errorEnabled="true">
@@ -299,9 +433,12 @@
                                 android:backgroundTint="@color/whiteLite2"
                                 android:fontFamily="@font/semibold"
                                 android:hint="Advance Value "
+                                android:inputType="number"
                                 android:textColor="@color/black"
                                 android:textSize="18dp" />
                         </com.google.android.material.textfield.TextInputLayout>
+
+
 
 
                         <RelativeLayout
@@ -336,7 +473,8 @@
                             android:background="@drawable/edittext"
                             android:backgroundTint="@color/whiteLite2"
                             android:fontFamily="@font/semibold"
-                            android:gravity="center"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="10dp"
                             android:hint="Deposited Date"
                             android:textColor="@color/black"
                             android:textSize="18dp"
@@ -360,6 +498,7 @@
                                 android:fontFamily="@font/semibold"
                                 android:hint="Payment Before Dispatch "
                                 android:textColor="@color/black"
+                                android:inputType="number"
                                 android:textSize="18dp" />
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -377,6 +516,7 @@
                                 android:id="@+id/edpaymentaterDispatch"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:inputType="number"
                                 android:background="@drawable/edittext"
                                 android:backgroundTint="@color/whiteLite2"
                                 android:fontFamily="@font/semibold"
@@ -404,6 +544,7 @@
                                 android:fontFamily="@font/semibold"
                                 android:hint="Payment On Installation "
                                 android:textColor="@color/black"
+                                android:inputType="number"
                                 android:textSize="18dp" />
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -441,11 +582,24 @@
                         </RelativeLayout>
 
 
+
+
+                        <TextView
+                            android:id="@+id/tvterms"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:fontFamily="@font/semibold"
+                            android:text="Terms :"
+                            android:textColor="@color/RoseRed"
+                            android:textSize="18dp" />
+
+
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/tvRemarkPayment"
                             style="@style/textInput2"
                             android:layout_marginLeft="8dp"
-                            android:layout_marginTop="5dp"
+                            android:layout_marginTop="10dp"
                             android:layout_marginRight="8dp"
                             app:endIconMode="clear_text"
                             app:errorEnabled="true">
@@ -473,8 +627,8 @@
                                 android:layout_marginLeft="8dp"
                                 android:layout_marginTop="11dp"
                                 android:fontFamily="@font/semibold"
-                                android:text="Warranty Terms :"
-                                android:textColor="@color/blue"
+                                android:text="Warranty  :"
+                                android:textColor="@color/RoseRed"
                                 android:textSize="18dp" />
 
                             <EditText
@@ -487,6 +641,8 @@
                                 android:backgroundTint="@color/whiteLite2"
                                 android:fontFamily="@font/semibold"
                                 android:gravity="center"
+                                android:inputType="number"
+                                android:text="12"
                                 android:textColor="@color/black"
                                 android:textSize="15dp" />
 
@@ -498,7 +654,7 @@
                                 android:layout_marginTop="11dp"
                                 android:fontFamily="@font/semibold"
                                 android:text="Months from the date of Installation / Supply-Whichever is earlier"
-                                android:textColor="@color/Radio"
+                                android:textColor="@color/blue"
                                 android:textSize="14dp" />
 
 
@@ -541,7 +697,8 @@
                                 android:background="@drawable/edittext"
                                 android:backgroundTint="@color/whiteLite2"
                                 android:fontFamily="@font/semibold"
-                                android:gravity="center"
+                                android:gravity="center_vertical"
+                                android:paddingLeft="10dp"
                                 android:hint="Delivery Schedule"
                                 android:textColor="@color/black"
                                 android:textSize="18dp"

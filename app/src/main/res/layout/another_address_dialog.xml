@@ -62,7 +62,7 @@
                             android:visibility="visible" />
 
                         <EditText
-                            android:id="@+id/edAddress"
+                            android:id="@+id/edAnotherAddress"
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:layout_marginLeft="20dp"
@@ -78,79 +78,6 @@
                             android:visibility="visible" />
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:id="@+id/rlDate"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/rlStaus"
-                        android:layout_marginBottom="5dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/tvDateTag"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginTop="30dp"
-                            android:fontFamily="@font/bold"
-                            android:text="Pin Code                  :"
-                            android:textColor="@color/RoseRed"
-                            android:textSize="18dp"
-                            android:visibility="visible" />
-
-                        <TextView
-                            android:id="@+id/tvDate"
-                            android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginTop="20dp"
-                            android:gravity="center"
-                            android:fontFamily="@font/semibold"
-                            android:textSize="18dp"
-                            android:textColor="@color/black"
-                            android:layout_marginRight="10dp"
-                            android:layout_toRightOf="@id/tvDateTag"
-                            android:background="@drawable/edittext"
-                            android:backgroundTint="@color/whiteLite2"
-                            android:visibility="visible" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/rlRemark"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/rlDate"
-                        android:layout_marginBottom="5dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/tvRemarkTag"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginTop="30dp"
-                            android:fontFamily="@font/bold"
-                            android:text="Remark           :"
-                            android:textColor="@color/RoseRed"
-                            android:textSize="18dp"
-                            android:visibility="visible" />
-
-                        <EditText
-                            android:id="@+id/edRemark"
-                            android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginRight="10dp"
-                            android:gravity="center"
-                            android:fontFamily="@font/semibold"
-                            android:textSize="18dp"
-                            android:textColor="@color/black"
-                            android:layout_toRightOf="@id/tvDateTag"
-                            android:background="@drawable/edittext"
-                            android:backgroundTint="@color/whiteLite2"
-                            android:visibility="visible" />
-                    </LinearLayout>
 
 
                 </RelativeLayout>
