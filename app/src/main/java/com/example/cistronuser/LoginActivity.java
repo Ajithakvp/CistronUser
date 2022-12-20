@@ -89,6 +89,9 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
         String EmpID = edName.getText().toString();
         String Pass = edPass.getText().toString();
 
+        edName.setText(PreferenceManager.getLoginEmpID(this));
+        edPass.setText(PreferenceManager.getLoginPwd(this));
+
 
 
         //LocationPermission
@@ -217,6 +220,8 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
                try {
                    if (response.isSuccessful()){
                        progressDialog.dismiss();
+                       PreferenceManager.saveLoginPwd(LoginActivity.this,edPass.getText().toString());
+                       PreferenceManager.saveLoginEmpID(LoginActivity.this,edName.getText().toString());
                        PreferenceManager.saveData(LoginActivity.this,loginuserModel);
                        PreferenceManager.setEmpID(LoginActivity.this,response.body().getEmpid());
                        PreferenceManager.setEmpName(LoginActivity.this,response.body().getName());

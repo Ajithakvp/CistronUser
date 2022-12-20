@@ -163,7 +163,9 @@
                         <TextView
                             android:id="@+id/tvAddress"
                             android:layout_width="match_parent"
-                            android:layout_height="60dp"
+                            android:layout_height="wrap_content"
+                            android:paddingVertical="10dp"
+                            android:minHeight="60dp"
                             android:layout_marginLeft="8dp"
                             android:layout_marginTop="10dp"
                             android:layout_marginRight="8dp"
@@ -174,7 +176,7 @@
                             android:paddingLeft="10dp"
                             android:hint="Billing Address"
                             android:textColor="@color/black"
-                            android:textSize="18dp"
+                            android:textSize="16dp"
                             android:visibility="visible" />
 
                         <RelativeLayout
@@ -206,7 +208,7 @@
                                  android:layout_toRightOf="@+id/cbSameAddress"
                                 android:layout_marginTop="15dp"
                                 android:fontFamily="@font/semibold"
-                                android:text="same as Billing Address"
+                                android:text="Same as Billing Address"
                                 android:textColor="@color/blue"
                                 android:textSize="14dp" />
 
@@ -215,7 +217,9 @@
                         <TextView
                             android:id="@+id/tvDeliveryAddress"
                             android:layout_width="match_parent"
-                            android:layout_height="60dp"
+                            android:layout_height="wrap_content"
+                            android:paddingVertical="10dp"
+                            android:minHeight="60dp"
                             android:layout_marginLeft="8dp"
                             android:layout_marginTop="10dp"
                             android:layout_marginRight="8dp"
@@ -224,9 +228,10 @@
                             android:fontFamily="@font/semibold"
                             android:gravity="center_vertical"
                             android:paddingLeft="10dp"
+                            android:padding="5dp"
                             android:hint="Delivery Address"
                             android:textColor="@color/black"
-                            android:textSize="18dp"
+                            android:textSize="16dp"
                             android:visibility="visible" />
                         <TextView
                             android:id="@+id/tvContact"

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -43,6 +44,125 @@
                     android:layout_below="@+id/tvUpdateStatus">
 
                     <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:orientation="vertical">
+
+
+                    <LinearLayout
+                        android:id="@+id/rlstate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvStateTag"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="30dp"
+                            android:fontFamily="@font/bold"
+                            android:text="State               :"
+                            android:textColor="@color/RoseRed"
+                            android:textSize="18dp"
+                            android:visibility="visible" />
+
+                        <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                            android:id="@+id/spState"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="20dp"
+                            app:hintText="Select a state"
+                            android:layout_marginRight="10dp"
+                            android:layout_toRightOf="@id/tvUserTag"
+                            android:background="@drawable/edittext"
+                            android:backgroundTint="@color/whiteLite2"
+                            android:visibility="visible">
+
+                        </com.toptoche.searchablespinnerlibrary.SearchableSpinner>
+                    </LinearLayout>
+
+
+                        <LinearLayout
+                            android:id="@+id/rlDis"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tvDistrict"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginTop="30dp"
+                                android:fontFamily="@font/bold"
+                                android:text="District               :"
+                                android:textColor="@color/RoseRed"
+                                android:textSize="18dp"
+                                android:visibility="visible" />
+
+                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                                android:id="@+id/spDistrict"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginTop="20dp"
+                                app:hintText="Select a District"
+                                android:layout_marginRight="10dp"
+                                android:layout_toRightOf="@id/tvUserTag"
+                                android:background="@drawable/edittext"
+                                android:backgroundTint="@color/whiteLite2"
+                                android:visibility="visible">
+
+                            </com.toptoche.searchablespinnerlibrary.SearchableSpinner>
+                        </LinearLayout>
+
+
+
+                        <LinearLayout
+                            android:id="@+id/rlhos"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tvHospital"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginTop="30dp"
+                                android:fontFamily="@font/bold"
+                                android:text="Hospital               :"
+                                android:textColor="@color/RoseRed"
+                                android:textSize="18dp"
+                                android:visibility="visible" />
+
+                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                                android:id="@+id/sphospital"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginTop="20dp"
+                                app:hintText="Select a Hospital"
+                                android:layout_marginRight="10dp"
+                                android:layout_toRightOf="@id/tvUserTag"
+                                android:background="@drawable/edittext"
+                                android:backgroundTint="@color/whiteLite2"
+                                android:visibility="visible">
+
+                            </com.toptoche.searchablespinnerlibrary.SearchableSpinner>
+                        </LinearLayout>
+
+
+
+
+
+                    <LinearLayout
                         android:id="@+id/rlStaus"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -61,16 +181,18 @@
                             android:textSize="18dp"
                             android:visibility="visible" />
 
-                        <EditText
-                            android:id="@+id/edAnotherAddress"
+                        <TextView
+                            android:id="@+id/tvDeliveryAddressDialog"
                             android:layout_width="match_parent"
-                            android:layout_height="50dp"
+                            android:layout_height="wrap_content"
+                            android:minHeight="50dp"
                             android:layout_marginLeft="20dp"
                             android:layout_marginTop="20dp"
                             android:layout_marginRight="10dp"
                             android:gravity="center"
                             android:fontFamily="@font/semibold"
                             android:textSize="18dp"
+
                             android:textColor="@color/black"
                             android:layout_toRightOf="@id/tvDateTag"
                             android:background="@drawable/edittext"
@@ -78,7 +200,7 @@
                             android:visibility="visible" />
                     </LinearLayout>
 
-
+                    </LinearLayout>
 
                 </RelativeLayout>
 
@@ -92,20 +214,19 @@
                 android:layout_below="@+id/rlUpdateStatus">
 
                 <TextView
+                    android:id="@+id/tvSubmitDialog"
                     android:layout_width="150dp"
-                    android:id="@+id/tvSubmit"
-                    android:layout_marginLeft="15dp"
-                    android:text="Submit"
-                    android:textSize="13dp"
-                    android:layout_marginRight="15dp"
+                    android:layout_height="50dp"
                     android:layout_centerInParent="true"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/edittext"
                     android:backgroundTint="@color/RoseRed"
                     android:fontFamily="@font/bold"
-                    android:textColor="@color/white"
-                    android:background="@drawable/edittext"
                     android:gravity="center"
-                    android:layout_height="50dp"
-                    />
+                    android:text="Submit"
+                    android:textColor="@color/white"
+                    android:textSize="13dp" />
 
 
             </RelativeLayout>

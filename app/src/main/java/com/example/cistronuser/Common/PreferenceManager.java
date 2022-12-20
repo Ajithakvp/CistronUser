@@ -229,15 +229,26 @@ public class PreferenceManager {
 
     //Category
 
-    public static void setAddOn(Activity activity, String Addon) {
+    public static void saveLoginEmpID(Activity activity, String Empid) {
         SharedPreferences preferences;
         preferences = activity.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
-        preferences.edit().putString("company", Addon).apply();
+        preferences.edit().putString("empid", Empid).apply();
     }
-    public static String getAddon(Context activity) {
+    public static String getLoginEmpID(Context activity) {
         SharedPreferences preferences;
         preferences = activity.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
-        return preferences.getString("company", "");
+        return preferences.getString("empid", "");
+    }
+
+    public static void saveLoginPwd(Activity activity, String pwd) {
+        SharedPreferences preferences;
+        preferences = activity.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
+        preferences.edit().putString("pass", pwd).apply();
+    }
+    public static String getLoginPwd(Context activity) {
+        SharedPreferences preferences;
+        preferences = activity.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
+        return preferences.getString("pass", "");
     }
 
 

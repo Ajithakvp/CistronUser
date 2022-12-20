@@ -68,7 +68,7 @@ public class SalesQuoteAddonAdapter extends RecyclerView.Adapter<SalesQuoteAddon
 
                    strCheckedproduct.add(id.getAddonId());
 
-                    PreferenceManager.setAddOn(activity,strCheckedproduct.toString().replace("[","").replace("]",""));
+
 
 
 

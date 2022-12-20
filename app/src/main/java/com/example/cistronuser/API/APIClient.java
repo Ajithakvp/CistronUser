@@ -8,10 +8,12 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class APIClient {
-
-    // private static final String LOGINURL = "http://192.168.29.157/beta1/app/";
+    //Localhost
     private static final String LOGINURL = "http://192.168.29.173/beta1/app/";
-    //private static final String LOGINURL = "https://cistronsystems.in/beta1/app/";
+    //Testing
+    //private static final String LOGINURL = "https://cistronsystems.in/beta1/app_demodp/";
+    //App
+    // private static final String LOGINURL = "https://cistronsystems.in/beta1/app/";
     private static Retrofit retrofit;
 
     public static Retrofit getClient() {

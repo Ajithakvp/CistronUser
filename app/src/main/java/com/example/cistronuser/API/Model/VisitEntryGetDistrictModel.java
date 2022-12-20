@@ -6,6 +6,7 @@ public class VisitEntryGetDistrictModel {
 
 //      "district": "Ariyalur"
 
+
     @SerializedName("district")
     private String district;
 

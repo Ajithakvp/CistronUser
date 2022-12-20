@@ -176,7 +176,7 @@ public class DashboardActivity extends Activity {
         lWebview.setMovementMethod(LinkMovementMethod.getInstance());
         lWebview.setLinkTextColor(getResources().getColor(R.color.white));
 
-        // Log.e(TAG, "onCreate: user :" + PreferenceManager.getEmpuser(this));
+
 
         String user = PreferenceManager.getEmpuser(this);
 

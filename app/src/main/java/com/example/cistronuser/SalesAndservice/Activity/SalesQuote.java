@@ -326,6 +326,8 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
+                tvPrice.setText(salesQuoteProductsModels.get(position).getPrice());
+
 
                 salesQuoteAddonAdapter = new SalesQuoteAddonAdapter(new SalesQuoteAddonAdapter.OnItemCheckListener() {
                     @Override
@@ -854,8 +856,6 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
                 try {
 
                     if (response.body().getVisitEntryStateModels().size() > 0) {
-
-                        Log.e(TAG, "onResponse: " + response.body().getVisitEntryStateModels());
                         visitEntryStateModels = response.body().getVisitEntryStateModels();
 
                         strState.clear();
