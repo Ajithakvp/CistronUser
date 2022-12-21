@@ -4,6 +4,7 @@ import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 import static okhttp3.RequestBody.create;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.core.app.ActivityCompat;
@@ -42,6 +43,7 @@ import com.example.cistronuser.API.Interface.SalesQuotesUpdateFinalizeInteface;
 import com.example.cistronuser.API.Interface.VisitEntryGetDistrictInterface;
 import com.example.cistronuser.API.Interface.VisitEntryHospitalInterface;
 import com.example.cistronuser.API.Interface.VisitEntryStateInterface;
+import com.example.cistronuser.API.Model.ContactPrefixModel;
 import com.example.cistronuser.API.Model.EditTextModel;
 import com.example.cistronuser.API.Model.VisitEntryGetDistrictModel;
 import com.example.cistronuser.API.Model.VisitEntryHospitalModel;
@@ -88,9 +90,6 @@ public class FinalizeNow extends AppCompatActivity {
     EditText edAmount;
     ImageView ivRemove;
 
-    //ContactPerson
-    ArrayAdapter personContact;
-    String PersonId;
     String QuotePDF;
     String SubmitquoteID;
 
@@ -117,6 +116,11 @@ public class FinalizeNow extends AppCompatActivity {
     ArrayList<String> strHospital = new ArrayList<>();
     ArrayAdapter hospitalAdapter;
     String HospitalID;
+    //ContactPrefix
+    ArrayList<ContactPrefixModel> contactPrefixModels = new ArrayList<>();
+    ArrayList<String> strPrefix = new ArrayList<>();
+    ArrayAdapter personContact;
+    String PersonId;
 
 
     @SuppressLint("MissingInflatedId")
@@ -125,7 +129,7 @@ public class FinalizeNow extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finalize_now);
 
-        installEdt= new ArrayList<>();
+        installEdt = new ArrayList<>();
         cbDeposited = findViewById(R.id.cbDeposited);
         tvDepositedDate = findViewById(R.id.tvDepositedDate);
         tvPODate = findViewById(R.id.tvPODate);
@@ -178,8 +182,10 @@ public class FinalizeNow extends AppCompatActivity {
                         edMobile.setText(response.body().getMobile());
                         QuotePDF = response.body().getQuote_pdf();
                         SubmitquoteID = response.body().getQuoteId();
-                        String prefix = response.body().getCon_prefix();
+                        edOrderValue.setText(response.body().getAmount());
+                        String  prefix = response.body().getCon_prefix();
                         spPerson.setSelection(Integer.parseInt(prefix));
+
 
                     }
 
@@ -196,9 +202,37 @@ public class FinalizeNow extends AppCompatActivity {
 
 
         //Contact Person
+        ContactPrefixModel Contact_Person = new ContactPrefixModel();
+        Contact_Person.setId("0");
+        Contact_Person.setPrefix("Contact Person Prefix");
+        contactPrefixModels.add(Contact_Person);
 
-        String[] contact = {"Dr", "Mr", "Ms", "Mrs"};
-        personContact = new ArrayAdapter(this, R.layout.spinner_item, contact);
+        ContactPrefixModel Dr = new ContactPrefixModel();
+        Dr.setId("1");
+        Dr.setPrefix("Dr");
+        contactPrefixModels.add(Dr);
+
+        ContactPrefixModel Mr = new ContactPrefixModel();
+        Mr.setId("2");
+        Mr.setPrefix("Mr");
+        contactPrefixModels.add(Mr);
+
+        ContactPrefixModel Ms = new ContactPrefixModel();
+        Ms.setId("3");
+        Ms.setPrefix("Ms");
+        contactPrefixModels.add(Ms);
+
+        ContactPrefixModel Mrs = new ContactPrefixModel();
+        Mrs.setId("4");
+        Mrs.setPrefix("Mrs");
+        contactPrefixModels.add(Mrs);
+
+        for (int i = 0; i < contactPrefixModels.size(); i++) {
+            strPrefix.add(contactPrefixModels.get(i).getPrefix());
+        }
+
+        // String[] contact = {"Dr", "Mr", "Ms", "Mrs"};
+        personContact = new ArrayAdapter(this, R.layout.spinner_item, strPrefix);
         personContact.setDropDownViewResource(R.layout.spinner_dropdown);
         spPerson.setAdapter(personContact);
         spPerson.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -442,53 +476,64 @@ public class FinalizeNow extends AppCompatActivity {
         tvSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                int Ordervalue = Integer.parseInt(edOrderValue.getText().toString());
+                int AdvanceValue = Integer.parseInt(edAdvanceValue.getText().toString());
+                int PaymentBefor = Integer.parseInt(edpaymentBforeDispatch.getText().toString());
+                int PaymentAfter = Integer.parseInt(edpaymentaterDispatch.getText().toString());
+                int PayIntallation = Integer.parseInt(edpaymentOnInstalltion.getText().toString());
+
+
                 strEditText.clear();
-                for (int i=0;i<layout_list.getChildCount();i++) {
+                for (int i = 0; i < layout_list.getChildCount(); i++) {
                     LinearLayout vi = (LinearLayout) layout_list.getChildAt(i);
-                    EditText edt= (EditText) vi.getChildAt(0);
-                    if(edt.getText().toString().trim().length()>0)
+                    EditText edt = (EditText) vi.getChildAt(0);
+                    if (edt.getText().toString().trim().length() > 0)
                         strEditText.add(edt.getText().toString().trim());
-                    else{
+                    else {
                         edt.setError("Enter The Amount / Remove It");
                         edt.setFocusable(true);
                     }
                 }
 
-
-
-                if (filePdf == null) {
-                    Toast.makeText(FinalizeNow.this, "Please Upload File", Toast.LENGTH_SHORT).show();
-                }else if (edPOR.getText().toString().length()==0){
+                if ((Ordervalue != AdvanceValue + PaymentAfter + PaymentBefor + PayIntallation)) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(FinalizeNow.this);
+                    builder.setMessage("Payment terms not matching with order value. Please check.");
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                } else if (edPOR.getText().toString().length() == 0) {
                     edPOR.setError("Please Enter the Purchase Order Reference");
                     edPOR.setFocusable(true);
-                }else if (tvPODate.getText().toString().trim().length()==0){
+                } else if (tvPODate.getText().toString().trim().length() == 0) {
                     tvPODate.setError("Please Enter the  Purchase Order Date");
                     tvPODate.setFocusable(true);
-                }else if (edName.getText().toString().trim().length()==0){
+                } else if (filePdf == null) {
+                    Toast.makeText(FinalizeNow.this, "Please Upload File", Toast.LENGTH_SHORT).show();
+                } else if (edName.getText().toString().trim().length() == 0) {
                     edName.setError("Please Enter the Name");
                     edName.setFocusable(true);
-                }else if (edMobile.getText().toString().trim().length()==0){
+                } else if (edMobile.getText().toString().trim().length() == 0) {
                     edMobile.setError("Please Enter the Mobile");
                     edMobile.setFocusable(true);
-                }else if (edQus.getText().toString().trim().length()==0){
+                } else if (edQus.getText().toString().trim().length() == 0) {
                     edQus.setError("Please Enter the As per Quotation");
                     edQus.setFocusable(true);
-                }else if (edOrderValue.getText().toString().trim().length()==0){
+                } else if (edOrderValue.getText().toString().trim().length() == 0) {
                     edOrderValue.setError("Please Enter a OrderValue");
                     edOrderValue.setFocusable(true);
-                }else if (edAdvanceValue.getText().toString().trim().length()==0){
+                } else if (edAdvanceValue.getText().toString().trim().length() == 0) {
                     edAdvanceValue.setError("Please Enter a Advance Value");
                     edAdvanceValue.setFocusable(true);
-                }else if (edpaymentBforeDispatch.getText().toString().trim().length()==0){
+                } else if (edpaymentBforeDispatch.getText().toString().trim().length() == 0) {
                     edpaymentBforeDispatch.setError("Please Enter a Payment before Dispatch");
                     edpaymentBforeDispatch.setFocusable(true);
-                }else if (edpaymentaterDispatch.getText().toString().trim().length()==0){
+                } else if (edpaymentaterDispatch.getText().toString().trim().length() == 0) {
                     edpaymentaterDispatch.setError("Please Enter a Payment After Dispatch");
                     edpaymentaterDispatch.setFocusable(true);
-                }else if (edpaymentOnInstalltion.getText().toString().trim().length()==0){
+                } else if (edpaymentOnInstalltion.getText().toString().trim().length() == 0) {
                     edpaymentOnInstalltion.setError("Please Entera Payment On Installation");
                     edpaymentOnInstalltion.setFocusable(true);
-                }else if (tvDeliveySchedule.getText().toString().trim().length()==0){
+                } else if (tvDeliveySchedule.getText().toString().trim().length() == 0) {
                     tvDeliveySchedule.setError("Please Enter a Delivery Date");
                     tvDeliveySchedule.setFocusable(true);
                 } else if (spPerson.getSelectedItemPosition() == -1) {
@@ -518,7 +563,7 @@ public class FinalizeNow extends AppCompatActivity {
                     RequestBody Pay_bef_dispatch = create(MediaType.parse("text/plain"), edpaymentBforeDispatch.getText().toString());
                     RequestBody Pay_aft_dispatch = create(MediaType.parse("text/plain"), edpaymentaterDispatch.getText().toString());
                     RequestBody Pay_on_install = create(MediaType.parse("text/plain"), edpaymentOnInstalltion.getText().toString());
-                    RequestBody Installments = create(MediaType.parse("text/plain"), strEditText.toString().replace("[","").replace("]",""));
+                    RequestBody Installments = create(MediaType.parse("text/plain"), strEditText.toString().replace("[", "").replace("]", ""));
                     RequestBody Install_terms = create(MediaType.parse("text/plain"), edRemarkPayment.getText().toString());
                     RequestBody Spl_remarks = create(MediaType.parse("text/plain"), edSpecialRemark.getText().toString());
                     RequestBody Warranty = create(MediaType.parse("text/plain"), edWarrenty.getText().toString());
@@ -701,7 +746,6 @@ public class FinalizeNow extends AppCompatActivity {
         final View addEditText = getLayoutInflater().inflate(R.layout.row_add_amount_finalize, null, false);
         edAmount = addEditText.findViewById(R.id.edAmount);
         ivRemove = addEditText.findViewById(R.id.ivRemove);
-
 
 
         ivRemove.setOnClickListener(new View.OnClickListener() {

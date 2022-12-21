@@ -3,18 +3,16 @@
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/flashdesign"
+    android:backgroundTint="#6495ED"
     android:layout_height="match_parent">
 
 
-
-
     <ImageView
+        android:id="@+id/lvcis"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:id="@+id/lvcis"
-      android:src="@drawable/cis"
         android:layout_centerInParent="true"
-       />
+       android:src="@drawable/newcistronimg" />
 
     <TextView
         android:layout_width="wrap_content"

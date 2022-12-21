@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -42,12 +43,16 @@ public class MainActivity extends AppCompatActivity {
                      CallLoginPage();
                    }else {
                        AlertDialog.Builder update=new AlertDialog.Builder(MainActivity.this);
-                       update.setTitle("Update Required");
+                       update.setCancelable(false);
+                       update.setTitle("Update Required !");
                        update.setMessage("You must update to Continue");
                        update.setPositiveButton("Update", new DialogInterface.OnClickListener() {
                            @Override
                            public void onClick(DialogInterface dialog, int which) {
-                               dialog.dismiss();
+                              String apk="https://cistronsystems.in/beta1/app/cistron.apk";
+                              Uri uri= Uri.parse(apk);
+                              Intent update=new Intent(Intent.ACTION_VIEW,uri);
+                              startActivity(update);
                            }
                        });
 

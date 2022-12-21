@@ -20,6 +20,7 @@
             android:layout_width="20dp"
             android:layout_height="10dp"
             android:layout_marginTop="2dp"
+            android:visibility="gone"
             android:src="@drawable/registered"
             android:layout_marginLeft="260dp"
             android:tint="@color/Radio"
@@ -27,11 +28,11 @@
 
         <ImageView
             android:id="@+id/ivName"
-            android:layout_width="wrap_content"
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginTop="8dp"
-            android:src="@drawable/logo_top" />
+            android:src="@drawable/newcistronimg" />
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/ivLogout"
