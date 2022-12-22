@@ -148,6 +148,7 @@ public class VisitEntryReport extends AppCompatActivity {
 
 
         //UserList
+        CallUserList();
         UserAdapter=new ArrayAdapter(this,R.layout.spinner_item,strUserList);
         UserAdapter.setDropDownViewResource(R.layout.spinner_dropdown);
         spUser.setAdapter(UserAdapter);
@@ -205,6 +206,8 @@ public class VisitEntryReport extends AppCompatActivity {
 
                 }, year, month, dayOfMonth);
 
+                datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+
 
 
 
@@ -242,7 +245,7 @@ public class VisitEntryReport extends AppCompatActivity {
                 }, year, month, dayOfMonth);
 
 
-
+                datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
 
                 datePickerDialog.show();
 

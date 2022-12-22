@@ -5,12 +5,14 @@ import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.example.cistronuser.API.APIClient;
 import com.example.cistronuser.API.Interface.AppVersionInterface;
@@ -26,10 +28,15 @@ public class MainActivity extends AppCompatActivity {
 
     String AppVersion="cistron 1.0";
 
+    TextView tvVersion;
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.flashscreen);
+        tvVersion=findViewById(R.id.tvVersion);
+
+        tvVersion.setText(AppVersion);
 
 
         //*******APP Version***********//

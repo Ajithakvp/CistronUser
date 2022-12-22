@@ -117,10 +117,10 @@ public class FinalizeNow extends AppCompatActivity {
     ArrayAdapter hospitalAdapter;
     String HospitalID;
     //ContactPrefix
-    ArrayList<ContactPrefixModel> contactPrefixModels = new ArrayList<>();
-    ArrayList<String> strPrefix = new ArrayList<>();
+    String sameAddress;
     ArrayAdapter personContact;
     String PersonId;
+    String  prefix;
 
 
     @SuppressLint("MissingInflatedId")
@@ -160,6 +160,23 @@ public class FinalizeNow extends AppCompatActivity {
         tvProduct = findViewById(R.id.tvProduct);
 
 
+        //Contact Person Prefix
+        String[] contact = {"Title","Dr. ", "Mr. ", "Ms. ", "Mrs. "};
+        personContact = new ArrayAdapter(this, com.airbnb.lottie.R.layout.support_simple_spinner_dropdown_item, contact);
+        personContact.setDropDownViewResource(R.layout.spinner_dropdown);
+        spPerson.setAdapter(personContact);
+        spPerson.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                PersonId = spPerson.getSelectedItem().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         //File Access Permission
         ActivityCompat.requestPermissions(this,
                 new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -167,7 +184,13 @@ public class FinalizeNow extends AppCompatActivity {
                 PackageManager.PERMISSION_GRANTED);
 
 
+
+
         //*********Contact person details ********//
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
         String QuoteID = getIntent().getStringExtra("QuoteID");
         SalesQuoteContactPersonInterface contactPersonInterface = APIClient.getClient().create(SalesQuoteContactPersonInterface.class);
         contactPersonInterface.callContact("viewSalesQuote", QuoteID).enqueue(new Callback<SalesQuoteContactPersonResponse>() {
@@ -175,16 +198,21 @@ public class FinalizeNow extends AppCompatActivity {
             public void onResponse(Call<SalesQuoteContactPersonResponse> call, Response<SalesQuoteContactPersonResponse> response) {
                 try {
                     if (response.isSuccessful()) {
-
+                        progressDialog.dismiss();
                         tvAddress.setText(response.body().getAddress());
+                        sameAddress=response.body().getAddress();
+                        tvDeliveryAddress.setText(response.body().getAddress());
                         tvProduct.setText(response.body().getProduct());
                         edName.setText(response.body().getCon_person());
                         edMobile.setText(response.body().getMobile());
                         QuotePDF = response.body().getQuote_pdf();
                         SubmitquoteID = response.body().getQuoteId();
                         edOrderValue.setText(response.body().getAmount());
-                        String  prefix = response.body().getCon_prefix();
-                        spPerson.setSelection(Integer.parseInt(prefix));
+                        prefix = response.body().getCon_prefix();
+                        for (int i=0;i<personContact.getCount();i++){
+                            if(personContact.getItem(i).toString().equals(prefix))
+                                spPerson.setSelection(i);
+                        }
 
 
                     }
@@ -200,52 +228,6 @@ public class FinalizeNow extends AppCompatActivity {
             }
         });
 
-
-        //Contact Person
-        ContactPrefixModel Contact_Person = new ContactPrefixModel();
-        Contact_Person.setId("0");
-        Contact_Person.setPrefix("Contact Person Prefix");
-        contactPrefixModels.add(Contact_Person);
-
-        ContactPrefixModel Dr = new ContactPrefixModel();
-        Dr.setId("1");
-        Dr.setPrefix("Dr");
-        contactPrefixModels.add(Dr);
-
-        ContactPrefixModel Mr = new ContactPrefixModel();
-        Mr.setId("2");
-        Mr.setPrefix("Mr");
-        contactPrefixModels.add(Mr);
-
-        ContactPrefixModel Ms = new ContactPrefixModel();
-        Ms.setId("3");
-        Ms.setPrefix("Ms");
-        contactPrefixModels.add(Ms);
-
-        ContactPrefixModel Mrs = new ContactPrefixModel();
-        Mrs.setId("4");
-        Mrs.setPrefix("Mrs");
-        contactPrefixModels.add(Mrs);
-
-        for (int i = 0; i < contactPrefixModels.size(); i++) {
-            strPrefix.add(contactPrefixModels.get(i).getPrefix());
-        }
-
-        // String[] contact = {"Dr", "Mr", "Ms", "Mrs"};
-        personContact = new ArrayAdapter(this, R.layout.spinner_item, strPrefix);
-        personContact.setDropDownViewResource(R.layout.spinner_dropdown);
-        spPerson.setAdapter(personContact);
-        spPerson.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                PersonId = spPerson.getSelectedItem().toString();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
 
 
         cbDeposited.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -278,6 +260,7 @@ public class FinalizeNow extends AppCompatActivity {
         tvDepositedDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                tvDepositedDate.setError(null);
                 Calendar calendar = Calendar.getInstance();
                 int year = calendar.get(Calendar.YEAR);
                 int month = calendar.get(Calendar.MONTH);
@@ -315,6 +298,7 @@ public class FinalizeNow extends AppCompatActivity {
         tvPODate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                tvPODate.setError(null);
                 Calendar calendar = Calendar.getInstance();
                 int year = calendar.get(Calendar.YEAR);
                 int month = calendar.get(Calendar.MONTH);
@@ -345,6 +329,7 @@ public class FinalizeNow extends AppCompatActivity {
         tvDeliveySchedule.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                tvDeliveySchedule.setError(null);
                 Calendar calendar = Calendar.getInstance();
                 int year = calendar.get(Calendar.YEAR);
                 int month = calendar.get(Calendar.MONTH);
@@ -389,6 +374,7 @@ public class FinalizeNow extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
+                    tvDeliveryAddress.setText(sameAddress);
                     Toast.makeText(FinalizeNow.this, "Same Address", Toast.LENGTH_SHORT).show();
                 } else {
                     Dialog dialog = new Dialog(FinalizeNow.this);
@@ -476,13 +462,7 @@ public class FinalizeNow extends AppCompatActivity {
         tvSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                int Ordervalue = Integer.parseInt(edOrderValue.getText().toString());
-                int AdvanceValue = Integer.parseInt(edAdvanceValue.getText().toString());
-                int PaymentBefor = Integer.parseInt(edpaymentBforeDispatch.getText().toString());
-                int PaymentAfter = Integer.parseInt(edpaymentaterDispatch.getText().toString());
-                int PayIntallation = Integer.parseInt(edpaymentOnInstalltion.getText().toString());
-
+                boolean isFilled=true;
 
                 strEditText.clear();
                 for (int i = 0; i < layout_list.getChildCount(); i++) {
@@ -492,104 +472,131 @@ public class FinalizeNow extends AppCompatActivity {
                         strEditText.add(edt.getText().toString().trim());
                     else {
                         edt.setError("Enter The Amount / Remove It");
-                        edt.setFocusable(true);
+                        edt.requestFocus();
                     }
                 }
 
-                if ((Ordervalue != AdvanceValue + PaymentAfter + PaymentBefor + PayIntallation)) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(FinalizeNow.this);
-                    builder.setMessage("Payment terms not matching with order value. Please check.");
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
-                } else if (edPOR.getText().toString().length() == 0) {
-                    edPOR.setError("Please Enter the Purchase Order Reference");
-                    edPOR.setFocusable(true);
-                } else if (tvPODate.getText().toString().trim().length() == 0) {
-                    tvPODate.setError("Please Enter the  Purchase Order Date");
-                    tvPODate.setFocusable(true);
+
+
+                if (edPOR.getText().toString().length() == 0) {
+                    edPOR.setError("Fill the Value");
+                    edPOR.requestFocus();
+                }
+               else if (tvPODate.getText().toString().trim().length() == 0) {
+                    tvPODate.setError("Fill the Value");
+                    tvPODate.requestFocus();
                 } else if (filePdf == null) {
                     Toast.makeText(FinalizeNow.this, "Please Upload File", Toast.LENGTH_SHORT).show();
                 } else if (edName.getText().toString().trim().length() == 0) {
                     edName.setError("Please Enter the Name");
-                    edName.setFocusable(true);
+                    edName.requestFocus();
                 } else if (edMobile.getText().toString().trim().length() == 0) {
                     edMobile.setError("Please Enter the Mobile");
-                    edMobile.setFocusable(true);
+                    edMobile.requestFocus();
                 } else if (edQus.getText().toString().trim().length() == 0) {
                     edQus.setError("Please Enter the As per Quotation");
-                    edQus.setFocusable(true);
+                    edQus.requestFocus();
+//                }else  if((Ordervalue != AdvanceValue + PaymentAfter + PaymentBefor + PayIntallation)) {
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(FinalizeNow.this);
+//                    builder.setMessage("Payment terms not matching with order value. Please check.");
+//                    AlertDialog dialog = builder.create();
+//                    dialog.show();
                 } else if (edOrderValue.getText().toString().trim().length() == 0) {
                     edOrderValue.setError("Please Enter a OrderValue");
-                    edOrderValue.setFocusable(true);
+                    edOrderValue.requestFocus();
                 } else if (edAdvanceValue.getText().toString().trim().length() == 0) {
                     edAdvanceValue.setError("Please Enter a Advance Value");
-                    edAdvanceValue.setFocusable(true);
+                    edAdvanceValue.requestFocus();
+                } else if (cbDeposited.isChecked()) {
+                  if (tvDepositedDate.getText().toString().trim().length()==0){
+                      tvDepositedDate.setError("Please Select the Date");
+                      tvDepositedDate.requestFocus();
+                  }
                 } else if (edpaymentBforeDispatch.getText().toString().trim().length() == 0) {
                     edpaymentBforeDispatch.setError("Please Enter a Payment before Dispatch");
-                    edpaymentBforeDispatch.setFocusable(true);
+                    edpaymentBforeDispatch.requestFocus();
                 } else if (edpaymentaterDispatch.getText().toString().trim().length() == 0) {
                     edpaymentaterDispatch.setError("Please Enter a Payment After Dispatch");
-                    edpaymentaterDispatch.setFocusable(true);
+                    edpaymentaterDispatch.requestFocus();
                 } else if (edpaymentOnInstalltion.getText().toString().trim().length() == 0) {
                     edpaymentOnInstalltion.setError("Please Entera Payment On Installation");
-                    edpaymentOnInstalltion.setFocusable(true);
+                    edpaymentOnInstalltion.requestFocus();
                 } else if (tvDeliveySchedule.getText().toString().trim().length() == 0) {
                     tvDeliveySchedule.setError("Please Enter a Delivery Date");
-                    tvDeliveySchedule.setFocusable(true);
+                    tvDeliveySchedule.requestFocus();
                 } else if (spPerson.getSelectedItemPosition() == -1) {
                     setSpinnerError(spPerson, "Please Select a Person perfix");
+                    spPerson.requestFocus();
                 } else {
-                    int sameAddr = cbSameAddress.isChecked() ? 1 : 0;
-                    int Depos = cbDeposited.isChecked() ? 1 : 0;
+                   int Ordervalue = Integer.parseInt(edOrderValue.getText().toString());
+                   int AdvanceValue = Integer.parseInt(edAdvanceValue.getText().toString());
+                   int PaymentBefor = Integer.parseInt(edpaymentBforeDispatch.getText().toString());
+                   int PaymentAfter = Integer.parseInt(edpaymentaterDispatch.getText().toString());
+                   int PayIntallation = Integer.parseInt(edpaymentOnInstalltion.getText().toString());
 
-                    RequestBody requestFile = create(MediaType.parse("multipart/form-data"), filePdf);
-                    MultipartBody.Part POPDF = MultipartBody.Part.createFormData("poPdf", filePdf.getName(), requestFile);
-                    RequestBody Action = create(MediaType.parse("text/plain"), "finalSubmit");
-                    RequestBody EmpId = create(MediaType.parse("text/plain"), PreferenceManager.getEmpID(FinalizeNow.this));
-                    RequestBody QuoteId = create(MediaType.parse("text/plain"), SubmitquoteID);
-                    RequestBody PoRef = create(MediaType.parse("text/plain"), edPOR.getText().toString());
-                    RequestBody PoDate = create(MediaType.parse("text/plain"), tvPODate.getText().toString());
-                    RequestBody Billing_opt = create(MediaType.parse("text/plain"), String.valueOf(sameAddr));
-                    RequestBody BillingAddress = create(MediaType.parse("text/plain"), tvAddress.getText().toString());
-                    RequestBody BillingAnother = create(MediaType.parse("text/plain"), tvDeliveryAddress.getText().toString());
-                    RequestBody Con_pre = create(MediaType.parse("text/plain"), PersonId);
-                    RequestBody Con_name = create(MediaType.parse("text/plain"), edName.getText().toString());
-                    RequestBody Con_no = create(MediaType.parse("text/plain"), edMobile.getText().toString());
-                    RequestBody Pro_spec = create(MediaType.parse("text/plain"), edQus.getText().toString());
-                    RequestBody Order_value = create(MediaType.parse("text/plain"), edOrderValue.getText().toString());
-                    RequestBody Advance_value = create(MediaType.parse("text/plain"), edAdvanceValue.getText().toString());
-                    RequestBody Deposit = create(MediaType.parse("text/plain"), String.valueOf(Depos));
-                    RequestBody Deposit_date = create(MediaType.parse("text/plain"), tvDepositedDate.getText().toString());
-                    RequestBody Pay_bef_dispatch = create(MediaType.parse("text/plain"), edpaymentBforeDispatch.getText().toString());
-                    RequestBody Pay_aft_dispatch = create(MediaType.parse("text/plain"), edpaymentaterDispatch.getText().toString());
-                    RequestBody Pay_on_install = create(MediaType.parse("text/plain"), edpaymentOnInstalltion.getText().toString());
-                    RequestBody Installments = create(MediaType.parse("text/plain"), strEditText.toString().replace("[", "").replace("]", ""));
-                    RequestBody Install_terms = create(MediaType.parse("text/plain"), edRemarkPayment.getText().toString());
-                    RequestBody Spl_remarks = create(MediaType.parse("text/plain"), edSpecialRemark.getText().toString());
-                    RequestBody Warranty = create(MediaType.parse("text/plain"), edWarrenty.getText().toString());
-                    RequestBody Delivery_date = create(MediaType.parse("text/plain"), tvDeliveySchedule.getText().toString());
+                   if ((Ordervalue != AdvanceValue + PaymentAfter + PaymentBefor + PayIntallation)) {
+                       AlertDialog.Builder builder = new AlertDialog.Builder(FinalizeNow.this);
+                       builder.setMessage("Payment terms not matching with order value. Please check.");
+                       AlertDialog dialog = builder.create();
+                       dialog.show();
+                   } else {
+                       int sameAddr = cbSameAddress.isChecked() ? 1 : 0;
+                       int Depos = cbDeposited.isChecked() ? 1 : 0;
+                       final ProgressDialog progressDialog = new ProgressDialog(FinalizeNow.this);
+                       progressDialog.setMessage("Loading...");
+                       progressDialog.setCancelable(false);
+                       progressDialog.show();
+                       RequestBody requestFile = create(MediaType.parse("multipart/form-data"), filePdf);
+                       MultipartBody.Part POPDF = MultipartBody.Part.createFormData("poPdf", filePdf.getName(), requestFile);
+                       RequestBody Action = create(MediaType.parse("text/plain"), "finalSubmit");
+                       RequestBody EmpId = create(MediaType.parse("text/plain"), PreferenceManager.getEmpID(FinalizeNow.this));
+                       RequestBody QuoteId = create(MediaType.parse("text/plain"), SubmitquoteID);
+                       RequestBody PoRef = create(MediaType.parse("text/plain"), edPOR.getText().toString());
+                       RequestBody PoDate = create(MediaType.parse("text/plain"), tvPODate.getText().toString());
+                       RequestBody Billing_opt = create(MediaType.parse("text/plain"), String.valueOf(sameAddr));
+                       RequestBody BillingAddress = create(MediaType.parse("text/plain"), tvAddress.getText().toString());
+                       RequestBody BillingAnother = create(MediaType.parse("text/plain"), tvDeliveryAddress.getText().toString());
+                       RequestBody Con_pre = create(MediaType.parse("text/plain"), PersonId);
+                       RequestBody Con_name = create(MediaType.parse("text/plain"), edName.getText().toString());
+                       RequestBody Con_no = create(MediaType.parse("text/plain"), edMobile.getText().toString());
+                       RequestBody Pro_spec = create(MediaType.parse("text/plain"), edQus.getText().toString());
+                       RequestBody Order_value = create(MediaType.parse("text/plain"), edOrderValue.getText().toString());
+                       RequestBody Advance_value = create(MediaType.parse("text/plain"), edAdvanceValue.getText().toString());
+                       RequestBody Deposit = create(MediaType.parse("text/plain"), String.valueOf(Depos));
+                       RequestBody Deposit_date = create(MediaType.parse("text/plain"), tvDepositedDate.getText().toString());
+                       RequestBody Pay_bef_dispatch = create(MediaType.parse("text/plain"), edpaymentBforeDispatch.getText().toString());
+                       RequestBody Pay_aft_dispatch = create(MediaType.parse("text/plain"), edpaymentaterDispatch.getText().toString());
+                       RequestBody Pay_on_install = create(MediaType.parse("text/plain"), edpaymentOnInstalltion.getText().toString());
+                       RequestBody Installments = create(MediaType.parse("text/plain"), strEditText.toString().replace("[", "").replace("]", ""));
+                       RequestBody Install_terms = create(MediaType.parse("text/plain"), edRemarkPayment.getText().toString());
+                       RequestBody Spl_remarks = create(MediaType.parse("text/plain"), edSpecialRemark.getText().toString());
+                       RequestBody Warranty = create(MediaType.parse("text/plain"), edWarrenty.getText().toString());
+                       RequestBody Delivery_date = create(MediaType.parse("text/plain"), tvDeliveySchedule.getText().toString());
 
-                    SalesQuotesUpdateFinalizeInteface salesQuotesUpdateFinalizeInteface = APIClient.getClient().create(SalesQuotesUpdateFinalizeInteface.class);
-                    salesQuotesUpdateFinalizeInteface.callFinalSubmit(Action, EmpId, QuoteId, PoRef, PoDate, Billing_opt, BillingAddress, BillingAnother, Con_pre, Con_name, Con_no, Pro_spec, Order_value, Advance_value, Deposit, Deposit_date, Pay_bef_dispatch, Pay_aft_dispatch, Pay_on_install, Installments, Install_terms, Spl_remarks, Warranty, Delivery_date, POPDF).enqueue(new Callback<SalesQuotesUpdateFinalizeResponse>() {
-                        @Override
-                        public void onResponse(Call<SalesQuotesUpdateFinalizeResponse> call, Response<SalesQuotesUpdateFinalizeResponse> response) {
-                            try {
-                                if (response.isSuccessful()) {
-                                    Toast.makeText(FinalizeNow.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                                    onBackPressed();
-                                }
+                       SalesQuotesUpdateFinalizeInteface salesQuotesUpdateFinalizeInteface = APIClient.getClient().create(SalesQuotesUpdateFinalizeInteface.class);
+                       salesQuotesUpdateFinalizeInteface.callFinalSubmit(Action, EmpId, QuoteId, PoRef, PoDate, Billing_opt, BillingAddress, BillingAnother, Con_pre, Con_name, Con_no, Pro_spec, Order_value, Advance_value, Deposit, Deposit_date, Pay_bef_dispatch, Pay_aft_dispatch, Pay_on_install, Installments, Install_terms, Spl_remarks, Warranty, Delivery_date, POPDF).enqueue(new Callback<SalesQuotesUpdateFinalizeResponse>() {
+                           @Override
+                           public void onResponse(Call<SalesQuotesUpdateFinalizeResponse> call, Response<SalesQuotesUpdateFinalizeResponse> response) {
+                               try {
+                                   if (response.isSuccessful()) {
+                                       progressDialog.dismiss();
+                                       Toast.makeText(FinalizeNow.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                       onBackPressed();
+                                   }
 
-                            } catch (Exception e) {
+                               } catch (Exception e) {
 
-                            }
-                        }
+                               }
+                           }
 
-                        @Override
-                        public void onFailure(Call<SalesQuotesUpdateFinalizeResponse> call, Throwable t) {
+                           @Override
+                           public void onFailure(Call<SalesQuotesUpdateFinalizeResponse> call, Throwable t) {
 
-                        }
-                    });
-                }
+                           }
+                       });
+                   }
+               }
+
             }
         });
 
@@ -774,7 +781,20 @@ public class FinalizeNow extends AppCompatActivity {
 
                     try {
                         if (filename.length() > 0) {
-                            tvAttach.setText(filename);
+                            String myStr = filename;
+                            int index=myStr.lastIndexOf(".");
+                            String extension = myStr.substring(index);
+                            System.out.println(extension);
+                            if(extension.equals(".pdf")){
+                                tvAttach.setText(filename);
+                            }else{
+                               AlertDialog.Builder builder=new AlertDialog.Builder(this);
+                               builder.setMessage("Please Select Pdf File Only ..");
+                               AlertDialog dialog=builder.create();
+                               dialog.show();
+                            }
+
+
                         }
 
                     } catch (Exception e) {

@@ -15,6 +15,7 @@ import android.graphics.Color;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -56,6 +57,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -343,7 +345,7 @@ public class VisitEntry extends AppCompatActivity {
 
     private void CallAdd(String hospitalID, String chefDocID, String productId) {
         final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Loading...");
+        progressDialog.setMessage("Adding...");
         progressDialog.setCancelable(false);
         progressDialog.show();
         VisitEntryAddInterface visitEntryAddInterface=APIClient.getClient().create(VisitEntryAddInterface.class);
@@ -522,6 +524,7 @@ public class VisitEntry extends AppCompatActivity {
                         for (int i=0;i<visitEntryProductModels.size();i++){
                             strProduct.add(visitEntryProductModels.get(i).getProduct());
                         }
+                        productAdapter.notifyDataSetChanged();
                         progressDialog.dismiss();
                     }else {
                         progressDialog.dismiss();
@@ -556,6 +559,7 @@ public class VisitEntry extends AppCompatActivity {
                         for (int i=0;i<visitEntryDoctorModels.size();i++){
                             strDoctor.add(visitEntryDoctorModels.get(i).getChiefDr());
                         }
+                        chefDocAdapter.notifyDataSetChanged();
                         progressDialog.dismiss();
                     }else {
                         progressDialog.dismiss();
@@ -591,6 +595,7 @@ public class VisitEntry extends AppCompatActivity {
                         for (int i=0;i<visitEntryHospitalModels.size();i++){
                             strHospital.add(visitEntryHospitalModels.get(i).getHospital());
                         }
+                        hospitalAdapter.notifyDataSetChanged();
                         progressDialog.dismiss();
                     }else {
                         progressDialog.dismiss();
@@ -630,6 +635,7 @@ public class VisitEntry extends AppCompatActivity {
                         for (int i=0;i<visitEntryStateModels.size();i++){
                             strState.add(visitEntryStateModels.get(i).getState());
                         }
+                        stateAdapter.notifyDataSetChanged();
                         progressDialog.dismiss();
                     }
 
@@ -664,6 +670,7 @@ public class VisitEntry extends AppCompatActivity {
                         for (int i=0;i<visitEntryGetDistrictModels.size();i++){
                             strDistrict.add(visitEntryGetDistrictModels.get(i).getDistrict());
                         }
+                        districtAdapter.notifyDataSetChanged();
                         progressDialog.dismiss();
                     }
 

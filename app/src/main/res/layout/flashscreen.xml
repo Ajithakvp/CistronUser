@@ -26,4 +26,19 @@
         android:text="Cistron Systems Private Ltd"
         />
 
+
+    <TextView
+        android:id="@+id/tvVersion"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:fontFamily="@font/semibold"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/whiteLite2"
+        android:textSize="15dp"
+        android:layout_marginTop="15dp"
+        android:text="Version"
+        />
+
 </RelativeLayout>

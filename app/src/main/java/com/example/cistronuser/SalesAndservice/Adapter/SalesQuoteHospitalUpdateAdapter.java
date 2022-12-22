@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
@@ -232,6 +233,10 @@ public class SalesQuoteHospitalUpdateAdapter extends RecyclerView.Adapter<SalesQ
     }
 
     private void CallUpdateStatus(String quoteId, Dialog dialog) {
+        final ProgressDialog progressDialog = new ProgressDialog(activity);
+        progressDialog.setMessage("Update Status...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
         StatusID=spStatus.getSelectedItem().toString();
         SalesQuoteUpdateStatusInterface salesQuoteUpdateStatusInterface=APIClient.getClient().create(SalesQuoteUpdateStatusInterface.class);
         salesQuoteUpdateStatusInterface.callUpdatestatus("updateStatus",quoteId,tvDate.getText().toString(),StatusID,edRemark.getText().toString(), PreferenceManager.getEmpID(activity)).enqueue(new Callback<SalesQuoteUpdateStatusResponse>() {
@@ -241,6 +246,7 @@ public class SalesQuoteHospitalUpdateAdapter extends RecyclerView.Adapter<SalesQ
                 try {
                     if (response.isSuccessful()){
                         Toast.makeText(activity, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
                         dialog.dismiss();
                     }
 

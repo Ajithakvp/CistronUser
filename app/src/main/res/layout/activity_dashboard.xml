@@ -564,6 +564,87 @@
                         </RelativeLayout>
 
 
+
+
+
+                        <RelativeLayout
+                            android:id="@+id/rlWaitingSalesQuoteApprovalRequest"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:visibility="visible"
+                            android:layout_below="@id/rlWaitingLeaveRequest"
+                            android:layout_marginTop="20dp"
+                            android:background="@drawable/cardview"
+                            android:backgroundTint="#6495ED">
+
+                            <ImageView
+                                android:id="@+id/ivWaitingSalesQuote"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="30dp"
+                                android:src="@drawable/salesquote"
+                                android:tint="@color/white"
+                                tools:ignore="UseAppTint" />
+
+                            <TextView
+                                android:id="@+id/tvWaitingSalesQuoteName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="20dp"
+                                android:layout_toRightOf="@+id/ivWaitingSalesQuote"
+                                android:fontFamily="@font/semibold"
+                                android:text="Sales Quote Approval"
+                                android:textColor="@color/white"
+                                android:textSize="18dp" />
+
+
+                            <TextView
+                                android:id="@+id/tvWaitingSalesQuoteStart"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="10dp"
+                                android:layout_toRightOf="@+id/tvWaitingSalesQuoteName"
+                                android:fontFamily="@font/semibold"
+                                android:text="("
+                                android:textColor="#C0C0C0"
+                                android:textSize="18dp" />
+
+                            <TextView
+                                android:id="@+id/tvWaitingSalesQuote"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="10dp"
+                                android:layout_toRightOf="@+id/tvWaitingSalesQuoteStart"
+                                android:fontFamily="@font/bold"
+                                android:textColor="#FF0000"
+                                android:textSize="18dp" />
+
+                            <TextView
+                                android:id="@+id/tvWaitingSalesQuoteend"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="10dp"
+                                android:layout_toRightOf="@+id/tvWaitingSalesQuote"
+                                android:fontFamily="@font/semibold"
+                                android:text=")"
+                                android:textColor="#C0C0C0"
+                                android:textSize="18dp" />
+
+                        </RelativeLayout>
+
+
+
+
+
+
+
+
+
                         <RelativeLayout
                             android:id="@+id/rlWaitingCompOFfRequest"
                             android:layout_width="match_parent"

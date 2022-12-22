@@ -39,11 +39,13 @@ import com.example.cistronuser.API.Interface.CompOffApprovalCountInterface;
 import com.example.cistronuser.API.Interface.ExpenseCountInterface;
 import com.example.cistronuser.API.Interface.LeaveApprovelCountInterface;
 import com.example.cistronuser.API.Interface.LogoutInterFace;
+import com.example.cistronuser.API.Interface.SalesQuoteApprovalCountInterFace;
 import com.example.cistronuser.API.Model.LoginuserModel;
 import com.example.cistronuser.API.Response.ChangePasswordResponse;
 import com.example.cistronuser.API.Response.CompOffCountResponse;
 import com.example.cistronuser.API.Response.LeaveApprovelCountResponse;
 import com.example.cistronuser.API.Response.LogoutResponse;
+import com.example.cistronuser.API.Response.SalesQuoteApprovalCountResponse;
 import com.example.cistronuser.API.Response.WaitingExpenseCountInterface;
 import com.example.cistronuser.Common.ConnectionRecevier;
 import com.example.cistronuser.Common.PreferenceManager;
@@ -53,11 +55,13 @@ import com.example.cistronuser.Report.Activity.AttendanceReports;
 import com.example.cistronuser.Report.Activity.ExpenseReportWM;
 import com.example.cistronuser.Report.Activity.LeaveReport;
 import com.example.cistronuser.Report.Activity.VisitEntryReport;
+import com.example.cistronuser.SalesAndservice.Activity.FinalizeNow;
 import com.example.cistronuser.SalesAndservice.Activity.SalesQuote;
 import com.example.cistronuser.SalesAndservice.Activity.VisitEntry;
 import com.example.cistronuser.WaitingforApprovel.Activity.CompOffRequest;
 import com.example.cistronuser.WaitingforApprovel.Activity.ExpensesReport;
 import com.example.cistronuser.WaitingforApprovel.Activity.LeaveRequest;
+import com.example.cistronuser.WaitingforApprovel.Activity.SalesQuoteApproval;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -97,10 +101,10 @@ public class DashboardActivity extends Activity {
     RelativeLayout rlWaitingExpense, rlSalesService;
     //Admin Dashboard
 
-    RelativeLayout rlAdmin, rlWaitingApproval, rlVisitEntryReportLayout;
+    RelativeLayout rlAdmin, rlWaitingApproval, rlVisitEntryReportLayout,rlWaitingSalesQuoteApprovalRequest;
 
     RelativeLayout rlExpenseReport, rlrlAttendaceReport, rlrlLeaveReport, rlWaitingLeaveRequest, rlWaitingCompOFfRequest;
-    TextView tvwaitingCountExpense, tvCountLeaveReq, tvCountCompOffReq;
+    TextView tvwaitingCountExpense, tvCountLeaveReq, tvCountCompOffReq,tvWaitingCountSalesQuote;
 
     Context context;
 
@@ -118,6 +122,9 @@ public class DashboardActivity extends Activity {
         //CompoffCount
         CallCompoffCount();
 
+        //SalesQuoteCount
+        CallSalesQuoteCount();
+
     }
 
 
@@ -133,6 +140,9 @@ public class DashboardActivity extends Activity {
 
         //CompoffCount
         CallCompoffCount();
+
+        //SalesQuoteCount
+        CallSalesQuoteCount();
 
 
     }
@@ -164,6 +174,8 @@ public class DashboardActivity extends Activity {
         tvCountCompOffReq = findViewById(R.id.tvCountCompOffReq);
         rlAdmin = findViewById(R.id.rlAdmin);
         rlWaitingApproval = findViewById(R.id.rlWaitingApproval);
+        rlWaitingSalesQuoteApprovalRequest=findViewById(R.id.rlWaitingSalesQuoteApprovalRequest);
+        tvWaitingCountSalesQuote=findViewById(R.id.tvWaitingSalesQuote);
 
         rlVisitEntryReportLayout = findViewById(R.id.rlVisitEntryReportLayout);
         cvVisitEntry = findViewById(R.id.cvVisitEntry);
@@ -354,6 +366,8 @@ public class DashboardActivity extends Activity {
         });
 
 
+
+
         rlWaitingCompOFfRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -387,6 +401,16 @@ public class DashboardActivity extends Activity {
             }
         });
 
+        rlWaitingSalesQuoteApprovalRequest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(DashboardActivity.this, SalesQuoteApproval.class);
+                startActivity(intent);
+
+            }
+        });
+
 
         //LeaveApprovalCount
         CallLeaveApprovalCount();
@@ -397,7 +421,40 @@ public class DashboardActivity extends Activity {
         //CompoffCount
         CallCompoffCount();
 
+        //SalesQuoteCount
+        CallSalesQuoteCount();
 
+
+    }
+
+    private void CallSalesQuoteCount() {
+        SalesQuoteApprovalCountInterFace salesQuoteApprovalCountInterFace=APIClient.getClient().create(SalesQuoteApprovalCountInterFace.class);
+        salesQuoteApprovalCountInterFace.callCount("getApprovalCounts").enqueue(new Callback<SalesQuoteApprovalCountResponse>() {
+            @Override
+            public void onResponse(Call<SalesQuoteApprovalCountResponse> call, Response<SalesQuoteApprovalCountResponse> response) {
+              try {
+                  if (response.isSuccessful()) {
+                      tvWaitingCountSalesQuote.setText(response.body().getSalesQuoteApprovalCountModel().getOaApproval());
+
+                      if (response.body().getSalesQuoteApprovalCountModel().getOaApproval().trim().equals("0")) {
+                          rlWaitingSalesQuoteApprovalRequest.setVisibility(View.GONE);
+
+                      } else {
+                          rlWaitingSalesQuoteApprovalRequest.setVisibility(View.VISIBLE);
+                      }
+
+
+                  }
+              }catch (Exception e){
+
+              }
+            }
+
+            @Override
+            public void onFailure(Call<SalesQuoteApprovalCountResponse> call, Throwable t) {
+
+            }
+        });
     }
 
     private void CallLeaveApprovalCount() {

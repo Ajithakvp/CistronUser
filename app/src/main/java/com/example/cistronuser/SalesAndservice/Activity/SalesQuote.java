@@ -29,6 +29,7 @@ import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -84,6 +85,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -211,6 +213,9 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
         int ipAddress = wifiInf.getIpAddress();
         ip = String.format("%d.%d.%d.%d", (ipAddress & 0xff), (ipAddress >> 8 & 0xff), (ipAddress >> 16 & 0xff), (ipAddress >> 24 & 0xff));
 
+        Date Start = new Date();
+        CharSequence SDate = DateFormat.format("yyyy-MM-dd ", Start.getTime());
+        tvDate.setText(SDate);
 
         //State
         CallState();
@@ -382,45 +387,45 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
             }
         });
 
-
-        tvDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tvDate.setError(null);
-
-                Calendar calendar = Calendar.getInstance();
-                int year = calendar.get(Calendar.YEAR);
-                int month = calendar.get(Calendar.MONTH);
-                int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-                calendar.add(Calendar.DATE, -1);
-
-                DatePickerDialog datePickerDialog = new DatePickerDialog(SalesQuote.this, new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                        String moth, dt;
-
-                        moth = ((month + 1) > 9) ? "" + (month + 1) : ("0" + (month + 1));
-
-                        dt = (day > 9) ? "" + day : ("0" + day);
-
-
-                        String strDate = year + "-" + moth + "-" + dt;
-                        tvDate.setText(strDate);
-
-
-                    }
-
-                }, year, month, dayOfMonth);
-
-                datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
-                datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis() - 1000);
-
-
-                datePickerDialog.show();
-
-
-            }
-        });
+//
+//        tvDate.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                tvDate.setError(null);
+//
+//                Calendar calendar = Calendar.getInstance();
+//                int year = calendar.get(Calendar.YEAR);
+//                int month = calendar.get(Calendar.MONTH);
+//                int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+//                calendar.add(Calendar.DATE, -1);
+//
+//                DatePickerDialog datePickerDialog = new DatePickerDialog(SalesQuote.this, new DatePickerDialog.OnDateSetListener() {
+//                    @Override
+//                    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+//                        String moth, dt;
+//
+//                        moth = ((month + 1) > 9) ? "" + (month + 1) : ("0" + (month + 1));
+//
+//                        dt = (day > 9) ? "" + day : ("0" + day);
+//
+//
+//                        String strDate = year + "-" + moth + "-" + dt;
+//                        tvDate.setText(strDate);
+//
+//
+//                    }
+//
+//                }, year, month, dayOfMonth);
+//
+//                datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
+//                datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis() - 1000);
+//
+//
+//                datePickerDialog.show();
+//
+//
+//            }
+//        });
 
         cbSms.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -444,7 +449,40 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
         tvAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CallPreview(android.text.TextUtils.join(",", strAddon));
+
+                try {
+
+
+                    boolean isfilled = true;
+
+                    if (tvDate.getText().toString().trim().length() == 0) {
+                        tvDate.setError("Please Select the Date");
+                        tvDate.requestFocus();
+                        isfilled = false;
+                    } else if (spState.getSelectedItemPosition() == -1) {
+                        setSpinnerError(spState, "Please Select the State");
+                        Log.e(TAG, "onClick: state");
+                        isfilled = false;
+                    } else if (sphospital.getSelectedItemPosition() == -1) {
+                        setSpinnerError(sphospital, "Please Select the Hospital");
+                        isfilled = false;
+                    } else if (spDoctor.getSelectedItemPosition() == -1) {
+                        setSpinnerError(spDoctor, "Please Select the Chef.Doctor");
+                        isfilled = false;
+                    } else if (spCategory.getSelectedItemPosition() == -1) {
+                        setSpinnerError(spCategory, "Please Select the Category");
+                        isfilled = false;
+                    } else if (spProduct.getSelectedItemPosition() == -1) {
+                        setSpinnerError(spProduct, "Please Select the Product");
+                        isfilled = false;
+                    }
+                    if (isfilled) {
+
+                        CallPreview(android.text.TextUtils.join(",", strAddon));
+                    }
+                }catch (Exception e){
+
+                }
             }
         });
 
@@ -539,7 +577,7 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
         progressDialog.setCancelable(false);
         progressDialog.show();
         SalesQuoteHospitalUpdateInterface salesQuoteHospitalUpdateInterface=APIClient.getClient().create(SalesQuoteHospitalUpdateInterface.class);
-        salesQuoteHospitalUpdateInterface.CallHospitalUpdateList("viewAvailableSalesQuote",HospitalID).enqueue(new Callback<SalesQuoteHospitalUpdateResponse>() {
+        salesQuoteHospitalUpdateInterface.CallHospitalUpdateList("viewAvailableSalesQuote","8531").enqueue(new Callback<SalesQuoteHospitalUpdateResponse>() {
             @Override
             public void onResponse(Call<SalesQuoteHospitalUpdateResponse> call, Response<SalesQuoteHospitalUpdateResponse> response) {
                 try {

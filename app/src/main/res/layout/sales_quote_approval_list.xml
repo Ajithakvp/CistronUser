@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:backgroundTint="@color/white"
+            app:cardCornerRadius="10dp">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:background="#FEFCFF"
+                android:layout_height="wrap_content"
+                >
+
+
+                <RelativeLayout
+                    android:id="@+id/rlEmployee"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#ffd55a"
+                    android:padding="10dp"
+                    android:visibility="visible">
+
+
+                    <TextView
+                        android:id="@+id/tvName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/bold"
+                        android:layout_alignParentStart="true"
+                        android:layout_toLeftOf="@+id/ivPdf"
+                        android:text="Velmurugan P(E367)"
+                        android:textColor="#104c91"
+                        android:textSize="20dp" />
+
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:id="@+id/ivPdf"
+                        android:layout_marginLeft="10dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="5dp"
+                        android:tint="@color/white"
+                        android:src="@drawable/pdffile"
+                        tools:ignore="UseAppTint" />
+
+
+                </RelativeLayout>
+
+
+                <TextView
+                    android:id="@+id/tvHospitalTag"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/rlEmployee"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/latest"
+                    android:text="Hospital   :"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:id="@+id/tvHospital"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/rlEmployee"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/DarkRed"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/tvHospitalTag"
+                    android:fontFamily="@font/semibold"
+                    android:text="Text"
+                    android:textSize="16dp" />
+
+
+
+                <TextView
+                    android:id="@+id/tvDistrictTag"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvHospital"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="12dp"
+                    android:fontFamily="@font/latest"
+                    android:text="District     :"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:id="@+id/tvDistrict"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvHospital"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/tvDistrictTag"
+                    android:fontFamily="@font/semibold"
+                    android:padding="5dp"
+                    android:text="Chennai-TN"
+                    android:textAlignment="center"
+                    android:textColor="@color/DarkRed"
+                    android:textSize="16dp" />
+
+
+
+
+                <TextView
+                    android:id="@+id/tvProductTag"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvDistrict"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/latest"
+                    android:text="Product    :"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:id="@+id/tvProduct"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvDistrict"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/tvProductTag"
+                    android:fontFamily="@font/semibold"
+                    android:textColor="@color/DarkRed"
+                    android:text="B-Sterile : Automatic Steam Sterilizer - 16x24 Single Door | BST05"
+                    android:textSize="16dp" />
+
+
+
+
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+</RelativeLayout>
