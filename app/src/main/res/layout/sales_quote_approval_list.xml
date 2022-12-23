@@ -21,10 +21,10 @@
 
 
             <RelativeLayout
+                android:id="@+id/rlView"
                 android:layout_width="match_parent"
-                android:background="#FEFCFF"
                 android:layout_height="wrap_content"
-                >
+                android:background="#FEFCFF">
 
 
                 <RelativeLayout
@@ -40,25 +40,25 @@
                         android:id="@+id/tvName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="10dp"
-                        android:fontFamily="@font/bold"
-                        android:layout_alignParentStart="true"
                         android:layout_toLeftOf="@+id/ivPdf"
+                        android:fontFamily="@font/bold"
                         android:text="Velmurugan P(E367)"
                         android:textColor="#104c91"
                         android:textSize="20dp" />
 
 
                     <ImageView
+                        android:id="@+id/ivPdf"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:id="@+id/ivPdf"
-                        android:layout_marginLeft="10dp"
                         android:layout_alignParentRight="true"
+                        android:layout_marginLeft="10dp"
                         android:layout_marginRight="5dp"
-                        android:tint="@color/white"
                         android:src="@drawable/pdffile"
+                        android:tint="@color/white"
                         tools:ignore="UseAppTint" />
 
 
@@ -72,9 +72,9 @@
                     android:layout_below="@id/rlEmployee"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
-                    android:textColor="@color/black"
                     android:fontFamily="@font/latest"
                     android:text="Hospital   :"
+                    android:textColor="@color/black"
                     android:textSize="16dp" />
 
                 <TextView
@@ -83,13 +83,27 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/rlEmployee"
                     android:layout_marginLeft="10dp"
-                    android:textColor="@color/DarkRed"
                     android:layout_marginTop="10dp"
+                    android:layout_toLeftOf="@id/ivDelete"
                     android:layout_toRightOf="@id/tvHospitalTag"
                     android:fontFamily="@font/semibold"
                     android:text="Text"
+                    android:textColor="@color/DarkRed"
                     android:textSize="16dp" />
 
+
+                <ImageView
+                    android:id="@+id/ivDelete"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_below="@id/rlEmployee"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/ic_baseline_delete_24"
+                    android:tint="@color/Radio"
+                    tools:ignore="UseAppTint" />
 
 
                 <TextView
@@ -98,10 +112,10 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tvHospital"
                     android:layout_marginLeft="10dp"
-                    android:textColor="@color/black"
                     android:layout_marginTop="12dp"
                     android:fontFamily="@font/latest"
                     android:text="District     :"
+                    android:textColor="@color/black"
                     android:textSize="16dp" />
 
                 <TextView
@@ -111,15 +125,13 @@
                     android:layout_below="@id/tvHospital"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
+                    android:layout_toLeftOf="@id/ivDelete"
                     android:layout_toRightOf="@id/tvDistrictTag"
                     android:fontFamily="@font/semibold"
                     android:padding="5dp"
                     android:text="Chennai-TN"
-                    android:textAlignment="center"
                     android:textColor="@color/DarkRed"
                     android:textSize="16dp" />
-
-
 
 
                 <TextView
@@ -129,9 +141,9 @@
                     android:layout_below="@id/tvDistrict"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
-                    android:textColor="@color/black"
                     android:fontFamily="@font/latest"
                     android:text="Product    :"
+                    android:textColor="@color/black"
                     android:textSize="16dp" />
 
                 <TextView
@@ -140,17 +152,14 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tvDistrict"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp"
                     android:layout_toRightOf="@id/tvProductTag"
                     android:fontFamily="@font/semibold"
-                    android:textColor="@color/DarkRed"
                     android:text="B-Sterile : Automatic Steam Sterilizer - 16x24 Single Door | BST05"
+                    android:textColor="@color/DarkRed"
                     android:textSize="16dp" />
-
-
-
 
 
             </RelativeLayout>

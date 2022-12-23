@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        /* **************App Version End************* */
 
 
 
@@ -91,16 +92,19 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
 
-                if (PreferenceManager.isLogged(MainActivity.this)){
+                Intent i = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(i);
 
-                    Intent dash=new Intent(MainActivity.this, DashboardActivity.class);
-                    startActivity(dash);
-
-
-                }else {
-                    Intent i = new Intent(MainActivity.this, LoginActivity.class);
-                    startActivity(i);
-                }
+//                if (PreferenceManager.isLogged(MainActivity.this)){
+//
+//                    Intent dash=new Intent(MainActivity.this, DashboardActivity.class);
+//                    startActivity(dash);
+//
+//
+//                }else {
+//                    Intent i = new Intent(MainActivity.this, LoginActivity.class);
+//                    startActivity(i);
+//                }
 
 
                 finish();

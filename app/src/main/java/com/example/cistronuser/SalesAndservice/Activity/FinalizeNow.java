@@ -74,7 +74,7 @@ import retrofit2.Response;
 
 public class FinalizeNow extends AppCompatActivity {
 
-    ArrayList<EditText> installEdt;
+
     File filePdf;
     String filename;
     CheckBox cbDeposited, cbSameAddress;
@@ -88,6 +88,7 @@ public class FinalizeNow extends AppCompatActivity {
 
     //AddEditText
     EditText edAmount;
+    ArrayList<EditText> installEdt;
     ImageView ivRemove;
 
     String QuotePDF;
@@ -462,14 +463,14 @@ public class FinalizeNow extends AppCompatActivity {
         tvSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean isFilled=true;
+
 
                 strEditText.clear();
                 for (int i = 0; i < layout_list.getChildCount(); i++) {
                     LinearLayout vi = (LinearLayout) layout_list.getChildAt(i);
                     EditText edt = (EditText) vi.getChildAt(0);
-                    if (edt.getText().toString().trim().length() > 0)
-                        strEditText.add(edt.getText().toString().trim());
+                    if (edt.getText().toString().trim().length() > 0){
+                        strEditText.add(edt.getText().toString().trim());}
                     else {
                         edt.setError("Enter The Amount / Remove It");
                         edt.requestFocus();
@@ -496,22 +497,15 @@ public class FinalizeNow extends AppCompatActivity {
                 } else if (edQus.getText().toString().trim().length() == 0) {
                     edQus.setError("Please Enter the As per Quotation");
                     edQus.requestFocus();
-//                }else  if((Ordervalue != AdvanceValue + PaymentAfter + PaymentBefor + PayIntallation)) {
-//                    AlertDialog.Builder builder = new AlertDialog.Builder(FinalizeNow.this);
-//                    builder.setMessage("Payment terms not matching with order value. Please check.");
-//                    AlertDialog dialog = builder.create();
-//                    dialog.show();
                 } else if (edOrderValue.getText().toString().trim().length() == 0) {
                     edOrderValue.setError("Please Enter a OrderValue");
                     edOrderValue.requestFocus();
                 } else if (edAdvanceValue.getText().toString().trim().length() == 0) {
                     edAdvanceValue.setError("Please Enter a Advance Value");
                     edAdvanceValue.requestFocus();
-                } else if (cbDeposited.isChecked()) {
-                  if (tvDepositedDate.getText().toString().trim().length()==0){
+                } else if (cbDeposited.isChecked() && tvDepositedDate.getText().toString().trim().length()==0) {
                       tvDepositedDate.setError("Please Select the Date");
                       tvDepositedDate.requestFocus();
-                  }
                 } else if (edpaymentBforeDispatch.getText().toString().trim().length() == 0) {
                     edpaymentBforeDispatch.setError("Please Enter a Payment before Dispatch");
                     edpaymentBforeDispatch.requestFocus();
@@ -540,6 +534,7 @@ public class FinalizeNow extends AppCompatActivity {
                        AlertDialog dialog = builder.create();
                        dialog.show();
                    } else {
+                       Log.e(TAG, "onClick: " );
                        int sameAddr = cbSameAddress.isChecked() ? 1 : 0;
                        int Depos = cbDeposited.isChecked() ? 1 : 0;
                        final ProgressDialog progressDialog = new ProgressDialog(FinalizeNow.this);
