@@ -235,7 +235,7 @@ public class DashboardActivity extends Activity {
                 progressDialog.setMessage("Log out...");
                 progressDialog.setCancelable(false);
                 progressDialog.show();
-                AlertDialog.Builder builder = new AlertDialog.Builder(DashboardActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(DashboardActivity.this,R.style.AlertDialogCustom);
                 builder.setMessage("Do you want to LogOut");
                 builder.setTitle("Log Out!");
                 builder.setIcon(R.drawable.logout);
@@ -807,7 +807,7 @@ public class DashboardActivity extends Activity {
     public void onBackPressed() {
         // super.onBackPressed();
 
-        android.app.AlertDialog alertDialog = new android.app.AlertDialog.Builder(this).create();
+        android.app.AlertDialog alertDialog = new android.app.AlertDialog.Builder(this,R.style.AlertDialogCustom).create();
         alertDialog.setMessage("Are you sure want to Quit App?");
         alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "Ok", new DialogInterface.OnClickListener() {
             @Override

@@ -595,7 +595,7 @@
                                 android:layout_marginLeft="20dp"
                                 android:layout_toRightOf="@+id/ivWaitingSalesQuote"
                                 android:fontFamily="@font/semibold"
-                                android:text="Sales Quote Approval"
+                                android:text="Order Call Approval"
                                 android:textColor="@color/white"
                                 android:textSize="18dp" />
 

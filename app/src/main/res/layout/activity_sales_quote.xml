@@ -194,7 +194,7 @@
                                 android:id="@+id/spProduct"
                                 style="@style/textviewLabel"
                                 android:layout_gravity="center"
-                                app:hintText="Select a Products">
+                                app:hintText="Select a Product">
 
                             </com.toptoche.searchablespinnerlibrary.SearchableSpinner>
 
