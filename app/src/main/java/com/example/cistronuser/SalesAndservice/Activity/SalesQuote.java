@@ -10,14 +10,13 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.Manifest;
-import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -26,9 +25,10 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
@@ -36,7 +36,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -47,6 +46,7 @@ import com.example.cistronuser.API.APIClient;
 import com.example.cistronuser.API.Interface.SalesQuoteAddInterface;
 import com.example.cistronuser.API.Interface.SalesQuoteCategoryInterface;
 import com.example.cistronuser.API.Interface.SalesQuoteHospitalUpdateInterface;
+import com.example.cistronuser.API.Interface.SalesQuoteMailtoSendInterface;
 import com.example.cistronuser.API.Interface.SalesQuoteProductsInterFace;
 import com.example.cistronuser.API.Interface.SalesQuoteSubmitedInterface;
 import com.example.cistronuser.API.Interface.VisitEntryDoctorInterface;
@@ -64,6 +64,7 @@ import com.example.cistronuser.API.Model.VisitEntryStateModel;
 import com.example.cistronuser.API.Response.SalesQuoteAddResponse;
 import com.example.cistronuser.API.Response.SalesQuoteCategoryResponse;
 import com.example.cistronuser.API.Response.SalesQuoteHospitalUpdateResponse;
+import com.example.cistronuser.API.Response.SalesQuoteMailtoSendResponse;
 import com.example.cistronuser.API.Response.SalesQuoteProductsResponse;
 import com.example.cistronuser.API.Response.SalesQuoteSubmitedResponse;
 import com.example.cistronuser.API.Response.VisitEntryDoctorResponse;
@@ -71,20 +72,12 @@ import com.example.cistronuser.API.Response.VisitEntryGetDistrictResponse;
 import com.example.cistronuser.API.Response.VisitEntryModelResponse;
 import com.example.cistronuser.API.Response.VisityEntryStateResponse;
 import com.example.cistronuser.Common.PreferenceManager;
-import com.example.cistronuser.LoginActivity;
 import com.example.cistronuser.R;
 import com.example.cistronuser.SalesAndservice.Adapter.SalesQuoteAddonAdapter;
 import com.example.cistronuser.SalesAndservice.Adapter.SalesQuoteHospitalUpdateAdapter;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -164,8 +157,7 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
     TextView tvNodata;
     ImageView ivBottomBack;
     SalesQuoteHospitalUpdateAdapter salesQuoteHospitalUpdateAdapter;
-    ArrayList<SalesQuoteHospitalUpdateModel>salesQuoteHospitalUpdateModels=new ArrayList<>();
-
+    ArrayList<SalesQuoteHospitalUpdateModel> salesQuoteHospitalUpdateModels = new ArrayList<>();
 
 
     @Override
@@ -188,9 +180,7 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
         edAnotherMail = findViewById(R.id.edAnotherMail);
         edMail = findViewById(R.id.edMail);
         tvSubmit = findViewById(R.id.tvSubmit);
-        cbSms=findViewById(R.id.cbSms);
-
-
+        cbSms = findViewById(R.id.cbSms);
 
 
         //LocationPermission
@@ -217,6 +207,56 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
         CharSequence SDate = DateFormat.format("yyyy-MM-dd ", Start.getTime());
         tvDate.setText(SDate);
 
+
+        //MailValidation
+        String emailPattern = "(([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)(\\s*(;|,)\\s*|\\s*$))*";
+        edMail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (edMail.getText().toString().trim().matches(emailPattern)){
+                    edMail.setError(null);
+                }else {
+                    edMail.setError("Invalid Mail");
+                    edMail.requestFocus();
+                }
+
+            }
+        });
+
+        edAnotherMail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (edAnotherMail.getText().toString().trim().matches(emailPattern)){
+                    edAnotherMail.setError(null);
+                }else {
+                    edAnotherMail.setError("Invalid Mail");
+                    edAnotherMail.requestFocus();
+                }
+
+            }
+        });
+
+    //******************mail end****************//
         //State
         CallState();
         stateAdapter = new ArrayAdapter(this, R.layout.spinner_item, strState);
@@ -288,8 +328,6 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
                 ChefDocID = visitEntryDoctorModels.get(position).getId();
                 MobileNo = visitEntryDoctorModels.get(position).getMobile();
                 edMail.setText(visitEntryDoctorModels.get(position).getMail());
-
-
 
 
             }
@@ -430,11 +468,11 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
         cbSms.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
+                if (isChecked) {
                     Toast.makeText(context, MobileNo, Toast.LENGTH_SHORT).show();
 
 
-                }else {
+                } else {
 
                 }
             }
@@ -480,7 +518,7 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
 
                         CallPreview(android.text.TextUtils.join(",", strAddon));
                     }
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
             }
@@ -537,19 +575,21 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
     }
 
     private void CallHospitalUpdateList() {
-        BottomSheetDialog bottomSheetDialog=new BottomSheetDialog(this);
+
+
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this,R.style.AppBottomSheetDialogTheme);
         bottomSheetDialog.setContentView(R.layout.sales_quote_hospital_recycleview);
         bottomSheetDialog.setCancelable(false);
         bottomSheetDialog.show();
 
-        rvSalesQuoteHospitalUpdate=bottomSheetDialog.findViewById(R.id.rvSalesQuoteHospitalUpdate);
-        ivBottomBack=bottomSheetDialog.findViewById(R.id.ivBack);
-        tvNodata=bottomSheetDialog.findViewById(R.id.tvNodata);
+        rvSalesQuoteHospitalUpdate = bottomSheetDialog.findViewById(R.id.rvSalesQuoteHospitalUpdate);
+        ivBottomBack = bottomSheetDialog.findViewById(R.id.ivBack);
+        tvNodata = bottomSheetDialog.findViewById(R.id.tvNodata);
 
 
         CallHospitalUpdateView();
-        salesQuoteHospitalUpdateAdapter=new SalesQuoteHospitalUpdateAdapter(this,salesQuoteHospitalUpdateModels);
-        LinearLayoutManager SaleQuoteUpdate=new LinearLayoutManager(this);
+        salesQuoteHospitalUpdateAdapter = new SalesQuoteHospitalUpdateAdapter(this, salesQuoteHospitalUpdateModels);
+        LinearLayoutManager SaleQuoteUpdate = new LinearLayoutManager(this);
         SaleQuoteUpdate.setOrientation(RecyclerView.VERTICAL);
         rvSalesQuoteHospitalUpdate.setAdapter(salesQuoteHospitalUpdateAdapter);
         rvSalesQuoteHospitalUpdate.setLayoutManager(SaleQuoteUpdate);
@@ -562,12 +602,6 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
         });
 
 
-
-
-
-
-
-
     }
 
     private void CallHospitalUpdateView() {
@@ -576,25 +610,27 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
         progressDialog.setMessage("Sales Quote...");
         progressDialog.setCancelable(false);
         progressDialog.show();
-        SalesQuoteHospitalUpdateInterface salesQuoteHospitalUpdateInterface=APIClient.getClient().create(SalesQuoteHospitalUpdateInterface.class);
-        salesQuoteHospitalUpdateInterface.CallHospitalUpdateList("viewAvailableSalesQuote","8531").enqueue(new Callback<SalesQuoteHospitalUpdateResponse>() {
+        SalesQuoteHospitalUpdateInterface salesQuoteHospitalUpdateInterface = APIClient.getClient().create(SalesQuoteHospitalUpdateInterface.class);
+        salesQuoteHospitalUpdateInterface.CallHospitalUpdateList("viewAvailableSalesQuote", HospitalID).enqueue(new Callback<SalesQuoteHospitalUpdateResponse>() {
             @Override
             public void onResponse(Call<SalesQuoteHospitalUpdateResponse> call, Response<SalesQuoteHospitalUpdateResponse> response) {
                 try {
-                    if (response.isSuccessful()){
-                        progressDialog.dismiss();
-                        if (response.body().getSalesQuoteHospitalUpdateModels()==null){
-                           tvNodata.setVisibility(View.VISIBLE);
-                           rvSalesQuoteHospitalUpdate.setVisibility(View.GONE);
-                        }else {
+                    if (response.isSuccessful()) {
+
+                        if (response.body().getSalesQuoteHospitalUpdateModels() == null) {
+                            progressDialog.dismiss();
+                            tvNodata.setVisibility(View.VISIBLE);
+                            rvSalesQuoteHospitalUpdate.setVisibility(View.GONE);
+                        } else {
                             rvSalesQuoteHospitalUpdate.setVisibility(View.VISIBLE);
                             tvNodata.setVisibility(View.GONE);
                             salesQuoteHospitalUpdateAdapter.salesQuoteHospitalUpdateModels = response.body().getSalesQuoteHospitalUpdateModels();
                             salesQuoteHospitalUpdateAdapter.notifyDataSetChanged();
+                            progressDialog.dismiss();
                         }
                     }
 
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
             }
@@ -620,26 +656,11 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
     }
 
     private void CallSalesQuoteSubmitted(String join, double latitude, double longtitude) {
-//        String[] str=PreferenceManager.getAddon(this).split(".");
-//        Log.e(TAG, " Submit  "+str.toString()) ;
-//        List addonList = Arrays.asList(str);
-//
-//        Log.e(TAG, " Submit  "+addonList.indexOf("565")) ;
-//
-//        if (addonList.contains("565")){
-//            Log.e(TAG, "CallSalesQuoteSubmitted: "+addonList.contains("565") );
-//            if (!addonList.contains("564")){
-//                Log.e(TAG, "Please select Vaccum Pump Upgradeable Kit ") ;
-//            }
-//        }else {
-//            Log.e(TAG, "else "+PreferenceManager.getAddon(this)) ;
-//        }
-
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Sales Quote...");
         progressDialog.setCancelable(false);
         progressDialog.show();
-        int sms=cbSms.isChecked() ? 1:0;
+        int sms = cbSms.isChecked() ? 1 : 0;
         SalesQuoteSubmitedInterface salesQuoteSubmitedInterface = APIClient.getClient().create(SalesQuoteSubmitedInterface.class);
         salesQuoteSubmitedInterface.salesQuoteSubmit("generateSalesQuote", PreferenceManager.getEmpID(this), HospitalID, ChefDocID, CategoryID, ProductID, tvPrice.getText().toString(), edMail.getText().toString(),
                 edAnotherMail.getText().toString(), sms, MobileNo, join, latitude, longtitude, ip, AddressLine).enqueue(new Callback<SalesQuoteSubmitedResponse>() {
@@ -653,7 +674,34 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
                         Uri uri = Uri.parse(Quote);
                         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                         startActivity(intent);
+//                        "empid": "E367",
+//                                "id": 53177,
+//                                "quote_id": "8910",
+//                                "doctor": "Mr.  TEST DOCTOR TEST DOCTOR MD",
+//                                "doc_email": "callmeasvelan@gmail.com",
+//                                "product": "Instrument Washer Cum Disinfector",
+//                                "m_status": 1,
+//                                "mailto": "callmeasvelan@gmail.com",
+//                                "mailcc": "ajithmaxwell3096@gmail.com",
+//                                "bro_name": "932858435_INW01.pdf",
+//                                "a": 1
 
+                        String empid = response.body().getSalesQuoteMailSendModel().getEmpid();
+                        String id = response.body().getSalesQuoteMailSendModel().getId();
+                        String quote_id = response.body().getSalesQuoteMailSendModel().getQuote_id();
+                        String doctor = response.body().getSalesQuoteMailSendModel().getDoctor();
+                        String doc_email = response.body().getSalesQuoteMailSendModel().getDoc_email();
+                        String product = response.body().getSalesQuoteMailSendModel().getProduct();
+                        String m_status = response.body().getSalesQuoteMailSendModel().getM_status();
+                        String mailto = response.body().getSalesQuoteMailSendModel().getMailto();
+                        String mailcc = response.body().getSalesQuoteMailSendModel().getMailcc();
+                        String bro_name = response.body().getSalesQuoteMailSendModel().getBro_name();
+                        String a = response.body().getSalesQuoteMailSendModel().getA();
+
+
+                        CallMailToSend(empid, id, quote_id, doctor, doc_email, product, m_status, mailto, mailcc, bro_name, a);
+
+                        onBackPressed();
                     }
 
                 } catch (Exception e) {
@@ -668,6 +716,26 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
             }
         });
 
+
+    }
+
+    private void CallMailToSend(String empid, String id, String quote_id, String doctor, String doc_email, String product, String m_status, String mailto, String mailcc, String bro_name, String a) {
+        SalesQuoteMailtoSendInterface salesQuoteMailtoSendInterface = APIClient.getClient().create(SalesQuoteMailtoSendInterface.class);
+        salesQuoteMailtoSendInterface.callSendMail(empid, id, quote_id, doctor, doc_email, product, m_status, mailto, mailcc, bro_name, a).enqueue(new Callback<SalesQuoteMailtoSendResponse>() {
+            @Override
+            public void onResponse(Call<SalesQuoteMailtoSendResponse> call, Response<SalesQuoteMailtoSendResponse> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "mail: "+response.body().getMail_error() );
+                    Log.e(TAG, "sms: "+response.body().getSms_error() );
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SalesQuoteMailtoSendResponse> call, Throwable t) {
+
+            }
+        });
 
     }
 
@@ -818,7 +886,7 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
             @Override
             public void onResponse(Call<VisitEntryDoctorResponse> call, Response<VisitEntryDoctorResponse> response) {
                 try {
-                    if (response.body().getVisitEntryDoctorModels().size()>0) {
+                    if (response.body().getVisitEntryDoctorModels().size() > 0) {
                         progressDialog.dismiss();
                         visitEntryDoctorModels = response.body().getVisitEntryDoctorModels();
                         strDoctor.clear();
@@ -967,7 +1035,7 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
             e.printStackTrace();
         }
         if (!gps_enabled && !network_enabled) {
-            new AlertDialog.Builder(SalesQuote.this)
+            new AlertDialog.Builder(SalesQuote.this,R.style.AlertDialogCustom)
                     .setTitle("Enable GPS Service")
                     .setIcon(R.drawable.ic_baseline_location_on_24)
                     .setMessage("Allow Cistron App to Access this device's location?")
@@ -998,10 +1066,10 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
         try {
             Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
             List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-            Latitude=addresses.get(0).getLatitude();
-            Longtitude=addresses.get(0).getLongitude();
-            AddressLine=addresses.get(0).getAddressLine(0);
-          //  Log.e(TAG, "Sales Quote onLocationChanged: "+Latitude+"--"+Longtitude+"--"+AddressLine );
+            Latitude = addresses.get(0).getLatitude();
+            Longtitude = addresses.get(0).getLongitude();
+            AddressLine = addresses.get(0).getAddressLine(0);
+            //  Log.e(TAG, "Sales Quote onLocationChanged: "+Latitude+"--"+Longtitude+"--"+AddressLine );
 
         } catch (Exception e) {
         }

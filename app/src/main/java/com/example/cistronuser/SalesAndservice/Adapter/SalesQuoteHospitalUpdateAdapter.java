@@ -6,6 +6,8 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -111,7 +113,9 @@ public class SalesQuoteHospitalUpdateAdapter extends RecyclerView.Adapter<SalesQ
                 public void onClick(View v) {
                     Dialog dialog=new Dialog(activity);
                     dialog.setContentView(R.layout.sales_quote_update_dialog_recycleview);
+                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     dialog.show();
+
                     rvExistingStatus=dialog.findViewById(R.id.rvExistingStatus);
                     edRemark=dialog.findViewById(R.id.edRemark);
                     spStatus=dialog.findViewById(R.id.spStatus);
@@ -263,12 +267,17 @@ public class SalesQuoteHospitalUpdateAdapter extends RecyclerView.Adapter<SalesQ
     }
 
     private void CallExistingList(String quoteId) {
+        final ProgressDialog progressDialog = new ProgressDialog(activity);
+        progressDialog.setMessage("Status...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
         SaleQuoteExistingUpdateInterface saleQuoteExistingUpdateInterface= APIClient.getClient().create(SaleQuoteExistingUpdateInterface.class);
         saleQuoteExistingUpdateInterface.CallExistingUpdateList("getQuoteUpdates",quoteId).enqueue(new Callback<SaleQuoteExistingUpdateResponse>() {
             @Override
             public void onResponse(Call<SaleQuoteExistingUpdateResponse> call, Response<SaleQuoteExistingUpdateResponse> response) {
                 try {
                     if (response.isSuccessful()){
+                        progressDialog.dismiss();
                         salesQuoteExistingAdapter.saleQuoteExistingUpdateModels=response.body().getSaleQuoteExistingUpdateModels();
                         salesQuoteExistingAdapter.notifyDataSetChanged();
                     }

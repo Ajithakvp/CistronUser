@@ -97,7 +97,6 @@ public class VisitEntryReportAdapter extends RecyclerView.Adapter<VisitEntryRepo
             public void onClick(View v) {
 
                 CallPreview(QuotePdf);
-                Log.e(TAG, "onClick: "+QuotePdf );
             }
         });
 

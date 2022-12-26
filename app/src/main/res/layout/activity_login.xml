@@ -98,6 +98,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edName"
                 android:layout_width="match_parent"
+                android:singleLine="true"
+                android:maxLines="1"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/bold"
                 android:hint="Employee ID"

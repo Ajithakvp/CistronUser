@@ -122,7 +122,7 @@ public class ReportExpenseAdapter extends RecyclerView.Adapter<ReportExpenseAdap
 
 
 
-                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(activity);
+                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(activity,R.style.AppBottomSheetDialogTheme);
                 bottomSheetDialog.setContentView(R.layout.expenses_viewweekly_report);
                 bottomSheetDialog.show();
                 bottomSheetDialog.setCancelable(false);

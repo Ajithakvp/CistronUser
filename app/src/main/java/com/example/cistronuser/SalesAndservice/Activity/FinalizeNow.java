@@ -19,6 +19,7 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -380,6 +381,7 @@ public class FinalizeNow extends AppCompatActivity {
                 } else {
                     Dialog dialog = new Dialog(FinalizeNow.this);
                     dialog.setContentView(R.layout.another_address_dialog);
+                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     dialog.show();
                     spState = dialog.findViewById(R.id.spState);
                     spDistrict = dialog.findViewById(R.id.spDistrict);

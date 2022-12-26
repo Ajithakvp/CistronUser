@@ -76,7 +76,7 @@ public class CompOffReqAdapter extends RecyclerView.Adapter<CompOffReqAdapter.Vi
                 progressDialog.show();
 
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                AlertDialog.Builder builder = new AlertDialog.Builder(activity,R.style.AlertDialogCustom);
                 builder.setMessage("Are you sure you want to Deleted this leave request?");
                 builder.setTitle("Deleted!");
                 builder.setIcon(R.drawable.ic_baseline_delete_24);
@@ -154,7 +154,7 @@ public class CompOffReqAdapter extends RecyclerView.Adapter<CompOffReqAdapter.Vi
                 progressDialog.setCancelable(false);
                 progressDialog.show();
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                AlertDialog.Builder builder = new AlertDialog.Builder(activity,R.style.AlertDialogCustom);
                 builder.setMessage("Are you sure you want to Reject this leave request?");
                 builder.setTitle("Rejected!");
                 builder.setIcon(R.drawable.ic_baseline_dangerous_24);
@@ -180,7 +180,7 @@ public class CompOffReqAdapter extends RecyclerView.Adapter<CompOffReqAdapter.Vi
                                             activity.overridePendingTransition(0, 0);
                                         }else {
 
-                                            AlertDialog.Builder msg=new AlertDialog.Builder(activity);
+                                            AlertDialog.Builder msg=new AlertDialog.Builder(activity,R.style.AlertDialogCustom);
                                             msg.setMessage(response.body().getMessage());
                                             msg.setTitle(" Failed !");
                                             msg.setIcon(R.drawable.oops);
@@ -247,7 +247,7 @@ public class CompOffReqAdapter extends RecyclerView.Adapter<CompOffReqAdapter.Vi
                                     activity.overridePendingTransition(0, 0);
                                 } else {
 
-                                    AlertDialog.Builder msg = new AlertDialog.Builder(activity);
+                                    AlertDialog.Builder msg = new AlertDialog.Builder(activity,R.style.AlertDialogCustom);
                                     msg.setMessage(response.body().getMessage());
                                     msg.setTitle(" Failed !");
                                     msg.setIcon(R.drawable.oops);

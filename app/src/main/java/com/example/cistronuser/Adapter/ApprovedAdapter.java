@@ -106,7 +106,7 @@ public class ApprovedAdapter extends RecyclerView.Adapter<ApprovedAdapter.ViewHo
         holder.ivCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                AlertDialog.Builder builder = new AlertDialog.Builder(activity,R.style.AlertDialogCustom);
                 builder.setMessage("Are you sure you want to cancel ?");
                 builder.setTitle("cancel!");
                 builder.setIcon(R.drawable.ic_baseline_cancel_24);

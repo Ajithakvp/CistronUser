@@ -129,7 +129,7 @@ public class LeaveApprovalAdapter extends RecyclerView.Adapter<LeaveApprovalAdap
                                     activity.startActivity(activity.getIntent());
                                     activity.overridePendingTransition(0, 0);
                                 }else {
-                                    AlertDialog.Builder msg=new AlertDialog.Builder(activity);
+                                    AlertDialog.Builder msg=new AlertDialog.Builder(activity,R.style.AlertDialogCustom);
                                     msg.setMessage(response.body().getMessage());
                                     msg.setTitle(" Failed !");
                                     msg.setIcon(R.drawable.oops);
@@ -156,12 +156,7 @@ public class LeaveApprovalAdapter extends RecyclerView.Adapter<LeaveApprovalAdap
             @Override
             public void onClick(View v) {
 
-                final ProgressDialog progressDialog = new ProgressDialog(activity);
-                progressDialog.setMessage("Please Wait...");
-                progressDialog.setCancelable(false);
-                progressDialog.show();
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                AlertDialog.Builder builder = new AlertDialog.Builder(activity,R.style.AlertDialogCustom);
                 builder.setMessage("Are you sure you want to Reject this leave request?");
                 builder.setTitle("Rejected!");
                 builder.setIcon(R.drawable.ic_baseline_dangerous_24);
@@ -169,6 +164,10 @@ public class LeaveApprovalAdapter extends RecyclerView.Adapter<LeaveApprovalAdap
                 builder.setPositiveButton("yes", (new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        final ProgressDialog progressDialog = new ProgressDialog(activity);
+                        progressDialog.setMessage("Please Wait...");
+                        progressDialog.setCancelable(false);
+                        progressDialog.show();
                         LeaveApprovalRejectedInterface leaveApprovalRejectedInterface=APIClient.getClient().create(LeaveApprovalRejectedInterface.class);
                         leaveApprovalRejectedInterface.CallRejected("rejectLeaveRequest",leaveApprovelModels.get(position).getLeaveid(),leaveApprovelModels.get(position).getEmpid()).enqueue(new Callback<LeaveApprovalRejectedResponse>() {
                             @SuppressLint("ResourceType")
@@ -187,7 +186,7 @@ public class LeaveApprovalAdapter extends RecyclerView.Adapter<LeaveApprovalAdap
                                             activity.overridePendingTransition(0, 0);
                                         }else {
 
-                                            AlertDialog.Builder msg=new AlertDialog.Builder(activity);
+                                            AlertDialog.Builder msg=new AlertDialog.Builder(activity,R.style.AlertDialogCustom);
                                             msg.setMessage(response.body().getMessage());
                                             msg.setTitle(" Failed !");
                                             msg.setIcon(R.drawable.oops);
@@ -233,11 +232,8 @@ public class LeaveApprovalAdapter extends RecyclerView.Adapter<LeaveApprovalAdap
         holder.tvDeleted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final ProgressDialog progressDialog = new ProgressDialog(activity);
-                progressDialog.setMessage("Please Wait...");
-                progressDialog.setCancelable(false);
-                progressDialog.show();
-                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(activity,R.style.AlertDialogCustom);
                 builder.setMessage("Are you sure you want to delete this leave request?");
                 builder.setTitle("Deleted!");
                 builder.setIcon(R.drawable.ic_baseline_delete_24);
@@ -245,6 +241,10 @@ public class LeaveApprovalAdapter extends RecyclerView.Adapter<LeaveApprovalAdap
                 builder.setPositiveButton("yes", (new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        final ProgressDialog progressDialog = new ProgressDialog(activity);
+                        progressDialog.setMessage("Please Wait...");
+                        progressDialog.setCancelable(false);
+                        progressDialog.show();
                         LeaveApprovalDeleteInterface leaveApprovalDeleteInterface=APIClient.getClient().create(LeaveApprovalDeleteInterface.class);
                         leaveApprovalDeleteInterface.CallDeleted("deleteLeaveRequestByAdmin",leaveApprovelModels.get(position).getLeaveid(),leaveApprovelModels.get(position).getEmpid()).enqueue(new Callback<LeaveApprovalDeletedResponse>() {
                             @Override
@@ -261,7 +261,7 @@ public class LeaveApprovalAdapter extends RecyclerView.Adapter<LeaveApprovalAdap
                                             activity.overridePendingTransition(0, 0);
                                         }else {
 
-                                            AlertDialog.Builder msg=new AlertDialog.Builder(activity);
+                                            AlertDialog.Builder msg=new AlertDialog.Builder(activity,R.style.AlertDialogCustom);
                                             msg.setMessage(response.body().getMessage());
                                             msg.setTitle(" Failed !");
                                             msg.setIcon(R.drawable.oops);

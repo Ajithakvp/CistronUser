@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp">
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/tvAmtTag"
-            android:fontFamily="@font/latest"
-            android:textSize="16dp"
-            android:layout_marginLeft="10dp"
-            android:visibility="visible"
-            android:layout_marginTop="8dp"
-            android:textColor="@color/black"
-            android:text="Amount :"/>
-
-        <TextView
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/tvAmt"
-            android:fontFamily="@font/latest"
-            android:textSize="16dp"
-            android:visibility="visible"
-            android:layout_toRightOf="@id/tvAmtTag"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
-            android:textColor="@color/RoseRed"
-            android:text="1884"/>
+    <EditText
+        android:id="@+id/edAmount"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="8dp"
+        android:gravity="center"
+        style="@android:style/Widget.EditText"
+        android:inputType="number"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/edittext"
+        android:backgroundTint="@color/whiteLite2"
+        android:fontFamily="@font/semibold"
+        android:hint="Amount"
+        android:textColor="@color/black"
+        android:textSize="18dp" />
 
 
-    </RelativeLayout>
+    <ImageView
+        android:id="@+id/ivRemove"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:visibility="gone"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/ic_baseline_close_24">
 
+    </ImageView>
 
-</RelativeLayout>
+</LinearLayout>

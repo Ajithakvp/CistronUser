@@ -91,18 +91,36 @@
 
 
     </style>
-
-
     <style name="textviewKey">
-
         <item name="android:textSize">16dp</item>
         <item name="android:fontFamily">@font/bold</item>
         <item name="android:textColor">@color/black</item>
-
-
     </style>
 
 
+    <style name="AlertDialogCustom" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:textColor">@color/Radio</item>
+        <item name="fontFamily">@font/latest</item>
+        <item name="colorButtonNormal">@color/Radio</item>
+        <item name="android:windowBackground">@drawable/dialog_backgroud</item>
+        <item name="colorAccent">@color/Radio</item>
+        <item name="buttonBarButtonStyle">@style/MyButtonStyle</item>
+    </style>
+
+    <style name="MyButtonStyle" parent="Widget.AppCompat.Button.Borderless">
+        <item name="android:textColor">@color/Radio</item>
+    </style>
+
+
+    <style name="AppBottomSheetDialogTheme"
+        parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/AppModalStyle</item>
+    </style>
+
+    <style name="AppModalStyle"
+        parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/bottomdialog_card</item>
+    </style>
 
 
 </resources>

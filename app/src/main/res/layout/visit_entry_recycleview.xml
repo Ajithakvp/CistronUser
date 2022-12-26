@@ -12,13 +12,11 @@
         android:layout_height="match_parent">
 
 
-
-
         <RelativeLayout
             android:id="@+id/rltoolbar"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:background="#6495ED">
+            android:background="@drawable/bottom_header">
 
             <TextView
                 android:id="@+id/tvHeader"

@@ -66,12 +66,9 @@ public class VisitEntryAdapter extends RecyclerView.Adapter<VisitEntryAdapter.Vi
         holder.ivDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final ProgressDialog progressDialog = new ProgressDialog(activity);
-                progressDialog.setMessage("Please Wait...");
-                progressDialog.setCancelable(false);
-                progressDialog.show();
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(activity,R.style.AlertDialogCustom);
                 builder.setMessage("Are you sure you want to Deleted this Visit Entry?");
                 builder.setTitle("Deleted!");
                 builder.setIcon(R.drawable.ic_baseline_delete_24);
@@ -79,7 +76,10 @@ public class VisitEntryAdapter extends RecyclerView.Adapter<VisitEntryAdapter.Vi
                 builder.setPositiveButton("yes", (new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
+                        final ProgressDialog progressDialog = new ProgressDialog(activity);
+                        progressDialog.setMessage("Please Wait...");
+                        progressDialog.setCancelable(false);
+                        progressDialog.show();
                         VisitEntryDeleteInterface visitEntryDeleteInterface=APIClient.getClient().create(VisitEntryDeleteInterface.class);
                         visitEntryDeleteInterface.CallVisitEntryDelete("deleteVisitEntry",visitEntryListModels.get(position).getId()).enqueue(new Callback<VisitEntryDeleteRessponse>() {
                             @Override

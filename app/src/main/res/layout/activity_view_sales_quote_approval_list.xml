@@ -112,10 +112,10 @@
 
                         <TextView
                             android:id="@+id/tvPODate"
+                            style="@android:style/Widget.EditText"
                             android:layout_width="match_parent"
                             android:layout_height="60dp"
                             android:layout_marginLeft="8dp"
-                            style="@android:style/Widget.EditText"
                             android:layout_marginRight="8dp"
                             android:background="@drawable/edittext"
                             android:backgroundTint="@color/whiteLite2"
@@ -148,8 +148,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="5dp"
-                                android:layout_toRightOf="@id/tvAttchFiles"
-                                />
+                                android:layout_toRightOf="@id/tvAttchFiles" />
 
                             <ImageView
                                 android:id="@+id/ivFileVIew"
@@ -291,10 +290,10 @@
                             android:layout_marginLeft="8dp"
                             android:layout_marginTop="18dp"
                             android:layout_marginRight="8dp"
-                            android:gravity="left"
                             android:background="@drawable/edittext"
                             android:backgroundTint="@color/whiteLite2"
                             android:fontFamily="@font/semibold"
+                            android:gravity="left"
                             android:paddingLeft="10dp"
                             android:visibility="visible" />
 
@@ -399,8 +398,6 @@
                             </com.google.android.material.textfield.TextInputLayout>
 
 
-
-
                         </RelativeLayout>
 
                         <TextView
@@ -413,8 +410,8 @@
                             android:backgroundTint="@color/whiteLite2"
                             android:fontFamily="@font/semibold"
                             android:gravity="center_vertical"
-                            android:paddingLeft="10dp"
                             android:hint="Qty"
+                            android:paddingLeft="10dp"
                             android:textColor="@color/black"
                             android:textSize="18dp"
                             android:visibility="visible" />
@@ -501,10 +498,10 @@
 
                         <TextView
                             android:id="@+id/tvDepositedDate"
+                            style="@android:style/Widget.EditText"
                             android:layout_width="match_parent"
                             android:layout_height="60dp"
                             android:layout_marginLeft="8dp"
-                            style="@android:style/Widget.EditText"
                             android:layout_marginRight="8dp"
                             android:background="@drawable/edittext"
                             android:backgroundTint="@color/whiteLite2"
@@ -602,17 +599,17 @@
                                 android:id="@+id/ivAdd"
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
-                                android:visibility="visible"
                                 android:layout_toRightOf="@id/tvInstall"
-                                android:src="@drawable/ic_baseline_add_box_24" />
+                                android:src="@drawable/ic_baseline_add_box_24"
+                                android:visibility="visible" />
 
                             <androidx.recyclerview.widget.RecyclerView
-                                android:layout_width="wrap_content"
-                                android:layout_marginTop="5dp"
                                 android:id="@+id/rvInstallmentAmt"
-                                android:layout_marginLeft="15dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
                                 android:layout_below="@id/tvInstall"
-                                android:layout_height="wrap_content"/>
+                                android:layout_marginTop="5dp" />
+
                             <LinearLayout
                                 android:id="@+id/layout_list"
                                 android:layout_width="match_parent"
@@ -732,12 +729,13 @@
 
                             <TextView
                                 android:id="@+id/tvDeliveySchedule"
+                                style="@android:style/Widget.EditText"
                                 android:layout_width="match_parent"
                                 android:layout_height="60dp"
                                 android:layout_below="@id/tvRemark"
                                 android:layout_marginLeft="8dp"
+                                android:layout_marginBottom="15dp"
                                 android:layout_marginRight="8dp"
-                                style="@android:style/Widget.EditText"
                                 android:background="@drawable/edittext"
                                 android:backgroundTint="@color/whiteLite2"
                                 android:fontFamily="@font/semibold"
@@ -759,6 +757,7 @@
                                 android:id="@+id/tvSubmit"
                                 android:layout_width="200dp"
                                 android:layout_height="50dp"
+                                android:visibility="gone"
                                 android:layout_centerHorizontal="true"
                                 android:layout_marginLeft="30dp"
                                 android:layout_marginTop="25dp"
@@ -767,7 +766,7 @@
                                 android:backgroundTint="#6495ED"
                                 android:fontFamily="@font/bold"
                                 android:gravity="center"
-                                android:text="create order call"
+                                android:text="Approval order call"
                                 android:textColor="@color/white"
                                 android:textSize="20dp" />
 
@@ -785,8 +784,6 @@
         </RelativeLayout>
 
     </androidx.core.widget.NestedScrollView>
-
-
 
 
 </RelativeLayout>

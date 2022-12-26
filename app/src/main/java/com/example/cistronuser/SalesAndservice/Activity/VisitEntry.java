@@ -12,6 +12,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -373,8 +374,9 @@ public class VisitEntry extends AppCompatActivity {
     }
 
     private void CallViewList() {
-        BottomSheetDialog bottomSheetDialog=new BottomSheetDialog(this);
+        BottomSheetDialog bottomSheetDialog=new BottomSheetDialog(this,R.style.AppBottomSheetDialogTheme);
         bottomSheetDialog.setContentView(R.layout.visit_entry_recycleview);
+        bottomSheetDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         bottomSheetDialog.setCancelable(false);
         bottomSheetDialog.show();
         rvVisitEntryList=bottomSheetDialog.findViewById(R.id.rvVisitEntryList);
@@ -428,7 +430,7 @@ public class VisitEntry extends AppCompatActivity {
 
                         }else {
 
-                            AlertDialog.Builder msg = new AlertDialog.Builder(VisitEntry.this);
+                            AlertDialog.Builder msg = new AlertDialog.Builder(VisitEntry.this,R.style.AlertDialogCustom);
                             msg.setMessage(response.body().getMessage());
                             msg.setTitle(" Failed !");
                             msg.setIcon(R.drawable.oops);
@@ -628,7 +630,6 @@ public class VisitEntry extends AppCompatActivity {
 
                     if (response.body().getVisitEntryStateModels().size()>0){
 
-                        Log.e(TAG, "onResponse: "+response.body().getVisitEntryStateModels() );
                         visitEntryStateModels=response.body().getVisitEntryStateModels();
 
                         strState.clear();

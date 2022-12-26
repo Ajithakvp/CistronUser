@@ -319,7 +319,7 @@ public class ViewSalesQuoteApprovalList extends AppCompatActivity {
                     tvDeliveryAddress.setText(DailveryAdrs);
                     Toast.makeText(ViewSalesQuoteApprovalList.this, "Same Address", Toast.LENGTH_SHORT).show();
                 } else {
-                    Dialog dialog = new Dialog(ViewSalesQuoteApprovalList.this);
+                    Dialog dialog = new Dialog(ViewSalesQuoteApprovalList.this,R.style.AlertDialogCustom);
                     dialog.setContentView(R.layout.another_address_dialog);
                     dialog.show();
                     spState = dialog.findViewById(R.id.spState);
@@ -721,7 +721,7 @@ public class ViewSalesQuoteApprovalList extends AppCompatActivity {
                             if(extension.equals(".pdf")){
                                 tvAttach.setText(filename);
                             }else{
-                                AlertDialog.Builder builder=new AlertDialog.Builder(this);
+                                AlertDialog.Builder builder=new AlertDialog.Builder(this,R.style.AlertDialogCustom);
                                 builder.setMessage("Please Select Pdf File Only ..");
                                 AlertDialog dialog=builder.create();
                                 dialog.show();

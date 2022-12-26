@@ -99,7 +99,7 @@ public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.ViewHold
             @Override
             public void onClick(View v) {
                 holder.simpleProgressBar.setVisibility(View.VISIBLE);
-                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                AlertDialog.Builder builder = new AlertDialog.Builder(activity,R.style.AlertDialogCustom);
                 builder.setMessage("Are you sure you want to delete this leave request?");
                 builder.setTitle("Deleted!");
                 builder.setIcon(R.drawable.ic_baseline_delete_24);

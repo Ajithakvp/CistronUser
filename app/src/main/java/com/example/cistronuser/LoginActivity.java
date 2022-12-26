@@ -178,7 +178,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
             e.printStackTrace();
         }
         if (!gps_enabled && !network_enabled) {
-            new AlertDialog.Builder(LoginActivity.this)
+            new AlertDialog.Builder(LoginActivity.this,R.style.AlertDialogCustom)
                     .setTitle("Enable GPS Service")
                     .setIcon(R.drawable.ic_baseline_location_on_24)
                     .setMessage("Allow Cistron App to Access this device's location?")

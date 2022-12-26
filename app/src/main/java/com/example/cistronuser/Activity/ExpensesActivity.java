@@ -23,6 +23,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -460,7 +461,7 @@ public class ExpensesActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(ExpensesActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(ExpensesActivity.this,R.style.AlertDialogCustom);
                 builder.setMessage("Are you sure you want to Delete ?");
                 builder.setTitle("Delete!");
                 builder.setIcon(R.drawable.ic_baseline_delete_24);
@@ -492,7 +493,7 @@ public class ExpensesActivity extends Activity {
             public void onClick(View v) {
 
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(ExpensesActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(ExpensesActivity.this,R.style.AlertDialogCustom);
                 builder.setMessage("Are you sure you want to Delete ?");
                 builder.setTitle("Delete!");
                 builder.setIcon(R.drawable.ic_baseline_delete_24);
@@ -523,7 +524,7 @@ public class ExpensesActivity extends Activity {
             public void onClick(View v) {
 
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(ExpensesActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(ExpensesActivity.this,R.style.AlertDialogCustom);
                 builder.setMessage("Are you sure you want to Delete ?");
                 builder.setTitle("Delete!");
                 builder.setIcon(R.drawable.ic_baseline_delete_24);
@@ -555,7 +556,7 @@ public class ExpensesActivity extends Activity {
             public void onClick(View v) {
 
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(ExpensesActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(ExpensesActivity.this,R.style.AlertDialogCustom);
                 builder.setMessage("Are you sure you want to Delete ?");
                 builder.setTitle("Delete!");
                 builder.setIcon(R.drawable.ic_baseline_delete_24);
@@ -669,6 +670,7 @@ public class ExpensesActivity extends Activity {
                             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                             dialog.setCancelable(false);
                             dialog.setContentView(R.layout.profile);
+                            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                             checkboxtextview = dialog.findViewById(R.id.tvmsg);
                             tvHeader = dialog.findViewById(R.id.tvHeader);
                             CheckBox checkBox = dialog.findViewById(R.id.cbname);
@@ -989,7 +991,6 @@ public class ExpensesActivity extends Activity {
             public void onResponse(Call<ExpenseResponse> call, Response<ExpenseResponse> response) {
 
                 progressDialog.dismiss();
-                Log.e(TAG, "onResponse: 4");
                 AlertDialog.Builder alert = new AlertDialog.Builder(ExpensesActivity.this);
                 alert.setMessage("Expense Saved Successfully");
                 alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {

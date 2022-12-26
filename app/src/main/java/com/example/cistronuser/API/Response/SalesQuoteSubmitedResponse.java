@@ -1,5 +1,6 @@
 package com.example.cistronuser.API.Response;
 
+import com.example.cistronuser.API.Model.SalesQuoteMailSendModel;
 import com.google.gson.annotations.SerializedName;
 
 public class SalesQuoteSubmitedResponse {
@@ -26,6 +27,18 @@ public class SalesQuoteSubmitedResponse {
 
     @SerializedName("qr")
     private String qr;
+
+    @SerializedName("mail")
+    private SalesQuoteMailSendModel salesQuoteMailSendModel;
+
+
+    public SalesQuoteMailSendModel getSalesQuoteMailSendModel() {
+        return salesQuoteMailSendModel;
+    }
+
+    public void setSalesQuoteMailSendModel(SalesQuoteMailSendModel salesQuoteMailSendModel) {
+        this.salesQuoteMailSendModel = salesQuoteMailSendModel;
+    }
 
     public String getAction() {
         return action;

@@ -6,9 +6,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkInfo;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -25,6 +28,9 @@ public class ConnectionRecevier extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
+
+
+
         if (isConnected(context)) {
 //            AlertDialog.Builder builder=new AlertDialog.Builder(context);
 //
@@ -36,18 +42,14 @@ public class ConnectionRecevier extends BroadcastReceiver {
         } else {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
-
             View view = LayoutInflater.from(context).inflate(R.layout.network, null);
             builder.setView(view);
             AlertDialog alertDialog = builder.create();
+            alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             alertDialog.show();
 
-
         }
-
     }
-
-
     private boolean isConnected(Context context) {
 
         try {

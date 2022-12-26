@@ -24,6 +24,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -142,6 +143,7 @@ public class LeaveActivity extends Activity {
 
     //Pending
     RecyclerView rvPending;
+    TextView tvNodata;
     PendingAdapter pendingAdapter;
 
     //Rejected , delected and Cancel
@@ -434,7 +436,7 @@ public class LeaveActivity extends Activity {
 
     private void callCompOff() {
         simpleProgressBar.setVisibility(View.VISIBLE);
-        BottomSheetDialog bottomSheetDialog1 = new BottomSheetDialog(this);
+        BottomSheetDialog bottomSheetDialog1 = new BottomSheetDialog(this,R.style.AppBottomSheetDialogTheme);
         bottomSheetDialog1.setContentView(R.layout.comoffdesign);
         bottomSheetDialog1.show();
 
@@ -493,7 +495,7 @@ public class LeaveActivity extends Activity {
 
     private void callDeleted() {
         simpleProgressBar.setVisibility(View.VISIBLE);
-        BottomSheetDialog bottomSheetDialog1 = new BottomSheetDialog(this);
+        BottomSheetDialog bottomSheetDialog1 = new BottomSheetDialog(this,R.style.AppBottomSheetDialogTheme);
         bottomSheetDialog1.setContentView(R.layout.deleted);
         bottomSheetDialog1.show();
 
@@ -550,7 +552,7 @@ public class LeaveActivity extends Activity {
 
     private void callCancel() {
         simpleProgressBar.setVisibility(View.VISIBLE);
-        BottomSheetDialog bottomSheetDialog1 = new BottomSheetDialog(this);
+        BottomSheetDialog bottomSheetDialog1 = new BottomSheetDialog(this,R.style.AppBottomSheetDialogTheme);
         bottomSheetDialog1.setContentView(R.layout.cancel);
         bottomSheetDialog1.show();
 
@@ -609,7 +611,7 @@ public class LeaveActivity extends Activity {
     private void callRejected() {
 
         simpleProgressBar.setVisibility(View.VISIBLE);
-        BottomSheetDialog bottomSheetDialog1 = new BottomSheetDialog(this);
+        BottomSheetDialog bottomSheetDialog1 = new BottomSheetDialog(this,R.style.AppBottomSheetDialogTheme);
         bottomSheetDialog1.setContentView(R.layout.rejected);
         bottomSheetDialog1.show();
 
@@ -664,7 +666,7 @@ public class LeaveActivity extends Activity {
 
     private void callPending() {
         simpleProgressBar.setVisibility(View.VISIBLE);
-        BottomSheetDialog bottomSheetDialog1 = new BottomSheetDialog(this);
+        BottomSheetDialog bottomSheetDialog1 = new BottomSheetDialog(this,R.style.AppBottomSheetDialogTheme);
         bottomSheetDialog1.setContentView(R.layout.pending);
         bottomSheetDialog1.show();
 
@@ -722,7 +724,7 @@ public class LeaveActivity extends Activity {
 
     private void callApproved() {
 
-        BottomSheetDialog bottomSheetDialog1 = new BottomSheetDialog(this);
+        BottomSheetDialog bottomSheetDialog1 = new BottomSheetDialog(this,R.style.AppBottomSheetDialogTheme);
         bottomSheetDialog1.setContentView(R.layout.approved);
         bottomSheetDialog1.show();
 
@@ -797,6 +799,7 @@ public class LeaveActivity extends Activity {
                         if (response.body().getCategory().trim().equals("leave policy")) {
                             final Dialog dialog = new Dialog(LeaveActivity.this);
                             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                             dialog.setCancelable(false);
                             dialog.setContentView(R.layout.profile);
                             tvmsg = dialog.findViewById(R.id.tvmsg);
@@ -893,7 +896,7 @@ public class LeaveActivity extends Activity {
     private void CallleaveDetails() {
 
         simpleProgressBar.setVisibility(View.VISIBLE);
-        BottomSheetDialog bottomSheetDialog1 = new BottomSheetDialog(this);
+        BottomSheetDialog bottomSheetDialog1 = new BottomSheetDialog(this,R.style.AppBottomSheetDialogTheme);
         bottomSheetDialog1.setContentView(R.layout.leave_lop);
         bottomSheetDialog1.show();
 
@@ -1012,7 +1015,7 @@ public class LeaveActivity extends Activity {
     private void CallLeave() {
 
         simpleProgressBar.setVisibility(View.VISIBLE);
-        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this,R.style.AppBottomSheetDialogTheme);
         bottomSheetDialog.setContentView(R.layout.leave_from);
         bottomSheetDialog.show();
 
@@ -1469,9 +1472,7 @@ public class LeaveActivity extends Activity {
 
     private void callDate() {
         datePickerDialog=new DatePickerDialog();
-
         Calendar calendar = Calendar.getInstance();
-
         year = calendar.get(Calendar.YEAR);
         month = calendar.get(Calendar.MONTH);
         dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);

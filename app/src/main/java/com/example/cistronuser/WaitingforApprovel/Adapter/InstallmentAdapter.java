@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -33,7 +36,12 @@ public class InstallmentAdapter extends RecyclerView.Adapter<InstallmentAdapter.
     @Override
     public void onBindViewHolder(@NonNull InstallmentAdapter.ViewHolder holder, int position) {
 
-        holder.tvAmt.setText(viewInstallmentModels.get(position).getInstalment());
+        holder.edAmount.setText(viewInstallmentModels.get(position).getInstalment());
+
+
+
+
+
 
     }
 
@@ -43,11 +51,15 @@ public class InstallmentAdapter extends RecyclerView.Adapter<InstallmentAdapter.
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvAmtTag,tvAmt;
+       EditText edAmount;
+       ImageView ivRemove;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvAmtTag=itemView.findViewById(R.id.tvAmtTag);
-            tvAmt=itemView.findViewById(R.id.tvAmt);
+            edAmount=itemView.findViewById(R.id.edAmount);
+            ivRemove=itemView.findViewById(R.id.ivRemove);
+
+
         }
     }
 }

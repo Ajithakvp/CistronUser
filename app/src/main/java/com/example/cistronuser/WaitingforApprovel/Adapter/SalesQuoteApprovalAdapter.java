@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -80,16 +82,13 @@ public class SalesQuoteApprovalAdapter extends RecyclerView.Adapter<SalesQuoteAp
         holder.ivDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                AlertDialog.Builder builder = new AlertDialog.Builder(activity,R.style.AlertDialogCustom);
                 builder.setMessage("Are you sure you want to Deleted this  Sales Quote Approval?");
                 builder.setTitle("Deleted!");
                 builder.setIcon(R.drawable.ic_baseline_delete_24);
                 builder.setCancelable(false);
 
-                builder.setPositiveButton("yes", (new DialogInterface.OnClickListener() {
+                builder.setPositiveButton("Yes", (new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         final ProgressDialog progressDialog = new ProgressDialog(activity);
@@ -105,7 +104,7 @@ public class SalesQuoteApprovalAdapter extends RecyclerView.Adapter<SalesQuoteAp
                                         progressDialog.dismiss();
 
                                         if (response.body().getError().trim().equals("1")){
-                                            AlertDialog.Builder msg=new AlertDialog.Builder(activity);
+                                            AlertDialog.Builder msg=new AlertDialog.Builder(activity,R.style.AlertDialogCustom);
                                             msg.setMessage(response.body().getMessage());
                                             msg.setTitle(" Failed !");
                                             msg.setIcon(R.drawable.oops);
@@ -149,6 +148,7 @@ public class SalesQuoteApprovalAdapter extends RecyclerView.Adapter<SalesQuoteAp
                     }
                 }));
                 AlertDialog alertDialog = builder.create();
+
                 alertDialog.show();
             }
         });
