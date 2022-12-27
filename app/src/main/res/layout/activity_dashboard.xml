@@ -405,6 +405,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:layout_marginLeft="20dp"
+                        android:layout_marginBottom="20dp"
                         android:layout_marginRight="20dp"
                         android:background="@drawable/cardview"
                         android:backgroundTint="#fdfff5 ">
@@ -425,11 +426,11 @@
                             android:id="@+id/rlWaitingExpense"
                             android:layout_width="match_parent"
                             android:layout_height="60dp"
-                            android:visibility="visible"
                             android:layout_below="@id/rlWaitingCompOFfRequest"
                             android:layout_marginTop="20dp"
                             android:background="@drawable/cardview"
-                            android:backgroundTint="#6495ED">
+                            android:backgroundTint="#6495ED"
+                            android:visibility="visible">
 
                             <ImageView
                                 android:id="@+id/ivExpense"
@@ -497,11 +498,11 @@
                             android:id="@+id/rlWaitingLeaveRequest"
                             android:layout_width="match_parent"
                             android:layout_height="60dp"
-                            android:visibility="visible"
                             android:layout_below="@id/rlWaitingExpense"
                             android:layout_marginTop="20dp"
                             android:background="@drawable/cardview"
-                            android:backgroundTint="#6495ED">
+                            android:backgroundTint="#6495ED"
+                            android:visibility="visible">
 
                             <ImageView
                                 android:id="@+id/ivLeaveRequest"
@@ -564,18 +565,15 @@
                         </RelativeLayout>
 
 
-
-
-
                         <RelativeLayout
                             android:id="@+id/rlWaitingSalesQuoteApprovalRequest"
                             android:layout_width="match_parent"
                             android:layout_height="60dp"
-                            android:visibility="visible"
                             android:layout_below="@id/rlWaitingLeaveRequest"
                             android:layout_marginTop="20dp"
                             android:background="@drawable/cardview"
-                            android:backgroundTint="#6495ED">
+                            android:backgroundTint="#6495ED"
+                            android:visibility="visible">
 
                             <ImageView
                                 android:id="@+id/ivWaitingSalesQuote"
@@ -638,22 +636,15 @@
                         </RelativeLayout>
 
 
-
-
-
-
-
-
-
                         <RelativeLayout
                             android:id="@+id/rlWaitingCompOFfRequest"
                             android:layout_width="match_parent"
                             android:layout_height="60dp"
-                            android:visibility="visible"
                             android:layout_below="@id/tvWaitingApproved"
                             android:layout_marginTop="20dp"
                             android:background="@drawable/cardview"
-                            android:backgroundTint="#6495ED">
+                            android:backgroundTint="#6495ED"
+                            android:visibility="visible">
 
                             <ImageView
                                 android:id="@+id/ivCompOffRequest"
@@ -852,10 +843,43 @@
 
 
                         <RelativeLayout
-                            android:id="@+id/rlVisitEntryReportLayout"
+                            android:id="@+id/rlQuoteReport"
                             android:layout_width="match_parent"
                             android:layout_height="60dp"
                             android:layout_below="@id/rlrlLeaveReport"
+                            android:layout_marginTop="20dp"
+                            android:background="@drawable/cardview"
+                            android:backgroundTint="#6495ED">
+
+                            <ImageView
+                                android:id="@+id/ivQuoteReport"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="30dp"
+                                android:src="@drawable/quotereport"
+                                android:tint="@color/white"
+                                tools:ignore="UseAppTint" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="20dp"
+                                android:layout_toRightOf="@+id/ivQuoteReport"
+                                android:fontFamily="@font/semibold"
+                                android:text="Quote Report"
+                                android:textColor="@color/white"
+                                android:textSize="18dp" />
+
+                        </RelativeLayout>
+
+
+                        <RelativeLayout
+                            android:id="@+id/rlVisitEntryReportLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:layout_below="@id/rlQuoteReport"
                             android:layout_marginTop="20dp"
                             android:layout_marginBottom="20dp"
                             android:background="@drawable/cardview"

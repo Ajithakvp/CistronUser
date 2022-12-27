@@ -4,11 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#6495ED"
     tools:context=".SalesAndservice.Activity.VisitEntry">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+
 
         <RelativeLayout
             android:id="@+id/rltoolbar"
@@ -51,7 +60,7 @@
                 android:backgroundTint="@color/white"
                 android:src="@drawable/ic_baseline_view_list_24"
                 android:tint="@color/white"
-                android:visibility="visible"
+                android:visibility="gone"
                 tools:ignore="UseAppTint" />
 
 
@@ -71,6 +80,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:id="@+id/llAdd"
                     android:orientation="vertical">
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -207,6 +217,7 @@
                         android:backgroundTint="@color/Radio"
                         android:fontFamily="@font/semibold"
                         android:gravity="center"
+                        android:layout_marginBottom="20dp"
                         android:id="@+id/tvAdd"
                         android:text="Add"
                         android:textColor="@color/white"
@@ -214,6 +225,87 @@
 
 
                 </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:id="@+id/View"
+                    android:layout_below="@id/llAdd"
+                    android:background="@color/white"/>
+
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textSize="25dp"
+                    android:layout_centerHorizontal="true"
+                    android:text="Visit Entry List"
+                    android:layout_below="@id/View"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/bold"
+                    android:visibility="visible"
+                    android:id="@+id/tvVisit"
+                    android:layout_height="wrap_content">
+
+
+                </TextView>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:id="@+id/View2"
+                    android:layout_marginTop="8dp"
+                    android:layout_below="@id/tvVisit"
+                    android:background="@color/white"/>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textSize="30dp"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="100dp"
+                    android:layout_marginBottom="100dp"
+                    android:text="No Data Found"
+                    android:layout_below="@id/View2"
+                    android:textColor="@color/Radio"
+                    android:visibility="gone"
+                    android:id="@+id/tvNodata"
+                    android:layout_height="wrap_content">
+
+
+                </TextView>
+
+
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:id="@+id/rvVisitEntryList"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="4dp"
+                    android:visibility="gone"
+                    android:layout_below="@id/View2"
+                    android:layout_height="wrap_content">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="20dp"
+                    android:id="@+id/tvSubmit"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/backdesign"
+                    android:text="Submit"
+                    android:visibility="gone"
+                    android:textColor="@color/white"
+                    android:textSize="25dp"
+                    android:fontFamily="@font/bold"
+                    android:gravity="center"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/rvVisitEntryList"/>
 
 
             </RelativeLayout>
@@ -223,5 +315,7 @@
 
 
     </RelativeLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 </RelativeLayout>

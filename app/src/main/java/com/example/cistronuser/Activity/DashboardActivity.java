@@ -54,6 +54,7 @@ import com.example.cistronuser.R;
 import com.example.cistronuser.Report.Activity.AttendanceReports;
 import com.example.cistronuser.Report.Activity.ExpenseReportWM;
 import com.example.cistronuser.Report.Activity.LeaveReport;
+import com.example.cistronuser.Report.Activity.SalesQuoteReport;
 import com.example.cistronuser.Report.Activity.VisitEntryReport;
 import com.example.cistronuser.SalesAndservice.Activity.FinalizeNow;
 import com.example.cistronuser.SalesAndservice.Activity.SalesQuote;
@@ -103,7 +104,7 @@ public class DashboardActivity extends Activity {
 
     RelativeLayout rlAdmin, rlWaitingApproval, rlVisitEntryReportLayout,rlWaitingSalesQuoteApprovalRequest;
 
-    RelativeLayout rlExpenseReport, rlrlAttendaceReport, rlrlLeaveReport, rlWaitingLeaveRequest, rlWaitingCompOFfRequest;
+    RelativeLayout rlExpenseReport, rlrlAttendaceReport, rlrlLeaveReport, rlWaitingLeaveRequest, rlWaitingCompOFfRequest,rlQuoteReport;
     TextView tvwaitingCountExpense, tvCountLeaveReq, tvCountCompOffReq,tvWaitingCountSalesQuote;
 
     Context context;
@@ -176,6 +177,7 @@ public class DashboardActivity extends Activity {
         rlWaitingApproval = findViewById(R.id.rlWaitingApproval);
         rlWaitingSalesQuoteApprovalRequest=findViewById(R.id.rlWaitingSalesQuoteApprovalRequest);
         tvWaitingCountSalesQuote=findViewById(R.id.tvWaitingSalesQuote);
+        rlQuoteReport=findViewById(R.id.rlQuoteReport);
 
         rlVisitEntryReportLayout = findViewById(R.id.rlVisitEntryReportLayout);
         cvVisitEntry = findViewById(R.id.cvVisitEntry);
@@ -195,7 +197,7 @@ public class DashboardActivity extends Activity {
         switch (user) {
             case "user":
                 rlWaitingApproval.setVisibility(View.GONE);
-                rlVisitEntryReportLayout.setVisibility(View.GONE);
+                rlVisitEntryReportLayout.setVisibility(View.VISIBLE);
                 break;
             case "admin":
                 rlWaitingApproval.setVisibility(View.VISIBLE);
@@ -210,6 +212,7 @@ public class DashboardActivity extends Activity {
                 cvVisitEntry.setVisibility(View.GONE);
                 rlExpenseReport.setVisibility(View.GONE);
                 rlVisitEntryReportLayout.setVisibility(View.GONE);
+                rlQuoteReport.setVisibility(View.GONE);
                 llview3.setVisibility(View.GONE);
                 break;
         }
@@ -408,6 +411,14 @@ public class DashboardActivity extends Activity {
                 Intent intent = new Intent(DashboardActivity.this, SalesQuoteApproval.class);
                 startActivity(intent);
 
+            }
+        });
+
+        rlQuoteReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(DashboardActivity.this, SalesQuoteReport.class);
+                startActivity(intent);
             }
         });
 
@@ -659,19 +670,8 @@ public class DashboardActivity extends Activity {
         });
 
 
-//        Name=getIntent().getStringExtra("Name");
-//        EmpiD=getIntent().getStringExtra("EmpID");
-//        Des=getIntent().getStringExtra("Des");
-//        DOB=getIntent().getStringExtra("DOB");
-//        DOJ=getIntent().getStringExtra("DOJ");
-//        Branch=getIntent().getStringExtra("Branch");
-//        Email=getIntent().getStringExtra("Email");
-//        Mob=getIntent().getStringExtra("Mob");
-//        TL=getIntent().getStringExtra("TL");
-//        strPhoto=getIntent().getStringExtra("Photo");
 
         strPhoto = PreferenceManager.getEmpphoto(this);
-
         tvName.setText(PreferenceManager.getEmpName(this));
         tvEmpId.setText(PreferenceManager.getEmpID(this));
         tvBranch.setText(PreferenceManager.getEmpbranch(this));
@@ -784,29 +784,10 @@ public class DashboardActivity extends Activity {
         unregBroadcast();
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode==100 &&requestCode==RESULT_OK && data!=null){
-//            Uri uri=data.getData();
-//            try {
-//                Bitmap bitmap= MediaStore.Images.Media.getBitmap(getContentResolver(),uri);
-//                ByteArrayOutputStream byteArrayOutputStream=new ByteArrayOutputStream();
-//                bitmap.compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream);
-//                byte[] bytes=byteArrayOutputStream.toByteArray();
-//                strPhoto= Base64.encodeToString(bytes,Base64.DEFAULT);
-//
-//
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
+
 
     @Override
     public void onBackPressed() {
-        // super.onBackPressed();
-
         android.app.AlertDialog alertDialog = new android.app.AlertDialog.Builder(this,R.style.AlertDialogCustom).create();
         alertDialog.setMessage("Are you sure want to Quit App?");
         alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "Ok", new DialogInterface.OnClickListener() {

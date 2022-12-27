@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -113,6 +114,7 @@ public class VisitEntry extends AppCompatActivity {
     
 
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,6 +130,9 @@ public class VisitEntry extends AppCompatActivity {
         tvAdd=findViewById(R.id.tvAdd);
         ivList=findViewById(R.id.ivList);
         EdComment=findViewById(R.id.EdComment);
+        rvVisitEntryList=findViewById(R.id.rvVisitEntryList);
+        tvSubmit=findViewById(R.id.tvSubmit);
+        tvNodata=findViewById(R.id.tvNodata);
 
 
 
@@ -141,6 +146,23 @@ public class VisitEntry extends AppCompatActivity {
         ip = String.format("%d.%d.%d.%d", (ipAddress & 0xff),(ipAddress >> 8 & 0xff),(ipAddress >> 16 & 0xff),(ipAddress >> 24 & 0xff));
 
 
+
+        //View List
+
+        CallVisitEntryList();
+        visitEntryAdapter=new VisitEntryAdapter(this,visitEntryListModels);
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
+        rvVisitEntryList.setAdapter(visitEntryAdapter);
+        rvVisitEntryList.setLayoutManager(linearLayoutManager);
+
+
+        tvSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CallSubmit();
+            }
+        });
 
 
         //State
@@ -337,7 +359,7 @@ public class VisitEntry extends AppCompatActivity {
         ivList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CallViewList();
+               // CallViewList();
             }
         });
 
@@ -385,31 +407,25 @@ public class VisitEntry extends AppCompatActivity {
         tvNodata=bottomSheetDialog.findViewById(R.id.tvNodata);
 
 
-        CallVisitEntryList();
-        visitEntryAdapter=new VisitEntryAdapter(this,visitEntryListModels);
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
-        rvVisitEntryList.setAdapter(visitEntryAdapter);
-        rvVisitEntryList.setLayoutManager(linearLayoutManager);
-
-        ivBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                bottomSheetDialog.dismiss();
-            }
-        });
-        tvSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CallSubmit(bottomSheetDialog);
-            }
-        });
-
+//        CallVisitEntryList();
+//        visitEntryAdapter=new VisitEntryAdapter(this,visitEntryListModels);
+//        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
+//        linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
+//        rvVisitEntryList.setAdapter(visitEntryAdapter);
+//        rvVisitEntryList.setLayoutManager(linearLayoutManager);
+//
+//
+//        tvSubmit.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                CallSubmit();
+//            }
+//        });
 
 
     }
 
-    private void CallSubmit(BottomSheetDialog bottomSheetDialog) {
+    private void CallSubmit() {
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Visit Entry Submitted...");
@@ -426,7 +442,7 @@ public class VisitEntry extends AppCompatActivity {
                         progressDialog.dismiss();
                         if (response.body().getSuccess().trim().equals("1")){
                             Toast.makeText(VisitEntry.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                            bottomSheetDialog.dismiss();
+                            onBackPressed();
 
                         }else {
 
