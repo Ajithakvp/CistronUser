@@ -147,7 +147,6 @@ public class ExpensesActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_expenses);
 
-
         ivBack = findViewById(R.id.ivBack);
         rlUploadother = findViewById(R.id.rlUploadother);
         rlUpload = findViewById(R.id.rlUpload);

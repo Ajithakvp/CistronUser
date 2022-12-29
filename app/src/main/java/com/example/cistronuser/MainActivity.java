@@ -6,6 +6,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.ActivityOptions;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -26,46 +27,47 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    String AppVersion="cistron 1.0";
+    String AppVersion = "cistron 1.0";
 
     TextView tvVersion;
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.flashscreen);
-        tvVersion=findViewById(R.id.tvVersion);
+        tvVersion = findViewById(R.id.tvVersion);
 
         tvVersion.setText(AppVersion);
 
 
         //*******APP Version***********//
-        AppVersionInterface appVersionInterface= APIClient.getClient().create(AppVersionInterface.class);
+        AppVersionInterface appVersionInterface = APIClient.getClient().create(AppVersionInterface.class);
         appVersionInterface.callVersion("getAppVersion").enqueue(new Callback<AppVersionResponse>() {
             @Override
             public void onResponse(Call<AppVersionResponse> call, Response<AppVersionResponse> response) {
-                if (response.isSuccessful()){
-                    Log.e(TAG, "onResponse: "+response.body().getMessage());
-                   if (response.body().getMessage().trim().equals(AppVersion)){
-                     CallLoginPage();
-                   }else {
-                       AlertDialog.Builder update=new AlertDialog.Builder(MainActivity.this);
-                       update.setCancelable(false);
-                       update.setTitle("Update Required !");
-                       update.setMessage("You must update to Continue");
-                       update.setPositiveButton("Update", new DialogInterface.OnClickListener() {
-                           @Override
-                           public void onClick(DialogInterface dialog, int which) {
-                              String apk="https://cistronsystems.in/beta1/app/cistron.apk";
-                              Uri uri= Uri.parse(apk);
-                              Intent update=new Intent(Intent.ACTION_VIEW,uri);
-                              startActivity(update);
-                           }
-                       });
+                if (response.isSuccessful()) {
+                    Log.e(TAG, "onResponse: " + response.body().getMessage());
+                    if (response.body().getMessage().trim().equals(AppVersion)) {
+                        CallLoginPage();
+                    } else {
+                        AlertDialog.Builder update = new AlertDialog.Builder(MainActivity.this);
+                        update.setCancelable(false);
+                        update.setTitle("Update Required !");
+                        update.setMessage("You must update to Continue");
+                        update.setPositiveButton("Update", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                String apk = "https://cistronsystems.in/beta1/app/cistron.apk";
+                                Uri uri = Uri.parse(apk);
+                                Intent update = new Intent(Intent.ACTION_VIEW, uri);
+                                startActivity(update);
+                            }
+                        });
 
-                       AlertDialog dialog=update.create();
-                       dialog.show();
-                   }
+                        AlertDialog dialog = update.create();
+                        dialog.show();
+                    }
                 }
 
             }
@@ -79,9 +81,6 @@ public class MainActivity extends AppCompatActivity {
         /* **************App Version End************* */
 
 
-
-
-
     }
 
     private void CallLoginPage() {
@@ -91,9 +90,9 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void run() {
-
+                ActivityOptions options = ActivityOptions.makeCustomAnimation(MainActivity.this,R.anim.fadein, R.anim.fadeout);
                 Intent i = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(i);
+                startActivity(i,options.toBundle());
 
 //                if (PreferenceManager.isLogged(MainActivity.this)){
 //

@@ -26,7 +26,7 @@ import java.util.ArrayList;
 
 public class SalesQuoteAddonAdapter extends RecyclerView.Adapter<SalesQuoteAddonAdapter.ViewHolder> {
 
-    public  ArrayList<String>strCheckedproduct=new ArrayList<>();
+    public ArrayList<String> strCheckedproduct = new ArrayList<>();
 
     public ArrayList<SalesQuoteProductsAddonModel> salesQuoteProductsAddonModels;
     Activity activity;
@@ -66,8 +66,7 @@ public class SalesQuoteAddonAdapter extends RecyclerView.Adapter<SalesQuoteAddon
 
                     onItemClick.onItemCheck(id);
 
-                   strCheckedproduct.add(id.getAddonId());
-
+                    strCheckedproduct.add(id.getAddonId());
 
 
 

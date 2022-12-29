@@ -131,6 +131,7 @@ public class ViewSalesQuoteApprovalList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_sales_quote_approval_list);
 
+
         ivFileVIew=findViewById(R.id.ivFileVIew);
         spPerson=findViewById(R.id.spPerson);
         cbAttach=findViewById(R.id.cbAttach);

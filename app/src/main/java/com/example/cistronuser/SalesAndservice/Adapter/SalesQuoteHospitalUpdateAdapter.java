@@ -2,6 +2,7 @@ package com.example.cistronuser.SalesAndservice.Adapter;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -35,6 +36,7 @@ import com.example.cistronuser.API.Model.SalesQuoteStausModel;
 import com.example.cistronuser.API.Response.SaleQuoteExistingUpdateResponse;
 import com.example.cistronuser.API.Response.SalesQuoteUpdateStatusResponse;
 import com.example.cistronuser.Common.PreferenceManager;
+import com.example.cistronuser.MainActivity;
 import com.example.cistronuser.R;
 import com.example.cistronuser.SalesAndservice.Activity.FinalizeNow;
 
@@ -165,11 +167,12 @@ public class SalesQuoteHospitalUpdateAdapter extends RecyclerView.Adapter<SalesQ
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             if (salesQuoteStausModels.get(position).getStatus().trim().equals("Finalize now")){
                                 Toast.makeText(activity,salesQuoteStausModels.get(position).getStatus(), Toast.LENGTH_SHORT).show();
+                                ActivityOptions options = ActivityOptions.makeCustomAnimation(activity,R.anim.down_in, R.anim.down_out);
                                 Intent intent=new Intent(activity, FinalizeNow.class);
                                 intent.putExtra("QuoteID",QuoteID);
                                 intent.putExtra("QuotePDF",QuotePdf);
                                 intent.putExtra("Product",Product);
-                                activity.startActivity(intent);
+                                activity.startActivity(intent,options.toBundle());
                             }
 
                         }

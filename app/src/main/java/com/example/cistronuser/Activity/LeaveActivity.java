@@ -337,8 +337,6 @@ public class LeaveActivity extends Activity {
 
             }
         });
-
-
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
