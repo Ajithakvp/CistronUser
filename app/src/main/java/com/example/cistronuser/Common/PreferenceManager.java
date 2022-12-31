@@ -225,6 +225,17 @@ public class PreferenceManager {
         return preferences.getString("company", "");
     }
 
+    public static void set_ismanager(Activity activity, String manager) {
+        SharedPreferences preferences;
+        preferences = activity.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
+        preferences.edit().putString("ismanger", manager).apply();
+    }
+    public static String get_ismanager(Context activity) {
+        SharedPreferences preferences;
+        preferences = activity.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
+        return preferences.getString("ismanger", "");
+    }
+
 
 
     //Category

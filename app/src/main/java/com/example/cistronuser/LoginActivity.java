@@ -236,6 +236,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
                        PreferenceManager.setEmpteamleader(LoginActivity.this,response.body().getTeamleader());
                        PreferenceManager.setEmpUser(LoginActivity.this,response.body().getUser());
                        PreferenceManager.setEmpCompany(LoginActivity.this,response.body().getCompany());
+                       PreferenceManager.set_ismanager(LoginActivity.this,response.body().getIs_manager());
                        Intent intent=new Intent(LoginActivity.this,DashboardActivity.class);
                        intent.putExtra("Pass",pass);
                        intent.putExtra("EmpID",response.body().getEmpid());

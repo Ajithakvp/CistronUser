@@ -276,7 +276,7 @@ public class VisitEntryReport extends AppCompatActivity {
                 }
 
                 CallVisitEntryReportList();
-                Log.e(TAG, "Empid: "+empid+" : category : "+user_category );
+               // Log.e(TAG, "Empid: "+empid+" : category : "+user_category );
             }
         });
 

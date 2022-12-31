@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/dialog_backgroud"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+
+            <RelativeLayout
+                android:id="@+id/rlUpdateStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tvUpdateStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/bold"
+                    android:text="Details"
+                    android:textColor="@color/darkGreen"
+                    android:textSize="16dp" />
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginRight="10dp"
+                    android:id="@+id/ivClose"
+                    android:src="@drawable/ic_baseline_close_24"
+                    android:layout_alignParentRight="true"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_below="@+id/rlUpdateStatus"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/tvDatetag"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/latest"
+                    android:text=" Date        :"
+                    android:textColor="@color/black"
+                    android:textSize="15dp" />
+
+                <TextView
+                    android:id="@+id/tvDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/tvDatetag"
+                    android:fontFamily="@font/semibold"
+                    android:text="2022-12-22"
+                    android:textColor="@color/Radio"
+                    android:textSize="15dp" />
+
+
+                <TextView
+                    android:id="@+id/tvUserTag"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/tvDate"
+                    android:fontFamily="@font/latest"
+                    android:text=" Person     :"
+                    android:textColor="@color/black"
+                    android:textSize="15dp" />
+
+                <TextView
+                    android:id="@+id/tvUser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvDate"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_toRightOf="@id/tvUserTag"
+                    android:fontFamily="@font/semibold"
+                    android:text="2022-12-22"
+                    android:textColor="@color/Radio"
+                    android:textSize="15dp" />
+
+
+                <TextView
+                    android:id="@+id/tvStatusTag"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/tvUser"
+                    android:fontFamily="@font/latest"
+                    android:text=" Status      :"
+                    android:textColor="@color/black"
+                    android:textSize="15dp" />
+
+                <TextView
+                    android:id="@+id/tvStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_below="@+id/tvUser"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/tvStatusTag"
+                    android:fontFamily="@font/semibold"
+                    android:text="2022-12-22"
+                    android:textColor="@color/Radio"
+                    android:textSize="15dp" />
+
+                <TextView
+                    android:id="@+id/tvRemarkTag"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/tvStatus"
+                    android:fontFamily="@font/latest"
+                    android:text=" Remark   :"
+                    android:textColor="@color/black"
+                    android:textSize="15dp" />
+
+                <TextView
+                    android:id="@+id/tvRemark"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_below="@+id/tvStatus"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/tvRemarkTag"
+                    android:fontFamily="@font/semibold"
+                    android:text="2022-12-22"
+                    android:textColor="@color/Radio"
+                    android:textSize="15dp" />
+
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</RelativeLayout>

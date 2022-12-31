@@ -44,6 +44,8 @@ public class LoginuserModel {
     @SerializedName("photo")
     private String photo;
 
+    @SerializedName("is_manager")
+    private String is_manager;
 
     @SerializedName("user")
     private String user;
@@ -157,5 +159,13 @@ public class LoginuserModel {
 
     public void setTeamleader(String teamleader) {
         this.teamleader = teamleader;
+    }
+
+    public String getIs_manager() {
+        return is_manager;
+    }
+
+    public void setIs_manager(String is_manager) {
+        this.is_manager = is_manager;
     }
 }
