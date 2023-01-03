@@ -49,6 +49,13 @@ public class SalesQuoteReportAdapter extends RecyclerView.Adapter<SalesQuoteRepo
         holder.tvQuote.setText(salesQuoteReportModels.get(position).getQuoteRef());
         String QuotePdf=salesQuoteReportModels.get(position).getQuotePdf();
 
+
+        if (salesQuoteReportModels.get(position).getStatus().trim().equals("")){
+            holder.tvStatus.setVisibility(View.GONE);
+            holder.tvStatusOther.setVisibility(View.GONE);
+            holder.tvStatusTag.setVisibility(View.GONE);
+        }
+
         if (salesQuoteReportModels.get(position).getStatus().trim().equals("Finalized")){
             holder.tvStatus.setVisibility(View.VISIBLE);
             holder.tvStatusOther.setVisibility(View.GONE);
@@ -103,7 +110,7 @@ public class SalesQuoteReportAdapter extends RecyclerView.Adapter<SalesQuoteRepo
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvName,tvHospital,tvDate,tvQuote,tvProduct,tvStatus,tvStatusOther;
+        TextView tvName,tvHospital,tvDate,tvQuote,tvProduct,tvStatus,tvStatusOther,tvStatusTag;
         ImageView ivQuotePdf;
 
         public ViewHolder(@NonNull View itemView) {
@@ -117,6 +124,7 @@ public class SalesQuoteReportAdapter extends RecyclerView.Adapter<SalesQuoteRepo
             tvStatus=itemView.findViewById(R.id.tvStatus);
             tvStatusOther=itemView.findViewById(R.id.tvStatusOther);
             ivQuotePdf=itemView.findViewById(R.id.ivQuotePdf);
+            tvStatusTag=itemView.findViewById(R.id.tvStatusTag);
 
 
         }

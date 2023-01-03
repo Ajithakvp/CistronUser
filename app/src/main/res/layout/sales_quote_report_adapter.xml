@@ -172,6 +172,7 @@
                 <TextView
                     android:id="@+id/tvStatusTag"
                     android:layout_width="100dp"
+                    android:visibility="gone"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tvProduct"
                     android:layout_marginLeft="10dp"
@@ -191,7 +192,7 @@
                     android:fontFamily="@font/semibold"
                     android:text="null"
                     android:gravity="center_vertical"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     android:textColor="#2874A6"
                     android:backgroundTint="#2874A6"
                     android:textSize="15dp" />
