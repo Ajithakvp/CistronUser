@@ -208,7 +208,7 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
         tvDate.setText(SDate);
 
 
-        //MailValidation
+        //*********MailValidation**********//
         String emailPattern = "(([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)(\\s*(;|,)\\s*|\\s*$))*";
         edMail.addTextChangedListener(new TextWatcher() {
             @Override
@@ -223,9 +223,9 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (edMail.getText().toString().trim().matches(emailPattern)){
+                if (edMail.getText().toString().trim().matches(emailPattern)) {
                     edMail.setError(null);
-                }else {
+                } else {
                     edMail.setError("Invalid Mail");
                     edMail.requestFocus();
                 }
@@ -246,9 +246,9 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (edAnotherMail.getText().toString().trim().matches(emailPattern)){
+                if (edAnotherMail.getText().toString().trim().matches(emailPattern)) {
                     edAnotherMail.setError(null);
-                }else {
+                } else {
                     edAnotherMail.setError("Invalid Mail");
                     edAnotherMail.requestFocus();
                 }
@@ -256,7 +256,7 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
             }
         });
 
-    //******************mail end****************//
+        //******************MailValidation end****************//
         //State
         CallState();
         stateAdapter = new ArrayAdapter(this, R.layout.spinner_item, strState);
@@ -268,10 +268,6 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
 
                 callDistrict(spState.getSelectedItem().toString());
                 callHospital(spState.getSelectedItem().toString(), "District");
-
-//                if (visitEntryStateModels.get(position).getState().trim().equals("Andhra Pradesh")){
-//
-//                }
 
             }
 
@@ -291,7 +287,6 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 callHospital(spState.getSelectedItem().toString(), spDistrict.getSelectedItem().toString());
-
 
             }
 
@@ -364,7 +359,6 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
         });
 
         //Product'
-
 
         ProductAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, strProduct);
         ProductAdapter.setDropDownViewResource(R.layout.spinner_dropdown);
@@ -581,7 +575,7 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
     private void CallHospitalUpdateList() {
 
 
-        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this,R.style.AppBottomSheetDialogTheme);
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this, R.style.AppBottomSheetDialogTheme);
         bottomSheetDialog.setContentView(R.layout.sales_quote_hospital_recycleview);
         bottomSheetDialog.setCancelable(false);
         bottomSheetDialog.show();
@@ -678,16 +672,17 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
                         Uri uri = Uri.parse(Quote);
                         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                         startActivity(intent);
+
 //                        "empid": "E367",
 //                                "id": 53177,
 //                                "quote_id": "8910",
 //                                "doctor": "Mr.  TEST DOCTOR TEST DOCTOR MD",
-//                                "doc_email": "callmeasvelan@gmail.com",
+//                                "doc_email": "",
 //                                "product": "Instrument Washer Cum Disinfector",
 //                                "m_status": 1,
-//                                "mailto": "callmeasvelan@gmail.com",
-//                                "mailcc": "ajithmaxwell3096@gmail.com",
-//                                "bro_name": "932858435_INW01.pdf",
+//                                "mailto": "",
+//                                "mailcc": "",
+//                                "bro_name": "",
 //                                "a": 1
 
                         String empid = response.body().getSalesQuoteMailSendModel().getEmpid();
@@ -730,8 +725,8 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
             public void onResponse(Call<SalesQuoteMailtoSendResponse> call, Response<SalesQuoteMailtoSendResponse> response) {
                 if (response.isSuccessful()) {
                     Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "mail: "+response.body().getMail_error() );
-                    Log.e(TAG, "sms: "+response.body().getSms_error() );
+                    //Log.e(TAG, "mail: " + response.body().getMail_error());
+                    //Log.e(TAG, "sms: " + response.body().getSms_error());
                 }
             }
 
@@ -807,28 +802,9 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
                             strProduct.clear();
                             for (int i = 0; i < salesQuoteProductsModels.size(); i++) {
                                 strProduct.add(salesQuoteProductsModels.get(i).getSeriesName());
-
-
-//
-//                                if (salesQuoteProductsModels.get(i).getSalesQuoteProductsAddonModels().size()>0){
-//                                    rvProducts.setVisibility(View.VISIBLE);
-//                                    salesQuoteAddonAdapter.salesQuoteProductsAddonModels =salesQuoteProductsModels.get(i).getSalesQuoteProductsAddonModels();
-//
-//
-//
-//
-//                                    salesQuoteAddonAdapter.notifyDataSetChanged();
-//                                }else {
-//                                    rvProducts.setVisibility(View.GONE);
-//                                }
-
-
                             }
-
-
                             ProductAdapter.notifyDataSetChanged();
                         }
-
 
                     }
 
@@ -848,7 +824,7 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
     }
 
     private void CallCategory() {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -881,7 +857,7 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
 
 
     private void CallChefDoc(String hospitalID) {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -917,7 +893,7 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
     }
 
     private void callHospital(String state, String district) {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -956,7 +932,7 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
     }
 
     private void CallState() {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -992,7 +968,7 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
 
     private void callDistrict(String state) {
 
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -1040,7 +1016,7 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
             e.printStackTrace();
         }
         if (!gps_enabled && !network_enabled) {
-            new AlertDialog.Builder(SalesQuote.this,R.style.AlertDialogCustom)
+            new AlertDialog.Builder(SalesQuote.this, R.style.AlertDialogCustom)
                     .setTitle("Enable GPS Service")
                     .setIcon(R.drawable.ic_baseline_location_on_24)
                     .setMessage("Allow Cistron App to Access this device's location?")

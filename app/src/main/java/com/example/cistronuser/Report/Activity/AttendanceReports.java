@@ -454,7 +454,7 @@ ArrayAdapter DailyUserAdapter;
 //    }
 
     private void callMonthlyReport() {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -494,7 +494,7 @@ ArrayAdapter DailyUserAdapter;
     }
 
     private void CallDailyUser(String category) {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -526,7 +526,7 @@ ArrayAdapter DailyUserAdapter;
     }
 
     private void callDailyReport() {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();

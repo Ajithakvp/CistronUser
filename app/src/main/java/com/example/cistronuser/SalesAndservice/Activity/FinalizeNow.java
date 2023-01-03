@@ -75,7 +75,6 @@ import retrofit2.Response;
 
 public class FinalizeNow extends AppCompatActivity {
 
-
     File filePdf;
     String filename;
     CheckBox cbDeposited, cbSameAddress;
@@ -189,7 +188,7 @@ public class FinalizeNow extends AppCompatActivity {
 
 
         //*********Contact person details ********//
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -539,7 +538,7 @@ public class FinalizeNow extends AppCompatActivity {
                        Log.e(TAG, "onClick: " );
                        int sameAddr = cbSameAddress.isChecked() ? 1 : 0;
                        int Depos = cbDeposited.isChecked() ? 1 : 0;
-                       final ProgressDialog progressDialog = new ProgressDialog(FinalizeNow.this);
+                       final ProgressDialog progressDialog = new ProgressDialog(FinalizeNow.this,R.style.ProgressBarDialog);
                        progressDialog.setMessage("Loading...");
                        progressDialog.setCancelable(false);
                        progressDialog.show();
@@ -639,7 +638,7 @@ public class FinalizeNow extends AppCompatActivity {
     }
 
     private void callHospital(String toString, String toString1) {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -678,7 +677,7 @@ public class FinalizeNow extends AppCompatActivity {
 
 
     private void callDistrict(String state) {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -710,7 +709,7 @@ public class FinalizeNow extends AppCompatActivity {
     }
 
     private void CallState() {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();

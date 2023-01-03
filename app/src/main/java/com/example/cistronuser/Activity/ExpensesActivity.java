@@ -315,8 +315,6 @@ public class ExpensesActivity extends Activity {
         tvDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 CallDate();
             }
         });
@@ -409,7 +407,7 @@ public class ExpensesActivity extends Activity {
                 }
                 if (edWorkReport.getText().toString().trim().length() == 0) {
 
-                    if (edConveyance.getText().toString().trim().length()>0){
+                    if (edConveyance.getText().toString().trim().length() > 0) {
                         edWorkReport.setError(" WorkReport for Conveyance is Required");
                         if (!focus)
                             edWorkReport.requestFocus();
@@ -425,25 +423,25 @@ public class ExpensesActivity extends Activity {
                 }
                 if (isfilled) {
 
-                    Log.e(TAG, "onClick: 5");
+                    // Log.e(TAG, "onClick: 5");
                     Callsubmitexpense();
                     if (fileconvency != null) {
                         Callsaveconvency();
-                        Log.e(TAG, "onClick: 1");
+                        // Log.e(TAG, "onClick: 1");
                     }
                     if (filelodging != null) {
-                        Log.e(TAG, "onClick: 2");
+                        // Log.e(TAG, "onClick: 2");
 
                         Callsavelodging();
                     }
                     if (fileticket != null) {
-                        Log.e(TAG, "onClick: 3");
+                        // Log.e(TAG, "onClick: 3");
 
 
                         Callsaveticket();
                     }
                     if (fileOther != null) {
-                        Log.e(TAG, "onClick: 4");
+                        // Log.e(TAG, "onClick: 4");
 
                         Callsaveother();
                     }
@@ -460,7 +458,7 @@ public class ExpensesActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(ExpensesActivity.this,R.style.AlertDialogCustom);
+                AlertDialog.Builder builder = new AlertDialog.Builder(ExpensesActivity.this, R.style.AlertDialogCustom);
                 builder.setMessage("Are you sure you want to Delete ?");
                 builder.setTitle("Delete!");
                 builder.setIcon(R.drawable.ic_baseline_delete_24);
@@ -492,7 +490,7 @@ public class ExpensesActivity extends Activity {
             public void onClick(View v) {
 
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(ExpensesActivity.this,R.style.AlertDialogCustom);
+                AlertDialog.Builder builder = new AlertDialog.Builder(ExpensesActivity.this, R.style.AlertDialogCustom);
                 builder.setMessage("Are you sure you want to Delete ?");
                 builder.setTitle("Delete!");
                 builder.setIcon(R.drawable.ic_baseline_delete_24);
@@ -523,7 +521,7 @@ public class ExpensesActivity extends Activity {
             public void onClick(View v) {
 
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(ExpensesActivity.this,R.style.AlertDialogCustom);
+                AlertDialog.Builder builder = new AlertDialog.Builder(ExpensesActivity.this, R.style.AlertDialogCustom);
                 builder.setMessage("Are you sure you want to Delete ?");
                 builder.setTitle("Delete!");
                 builder.setIcon(R.drawable.ic_baseline_delete_24);
@@ -555,7 +553,7 @@ public class ExpensesActivity extends Activity {
             public void onClick(View v) {
 
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(ExpensesActivity.this,R.style.AlertDialogCustom);
+                AlertDialog.Builder builder = new AlertDialog.Builder(ExpensesActivity.this, R.style.AlertDialogCustom);
                 builder.setMessage("Are you sure you want to Delete ?");
                 builder.setTitle("Delete!");
                 builder.setIcon(R.drawable.ic_baseline_delete_24);
@@ -586,8 +584,8 @@ public class ExpensesActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                Log.e(TAG, "onClick:1 " + BaseExpenseUrl);
-                Log.e(TAG, "onClick:2 " + WebviewConvency);
+                //Log.e(TAG, "onClick:1 " + BaseExpenseUrl);
+                //Log.e(TAG, "onClick:2 " + WebviewConvency);
                 previewattache(BaseExpenseUrl + WebviewConvency);
             }
         });
@@ -595,8 +593,8 @@ public class ExpensesActivity extends Activity {
         ivpreviewOther.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e(TAG, "onClick:1 " + BaseExpenseUrl);
-                Log.e(TAG, "onClick:2 " + WebViewOther);
+               // Log.e(TAG, "onClick:1 " + BaseExpenseUrl);
+               // Log.e(TAG, "onClick:2 " + WebViewOther);
                 previewattache(BaseExpenseUrl + WebViewOther);
 
             }
@@ -605,8 +603,8 @@ public class ExpensesActivity extends Activity {
         ivpreviewtTicket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e(TAG, "onClick:1 " + BaseExpenseUrl);
-                Log.e(TAG, "onClick:2 " + WebViewTicket);
+               // Log.e(TAG, "onClick:1 " + BaseExpenseUrl);
+               // Log.e(TAG, "onClick:2 " + WebViewTicket);
                 previewattache(BaseExpenseUrl + WebViewTicket);
 
             }
@@ -615,8 +613,8 @@ public class ExpensesActivity extends Activity {
         ivpreviewtlodging.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e(TAG, "onClick:1 " + BaseExpenseUrl);
-                Log.e(TAG, "onClick:2 " + WebViewLodging);
+               // Log.e(TAG, "onClick:1 " + BaseExpenseUrl);
+              //  Log.e(TAG, "onClick:2 " + WebViewLodging);
                 previewattache(BaseExpenseUrl + WebViewLodging);
 
             }
@@ -655,7 +653,7 @@ public class ExpensesActivity extends Activity {
             @Override
             public void onResponse(Call<ExpensePolicyResponse> call, Response<ExpensePolicyResponse> response) {
 
-                Log.e(TAG, "onResponse: " + response.body().getMessage());
+               //Log.e(TAG, "onResponse: " + response.body().getMessage());
                 try {
                     if (response.isSuccessful()) {
                         if (response.body().getMessage().trim().equals("error")) {
@@ -757,7 +755,7 @@ public class ExpensesActivity extends Activity {
 
     private void callcheckWeekList() {
 
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -781,8 +779,6 @@ public class ExpensesActivity extends Activity {
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         rvExpense.setLayoutManager(linearLayoutManager);
         rvExpense.setAdapter(weeklyAdapter);
-
-
 
 
         ViewExpenseListInterface viewExpenseListInterface = APIClient.getClient().create(ViewExpenseListInterface.class);
@@ -818,7 +814,7 @@ public class ExpensesActivity extends Activity {
             @Override
             public void onClick(View v) {
                 previewattache(WeekBaseurl + Filename_r);
-                Log.e(TAG, "onClick: "+WeekBaseurl + Filename_r );
+               // Log.e(TAG, "onClick: " + WeekBaseurl + Filename_r);
             }
         });
 
@@ -1018,7 +1014,7 @@ public class ExpensesActivity extends Activity {
 
     private void Callsaveticket() {
 
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Please Wait...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -1044,7 +1040,7 @@ public class ExpensesActivity extends Activity {
             @Override
             public void onResponse(Call<ExpenseResponse> call, Response<ExpenseResponse> response) {
                 progressDialog.dismiss();
-                Log.e(TAG, "onResponse: 3");
+               // Log.e(TAG, "onResponse: 3");
                 progressDialog.dismiss();
                 AlertDialog.Builder alert = new AlertDialog.Builder(ExpensesActivity.this);
                 alert.setMessage("Expense Saved Successfully");
@@ -1075,7 +1071,7 @@ public class ExpensesActivity extends Activity {
     }
 
     private void Callsavelodging() {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Please Wait...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -1099,7 +1095,7 @@ public class ExpensesActivity extends Activity {
         convency.CallLodging(action, EmpId, Date, LodgingFile).enqueue(new Callback<ExpenseResponse>() {
             @Override
             public void onResponse(Call<ExpenseResponse> call, Response<ExpenseResponse> response) {
-                Log.e(TAG, "onResponse: 2");
+               // Log.e(TAG, "onResponse: 2");
 
                 progressDialog.dismiss();
 
@@ -1133,7 +1129,7 @@ public class ExpensesActivity extends Activity {
 
     private void Callsaveconvency() {
 
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Please Wait...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -1157,7 +1153,7 @@ public class ExpensesActivity extends Activity {
         convency.CallConvency(action, EmpId, Date, ConvencyFile).enqueue(new Callback<ExpenseResponse>() {
             @Override
             public void onResponse(Call<ExpenseResponse> call, Response<ExpenseResponse> response) {
-                Log.e(TAG, "onResponse: 1");
+               // Log.e(TAG, "onResponse: 1");
                 progressDialog.dismiss();
                 AlertDialog.Builder alert = new AlertDialog.Builder(ExpensesActivity.this);
                 alert.setMessage("Expense Saved Successfully");
@@ -1241,7 +1237,7 @@ public class ExpensesActivity extends Activity {
 
 
         callExp();
-        weeklyAdapter = new ExpensesViewWeeklyAdapter(ExpensesActivity.this,  weeklyExpensesModels);
+        weeklyAdapter = new ExpensesViewWeeklyAdapter(ExpensesActivity.this, weeklyExpensesModels);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ExpensesActivity.this);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         rvExpense.setLayoutManager(linearLayoutManager);
@@ -1288,7 +1284,7 @@ public class ExpensesActivity extends Activity {
     }
 
     private void callExp() {
-        final ProgressDialog progressDialog = new ProgressDialog(ExpensesActivity.this);
+        final ProgressDialog progressDialog = new ProgressDialog(ExpensesActivity.this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Please Wait...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -1314,7 +1310,7 @@ public class ExpensesActivity extends Activity {
     }
 
     private void callWeeklySubmit() {
-        final ProgressDialog progressDialog = new ProgressDialog(ExpensesActivity.this);
+        final ProgressDialog progressDialog = new ProgressDialog(ExpensesActivity.this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Please Wait...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -1359,7 +1355,7 @@ public class ExpensesActivity extends Activity {
 
     private void CallWeeklyFileSubmit() {
 
-        final ProgressDialog progressDialog = new ProgressDialog(ExpensesActivity.this);
+        final ProgressDialog progressDialog = new ProgressDialog(ExpensesActivity.this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Please Wait...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -1408,7 +1404,7 @@ public class ExpensesActivity extends Activity {
 
     private void Callsubmitexpense() {
 
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Please Wait...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -1434,7 +1430,7 @@ public class ExpensesActivity extends Activity {
             public void onResponse(Call<ExpenseResponse> call, Response<ExpenseResponse> response) {
                 try {
                     if (response.isSuccessful()) {
-                        Log.e(TAG, "onResponse: All");
+                       // Log.e(TAG, "onResponse: All");
                         progressDialog.dismiss();
                         AlertDialog.Builder alert = new AlertDialog.Builder(ExpensesActivity.this);
                         alert.setMessage("Expense Saved Successfully");
@@ -1476,14 +1472,11 @@ public class ExpensesActivity extends Activity {
         int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
 
 
-
-
         DatePickerDialog datePickerDialog = new DatePickerDialog(this,
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                         String moth, dt;
-
                         moth = ((month + 1) > 9) ? "" + (month + 1) : ("0" + (month + 1));
 
                         dt = (day > 9) ? "" + day : ("0" + day);
@@ -1494,7 +1487,7 @@ public class ExpensesActivity extends Activity {
                         tvDate.setText(strDate);
 
                         callselectdateViewExpenses();
-                        final ProgressDialog progressDialog = new ProgressDialog(ExpensesActivity.this);
+                        final ProgressDialog progressDialog = new ProgressDialog(ExpensesActivity.this,R.style.ProgressBarDialog);
                         progressDialog.setMessage("Loading...");
                         progressDialog.setCancelable(false);
                         progressDialog.show();
@@ -1524,7 +1517,7 @@ public class ExpensesActivity extends Activity {
                                             rlmsg.setVisibility(View.GONE);
 
                                         }
-                                        Log.e(TAG, "onResponse: " + response.body().getError());
+                                       // Log.e(TAG, "onResponse: " + response.body().getError());
 
                                         tvStartdate.setText(response.body().getStartdate());
                                         tvEnddate.setText(response.body().getEnddate());

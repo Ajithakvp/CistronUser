@@ -114,7 +114,7 @@ public class ApprovedAdapter extends RecyclerView.Adapter<ApprovedAdapter.ViewHo
                 builder.setPositiveButton("yes", (new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        final ProgressDialog progressDialog = new ProgressDialog(activity);
+                        final ProgressDialog progressDialog = new ProgressDialog(activity,R.style.ProgressBarDialog);
                         progressDialog.setMessage("Loading...");
                         progressDialog.setCancelable(false);
                         progressDialog.show();

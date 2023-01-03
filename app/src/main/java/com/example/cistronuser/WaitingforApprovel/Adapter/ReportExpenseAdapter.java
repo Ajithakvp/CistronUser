@@ -304,7 +304,7 @@ public class ReportExpenseAdapter extends RecyclerView.Adapter<ReportExpenseAdap
 
                         if (isChecked) {
 
-                            final ProgressDialog progressDialog = new ProgressDialog(activity);
+                            final ProgressDialog progressDialog = new ProgressDialog(activity,R.style.ProgressBarDialog);
                             progressDialog.setMessage("Reset...");
                             progressDialog.setCancelable(false);
                             progressDialog.show();
@@ -410,7 +410,7 @@ public class ReportExpenseAdapter extends RecyclerView.Adapter<ReportExpenseAdap
                 tvhcSubmit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        final ProgressDialog progressDialog = new ProgressDialog(activity);
+                        final ProgressDialog progressDialog = new ProgressDialog(activity,R.style.ProgressBarDialog);
                         progressDialog.setMessage("Loading...");
                         progressDialog.setCancelable(false);
                         progressDialog.show();
@@ -445,7 +445,7 @@ public class ReportExpenseAdapter extends RecyclerView.Adapter<ReportExpenseAdap
                 tvUpdate.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        final ProgressDialog progressDialog = new ProgressDialog(activity);
+                        final ProgressDialog progressDialog = new ProgressDialog(activity,R.style.ProgressBarDialog);
                         progressDialog.setMessage("Loading...");
                         progressDialog.setCancelable(false);
                         progressDialog.show();
@@ -478,7 +478,7 @@ public class ReportExpenseAdapter extends RecyclerView.Adapter<ReportExpenseAdap
                 tvPaidSubmit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        final ProgressDialog progressDialog = new ProgressDialog(activity);
+                        final ProgressDialog progressDialog = new ProgressDialog(activity,R.style.ProgressBarDialog);
                         progressDialog.setMessage("Loading...");
                         progressDialog.setCancelable(false);
                         progressDialog.show();
@@ -511,7 +511,7 @@ public class ReportExpenseAdapter extends RecyclerView.Adapter<ReportExpenseAdap
                     @Override
                     public void onClick(View v) {
 
-                        final ProgressDialog progressDialog = new ProgressDialog(activity);
+                        final ProgressDialog progressDialog = new ProgressDialog(activity,R.style.ProgressBarDialog);
                         progressDialog.setMessage("Loading...");
                         progressDialog.setCancelable(false);
                         progressDialog.show();
@@ -549,7 +549,7 @@ public class ReportExpenseAdapter extends RecyclerView.Adapter<ReportExpenseAdap
     private void callExpenseView(String empid, String startdate, String enddate) {
 
 
-        final ProgressDialog progressDialog = new ProgressDialog(activity);
+        final ProgressDialog progressDialog = new ProgressDialog(activity,R.style.ProgressBarDialog);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();

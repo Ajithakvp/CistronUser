@@ -39,10 +39,6 @@ public class InstallmentAdapter extends RecyclerView.Adapter<InstallmentAdapter.
         holder.edAmount.setText(viewInstallmentModels.get(position).getInstalment());
 
 
-
-
-
-
     }
 
     @Override

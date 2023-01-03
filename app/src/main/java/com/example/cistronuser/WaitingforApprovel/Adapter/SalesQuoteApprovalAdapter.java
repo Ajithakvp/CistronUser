@@ -91,7 +91,7 @@ public class SalesQuoteApprovalAdapter extends RecyclerView.Adapter<SalesQuoteAp
                 builder.setPositiveButton("Yes", (new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        final ProgressDialog progressDialog = new ProgressDialog(activity);
+                        final ProgressDialog progressDialog = new ProgressDialog(activity,R.style.ProgressBarDialog);
                         progressDialog.setMessage("Please Wait...");
                         progressDialog.setCancelable(false);
                         progressDialog.show();

@@ -209,7 +209,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
 
 
     private void CallLogin(String empID, String pass, double latitude, double longtitude, String addressLine, String ip) {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Employee Login...");
         progressDialog.setCancelable(false);
         progressDialog.show();

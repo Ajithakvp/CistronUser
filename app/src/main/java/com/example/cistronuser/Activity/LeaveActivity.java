@@ -417,7 +417,7 @@ public class LeaveActivity extends Activity {
 
 
                     }
-                    Log.e(TAG, "onResponse: CL" + avCl + ":" + avMl + ":" + avPl + ":" + avProbl + ":" + avCompOff);
+                    //Log.e(TAG, "onResponse: CL" + avCl + ":" + avMl + ":" + avPl + ":" + avProbl + ":" + avCompOff);
                 } catch (Exception e) {
 
                 }
@@ -460,7 +460,7 @@ public class LeaveActivity extends Activity {
     }
 
     private void callCompoffReport() {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -518,7 +518,7 @@ public class LeaveActivity extends Activity {
     }
 
     private void calldeletedReport() {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -575,7 +575,7 @@ public class LeaveActivity extends Activity {
     }
 
     private void callcancelReport() {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -633,7 +633,7 @@ public class LeaveActivity extends Activity {
     }
 
     private void CallRejected() {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Loading...");
         progressDialog.show();
         LeaveDetailsInterface leaveDetailsInterface = APIClient.getClient().create(LeaveDetailsInterface.class);
@@ -689,7 +689,7 @@ public class LeaveActivity extends Activity {
     }
 
     private void Callpending() {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -749,7 +749,7 @@ public class LeaveActivity extends Activity {
     }
 
     private void CallApprovedList() {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -932,7 +932,7 @@ public class LeaveActivity extends Activity {
 
 
     private void callDetail() {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -1204,7 +1204,7 @@ public class LeaveActivity extends Activity {
                         }
                     }
                 } catch (Exception e) {
-                    Log.e(TAG, "onClick: " + e.getMessage());
+                    //Log.e(TAG, "onClick: " + e.getMessage());
                 }
             }
         });
@@ -1228,7 +1228,7 @@ public class LeaveActivity extends Activity {
     }
 
     private void calluploadsubmit(BottomSheetDialog bottomSheetDialog) {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Leave Request is processing...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -1269,7 +1269,7 @@ public class LeaveActivity extends Activity {
 
                         }
                     } catch (Exception e) {
-                        Log.e(TAG, "onResponse: " + e.getMessage());
+                       // Log.e(TAG, "onResponse: " + e.getMessage());
 
                     }
 
@@ -1279,7 +1279,7 @@ public class LeaveActivity extends Activity {
                 public void onFailure(Call<leavesubmitresponse> call, Throwable t) {
                     progressDialog.dismiss();
                     Toast.makeText(LeaveActivity.this, "Not Submited", Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "onFailure: " + t.getMessage());
+                   // Log.e(TAG, "onFailure: " + t.getMessage());
 
                 }
             });
@@ -1289,7 +1289,7 @@ public class LeaveActivity extends Activity {
 
     private void Callsubmit(BottomSheetDialog bottomSheetDialog) {
 
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Leave Request is processing...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -1356,7 +1356,7 @@ public class LeaveActivity extends Activity {
     }
 
     private void callRes() {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -1373,7 +1373,7 @@ public class LeaveActivity extends Activity {
                         progressDialog.dismiss();
 
 
-                        Log.e(TAG, "onResponse: " + response.body().getLeaveResons().getReasons());
+                       // Log.e(TAG, "onResponse: " + response.body().getLeaveResons().getReasons());
                         String name = response.body().getLeaveResons().getReasons();
 
                         leave.add("----Select----");
@@ -1392,7 +1392,7 @@ public class LeaveActivity extends Activity {
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                                 if (! leave.get(position).trim().equals("----Select----"))
-                                    
+
                                // Toast.makeText(LeaveActivity.this, leave.get(position), Toast.LENGTH_SHORT).show();
                                 // reason = Integer.parseInt(leave.get(position));
                                 reason = position;
@@ -1498,7 +1498,7 @@ public class LeaveActivity extends Activity {
 
 
                 try {
-                    Log.e(TAG, "onResponse: "+response.body().getDateDisableModels().size() );
+                    //Log.e(TAG, "onResponse: "+response.body().getDateDisableModels().size() );
                     if (response.body().getDateDisableModels().size()>0){
                         dateDisableModels=response.body().getDateDisableModels();
 

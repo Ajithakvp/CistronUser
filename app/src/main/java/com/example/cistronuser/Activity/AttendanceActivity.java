@@ -6,6 +6,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -53,12 +54,12 @@ public class AttendanceActivity extends Activity {
     RadioButton rbLocal, rbOutstation, rbExstation, rbRegular, rbTraining, rbMeeting;
     Button btnSubmit;
     RadioGroup rbGroup;
-    ProgressBar simpleProgressBar;
+
     int placeId;
     TextView tvMsg, tvcat;
     RelativeLayout rlmsg;
     LinearLayout rlattendance;
-    SwipeRefreshLayout srRefresh;
+
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -81,17 +82,6 @@ public class AttendanceActivity extends Activity {
         tvcat = findViewById(R.id.tvcat);
         rlmsg = findViewById(R.id.rlmsg);
         rlattendance = findViewById(R.id.rlattendance);
-        simpleProgressBar = findViewById(R.id.simpleProgressBar);
-        // srRefresh=findViewById(R.id.srRefresh);
-//
-//        srRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//
-//                srRefresh.setRefreshing(false);
-//
-//            }
-//        });
 
 
         //internet
@@ -111,22 +101,21 @@ public class AttendanceActivity extends Activity {
             @Override
             public void onClick(View view) {
 
-                boolean isfilled=true;
+                boolean isfilled = true;
                 if (rbGroup.getCheckedRadioButtonId() == -1) {
-                    isfilled=false;
+                    isfilled = false;
                     Toast.makeText(AttendanceActivity.this, "Please select Any one of the options ", Toast.LENGTH_SHORT).show();
                 } else if (rbRegular.isChecked()) {
-                    if (edtPlace.getText().toString().trim().equals("")){
-                        isfilled=false;
+                    if (edtPlace.getText().toString().trim().equals("")) {
+                        isfilled = false;
                         edtPlace.setError("Enter the place");
                         edtPlace.requestFocus();
                     }
 
                 }
-                if (isfilled){
+                if (isfilled) {
                     btnSubmit.setEnabled(false);
                     callAttendance();
-                    simpleProgressBar.setVisibility(View.VISIBLE);
                 }
 
 
@@ -134,7 +123,7 @@ public class AttendanceActivity extends Activity {
         });
 
 
-//RadioGroup
+        //RadioGroup
         rbGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @SuppressLint("ResourceType")
             @Override
@@ -196,7 +185,7 @@ public class AttendanceActivity extends Activity {
                         rbLocal.setTextColor(Color.BLACK);
                         rbExstation.setTextColor(Color.BLACK);
                         rbOutstation.setTextColor(Color.BLACK);
-                       // Toast.makeText(AttendanceActivity.this, "Enter The Place", Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(AttendanceActivity.this, "Enter The Place", Toast.LENGTH_SHORT).show();
                         break;
                     case 5:
 
@@ -233,8 +222,10 @@ public class AttendanceActivity extends Activity {
     }
 
     private void callAttendance() {
-
-        simpleProgressBar.setVisibility(View.VISIBLE);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
+        progressDialog.setMessage("Attendance Submitting...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
         AttendanceInsert attendanceInsert = APIClient.getClient().create(AttendanceInsert.class);
         attendanceInsert.callAttendInsert(PreferenceManager.getEmpID(this), placeId, edtPlace.getText().toString(), "new_attendance").enqueue(new Callback<AttendanceResponse>() {
             @Override
@@ -242,7 +233,7 @@ public class AttendanceActivity extends Activity {
                 try {
                     if (response.isSuccessful()) {
                         callAttendmsgAPI();
-                        simpleProgressBar.setVisibility(View.GONE);
+                        progressDialog.dismiss();
                         rlattendance.setVisibility(View.GONE);
                         rlmsg.setVisibility(View.VISIBLE);
                         Toast.makeText(AttendanceActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
@@ -263,6 +254,10 @@ public class AttendanceActivity extends Activity {
 
 
     private void callAttendmsgAPI() {
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
+        progressDialog.setMessage("Please Wait...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
         AttendanceMessage attendanceMessage = APIClient.getClient().create(AttendanceMessage.class);
         attendanceMessage.CallAttendMsg(PreferenceManager.getEmpID(this), "check_attend").enqueue(new Callback<AttendanceMessageModel>() {
             @Override
@@ -274,10 +269,11 @@ public class AttendanceActivity extends Activity {
                         if (response.body().getCategory().trim().equals("no attendance")) {
                             rlattendance.setVisibility(View.VISIBLE);
                             rlmsg.setVisibility(View.GONE);
-                            simpleProgressBar.setVisibility(View.GONE);
+                            progressDialog.dismiss();
                         } else {
                             tvMsg.setText(response.body().getMessage());
                             tvcat.setText(response.body().getCategory());
+                            progressDialog.dismiss();
                             rlattendance.setVisibility(View.GONE);
                             rlmsg.setVisibility(View.VISIBLE);
                         }

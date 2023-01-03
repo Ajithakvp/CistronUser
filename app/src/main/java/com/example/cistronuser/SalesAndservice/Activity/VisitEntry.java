@@ -367,7 +367,7 @@ public class VisitEntry extends AppCompatActivity {
     }
 
     private void CallAdd(String hospitalID, String chefDocID, String productId) {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Adding...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -427,7 +427,7 @@ public class VisitEntry extends AppCompatActivity {
 
     private void CallSubmit() {
 
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Visit Entry Submitted...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -471,7 +471,7 @@ public class VisitEntry extends AppCompatActivity {
     }
 
     private void CallVisitEntryList() {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -527,7 +527,7 @@ public class VisitEntry extends AppCompatActivity {
     }
 
     private void callProduct() {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -562,7 +562,7 @@ public class VisitEntry extends AppCompatActivity {
     }
 
     private void CallChefDoc(String hospitalID) {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -597,7 +597,7 @@ public class VisitEntry extends AppCompatActivity {
     }
 
     private void callHospital(String state, String district) {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -634,7 +634,7 @@ public class VisitEntry extends AppCompatActivity {
     }
 
     private void CallState() {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -671,7 +671,7 @@ public class VisitEntry extends AppCompatActivity {
 
     private void callDistrict(String state) {
 
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();

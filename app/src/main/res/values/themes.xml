@@ -99,6 +99,8 @@
     </style>
 
 
+    <!--    Dialog-->
+
     <style name="AlertDialogCustom" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:textColor">@color/Radio</item>
         <item name="fontFamily">@font/latest</item>
@@ -111,7 +113,7 @@
     <style name="MyButtonStyle" parent="Widget.AppCompat.Button.Borderless">
         <item name="android:textColor">@color/Radio</item>
     </style>
-
+    <!--    BottomDialog-->
 
     <style name="AppBottomSheetDialogTheme"
         parent="Theme.Design.Light.BottomSheetDialog">
@@ -123,7 +125,20 @@
         <item name="android:background">@drawable/bottomdialog_card</item>
     </style>
 
+<!--    ProgressBar-->
 
+    <style name="ProgressBarDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:textColor">@color/RoseRed</item>
+        <item name="fontFamily">@font/latest</item>
+        <item name="colorButtonNormal">@color/RoseRed</item>
+        <item name="android:windowBackground">@drawable/progress_dialog</item>
+        <item name="colorAccent">@color/blue</item>
+        <item name="buttonBarButtonStyle">@style/ProgressBarDialogStyle</item>
+    </style>
+
+    <style name="ProgressBarDialogStyle" parent="Widget.AppCompat.Button.Borderless">
+        <item name="android:textColor">@color/Burgundy</item>
+    </style>
 
 
 </resources>

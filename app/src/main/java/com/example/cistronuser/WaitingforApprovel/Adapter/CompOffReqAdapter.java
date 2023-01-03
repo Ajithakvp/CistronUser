@@ -70,7 +70,7 @@ public class CompOffReqAdapter extends RecyclerView.Adapter<CompOffReqAdapter.Vi
             public void onClick(View v) {
 
 
-                final ProgressDialog progressDialog = new ProgressDialog(activity);
+                final ProgressDialog progressDialog = new ProgressDialog(activity,R.style.ProgressBarDialog);
                 progressDialog.setMessage("Please Wait...");
                 progressDialog.setCancelable(false);
                 progressDialog.show();
@@ -149,7 +149,7 @@ public class CompOffReqAdapter extends RecyclerView.Adapter<CompOffReqAdapter.Vi
             @Override
             public void onClick(View v) {
 
-                final ProgressDialog progressDialog = new ProgressDialog(activity);
+                final ProgressDialog progressDialog = new ProgressDialog(activity,R.style.ProgressBarDialog);
                 progressDialog.setMessage("Please Wait...");
                 progressDialog.setCancelable(false);
                 progressDialog.show();
@@ -226,7 +226,7 @@ public class CompOffReqAdapter extends RecyclerView.Adapter<CompOffReqAdapter.Vi
         holder.tvApproval.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final ProgressDialog progressDialog = new ProgressDialog(activity);
+                final ProgressDialog progressDialog = new ProgressDialog(activity,R.style.ProgressBarDialog);
                 progressDialog.setMessage("Please Wait...");
                 progressDialog.setCancelable(false);
                 progressDialog.show();

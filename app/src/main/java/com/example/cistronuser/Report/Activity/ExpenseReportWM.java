@@ -380,7 +380,7 @@ public class ExpenseReportWM extends AppCompatActivity {
 
 
                         CallWeeklyUser();
-                        final ProgressDialog progressDialog = new ProgressDialog(ExpenseReportWM.this);
+                        final ProgressDialog progressDialog = new ProgressDialog(ExpenseReportWM.this,R.style.ProgressBarDialog);
                         progressDialog.setMessage("Loading...");
                         progressDialog.setCancelable(false);
                         progressDialog.show();
@@ -470,7 +470,7 @@ public class ExpenseReportWM extends AppCompatActivity {
     }
 
     private void CallWeeklyMW() {
-        final ProgressDialog progressDialog = new ProgressDialog(ExpenseReportWM.this);
+        final ProgressDialog progressDialog = new ProgressDialog(ExpenseReportWM.this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -509,7 +509,7 @@ public class ExpenseReportWM extends AppCompatActivity {
 
 
     private void callMonthlyuser() {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -549,7 +549,7 @@ public class ExpenseReportWM extends AppCompatActivity {
     }
 
     private void CallWeeklyUser() {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -589,7 +589,7 @@ public class ExpenseReportWM extends AppCompatActivity {
     private void callUserWeeklyMW() {
 
         //monthly
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();

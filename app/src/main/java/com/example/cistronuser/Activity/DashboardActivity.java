@@ -87,7 +87,7 @@ public class DashboardActivity extends Activity {
     LinearLayout llview3;
     CircleImageView ivProfilePhoto;
     RelativeLayout rlProfile;
-    CardView cvAttendance, cvExpense, cvLeave, cvVisitEntry,cvQuote;
+    CardView cvAttendance, cvExpense, cvLeave, cvVisitEntry, cvQuote;
     LoginuserModel loginuserModel;
 
 
@@ -106,10 +106,10 @@ public class DashboardActivity extends Activity {
     RelativeLayout rlWaitingExpense, rlSalesService;
     //Admin Dashboard
 
-    RelativeLayout rlAdmin, rlWaitingApproval, rlVisitEntryReportLayout,rlWaitingSalesQuoteApprovalRequest;
+    RelativeLayout rlAdmin, rlWaitingApproval, rlVisitEntryReportLayout, rlWaitingSalesQuoteApprovalRequest;
 
-    RelativeLayout rlExpenseReport, rlrlAttendaceReport, rlrlLeaveReport, rlWaitingLeaveRequest, rlWaitingCompOFfRequest,rlQuoteReport;
-    TextView tvwaitingCountExpense, tvCountLeaveReq, tvCountCompOffReq,tvWaitingCountSalesQuote;
+    RelativeLayout rlExpenseReport, rlrlAttendaceReport, rlrlLeaveReport, rlWaitingLeaveRequest, rlWaitingCompOFfRequest, rlQuoteReport;
+    TextView tvwaitingCountExpense, tvCountLeaveReq, tvCountCompOffReq, tvWaitingCountSalesQuote;
 
     Context context;
 
@@ -179,13 +179,13 @@ public class DashboardActivity extends Activity {
         tvCountCompOffReq = findViewById(R.id.tvCountCompOffReq);
         rlAdmin = findViewById(R.id.rlAdmin);
         rlWaitingApproval = findViewById(R.id.rlWaitingApproval);
-        rlWaitingSalesQuoteApprovalRequest=findViewById(R.id.rlWaitingSalesQuoteApprovalRequest);
-        tvWaitingCountSalesQuote=findViewById(R.id.tvWaitingSalesQuote);
-        rlQuoteReport=findViewById(R.id.rlQuoteReport);
+        rlWaitingSalesQuoteApprovalRequest = findViewById(R.id.rlWaitingSalesQuoteApprovalRequest);
+        tvWaitingCountSalesQuote = findViewById(R.id.tvWaitingSalesQuote);
+        rlQuoteReport = findViewById(R.id.rlQuoteReport);
 
         rlVisitEntryReportLayout = findViewById(R.id.rlVisitEntryReportLayout);
         cvVisitEntry = findViewById(R.id.cvVisitEntry);
-        cvQuote=findViewById(R.id.cvQuote);
+        cvQuote = findViewById(R.id.cvQuote);
         llview3 = findViewById(R.id.llview3);
 
 
@@ -193,7 +193,6 @@ public class DashboardActivity extends Activity {
 
         lWebview.setMovementMethod(LinkMovementMethod.getInstance());
         lWebview.setLinkTextColor(getResources().getColor(R.color.white));
-
 
 
         String user = PreferenceManager.getEmpuser(this);
@@ -238,11 +237,11 @@ public class DashboardActivity extends Activity {
         lottieAnimationView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final ProgressDialog progressDialog = new ProgressDialog(DashboardActivity.this);
+                final ProgressDialog progressDialog = new ProgressDialog(DashboardActivity.this,R.style.ProgressBarDialog);
                 progressDialog.setMessage("Log out...");
                 progressDialog.setCancelable(false);
                 progressDialog.show();
-                AlertDialog.Builder builder = new AlertDialog.Builder(DashboardActivity.this,R.style.AlertDialogCustom);
+                AlertDialog.Builder builder = new AlertDialog.Builder(DashboardActivity.this, R.style.AlertDialogCustom);
                 builder.setMessage("Do you want to LogOut");
                 builder.setTitle("Log Out!");
                 builder.setIcon(R.drawable.logout);
@@ -373,8 +372,6 @@ public class DashboardActivity extends Activity {
         });
 
 
-
-
         rlWaitingCompOFfRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -421,7 +418,7 @@ public class DashboardActivity extends Activity {
         rlQuoteReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(DashboardActivity.this, SalesQuoteReport.class);
+                Intent intent = new Intent(DashboardActivity.this, SalesQuoteReport.class);
                 startActivity(intent);
             }
         });
@@ -443,26 +440,26 @@ public class DashboardActivity extends Activity {
     }
 
     private void CallSalesQuoteCount() {
-        SalesQuoteApprovalCountInterFace salesQuoteApprovalCountInterFace=APIClient.getClient().create(SalesQuoteApprovalCountInterFace.class);
+        SalesQuoteApprovalCountInterFace salesQuoteApprovalCountInterFace = APIClient.getClient().create(SalesQuoteApprovalCountInterFace.class);
         salesQuoteApprovalCountInterFace.callCount("getApprovalCounts").enqueue(new Callback<SalesQuoteApprovalCountResponse>() {
             @Override
             public void onResponse(Call<SalesQuoteApprovalCountResponse> call, Response<SalesQuoteApprovalCountResponse> response) {
-              try {
-                  if (response.isSuccessful()) {
-                      tvWaitingCountSalesQuote.setText(response.body().getSalesQuoteApprovalCountModel().getOaApproval());
+                try {
+                    if (response.isSuccessful()) {
+                        tvWaitingCountSalesQuote.setText(response.body().getSalesQuoteApprovalCountModel().getOaApproval());
 
-                      if (response.body().getSalesQuoteApprovalCountModel().getOaApproval().trim().equals("0")) {
-                          rlWaitingSalesQuoteApprovalRequest.setVisibility(View.GONE);
+                        if (response.body().getSalesQuoteApprovalCountModel().getOaApproval().trim().equals("0")) {
+                            rlWaitingSalesQuoteApprovalRequest.setVisibility(View.GONE);
 
-                      } else {
-                          rlWaitingSalesQuoteApprovalRequest.setVisibility(View.VISIBLE);
-                      }
+                        } else {
+                            rlWaitingSalesQuoteApprovalRequest.setVisibility(View.VISIBLE);
+                        }
 
 
-                  }
-              }catch (Exception e){
+                    }
+                } catch (Exception e) {
 
-              }
+                }
             }
 
             @Override
@@ -564,7 +561,7 @@ public class DashboardActivity extends Activity {
 
     private void ProfileView() {
 
-        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this,R.style.AppBottomSheetDialogTheme);
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this, R.style.AppBottomSheetDialogTheme);
         bottomSheetDialog.setContentView(R.layout.profileview);
         bottomSheetDialog.setCancelable(false);
         bottomSheetDialog.show();
@@ -674,7 +671,6 @@ public class DashboardActivity extends Activity {
         });
 
 
-
         strPhoto = PreferenceManager.getEmpphoto(this);
         tvName.setText(PreferenceManager.getEmpName(this));
         tvEmpId.setText(PreferenceManager.getEmpID(this));
@@ -738,7 +734,7 @@ public class DashboardActivity extends Activity {
         btnpasssubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final ProgressDialog progressDialog = new ProgressDialog(DashboardActivity.this);
+                final ProgressDialog progressDialog = new ProgressDialog(DashboardActivity.this,R.style.ProgressBarDialog);
                 progressDialog.setMessage("Password changing...");
                 progressDialog.setCancelable(false);
                 progressDialog.show();
@@ -789,10 +785,9 @@ public class DashboardActivity extends Activity {
     }
 
 
-
     @Override
     public void onBackPressed() {
-        android.app.AlertDialog alertDialog = new android.app.AlertDialog.Builder(this,R.style.AlertDialogCustom).create();
+        android.app.AlertDialog alertDialog = new android.app.AlertDialog.Builder(this, R.style.AlertDialogCustom).create();
         alertDialog.setMessage("Are you sure want to Quit App?");
         alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "Ok", new DialogInterface.OnClickListener() {
             @Override

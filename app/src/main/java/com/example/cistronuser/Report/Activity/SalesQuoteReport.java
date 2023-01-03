@@ -232,7 +232,7 @@ public class SalesQuoteReport extends AppCompatActivity {
     }
 
     private void CallSalesQuoteReport(String userid) {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Quote Report...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -277,7 +277,7 @@ public class SalesQuoteReport extends AppCompatActivity {
     }
 
     private void CallUserList() {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();

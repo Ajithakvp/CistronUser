@@ -240,7 +240,7 @@ public class SalesQuoteHospitalUpdateAdapter extends RecyclerView.Adapter<SalesQ
     }
 
     private void CallUpdateStatus(String quoteId, Dialog dialog) {
-        final ProgressDialog progressDialog = new ProgressDialog(activity);
+        final ProgressDialog progressDialog = new ProgressDialog(activity,R.style.ProgressBarDialog);
         progressDialog.setMessage("Update Status...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -270,7 +270,7 @@ public class SalesQuoteHospitalUpdateAdapter extends RecyclerView.Adapter<SalesQ
     }
 
     private void CallExistingList(String quoteId) {
-        final ProgressDialog progressDialog = new ProgressDialog(activity);
+        final ProgressDialog progressDialog = new ProgressDialog(activity,R.style.ProgressBarDialog);
         progressDialog.setMessage("Status...");
         progressDialog.setCancelable(false);
         progressDialog.show();

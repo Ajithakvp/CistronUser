@@ -59,7 +59,7 @@ public class LeaveRequest extends AppCompatActivity {
     }
 
     private void callLeaveApprovalList() {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();

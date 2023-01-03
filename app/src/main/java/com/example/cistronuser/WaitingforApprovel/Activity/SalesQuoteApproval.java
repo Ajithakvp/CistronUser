@@ -63,7 +63,7 @@ public class SalesQuoteApproval extends AppCompatActivity {
     }
 
     private void CallApprovalList() {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("SalesQuote Approval list...");
         progressDialog.setCancelable(false);
         progressDialog.show();

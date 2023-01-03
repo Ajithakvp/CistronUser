@@ -57,7 +57,7 @@ public class CompOffRequest extends AppCompatActivity {
     }
 
     private void callCompoff() {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();

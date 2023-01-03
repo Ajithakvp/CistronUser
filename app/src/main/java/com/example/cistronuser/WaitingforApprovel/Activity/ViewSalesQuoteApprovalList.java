@@ -193,7 +193,7 @@ public class ViewSalesQuoteApprovalList extends AppCompatActivity {
 
 
         //*****View Approval*****
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Please Wait...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -573,7 +573,7 @@ public class ViewSalesQuoteApprovalList extends AppCompatActivity {
     }
 
     private void callHospital(String toString, String toString1) {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -612,7 +612,7 @@ public class ViewSalesQuoteApprovalList extends AppCompatActivity {
 
 
     private void callDistrict(String state) {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -644,7 +644,7 @@ public class ViewSalesQuoteApprovalList extends AppCompatActivity {
     }
 
     private void CallState() {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();

@@ -111,7 +111,7 @@ public class LeaveApprovalAdapter extends RecyclerView.Adapter<LeaveApprovalAdap
         holder.tvApproved.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final ProgressDialog progressDialog = new ProgressDialog(activity);
+                final ProgressDialog progressDialog = new ProgressDialog(activity,R.style.ProgressBarDialog);
                 progressDialog.setMessage("Please Wait...");
                 progressDialog.setCancelable(false);
                 progressDialog.show();
@@ -164,7 +164,7 @@ public class LeaveApprovalAdapter extends RecyclerView.Adapter<LeaveApprovalAdap
                 builder.setPositiveButton("yes", (new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        final ProgressDialog progressDialog = new ProgressDialog(activity);
+                        final ProgressDialog progressDialog = new ProgressDialog(activity,R.style.ProgressBarDialog);
                         progressDialog.setMessage("Please Wait...");
                         progressDialog.setCancelable(false);
                         progressDialog.show();
@@ -241,7 +241,7 @@ public class LeaveApprovalAdapter extends RecyclerView.Adapter<LeaveApprovalAdap
                 builder.setPositiveButton("yes", (new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        final ProgressDialog progressDialog = new ProgressDialog(activity);
+                        final ProgressDialog progressDialog = new ProgressDialog(activity,R.style.ProgressBarDialog);
                         progressDialog.setMessage("Please Wait...");
                         progressDialog.setCancelable(false);
                         progressDialog.show();

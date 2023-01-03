@@ -59,7 +59,7 @@ public class ExpensesReport extends AppCompatActivity {
     }
 
     private void callReportExpenses() {
-        final ProgressDialog progressDialog = new ProgressDialog(ExpensesReport.this);
+        final ProgressDialog progressDialog = new ProgressDialog(ExpensesReport.this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Please Wait...");
         progressDialog.setCancelable(false);
         progressDialog.show();
