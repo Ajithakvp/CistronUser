@@ -269,6 +269,10 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
                 callDistrict(spState.getSelectedItem().toString());
                 callHospital(spState.getSelectedItem().toString(), "District");
 
+//                if (visitEntryStateModels.get(position).getState().trim().equals("Andhra Pradesh")){
+//
+//                }
+
             }
 
             @Override
@@ -924,8 +928,8 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
 
                 try {
                     if (response.body().getVisitEntryHospitalModels().size() > 0) {
-                        visitEntryHospitalModels = response.body().getVisitEntryHospitalModels();
 
+                        visitEntryHospitalModels = response.body().getVisitEntryHospitalModels();
                         strHospital.clear();
                         for (int i = 0; i < visitEntryHospitalModels.size(); i++) {
                             strHospital.add(visitEntryHospitalModels.get(i).getHospital());
@@ -933,6 +937,7 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
                         hospitalAdapter.notifyDataSetChanged();
                         progressDialog.dismiss();
                     } else {
+                        hospitalAdapter.notifyDataSetChanged();
                         progressDialog.dismiss();
                     }
 

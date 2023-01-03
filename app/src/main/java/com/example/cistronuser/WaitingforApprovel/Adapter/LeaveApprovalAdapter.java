@@ -64,14 +64,14 @@ public class LeaveApprovalAdapter extends RecyclerView.Adapter<LeaveApprovalAdap
     public void onBindViewHolder(@NonNull LeaveApprovalAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
         holder.tvName.setText(leaveApprovelModels.get(position).getEmpname());
-        holder.tvEmpId.setText(  leaveApprovelModels.get(position).getEmpid());
+        holder.tvEmpId.setText(leaveApprovelModels.get(position).getEmpid());
         holder.tvLeaveDate.setText(leaveApprovelModels.get(position).getLeavedate());
 //        holder.tvCL.setText(leaveApprovelModels.get(position).getCl());
 //        holder.tvPL.setText(leaveApprovelModels.get(position).getPl());
 //        holder.tvML.setText(leaveApprovelModels.get(position).getMl());
 //        holder.tvProb.setText(leaveApprovelModels.get(position).getProbl());
 //        holder.tvCompOff.setText(leaveApprovelModels.get(position).getCompoff());
-//        holder.tvReason.setText(leaveApprovelModels.get(position).getReason());
+        holder.tvReason.setText(leaveApprovelModels.get(position).getReason());
         holder.tvLeaveType.setText(leaveApprovelModels.get(position).getLeavetype());
         holder.tvAppliedDate.setText(leaveApprovelModels.get(position).getApplied_date());
         holder.tvAppliedTime.setText(leaveApprovelModels.get(position).getApplied_time());

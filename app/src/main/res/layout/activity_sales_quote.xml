@@ -87,7 +87,7 @@
                                 android:id="@+id/tvDate"
                                 style="@android:style/Widget.EditText"
                                 android:layout_width="match_parent"
-                                android:layout_height="40dp"
+                                android:layout_height="48dp"
                                 android:fontFamily="@font/latest"
                                 android:hint="Select a date"
                                 android:textAlignment="center"
@@ -107,6 +107,7 @@
                             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                                 android:id="@+id/spState"
                                 style="@style/textviewLabel"
+                                android:layout_height="48dp"
                                 android:layout_gravity="center"
                                 app:hintText="Select a State">
 
@@ -125,6 +126,7 @@
                             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                                 android:id="@+id/spDistrict"
                                 style="@style/textviewLabel"
+                                android:layout_height="48dp"
                                 android:layout_gravity="center"
                                 app:hintText="Select a District">
 
@@ -141,6 +143,7 @@
                             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                                 android:id="@+id/sphospital"
                                 style="@style/textviewLabel"
+                                android:layout_height="48dp"
                                 android:layout_gravity="center"
                                 android:padding="3dp"
                                 app:hintText="Select a Hospital">
@@ -158,6 +161,7 @@
                             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                                 android:id="@+id/spDoctor"
                                 style="@style/textviewLabel"
+                                android:layout_height="48dp"
                                 android:layout_gravity="center"
                                 app:hintText="Select a Doctor">
 
@@ -170,12 +174,12 @@
                             style="@style/textInput"
                             android:layout_margin="10dp"
                             android:background="@drawable/edittext"
-
                             >
 
                             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                                 android:id="@+id/spCategory"
                                 style="@style/textviewLabel"
+                                android:layout_height="48dp"
                                 android:layout_gravity="center"
                                 app:hintText="Select a Category">
 
@@ -193,6 +197,7 @@
                             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                                 android:id="@+id/spProduct"
                                 style="@style/textviewLabel"
+                                android:layout_height="48dp"
                                 android:layout_gravity="center"
                                 app:hintText="Select a Product">
 
