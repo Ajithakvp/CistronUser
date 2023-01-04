@@ -738,7 +738,6 @@ public class DashboardActivity extends Activity {
                 progressDialog.setMessage("Password changing...");
                 progressDialog.setCancelable(false);
                 progressDialog.show();
-
                 ChangePasswordInterface changePasswordInterface = APIClient.getClient().create(ChangePasswordInterface.class);
                 changePasswordInterface.callchangepasswor("changePassword", PreferenceManager.getEmpID(DashboardActivity.this), edRetypePass.getText().toString()).enqueue(new Callback<ChangePasswordResponse>() {
                     @Override
@@ -749,7 +748,6 @@ public class DashboardActivity extends Activity {
                                 progressDialog.dismiss();
                                 Toast.makeText(DashboardActivity.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
                                 bottomSheetDialog.dismiss();
-
                             }
 
                         } catch (Exception e) {
