@@ -6,22 +6,24 @@ import com.example.cistronuser.API.Response.LoginResponse;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 public interface LoginInterFace {
 
-    @FormUrlEncoded
-    @POST("user_action.php")
+    @GET("user_action.php")
     Call<LoginuserModel> getUserLogin(
 
-            @Field("action") String action,
-            @Field("empid") String ID,
-            @Field("pwd") String password,
-             @Field("lat") Double Latitude,
-            @Field("long") Double longtitude,
-             @Field("place") String Addresss,
-            @Field("devName") String devName,
-            @Field("ip") String ip
+            @Query("action") String action,
+            @Query("empid") String ID,
+            @Query("pwd") String password,
+            @Query("lat") Double Latitude,
+            @Query("long") Double longtitude,
+            @Query("place") String Addresss,
+            @Query("devName") String devName,
+            @Query("ip") String ip
     );
+
 
 }
