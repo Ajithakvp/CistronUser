@@ -39,6 +39,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.example.cistronuser.API.APIClient;
 import com.example.cistronuser.API.Interface.ChangePasswordInterface;
 import com.example.cistronuser.API.Interface.CompOffApprovalCountInterface;
+import com.example.cistronuser.API.Interface.DashboardCallCountInterface;
 import com.example.cistronuser.API.Interface.ExpenseCountInterface;
 import com.example.cistronuser.API.Interface.LeaveApprovelCountInterface;
 import com.example.cistronuser.API.Interface.LogoutInterFace;
@@ -46,6 +47,7 @@ import com.example.cistronuser.API.Interface.SalesQuoteApprovalCountInterFace;
 import com.example.cistronuser.API.Model.LoginuserModel;
 import com.example.cistronuser.API.Response.ChangePasswordResponse;
 import com.example.cistronuser.API.Response.CompOffCountResponse;
+import com.example.cistronuser.API.Response.DashboardCallCountResponse;
 import com.example.cistronuser.API.Response.LeaveApprovelCountResponse;
 import com.example.cistronuser.API.Response.LogoutResponse;
 import com.example.cistronuser.API.Response.SalesQuoteApprovalCountResponse;
@@ -63,6 +65,8 @@ import com.example.cistronuser.Report.Activity.VisitEntryReport;
 import com.example.cistronuser.SalesAndservice.Activity.FinalizeNow;
 import com.example.cistronuser.SalesAndservice.Activity.SalesQuote;
 import com.example.cistronuser.SalesAndservice.Activity.VisitEntry;
+import com.example.cistronuser.ServiceEngineer.Activity.PendicallActivity;
+import com.example.cistronuser.ServiceEngineer.Activity.UpComingCallActivity;
 import com.example.cistronuser.WaitingforApprovel.Activity.CompOffRequest;
 import com.example.cistronuser.WaitingforApprovel.Activity.ExpensesReport;
 import com.example.cistronuser.WaitingforApprovel.Activity.LeaveRequest;
@@ -105,11 +109,13 @@ public class DashboardActivity extends Activity {
 
     RelativeLayout rlWaitingExpense, rlSalesService;
     //Admin Dashboard
-
     RelativeLayout rlAdmin, rlWaitingApproval, rlVisitEntryReportLayout, rlWaitingSalesQuoteApprovalRequest;
 
-    RelativeLayout rlExpenseReport, rlrlAttendaceReport, rlrlLeaveReport, rlWaitingLeaveRequest, rlWaitingCompOFfRequest, rlQuoteReport;
-    TextView tvwaitingCountExpense, tvCountLeaveReq, tvCountCompOffReq, tvWaitingCountSalesQuote;
+    //Service
+    RelativeLayout rlUpcomingCallLayout,rlPendingingCallLayout;
+    //Report
+    RelativeLayout rlExpenseReport, rlrlAttendaceReport, rlrlLeaveReport,rlService, rlWaitingLeaveRequest, rlWaitingCompOFfRequest, rlQuoteReport;
+    TextView tvwaitingCountExpense, tvCountLeaveReq, tvCountCompOffReq, tvWaitingCountSalesQuote,tvUpcomingCallCount,tvPendingCallCount;
 
     Context context;
 
@@ -130,7 +136,12 @@ public class DashboardActivity extends Activity {
         //SalesQuoteCount
         CallSalesQuoteCount();
 
+        //UpcomingCall and Pendingcall Count
+        CallUpComPendingCount();
+
     }
+
+
 
 
     @Override
@@ -148,6 +159,9 @@ public class DashboardActivity extends Activity {
 
         //SalesQuoteCount
         CallSalesQuoteCount();
+
+        //UpcomingCall and Pendingcall Count
+        CallUpComPendingCount();
 
 
     }
@@ -182,11 +196,17 @@ public class DashboardActivity extends Activity {
         rlWaitingSalesQuoteApprovalRequest = findViewById(R.id.rlWaitingSalesQuoteApprovalRequest);
         tvWaitingCountSalesQuote = findViewById(R.id.tvWaitingSalesQuote);
         rlQuoteReport = findViewById(R.id.rlQuoteReport);
+        tvUpcomingCallCount=findViewById(R.id.tvUpcomingCallCount);
+        tvPendingCallCount=findViewById(R.id.tvPendingCallCount);
+        rlService=findViewById(R.id.rlService);
+        rlUpcomingCallLayout=findViewById(R.id.rlUpcomingCallLayout);
+        rlPendingingCallLayout=findViewById(R.id.rlPendingingCallLayout);
 
         rlVisitEntryReportLayout = findViewById(R.id.rlVisitEntryReportLayout);
         cvVisitEntry = findViewById(R.id.cvVisitEntry);
         cvQuote = findViewById(R.id.cvQuote);
         llview3 = findViewById(R.id.llview3);
+
 
 
         tvProfilename.setText(PreferenceManager.getEmpName(this));
@@ -217,6 +237,7 @@ public class DashboardActivity extends Activity {
                 rlVisitEntryReportLayout.setVisibility(View.GONE);
                 rlQuoteReport.setVisibility(View.GONE);
                 llview3.setVisibility(View.GONE);
+                rlService.setVisibility(View.GONE);
                 break;
         }
 
@@ -436,7 +457,62 @@ public class DashboardActivity extends Activity {
         //SalesQuoteCount
         CallSalesQuoteCount();
 
+        //UpcomingCall and Pendingcall Count
+        CallUpComPendingCount();
 
+
+    }
+
+    private void CallUpComPendingCount() {
+        DashboardCallCountInterface dashboardCallCountInterface=APIClient.getClient().create(DashboardCallCountInterface.class);
+        dashboardCallCountInterface.CallCount("getDashboardCounts",PreferenceManager.getEmpID(this)).enqueue(new Callback<DashboardCallCountResponse>() {
+            @Override
+            public void onResponse(Call<DashboardCallCountResponse> call, Response<DashboardCallCountResponse> response) {
+                try {
+                    if (response.isSuccessful()){
+                        tvUpcomingCallCount.setText(response.body().getUpcomingCalls());
+                        tvPendingCallCount.setText(response.body().getPendingCalls());
+
+
+                        rlUpcomingCallLayout.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (response.body().getUpcomingCalls().trim().equals("0")){
+                                    Toast.makeText(context, "No  Upcoming Call ", Toast.LENGTH_SHORT).show();
+                                }else {
+                                    Intent intent=new Intent(DashboardActivity.this, UpComingCallActivity.class);
+                                    startActivity(intent);
+                                }
+                            }
+                        });
+
+                        rlPendingingCallLayout.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (response.body().getPendingCalls().trim().equals("0")){
+                                    Toast.makeText(context, "No Pending Call ", Toast.LENGTH_SHORT).show();
+                                }else {
+                                    Intent intent=new Intent(DashboardActivity.this, PendicallActivity.class);
+                                    startActivity(intent);
+                                }
+                            }
+                        });
+
+
+
+                    }
+
+                }catch (Exception e){
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<DashboardCallCountResponse> call, Throwable t) {
+
+            }
+        });
     }
 
     private void CallSalesQuoteCount() {

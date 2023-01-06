@@ -19,11 +19,11 @@
             android:id="@+id/tvR"
             android:layout_width="20dp"
             android:layout_height="10dp"
-            android:layout_marginTop="2dp"
-            android:visibility="gone"
-            android:src="@drawable/registered"
             android:layout_marginLeft="260dp"
+            android:layout_marginTop="2dp"
+            android:src="@drawable/registered"
             android:tint="@color/Radio"
+            android:visibility="gone"
             tools:ignore="UseAppTint" />
 
         <ImageView
@@ -132,8 +132,8 @@
                 <LinearLayout
                     android:id="@+id/llview"
                     android:layout_width="wrap_content"
-                    android:layout_centerHorizontal="true"
                     android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
                     android:orientation="horizontal">
 
 
@@ -294,8 +294,6 @@
                 </LinearLayout>
 
 
-
-
                 <LinearLayout
                     android:id="@+id/llview3"
                     android:layout_width="wrap_content"
@@ -315,8 +313,8 @@
                         android:layout_marginTop="40dp"
                         android:layout_marginRight="20dp"
                         android:layout_weight="1"
-                        android:visibility="visible"
                         android:backgroundTint="#6495ED"
+                        android:visibility="visible"
                         app:cardCornerRadius="20dp">
 
                         <com.airbnb.lottie.LottieAnimationView
@@ -379,9 +377,6 @@
                 </LinearLayout>
 
 
-
-
-
             </RelativeLayout>
 
 
@@ -405,8 +400,8 @@
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:layout_marginLeft="20dp"
-                        android:layout_marginBottom="20dp"
                         android:layout_marginRight="20dp"
+                        android:layout_marginBottom="20dp"
                         android:background="@drawable/cardview"
                         android:backgroundTint="#fdfff5 ">
 
@@ -709,17 +704,208 @@
                     </RelativeLayout>
                 </RelativeLayout>
 
-                <!--                Report-->
+
+
+                <!--  Sevice   -->
+
+
+                <RelativeLayout
+                    android:id="@+id/rlService"
+                    android:layout_width="match_parent"
+                    android:visibility="visible"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/rlWaitingApproval"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="20dp">
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:background="@drawable/cardview"
+                        android:backgroundTint="#fdfff5 ">
+
+                        <TextView
+                            android:id="@+id/tvServicetag"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="20dp"
+                            android:fontFamily="@font/bold"
+                            android:text="Service Engineer"
+                            android:textColor="@color/black"
+                            android:textSize="20dp" />
+
+
+                        <RelativeLayout
+                            android:id="@+id/rlUpcomingCallLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:layout_below="@id/tvServicetag"
+                            android:layout_marginTop="20dp"
+                            android:background="@drawable/cardview"
+                            android:backgroundTint="#6495ED">
+
+                            <ImageView
+                                android:id="@+id/ivUpcomingCall"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="30dp"
+                                android:src="@drawable/expensereport"
+                                android:tint="@color/white"
+                                tools:ignore="UseAppTint" />
+
+                            <TextView
+                                android:id="@+id/tvUpcomingCall"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="20dp"
+                                android:layout_toRightOf="@+id/ivUpcomingCall"
+                                android:fontFamily="@font/semibold"
+                                android:text="Upcoming Call"
+                                android:textColor="@color/white"
+                                android:textSize="18dp" />
+
+
+
+                            <TextView
+                                android:id="@+id/tvUpcomingCallStart"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="10dp"
+                                android:layout_toRightOf="@+id/tvUpcomingCall"
+                                android:fontFamily="@font/semibold"
+                                android:text="("
+                                android:textColor="#C0C0C0"
+                                android:textSize="18dp" />
+
+                            <TextView
+                                android:id="@+id/tvUpcomingCallCount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="10dp"
+                                android:layout_toRightOf="@+id/tvUpcomingCallStart"
+                                android:fontFamily="@font/bold"
+                                android:textColor="#FF0000"
+                                android:textSize="18dp" />
+
+                            <TextView
+                                android:id="@+id/tvUpcomingCallEnd"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="10dp"
+                                android:layout_toRightOf="@+id/tvUpcomingCallCount"
+                                android:fontFamily="@font/semibold"
+                                android:text=")"
+                                android:textColor="#C0C0C0"
+                                android:textSize="18dp" />
+
+
+
+                        </RelativeLayout>
+
+
+
+                        <RelativeLayout
+                            android:id="@+id/rlPendingingCallLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:layout_below="@id/rlUpcomingCallLayout"
+                            android:layout_marginTop="20dp"
+                            android:background="@drawable/cardview"
+                            android:backgroundTint="#6495ED">
+
+                            <ImageView
+                                android:id="@+id/ivPendingingCall"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="30dp"
+                                android:src="@drawable/expensereport"
+                                android:tint="@color/white"
+                                tools:ignore="UseAppTint" />
+
+                            <TextView
+                                android:id="@+id/tvPendingingCall"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="20dp"
+                                android:layout_toRightOf="@+id/ivPendingingCall"
+                                android:fontFamily="@font/semibold"
+                                android:text="Pending Call"
+                                android:textColor="@color/white"
+                                android:textSize="18dp" />
+
+
+
+                            <TextView
+                                android:id="@+id/tvPendingCallStart"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="10dp"
+                                android:layout_toRightOf="@+id/tvPendingingCall"
+                                android:fontFamily="@font/semibold"
+                                android:text="("
+                                android:textColor="#C0C0C0"
+                                android:textSize="18dp" />
+
+                            <TextView
+                                android:id="@+id/tvPendingCallCount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="10dp"
+                                android:layout_toRightOf="@+id/tvPendingCallStart"
+                                android:fontFamily="@font/bold"
+                                android:textColor="#FF0000"
+                                android:textSize="18dp" />
+
+                            <TextView
+                                android:id="@+id/tvPendingCallEnd"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="10dp"
+                                android:layout_toRightOf="@+id/tvPendingCallCount"
+                                android:fontFamily="@font/semibold"
+                                android:text=")"
+                                android:textColor="#C0C0C0"
+                                android:textSize="18dp" />
+
+
+
+                        </RelativeLayout>
+
+
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
+
+
+
+
+
+                <!--       Report    -->
 
 
                 <RelativeLayout
                     android:id="@+id/rlReport"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
-                    android:layout_below="@id/rlWaitingApproval"
+                    android:layout_below="@id/rlService"
                     android:layout_marginTop="30dp"
-                   >
+                    android:layout_marginBottom="20dp">
 
 
                     <RelativeLayout
@@ -909,13 +1095,9 @@
                         </RelativeLayout>
 
 
-
-
                     </RelativeLayout>
 
-
                 </RelativeLayout>
-
 
 
             </RelativeLayout>
