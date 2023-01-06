@@ -1,7 +1,9 @@
 package com.example.cistronuser.ServiceEngineer.Adapter;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -13,17 +15,31 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.cistronuser.API.APIClient;
+import com.example.cistronuser.API.Interface.ServiceDetailsInterFace;
+import com.example.cistronuser.API.Model.ServiceDetailsInterModel;
 import com.example.cistronuser.API.Model.UpcomingCallListModel;
+import com.example.cistronuser.API.Response.ServiceDetailsResponse;
 import com.example.cistronuser.R;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class UpcomingCallAdapter extends RecyclerView.Adapter<UpcomingCallAdapter.ViewHolder> {
 
     Activity activity;
     public ArrayList<UpcomingCallListModel>upcomingCallReportlistModels;
+
+    RecyclerView rvServiceDetails;
+    ImageView ivClose;
+    ServiceDetailsAdapter serviceDetailsAdapter;
+    ArrayList<ServiceDetailsInterModel>serviceDetailsInterModels=new ArrayList<>();
 
     public UpcomingCallAdapter(Activity activity, ArrayList<UpcomingCallListModel> upcomingCallReportlistModels) {
         this.activity = activity;
@@ -38,7 +54,7 @@ public class UpcomingCallAdapter extends RecyclerView.Adapter<UpcomingCallAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull UpcomingCallAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull UpcomingCallAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.tvCR.setText(upcomingCallReportlistModels.get(position).getCrNo());
         holder.tvName.setText(upcomingCallReportlistModels.get(position).getHospital().replace("\\n","\n"));
         holder.tvDate.setText(upcomingCallReportlistModels.get(position).getDate());
@@ -65,12 +81,57 @@ public class UpcomingCallAdapter extends RecyclerView.Adapter<UpcomingCallAdapte
             @Override
             public void onClick(View v) {
                 Dialog dialog=new Dialog(activity);
-                dialog.setContentView(R.layout.cr_service_list);
+                dialog.setContentView(R.layout.serivice_details_dialog);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                ivClose=dialog.findViewById(R.id.ivClose);
+                rvServiceDetails=dialog.findViewById(R.id.rvServiceDetails);
                 dialog.show();
+
+                CallServiceDetails(upcomingCallReportlistModels.get(position).getCrId());
+                serviceDetailsAdapter=new ServiceDetailsAdapter(activity,serviceDetailsInterModels);
+                LinearLayoutManager linearLayoutManager=new LinearLayoutManager(activity);
+                linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
+                rvServiceDetails.setAdapter(serviceDetailsAdapter);
+                rvServiceDetails.setLayoutManager(linearLayoutManager);
+
+                ivClose.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
             }
         });
 
+    }
+
+    private void CallServiceDetails(String crId) {
+        final ProgressDialog progressDialog = new ProgressDialog(activity,R.style.ProgressBarDialog);
+        progressDialog.setMessage("Service Details...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        ServiceDetailsInterFace serviceDetailsInterFace= APIClient.getClient().create(ServiceDetailsInterFace.class);
+        serviceDetailsInterFace.CallServiceDetails("getServiceDetail",crId).enqueue(new Callback<ServiceDetailsResponse>() {
+            @Override
+            public void onResponse(Call<ServiceDetailsResponse> call, Response<ServiceDetailsResponse> response) {
+                try {
+                    if (response.isSuccessful()){
+                        progressDialog.dismiss();
+                        serviceDetailsAdapter.serviceDetailsInterModels=response.body().getServiceDetailsInterModels();;
+                        serviceDetailsAdapter.notifyDataSetChanged();
+                    }
+
+                }catch (Exception e){
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ServiceDetailsResponse> call, Throwable t) {
+
+            }
+        });
     }
 
     @Override

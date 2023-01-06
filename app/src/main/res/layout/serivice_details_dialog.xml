@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@drawable/dialog_backgroud"
+    android:layout_height="match_parent">
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvServiceDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/newfont"
+            android:text="Service Detalis"
+            android:textColor="@color/GoldYellow"
+            android:textSize="20dp" />
+
+
+        <ImageView
+            android:layout_width="40dp"
+            android:id="@+id/ivClose"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_baseline_close_24"
+            android:layout_alignParentRight="true"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rvServiceDetails"
+            android:layout_below="@id/tvServiceDetails"
+            android:layout_marginTop="7dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"/>
+
+
+
+
+
+    </RelativeLayout>
+
+</RelativeLayout>
