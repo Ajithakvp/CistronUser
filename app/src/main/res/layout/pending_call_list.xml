@@ -1,6 +1,278 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:backgroundTint="@color/white"
+            app:cardCornerRadius="20dp">
+
+
+            <RelativeLayout
+                android:id="@+id/rlView"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FEFCFF">
+
+
+                <RelativeLayout
+                    android:id="@+id/rlEmployee"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/Cistronbasecolor"
+                    android:padding="10dp"
+                    android:visibility="visible">
+
+
+                    <TextView
+                        android:id="@+id/tvName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/bold"
+                        android:text="Soba General Hospital \n 19TN206315"
+                        android:textColor="@color/white"
+                        android:textSize="20dp" />
+
+
+
+
+                </RelativeLayout>
+
+
+
+
+                <TextView
+                    android:id="@+id/tvDateTag"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/rlEmployee"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/latest"
+                    android:text="@string/DateTime"
+                    android:textColor="@color/black"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:id="@+id/tvDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/rlEmployee"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_toRightOf="@id/tvDateTag"
+                    android:fontFamily="@font/semibold"
+                    android:text="02-01-2023 10:00:00"
+                    android:textColor="@color/DarkRed"
+                    android:textSize="16dp" />
+
+
+                <TextView
+                    android:id="@+id/tvContactDetailsTag"
+                    android:layout_width="130dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvDate"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/latest"
+                    android:text="Contact Details  :"
+                    android:textColor="@color/black"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:id="@+id/tvContactDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvDate"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/tvContactDetailsTag"
+                    android:fontFamily="@font/semibold"
+                    android:text="Dr. Sokkaiyan 0451-2435232"
+                    android:textColor="@color/DarkRed"
+                    android:textSize="16dp" />
+
+
+
+
+                <TextView
+                    android:id="@+id/tvLocationTag"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvContactDetails"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="12dp"
+                    android:fontFamily="@font/latest"
+                    android:text="Location     :"
+                    android:textColor="@color/black"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:id="@+id/tvLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvContactDetails"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/tvLocationTag"
+                    android:fontFamily="@font/semibold"
+                    android:padding="5dp"
+                    android:text="Narayana Nagar - Dindigul TAMIL NADU"
+                    android:textColor="@color/DarkRed"
+                    android:textSize="16dp" />
+
+
+                <TextView
+                    android:id="@+id/tvProductTag"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvLocation"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/latest"
+                    android:text="Product      :"
+                    android:textColor="@color/black"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:id="@+id/tvProduct"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvLocation"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_toRightOf="@id/tvProductTag"
+                    android:fontFamily="@font/semibold"
+                    android:text="Harmony - Anaesthesia Work Station With Vaporizor (HAR01)"
+                    android:textColor="@color/DarkRed"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:id="@+id/tvCRTag"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvProduct"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/latest"
+                    android:text="CR #            :"
+                    android:textColor="@color/black"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:id="@+id/tvCR"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvProduct"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_toRightOf="@id/tvCRTag"
+                    android:fontFamily="@font/semibold"
+                    android:text="23010139"
+                    android:textColor="@color/blue"
+                    android:textSize="16dp" />
+
+
+                <TextView
+                    android:id="@+id/tvIssueDetailsTag"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvCR"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/latest"
+                    android:text="Issue Detail :"
+                    android:textColor="@color/black"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:id="@+id/tvIssueDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvCR"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_toRightOf="@id/tvIssueDetailsTag"
+                    android:fontFamily="@font/semibold"
+                    android:text="Preventive AMC"
+                    android:textColor="@color/Radio"
+                    android:textSize="16dp" />
+
+
+                <TextView
+                    android:id="@+id/tvCallCreateByTag"
+                    android:layout_width="130dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvIssueDetails"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/latest"
+                    android:text="Call Created by  :"
+                    android:textColor="@color/black"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:id="@+id/tvCallCreateBy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvIssueDetails"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_toRightOf="@id/tvCallCreateByTag"
+                    android:fontFamily="@font/semibold"
+                    android:text="System Generated (e000)"
+                    android:textColor="@color/RoseRed"
+                    android:textSize="16dp" />
+
+
+                <TextView
+                    android:id="@+id/tvCallReportButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_below="@id/tvCallCreateBy"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="30dp"
+                    android:gravity="center"
+                    android:textAlignment="center"
+                    android:background="@drawable/edittext"
+                    android:backgroundTint="@color/Cistronbasecolor"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/bold"
+                    android:text="Call Report"
+                    android:textColor="@color/white"
+                    android:textSize="16dp" />
+
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+</RelativeLayout>

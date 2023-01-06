@@ -107,9 +107,34 @@
                     android:layout_marginTop="10dp"
                     android:layout_toRightOf="@id/tvContactDetailsTag"
                     android:fontFamily="@font/semibold"
-                    android:text="Dr. Sokkaiyan 0451-2435232"
+                    android:text="Dr. Sokkaiyan "
                     android:textColor="@color/DarkRed"
                     android:textSize="16dp" />
+
+                <ImageView
+                    android:id="@+id/ivCall"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/call"
+                    android:layout_below="@id/tvContactDetails"
+                    android:layout_toRightOf="@id/tvContactDetailsTag"
+                    />
+
+                <TextView
+                    android:id="@+id/tvMobileNo"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvContactDetails"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/ivCall"
+                    android:fontFamily="@font/semibold"
+                    android:text=" 0451-2435232"
+                    android:textColor="@color/DarkRed"
+                    android:textSize="14dp" />
+
+
 
 
 
@@ -118,7 +143,7 @@
                     android:id="@+id/tvLocationTag"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/tvContactDetails"
+                    android:layout_below="@id/ivCall"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="12dp"
                     android:fontFamily="@font/latest"
@@ -130,7 +155,7 @@
                     android:id="@+id/tvLocation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/tvContactDetails"
+                    android:layout_below="@id/ivCall"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_toRightOf="@id/tvLocationTag"

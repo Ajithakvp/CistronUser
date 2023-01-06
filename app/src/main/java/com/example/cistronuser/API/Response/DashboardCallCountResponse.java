@@ -1,11 +1,14 @@
 package com.example.cistronuser.API.Response;
+
 import com.google.gson.annotations.SerializedName;
 
 public class DashboardCallCountResponse {
 
-//    "action": "getDashboardCounts",
-//            "upcomingCalls": 0,
-//            "pendingCalls": 0
+//     "action": "getDashboardCounts",
+//             "upcomingCalls": 8,
+//             "pendingCalls": 142
+
+
     @SerializedName("action")
     private String action;
 
@@ -14,6 +17,7 @@ public class DashboardCallCountResponse {
 
     @SerializedName("pendingCalls")
     private String pendingCalls;
+
 
     public String getAction() {
         return action;

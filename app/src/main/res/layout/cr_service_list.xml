@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_backgroud"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvServiceDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/newfont"
+            android:text="Service Detalis"
+            android:textColor="@color/GoldYellow"
+            android:textSize="20dp" />
+
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvServiceDetails"
+            android:layout_marginLeft="8dp"
+            app:cardCornerRadius="8dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="8dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_marginBottom="10dp"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:id="@+id/rlSr"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/RoseRed">
+
+                    <TextView
+                        android:id="@+id/tvSRTag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="7dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginBottom="5dp"
+                        android:fontFamily="@font/roboblod"
+                        android:text="SR # :"
+                        android:textColor="@color/white"
+                        android:textSize="18dp" />
+
+                    <TextView
+                        android:id="@+id/tvSR"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="7dp"
+                        android:layout_toRightOf="@id/tvSRTag"
+                        android:fontFamily="@font/roboblod"
+                        android:text="22081108"
+                        android:textColor="@color/white"
+                        android:textSize="18dp" />
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="7dp"
+                        android:layout_marginBottom="5dp"
+                        android:tint="@color/white"
+                        android:src="@drawable/pdffile"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp"
+                        tools:ignore="UseAppTint" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rlSr">
+
+                    <TextView
+                        android:id="@+id/tvEngineerTag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="4dp"
+                        android:fontFamily="@font/roboblod"
+                        android:text="Engineer   :"
+                        android:textColor="@color/RoseRed"
+                        android:textSize="16dp" />
+
+                    <TextView
+                        android:id="@+id/tvEngineer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_toRightOf="@+id/tvEngineerTag"
+                        android:fontFamily="@font/robomedium"
+                        android:text="Tempyugan (Tempyugan)"
+                        android:textColor="@color/black"
+                        android:textSize="16dp" />
+
+
+                    <TextView
+                        android:id="@+id/tvAssignedDetailsTag"
+                        android:layout_width="150dp"
+                        android:layout_below="@+id/tvEngineer"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="7dp"
+                        android:fontFamily="@font/roboblod"
+                        android:text="Assigned Details	   :"
+                        android:textColor="@color/RoseRed"
+                        android:textSize="16dp" />
+
+                    <TextView
+                        android:id="@+id/tvAssignedDetails"
+                        android:layout_width="wrap_content"
+                        android:layout_below="@+id/tvEngineer"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="7dp"
+                        android:layout_toRightOf="@+id/tvAssignedDetailsTag"
+                        android:fontFamily="@font/robomedium"
+                        android:text="11-01-2023 ; 11:00:00	"
+                        android:textColor="@color/black"
+                        android:textSize="16dp" />
+
+                    <TextView
+                        android:id="@+id/tvAttenedDetailsTag"
+                        android:layout_width="150dp"
+                        android:layout_below="@+id/tvAssignedDetails"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="7dp"
+                        android:fontFamily="@font/roboblod"
+                        android:text="Attended Details	   :"
+                        android:textColor="@color/RoseRed"
+                        android:textSize="16dp" />
+
+                    <TextView
+                        android:id="@+id/tvAttenedDetails"
+                        android:layout_width="wrap_content"
+                        android:layout_below="@+id/tvAssignedDetails"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="7dp"
+                        android:layout_toRightOf="@+id/tvAttenedDetailsTag"
+                        android:fontFamily="@font/robomedium"
+                        android:text="11-08-2022 ; 09:00:00 to 20:00:00	"
+                        android:textColor="@color/black"
+                        android:textSize="16dp" />
+
+                    <TextView
+                        android:id="@+id/tvProblamTag"
+                        android:layout_width="150dp"
+                        android:layout_below="@+id/tvAttenedDetails"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="7dp"
+                        android:fontFamily="@font/roboblod"
+                        android:text="Problam Found	     :"
+                        android:textColor="@color/RoseRed"
+                        android:textSize="16dp" />
+
+                    <TextView
+                        android:id="@+id/tvProblam"
+                        android:layout_width="wrap_content"
+                        android:layout_below="@+id/tvAttenedDetails"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="7dp"
+                        android:layout_toRightOf="@+id/tvProblamTag"
+                        android:fontFamily="@font/robomedium"
+                        android:text="11-08-2022 ; 09:00:00 to 20:00:00	"
+                        android:textColor="@color/black"
+                        android:textSize="16dp" />
+
+
+                    <TextView
+                        android:id="@+id/tvWorkDoneTag"
+                        android:layout_width="150dp"
+                        android:layout_below="@+id/tvProblam"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="7dp"
+                        android:fontFamily="@font/roboblod"
+                        android:text="Work Done	             :"
+                        android:textColor="@color/RoseRed"
+                        android:textSize="16dp" />
+
+                    <TextView
+                        android:id="@+id/tvWorkDone"
+                        android:layout_width="wrap_content"
+                        android:layout_below="@+id/tvWorkDoneTag"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="4dp"
+                        android:layout_marginTop="7dp"
+                        android:textAlignment="center"
+                        android:fontFamily="@font/robomedium"
+                        android:text="Preventive maintenance Checked hating coil of amps 28.9 Work done Checked gas cuts and boiler No leakage found from the boiler Run all cycles
+                        machine is working good"
+                        android:textColor="@color/black"
+                        android:textSize="16dp" />
+
+
+
+                    <TextView
+                        android:id="@+id/tvEngineerAdviceTag"
+                        android:layout_width="150dp"
+                        android:layout_below="@+id/tvWorkDone"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="7dp"
+                        android:fontFamily="@font/roboblod"
+                        android:text="Engineer Advice	   :"
+                        android:textColor="@color/RoseRed"
+                        android:textSize="16dp" />
+
+                    <TextView
+                        android:id="@+id/tvEngineerAdvice"
+                        android:layout_width="wrap_content"
+                        android:layout_below="@+id/tvWorkDone"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="7dp"
+                        android:layout_toRightOf="@+id/tvEngineerAdviceTag"
+                        android:fontFamily="@font/robomedium"
+                        android:text="11-08-2022 ; 09:00:00 to 20:00:00	"
+                        android:textColor="@color/black"
+                        android:textSize="16dp" />
+
+
+                    <TextView
+                        android:id="@+id/tvCustomerTag"
+                        android:layout_width="wrap_content"
+                        android:layout_below="@+id/tvEngineerAdvice"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="7dp"
+                        android:fontFamily="@font/roboblod"
+                        android:text="Customer FeedBack	 :"
+                        android:textColor="@color/RoseRed"
+                        android:textSize="16dp" />
+
+                    <TextView
+                        android:id="@+id/tvCustomerFeedBack"
+                        android:layout_width="match_parent"
+                        android:layout_below="@+id/tvCustomerTag"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="7dp"
+                        android:textAlignment="center"
+                        android:fontFamily="@font/robomedium"
+                        android:text="Good	"
+                        android:textColor="@color/black"
+                        android:textSize="16dp" />
+
+
+                    <TextView
+                        android:id="@+id/tvCallStatusTag"
+                        android:layout_width="150dp"
+                        android:layout_below="@+id/tvCustomerFeedBack"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="7dp"
+                        android:fontFamily="@font/roboblod"
+                        android:text="Call Status	             :"
+                        android:textColor="@color/RoseRed"
+                        android:textSize="16dp" />
+
+                    <TextView
+                        android:id="@+id/tvCallStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_below="@+id/tvCustomerFeedBack"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="7dp"
+                        android:layout_toRightOf="@+id/tvCallStatusTag"
+                        android:fontFamily="@font/robomedium"
+                        android:text="Not yet to attend	"
+                        android:textColor="@color/black"
+                        android:textSize="16dp" />
+
+
+                    <TextView
+                        android:id="@+id/tvPendingReasonTag"
+                        android:layout_width="150dp"
+                        android:layout_below="@+id/tvCallStatus"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="7dp"
+                        android:fontFamily="@font/roboblod"
+                        android:text="Pending Reason    :"
+                        android:textColor="@color/RoseRed"
+                        android:textSize="16dp" />
+
+                    <TextView
+                        android:id="@+id/tvPendingReason"
+                        android:layout_width="wrap_content"
+                        android:layout_below="@+id/tvCallStatus"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="7dp"
+                        android:layout_toRightOf="@+id/tvPendingReasonTag"
+                        android:fontFamily="@font/robomedium"
+                        android:text="Not yet to attend	"
+                        android:textColor="@color/black"
+                        android:textSize="16dp" />
+
+
+                    <TextView
+                        android:id="@+id/tvReportTag"
+                        android:layout_width="150dp"
+                        android:layout_below="@+id/tvPendingReason"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="7dp"
+                        android:fontFamily="@font/roboblod"
+                        android:text="Report                      :"
+                        android:textColor="@color/RoseRed"
+                        android:textSize="16dp" />
+
+                    <TextView
+                        android:id="@+id/tvReport"
+                        android:layout_width="wrap_content"
+                        android:layout_below="@+id/tvPendingReason"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="7dp"
+                        android:layout_toRightOf="@+id/tvReportTag"
+                        android:fontFamily="@font/robomedium"
+                        android:text="Not yet to attend	"
+                        android:textColor="@color/black"
+                        android:textSize="16dp" />
+
+
+
+                    <TextView
+                        android:id="@+id/tvPaidServiceTag"
+                        android:layout_width="150dp"
+                        android:layout_below="@+id/tvReport"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="7dp"
+                        android:fontFamily="@font/roboblod"
+                        android:text="Paid Service           :"
+                        android:textColor="@color/RoseRed"
+                        android:textSize="16dp" />
+
+                    <TextView
+                        android:id="@+id/tvPaidService"
+                        android:layout_width="wrap_content"
+                        android:layout_below="@+id/tvReport"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="7dp"
+                        android:layout_toRightOf="@+id/tvPaidServiceTag"
+                        android:fontFamily="@font/robomedium"
+                        android:text="Not yet to attend	"
+                        android:textColor="@color/black"
+                        android:textSize="16dp" />
+
+
+
+
+                    <TextView
+                        android:id="@+id/tvSpareReplaceTag"
+                        android:layout_width="150dp"
+                        android:layout_below="@+id/tvPaidService"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="7dp"
+                        android:fontFamily="@font/roboblod"
+                        android:text="Spare Replace       :"
+                        android:textColor="@color/RoseRed"
+                        android:textSize="16dp" />
+
+                    <TextView
+                        android:id="@+id/tvSpareReplace"
+                        android:layout_width="wrap_content"
+                        android:layout_below="@+id/tvPaidService"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="7dp"
+                        android:layout_toRightOf="@+id/tvSpareReplaceTag"
+                        android:fontFamily="@font/robomedium"
+                        android:text="Not yet to attend	"
+                        android:textColor="@color/black"
+                        android:textSize="16dp" />
+
+
+
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

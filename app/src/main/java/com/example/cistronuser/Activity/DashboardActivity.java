@@ -489,6 +489,7 @@ public class DashboardActivity extends Activity {
                         rlPendingingCallLayout.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+
                                 if (response.body().getPendingCalls().trim().equals("0")){
                                     Toast.makeText(context, "No Pending Call ", Toast.LENGTH_SHORT).show();
                                 }else {

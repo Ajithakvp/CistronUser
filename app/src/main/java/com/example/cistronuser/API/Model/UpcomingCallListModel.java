@@ -46,6 +46,17 @@ public class UpcomingCallListModel {
     @SerializedName("product")
     private String product;
 
+    @SerializedName("mobile")
+    private String mobile;
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
     public String getCrId() {
         return crId;
     }

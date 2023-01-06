@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.example.cistronuser.API.APIClient;
@@ -44,6 +45,13 @@ public class UpComingCallActivity extends AppCompatActivity {
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         rvUpcomingCall.setAdapter(upcomingCallAdapter);
         rvUpcomingCall.setLayoutManager(linearLayoutManager);
+
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
     }
 

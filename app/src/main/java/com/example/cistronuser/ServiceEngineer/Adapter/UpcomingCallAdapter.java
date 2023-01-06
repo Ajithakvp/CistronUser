@@ -1,9 +1,15 @@
 package com.example.cistronuser.ServiceEngineer.Adapter;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -41,6 +47,30 @@ public class UpcomingCallAdapter extends RecyclerView.Adapter<UpcomingCallAdapte
         holder.tvProduct.setText(upcomingCallReportlistModels.get(position).getProduct());
         holder.tvIssueDetails.setText(upcomingCallReportlistModels.get(position).getIssue());
         holder.tvCallCreateBy.setText(upcomingCallReportlistModels.get(position).getCreatedBy());
+        holder.tvMobileNo.setText(upcomingCallReportlistModels.get(position).getMobile());
+
+        String MobileNo=upcomingCallReportlistModels.get(position).getMobile();
+
+        holder.ivCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent=new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:"+MobileNo));
+                activity.startActivity(intent);
+            }
+        });
+
+        holder.tvCR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Dialog dialog=new Dialog(activity);
+                dialog.setContentView(R.layout.cr_service_list);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+            }
+        });
+
     }
 
     @Override
@@ -50,7 +80,10 @@ public class UpcomingCallAdapter extends RecyclerView.Adapter<UpcomingCallAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvName,tvDate,tvContactDetails,tvLocation,tvProduct,tvCR,tvIssueDetails,tvCallCreateBy;
+        TextView tvName,tvDate,tvContactDetails,tvLocation,tvProduct,tvCR,tvIssueDetails,tvCallCreateBy,tvMobileNo;
+
+        ImageView ivCall;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -62,6 +95,8 @@ public class UpcomingCallAdapter extends RecyclerView.Adapter<UpcomingCallAdapte
             tvCR=itemView.findViewById(R.id.tvCR);
             tvIssueDetails=itemView.findViewById(R.id.tvIssueDetails);
             tvCallCreateBy=itemView.findViewById(R.id.tvCallCreateBy);
+            ivCall=itemView.findViewById(R.id.ivCall);
+            tvMobileNo=itemView.findViewById(R.id.tvMobileNo);
         }
     }
 }
