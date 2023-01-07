@@ -140,5 +140,12 @@
         <item name="android:textColor">@color/Burgundy</item>
     </style>
 
+    <!--  Ratingbar  -->
+
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/AshGray</item>
+        <item name="colorControlActivated">@color/RoseRed</item>
+    </style>
+
 
 </resources>

@@ -24,6 +24,7 @@ import com.example.cistronuser.API.Model.ServiceDetailsInterModel;
 import com.example.cistronuser.API.Model.UpcomingCallListModel;
 import com.example.cistronuser.API.Response.ServiceDetailsResponse;
 import com.example.cistronuser.R;
+import com.example.cistronuser.ServiceEngineer.Activity.UpcomingCallReport;
 
 import java.util.ArrayList;
 
@@ -73,6 +74,14 @@ public class UpcomingCallAdapter extends RecyclerView.Adapter<UpcomingCallAdapte
 
                 Intent intent=new Intent(Intent.ACTION_DIAL);
                 intent.setData(Uri.parse("tel:"+MobileNo));
+                activity.startActivity(intent);
+            }
+        });
+
+        holder.tvCallReportButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(activity, UpcomingCallReport.class);
                 activity.startActivity(intent);
             }
         });
@@ -141,7 +150,7 @@ public class UpcomingCallAdapter extends RecyclerView.Adapter<UpcomingCallAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvName,tvDate,tvContactDetails,tvLocation,tvProduct,tvCR,tvIssueDetails,tvCallCreateBy,tvMobileNo;
+        TextView tvName,tvDate,tvContactDetails,tvLocation,tvProduct,tvCR,tvIssueDetails,tvCallCreateBy,tvMobileNo,tvCallReportButton;
 
         ImageView ivCall;
 
@@ -158,6 +167,7 @@ public class UpcomingCallAdapter extends RecyclerView.Adapter<UpcomingCallAdapte
             tvCallCreateBy=itemView.findViewById(R.id.tvCallCreateBy);
             ivCall=itemView.findViewById(R.id.ivCall);
             tvMobileNo=itemView.findViewById(R.id.tvMobileNo);
+            tvCallReportButton=itemView.findViewById(R.id.tvCallReportButton);
         }
     }
 }

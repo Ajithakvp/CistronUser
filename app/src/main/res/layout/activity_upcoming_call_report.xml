@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ServiceEngineer.Activity.UpcomingCallReport">
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/rltoolbar"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/Cistronbasecolor">
+
+                <TextView
+                    android:id="@+id/tvHeader"
+                    style="@style/header"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:fontFamily="@font/bold"
+                    android:text="Call Report"
+                    android:textColor="@color/white"
+                    android:textSize="20dp" />
+
+                <ImageView
+                    android:id="@+id/ivBack"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_centerInParent="true"
+                    android:layout_marginRight="35dp"
+                    android:layout_toLeftOf="@id/tvHeader"
+                    android:backgroundTint="@color/white"
+                    android:src="@drawable/ic_baseline_arrow_left_24"
+                    android:tint="@color/white"
+                    tools:ignore="UseAppTint" />
+
+
+                <ImageView
+                    android:id="@+id/ivMore"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="35dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_toRightOf="@id/tvHeader"
+                    android:backgroundTint="@color/white"
+                    android:src="@drawable/ic_baseline_view_list_24"
+                    android:tint="@color/white"
+                    android:visibility="gone"
+                    tools:ignore="UseAppTint" />
+
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rltoolbar">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:id="@+id/tvContact"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/openssansbold"
+                        android:text="Call Type :"
+                        android:textColor="@color/RoseRed"
+                        android:textSize="18dp" />
+
+                    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                        android:id="@+id/spCallType"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="18dp"
+                        android:layout_marginRight="8dp"
+                        android:background="@drawable/edittext"
+                        android:backgroundTint="@color/whiteLite2"
+                        android:fontFamily="@font/semibold"
+                        android:gravity="left"
+                        android:paddingLeft="10dp"
+                        android:visibility="visible" />
+
+                    <TextView
+                        android:id="@+id/tvCusInvoice"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="18dp"
+                        android:layout_marginRight="8dp"
+                        android:background="@drawable/edittext"
+                        android:backgroundTint="@color/whiteLite2"
+                        android:fontFamily="@font/semibold"
+                        android:gravity="center_vertical"
+                        android:hint="Customer Invoice file Attach"
+                        android:paddingLeft="10dp"
+                        android:textColor="@color/black"
+                        android:textSize="18dp"
+                        android:visibility="visible" />
+
+                    <TextView
+                        android:id="@+id/tvCallStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/openssansbold"
+                        android:text="Call Status :"
+                        android:textColor="@color/RoseRed"
+                        android:textSize="18dp" />
+
+                    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                        android:id="@+id/spCallStatus"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="18dp"
+                        android:layout_marginRight="8dp"
+                        android:background="@drawable/edittext"
+                        android:backgroundTint="@color/whiteLite2"
+                        android:fontFamily="@font/semibold"
+                        android:gravity="left"
+                        android:paddingLeft="10dp"
+                        android:visibility="visible" />
+
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tvPendingReason"
+                        style="@style/textInput2"
+                        android:visibility="gone"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="8dp"
+                        app:endIconMode="clear_text"
+                        app:errorEnabled="true">
+
+                        <EditText
+                            android:id="@+id/edPendingReason"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/edittext"
+                            android:backgroundTint="@color/whiteLite2"
+                            android:fontFamily="@font/semibold"
+                            android:hint="Pending Reason "
+                            android:textColor="@color/black"
+                            android:textSize="18dp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tvConsumer"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/openssansbold"
+                            android:text="Do you want to consume spares ?"
+                            android:textColor="@color/RoseRed"
+                            android:textSize="18dp" />
+
+                        <RadioGroup
+                            android:id="@+id/rbGrp"
+                            android:layout_width="200dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tvConsumer"
+                            android:layout_marginLeft="30dp"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/rbYes"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Yes" />
+
+
+                            <RadioButton
+                                android:id="@+id/rbNo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:text="No" />
+
+
+                        </RadioGroup>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/rbGrp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:visibility="gone" />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/tvFollowUpDate"
+                        style="@android:style/Widget.EditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:background="@drawable/edittext"
+                        android:backgroundTint="@color/whiteLite2"
+                        android:fontFamily="@font/semibold"
+                        android:gravity="center_vertical"
+                        android:hint="Follow Up Date"
+                        android:paddingLeft="10dp"
+                        android:textColor="@color/black"
+                        android:textSize="18dp"
+                        android:visibility="visible" />
+
+                    <TextView
+                        android:id="@+id/tvStartingTime"
+                        style="@android:style/Widget.EditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginRight="8dp"
+                        android:background="@drawable/edittext"
+                        android:backgroundTint="@color/whiteLite2"
+                        android:fontFamily="@font/semibold"
+                        android:gravity="center_vertical"
+                        android:hint="Start Time"
+                        android:paddingLeft="10dp"
+                        android:textColor="@color/black"
+                        android:textSize="18dp"
+                        android:visibility="visible" />
+
+
+                    <TextView
+                        android:id="@+id/tvEndTime"
+                        style="@android:style/Widget.EditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginRight="8dp"
+                        android:background="@drawable/edittext"
+                        android:backgroundTint="@color/whiteLite2"
+                        android:fontFamily="@font/semibold"
+                        android:gravity="center_vertical"
+                        android:hint="End Time"
+                        android:paddingLeft="10dp"
+                        android:textColor="@color/black"
+                        android:textSize="18dp"
+                        android:visibility="visible" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tvname"
+                        style="@style/textInput2"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="8dp"
+                        app:endIconMode="clear_text"
+                        app:errorEnabled="true">
+
+                        <EditText
+                            android:id="@+id/edName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/edittext"
+                            android:backgroundTint="@color/whiteLite2"
+                            android:fontFamily="@font/semibold"
+                            android:hint="Name "
+                            android:textColor="@color/black"
+                            android:textSize="18dp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tvmob"
+                        style="@style/textInput2"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        app:endIconMode="clear_text"
+                        app:errorEnabled="true">
+
+                        <EditText
+                            android:id="@+id/edMobile"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/edittext"
+                            android:backgroundTint="@color/whiteLite2"
+                            android:fontFamily="@font/semibold"
+                            android:hint="Contact Number"
+                            android:inputType="number"
+                            android:textColor="@color/black"
+                            android:textSize="18dp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tvWorkDone"
+                        style="@style/textInput2"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        app:endIconMode="clear_text"
+                        app:errorEnabled="true">
+
+                        <EditText
+                            android:id="@+id/edWorkdone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/edittext"
+                            android:backgroundTint="@color/whiteLite2"
+                            android:fontFamily="@font/semibold"
+                            android:hint="Work Done"
+                            android:textColor="@color/black"
+                            android:textSize="18dp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tvEngineerAdvice"
+                        style="@style/textInput2"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        app:endIconMode="clear_text"
+                        app:errorEnabled="true">
+
+                        <EditText
+                            android:id="@+id/edEngineerAdvice"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/edittext"
+                            android:backgroundTint="@color/whiteLite2"
+                            android:fontFamily="@font/semibold"
+                            android:hint="Engineer Advice"
+                            android:textColor="@color/black"
+                            android:textSize="18dp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tvServie"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/openssansbold"
+                            android:text="Do you have Service Report ?"
+                            android:textColor="@color/RoseRed"
+                            android:textSize="18dp" />
+
+                        <CheckBox
+                            android:id="@+id/cbAttach"
+                            android:layout_toRightOf="@id/tvServie"
+                            android:layout_width="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_height="wrap_content"
+                            />
+
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/tvReason"
+                            style="@style/textInput2"
+                            android:layout_marginLeft="8dp"
+                            android:visibility="visible"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_below="@+id/tvServie"
+                            app:endIconMode="clear_text"
+                            app:errorEnabled="true">
+
+                            <EditText
+                                android:id="@+id/edReason"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/edittext"
+                                android:backgroundTint="@color/whiteLite2"
+                                android:fontFamily="@font/semibold"
+                                android:hint="Reason"
+                                android:textColor="@color/black"
+                                android:textSize="18dp" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <TextView
+                            android:id="@+id/tvserviceReportAttach"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_below="@id/tvReason"
+                            android:layout_marginTop="18dp"
+                            android:layout_marginRight="8dp"
+                            android:background="@drawable/edittext"
+                            android:backgroundTint="@color/whiteLite2"
+                            android:fontFamily="@font/semibold"
+                            android:gravity="center_vertical"
+                            android:hint=" Attach Report"
+                            android:paddingLeft="10dp"
+                            android:textColor="@color/black"
+                            android:textSize="18dp"
+                            android:visibility="gone" />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/tvCusRating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/openssansbold"
+                        android:text="Customer Feedback"
+                        android:textColor="@color/RoseRed"
+                        android:textSize="18dp" />
+
+
+                    <RatingBar
+                        android:id="@+id/ratingBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="72dp"
+                        android:theme="@style/RatingBar"
+                        android:layout_marginTop="30dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tvSubmit"
+                        android:layout_width="200dp"
+                        android:layout_height="50dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="25dp"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="30dp"
+                        android:background="@drawable/size"
+                        android:backgroundTint="#6495ED"
+                        android:fontFamily="@font/bold"
+                        android:gravity="center"
+                        android:text="Submit"
+                        android:textColor="@color/white"
+                        android:textSize="20dp" />
+
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</RelativeLayout>
