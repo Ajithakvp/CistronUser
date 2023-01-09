@@ -82,6 +82,7 @@ public class UpcomingCallAdapter extends RecyclerView.Adapter<UpcomingCallAdapte
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(activity, UpcomingCallReport.class);
+                intent.putExtra("id",upcomingCallReportlistModels.get(position).getButton());
                 activity.startActivity(intent);
             }
         });

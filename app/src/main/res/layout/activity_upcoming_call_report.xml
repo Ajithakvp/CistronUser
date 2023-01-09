@@ -74,6 +74,152 @@
                     android:orientation="vertical">
 
 
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tvCusDetailsTag"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/openssansbold"
+                            android:text="Customer Details :"
+                            android:textColor="@color/RoseRed"
+                            android:textSize="16dp" />
+
+                        <TextView
+                            android:id="@+id/tvCusDetails"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="6dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_toRightOf="@+id/tvCusDetailsTag"
+                            android:fontFamily="@font/openssansbold"
+                            android:textColor="@color/blue"
+                            android:textSize="16dp" />
+
+
+                        <TextView
+                            android:id="@+id/tvProdDetailsTag"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/tvCusDetails"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/openssansbold"
+                            android:text="Product Details :"
+                            android:textColor="@color/RoseRed"
+                            android:textSize="16dp" />
+
+                        <TextView
+                            android:id="@+id/tvProdDetails"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tvCusDetails"
+                            android:layout_marginLeft="6dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_toRightOf="@+id/tvProdDetailsTag"
+                            android:fontFamily="@font/openssansbold"
+                            android:textColor="@color/blue"
+                            android:textSize="16dp" />
+
+                        <TextView
+                            android:id="@+id/tvProdSerialTag"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/tvProdDetails"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/openssansbold"
+                            android:text="Product Serial # :"
+                            android:textColor="@color/RoseRed"
+                            android:textSize="16dp" />
+
+                        <TextView
+                            android:id="@+id/tvProdSerial"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tvProdDetails"
+                            android:layout_marginLeft="6dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_toRightOf="@+id/tvProdSerialTag"
+                            android:fontFamily="@font/openssansbold"
+                            android:textColor="@color/blue"
+                            android:textSize="16dp" />
+
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.9dp"
+                            android:layout_marginTop="7dp"
+                            android:id="@+id/view"
+                            android:layout_below="@id/tvProdSerial"
+                            android:background="@color/black"/>
+
+
+                        <TextView
+                            android:id="@+id/tvCreatedTag"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/view"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/openssansbold"
+                            android:text="Created by  :"
+                            android:textColor="@color/RoseRed"
+                            android:textSize="16dp" />
+
+                        <TextView
+                            android:id="@+id/tvCreated"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/view"
+                            android:layout_marginLeft="6dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_toRightOf="@+id/tvCreatedTag"
+                            android:fontFamily="@font/openssansbold"
+                            android:textColor="@color/blue"
+                            android:textSize="16dp" />
+
+                        <TextView
+                            android:id="@+id/tvReportbyTag"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/tvCreated"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/openssansbold"
+                            android:text="Reported by :"
+                            android:textColor="@color/RoseRed"
+                            android:textSize="16dp" />
+
+                        <TextView
+                            android:id="@+id/tvReportby"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tvCreated"
+                            android:layout_marginLeft="6dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_toRightOf="@+id/tvReportbyTag"
+                            android:fontFamily="@font/openssansbold"
+                            android:textColor="@color/blue"
+                            android:textSize="16dp" />
+
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.9dp"
+                            android:layout_marginTop="7dp"
+                            android:layout_below="@id/tvReportby"
+                            android:background="@color/black"/>
+
+
+                    </RelativeLayout>
+
+
+
                     <TextView
                         android:id="@+id/tvContact"
                         android:layout_width="wrap_content"
@@ -115,6 +261,76 @@
                         android:textColor="@color/black"
                         android:textSize="18dp"
                         android:visibility="visible" />
+
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:id="@+id/rlComplaint"
+                        android:visibility="gone"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tvComplaint"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/openssansbold"
+                            android:text="Complaint Category :"
+                            android:textColor="@color/RoseRed"
+                            android:textSize="18dp" />
+
+                        <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                            android:id="@+id/spComplaint"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:layout_below="@id/tvComplaint"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="18dp"
+                            android:layout_marginRight="8dp"
+                            app:hintText="Select a Complaint"
+                            android:background="@drawable/edittext"
+                            android:backgroundTint="@color/whiteLite2"
+                            android:fontFamily="@font/semibold"
+                            android:gravity="left"
+                            android:paddingLeft="10dp"
+                            android:visibility="visible" />
+
+
+                        <TextView
+                            android:id="@+id/tvSubComplaint"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_below="@id/spComplaint"
+                            android:fontFamily="@font/openssansbold"
+                            android:text="Complaint Subcategory :"
+                            android:textColor="@color/RoseRed"
+                            android:textSize="18dp" />
+
+                        <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                            android:id="@+id/spSubComplaint"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:layout_below="@id/tvSubComplaint"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="18dp"
+                            android:layout_marginRight="8dp"
+                            app:hintText="Select Complaint SubCategory"
+                            android:background="@drawable/edittext"
+                            android:backgroundTint="@color/whiteLite2"
+                            android:fontFamily="@font/semibold"
+                            android:gravity="left"
+                            android:paddingLeft="10dp"
+                            android:visibility="visible" />
+
+
+
+
+                    </RelativeLayout>
+
 
                     <TextView
                         android:id="@+id/tvCallStatus"
@@ -233,7 +449,7 @@
                         android:paddingLeft="10dp"
                         android:textColor="@color/black"
                         android:textSize="18dp"
-                        android:visibility="visible" />
+                        android:visibility="gone" />
 
                     <TextView
                         android:id="@+id/tvStartingTime"
@@ -278,6 +494,7 @@
                         android:layout_marginLeft="8dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginRight="8dp"
+                        android:orientation="vertical"
                         app:endIconMode="clear_text"
                         app:errorEnabled="true">
 
@@ -377,6 +594,7 @@
                             android:id="@+id/cbAttach"
                             android:layout_toRightOf="@id/tvServie"
                             android:layout_width="wrap_content"
+                            android:checked="true"
                             android:layout_marginLeft="8dp"
                             android:layout_height="wrap_content"
                             />
@@ -386,7 +604,7 @@
                             android:id="@+id/tvReason"
                             style="@style/textInput2"
                             android:layout_marginLeft="8dp"
-                            android:visibility="visible"
+                            android:visibility="gone"
                             android:layout_marginRight="8dp"
                             android:layout_marginTop="8dp"
                             android:layout_below="@+id/tvServie"
@@ -421,7 +639,7 @@
                             android:paddingLeft="10dp"
                             android:textColor="@color/black"
                             android:textSize="18dp"
-                            android:visibility="gone" />
+                            android:visibility="visible" />
 
                     </RelativeLayout>
 
