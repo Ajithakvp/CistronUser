@@ -9,12 +9,15 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -103,8 +106,6 @@ public class UpcomingCallReport extends AppCompatActivity  {
     ArrayList<String> strStatus = new ArrayList<>();
     ArrayAdapter callStatusAdapter;
 
-    TimePicker timePicker;
-    boolean mIgnoreEvent=false;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -153,6 +154,7 @@ public class UpcomingCallReport extends AppCompatActivity  {
 
         // *********** GetString **********//
         String id = getIntent().getStringExtra("id");
+        strRating= String.valueOf(ratingBar.getRating());
         // *********** GetString End **********//
 
         //********Customer Detalils ******************//
@@ -191,7 +193,6 @@ public class UpcomingCallReport extends AppCompatActivity  {
                                 spCallType.setSelection(i);
                             }
                         }
-
                         callTypeAdapter.notifyDataSetChanged();
                         // ***********  Call Type End ******** //
 
@@ -279,6 +280,9 @@ public class UpcomingCallReport extends AppCompatActivity  {
                 }else {
                     tvPendingReason.setVisibility(View.GONE);
                     tvFollowUpDate.setVisibility(View.GONE);
+                }
+                if (callStatusModels.get(position).getText().trim().equals("Require Spare's")){
+                    CallRequiredSpareDialog();
                 }
 
             }
@@ -395,7 +399,6 @@ public class UpcomingCallReport extends AppCompatActivity  {
              int mHour = c.get(Calendar.HOUR_OF_DAY);
              int mMinute = c.get(Calendar.MINUTE);
 
-             // Launch Time Picker Dialog
              TimePickerDialog timePickerDialog = new TimePickerDialog(UpcomingCallReport.this,
                      new TimePickerDialog.OnTimeSetListener() {
 
@@ -433,6 +436,26 @@ public class UpcomingCallReport extends AppCompatActivity  {
             }
         });
 
+    }
+
+    private void CallRequiredSpareDialog() {
+        Dialog dialog=new Dialog(this);
+        dialog.setContentView(R.layout.sales_quote_update_dialog_recycleview);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
+    }
+
+    private void setSpinnerError(Spinner spinner, String error) {
+        View selectedView = spinner.getSelectedView();
+        if (selectedView != null && selectedView instanceof TextView) {
+            spinner.requestFocus();
+            TextView selectedTextView = (TextView) selectedView;
+            selectedTextView.setError("error");
+            selectedTextView.setTextColor(Color.RED);
+            selectedTextView.setText(error);
+            spinner.performClick();
+
+        }
     }
 
 
