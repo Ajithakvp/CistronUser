@@ -1,16 +1,17 @@
 package com.example.cistronuser;
 
-import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+import static android.hardware.biometrics.BiometricManager.Authenticators.BIOMETRIC_STRONG;
+import static android.hardware.biometrics.BiometricManager.Authenticators.DEVICE_CREDENTIAL;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.biometric.BiometricManager;
+import androidx.biometric.BiometricPrompt;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -19,7 +20,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.location.Address;
-import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
@@ -27,10 +27,8 @@ import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -43,15 +41,12 @@ import com.example.cistronuser.Activity.DashboardActivity;
 import com.example.cistronuser.Common.ConnectionRecevier;
 import com.example.cistronuser.Common.PreferenceManager;
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.Executor;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -76,6 +71,11 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
     double Longtitude;
     ArrayList<LoginuserModel> loginuserModel = new ArrayList<>();
 
+
+    //FingerPrint
+    private Executor executor;
+    private BiometricPrompt biometricPrompt;
+    private BiometricPrompt.PromptInfo promptInfo;
 
     @SuppressLint({"MissingInflatedId"})
     @Override
@@ -134,8 +134,65 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
 
 
 
+        // *********Finger Print login ****************//
+        BiometricManager biometricManager = BiometricManager.from(this);
+        switch (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG | BiometricManager.Authenticators.DEVICE_CREDENTIAL)) {
+            case BiometricManager.BIOMETRIC_SUCCESS:
+               // Log.d("MY_APP_TAG", "App can authenticate using biometrics.");
+                break;
+            case BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE:
+               // Log.e("MY_APP_TAG", "No biometric features available on this device.");
+                break;
+            case BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE:
+               // Log.e("MY_APP_TAG", "Biometric features are currently unavailable.");
+                break;
+            case BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED:
+                // Prompts the user to create credentials that your app accepts.
+                final Intent enrollIntent = new Intent(Settings.ACTION_BIOMETRIC_ENROLL);
+                enrollIntent.putExtra(Settings.EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED,
+                        BIOMETRIC_STRONG | DEVICE_CREDENTIAL);
+                startActivityForResult(enrollIntent, 100);
+                break;
+        }
+        executor = ContextCompat.getMainExecutor(this);
+        biometricPrompt = new BiometricPrompt(LoginActivity.this,
+                executor, new BiometricPrompt.AuthenticationCallback() {
+            @Override
+            public void onAuthenticationError(int errorCode,
+                                              @NonNull CharSequence errString) {
+                super.onAuthenticationError(errorCode, errString);
+//                Toast.makeText(getApplicationContext(),
+//                                "Authentication error: " + errString, Toast.LENGTH_SHORT)
+//                        .show();
+            }
+
+            @Override
+            public void onAuthenticationSucceeded(
+                    @NonNull BiometricPrompt.AuthenticationResult result) {
+                super.onAuthenticationSucceeded(result);
+                CallLogin(EmpID, Pass, Latitude, Longtitude, AddressLine, ip);
+              //  Toast.makeText(getApplicationContext(),"Authentication succeeded!", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onAuthenticationFailed() {
+                super.onAuthenticationFailed();
+                Toast.makeText(getApplicationContext(), "Authentication failed",
+                                Toast.LENGTH_SHORT)
+                        .show();
+            }
+        });
+
+        promptInfo = new BiometricPrompt.PromptInfo.Builder()
+                .setTitle("Biometric login for Cistron App")
+                .setSubtitle("Log in  your biometric credential")
+                .setNegativeButtonText("Cancel")
+                .build();
 
 
+        biometricPrompt.authenticate(promptInfo);
+
+        // *********Finger Print login end ****************//
 
 
         login_btn.setOnClickListener(new View.OnClickListener() {
@@ -155,6 +212,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
                     tvfailed.setVisibility(View.GONE);
                 } else {
                     CallLogin(EmpID, Pass, Latitude, Longtitude, AddressLine, ip);
+
                     // Toast.makeText(LoginActivity.this, "Incorrect Employee ID and Password", Toast.LENGTH_SHORT).show();
                 }
 

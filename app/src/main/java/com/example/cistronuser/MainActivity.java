@@ -18,8 +18,6 @@ import android.widget.TextView;
 import com.example.cistronuser.API.APIClient;
 import com.example.cistronuser.API.Interface.AppVersionInterface;
 import com.example.cistronuser.API.Response.AppVersionResponse;
-import com.example.cistronuser.Activity.DashboardActivity;
-import com.example.cistronuser.Common.PreferenceManager;
 
 import retrofit2.Call;
 import retrofit2.Callback;
