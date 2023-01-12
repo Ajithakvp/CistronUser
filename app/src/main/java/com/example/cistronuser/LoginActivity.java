@@ -63,7 +63,6 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
     Context context;
 
     //Map
-    FusedLocationProviderClient fusedLocationProviderClient;
     LocationManager locationManager;
 
     String strDeviceName, AddressLine;
@@ -90,32 +89,36 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
         String EmpID = edName.getText().toString();
         String Pass = edPass.getText().toString();
 
+
         edName.setText(PreferenceManager.getLoginEmpID(this));
         edPass.setText(PreferenceManager.getLoginPwd(this));
 
 
-
-        //LocationPermission
+        // *****LocationPermission ******//
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(getApplicationContext(),
                 android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION,
                     android.Manifest.permission.ACCESS_COARSE_LOCATION}, 101);
         }
+        // *****LocationPermission End ******//
 
-        //Location
+
+        //*****  Location ******//
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationEnabled();
         getLocation();
+        //*****  Location End ******//
 
 
+        //*****  Ip Address ******//
         context = getApplicationContext();
         WifiManager wifiMan = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
         WifiInfo wifiInf = wifiMan.getConnectionInfo();
         int ipAddress = wifiInf.getIpAddress();
         String ip = String.format("%d.%d.%d.%d", (ipAddress & 0xff), (ipAddress >> 8 & 0xff), (ipAddress >> 16 & 0xff), (ipAddress >> 24 & 0xff));
         //  Log.e(TAG, "onCreate: "+ip );
-
+        //*****  Ip Address End ******//
 
 
         //network
@@ -184,7 +187,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
         });
 
         promptInfo = new BiometricPrompt.PromptInfo.Builder()
-                .setTitle("Biometric login for Cistron App")
+                .setTitle("Biometric login for Cistron ")
                 .setSubtitle("Log in  your biometric credential")
                 .setNegativeButtonText("Cancel")
                 .build();
@@ -320,11 +323,6 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
             public void onFailure(Call<LoginuserModel> call, Throwable t) {
                 progressDialog.dismiss();
                 tvfailed.setVisibility(View.VISIBLE);
-
-
-
-
-
 
             }
         });
