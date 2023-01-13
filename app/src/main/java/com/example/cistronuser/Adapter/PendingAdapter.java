@@ -82,7 +82,7 @@ public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.ViewHold
         try {
 
             if (leavedetailsModels.get(position).getAttachment().trim().equals(null)) {
-                Log.e(TAG, "onBindViewHolder: " + leavedetailsModels.get(position).getAttachment().trim().equals("null"));
+               // Log.e(TAG, "onBindViewHolder: " + leavedetailsModels.get(position).getAttachment().trim().equals("null"));
                 holder.tvStatusTag.setVisibility(View.GONE);
                 holder.ivfile.setVisibility(View.GONE);
             } else {

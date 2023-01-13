@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_backgroud">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <ImageView
+            android:id="@+id/ivListView"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="8dp"
+            android:tint="@color/Burgundy"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/ic_baseline_view_list_24"
+            tools:ignore="UseAppTint" />
+
+
+        <ImageView
+            android:id="@+id/ivClose"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/ic_baseline_arrow_left_24" />
+
+
+        <TextView
+            android:id="@+id/tvReq"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="18dp"
+            android:fontFamily="@font/roboblack"
+            android:text=" Spare List"
+            android:textColor="@color/Burgundy"
+            android:textSize="16dp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:id="@+id/rlSearch"
+            android:background="@drawable/dialog_backgroud"
+            android:backgroundTint="@color/Burgundy"
+            android:layout_below="@id/tvReq"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:id="@+id/ivsearch"
+                android:layout_marginTop="5dp"
+                android:layout_height="40dp"
+                android:tint="@color/white"
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/ic_baseline_search_24"
+                tools:ignore="UseAppTint" />
+
+
+
+        <EditText
+            android:id="@+id/edSearch"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_toRightOf="@+id/ivsearch"
+            android:fontFamily="@font/semibold"
+            android:hint=" Search "
+            android:textColorHint="@color/white"
+            android:textColor="@color/whiteLite1"
+            android:textSize="15dp"
+            android:visibility="visible" />
+        </RelativeLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvSpareList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rlSearch"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="4dp" />
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

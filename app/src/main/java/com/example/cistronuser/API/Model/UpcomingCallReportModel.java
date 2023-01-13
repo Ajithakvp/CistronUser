@@ -30,6 +30,29 @@ public class UpcomingCallReportModel {
     private ArrayList<ComplaintCategoryModel>complaintCategoryModels=new ArrayList<>();
 
 
+    @SerializedName("seriesid1")
+    private String seriesid1;
+
+    @SerializedName("seriesid2")
+    private String seriesid2;
+
+    public String getSeriesid1() {
+        return seriesid1;
+    }
+
+    public void setSeriesid1(String seriesid1) {
+        this.seriesid1 = seriesid1;
+    }
+
+    public String getSeriesid2() {
+        return seriesid2;
+    }
+
+    public void setSeriesid2(String seriesid2) {
+        this.seriesid2 = seriesid2;
+    }
+
+
     public CallInfoModel getCallInfoModel() {
         return callInfoModel;
     }

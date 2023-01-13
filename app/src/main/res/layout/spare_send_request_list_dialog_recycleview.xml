@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_backgroud">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <ImageView
+            android:id="@+id/ivClose"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="8dp"
+            android:tint="@color/Burgundy"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/ic_baseline_close_24"
+            tools:ignore="UseAppTint" />
+
+
+
+
+
+        <TextView
+            android:id="@+id/tvReq"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="18dp"
+            android:fontFamily="@font/roboblack"
+            android:text=" Send Request Spare List"
+            android:textColor="@color/Burgundy"
+            android:textSize="16dp" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvSendReqSpareList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvReq"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="4dp" />
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

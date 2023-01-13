@@ -4,6 +4,8 @@ import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -43,16 +45,20 @@ import android.widget.Toast;
 
 import com.example.cistronuser.API.APIClient;
 import com.example.cistronuser.API.Interface.CallReportComplaintSubCategoryInterface;
+import com.example.cistronuser.API.Interface.ServiceSpareRequestInterface;
 import com.example.cistronuser.API.Interface.UpcomingCallReportInterface;
 import com.example.cistronuser.API.Model.CallReportComplaintSubCategoryModel;
 import com.example.cistronuser.API.Model.CallStatusModel;
 import com.example.cistronuser.API.Model.CallTypeModel;
 import com.example.cistronuser.API.Model.ComplaintCategoryModel;
+import com.example.cistronuser.API.Model.ServiceSpareRequestModel;
 import com.example.cistronuser.API.Response.CallReportComplaintSubCategoryResponse;
+import com.example.cistronuser.API.Response.ServiceSpareRequestResponse;
 import com.example.cistronuser.API.Response.UpcomingCallReportResponse;
 import com.example.cistronuser.Common.FileUtli;
 import com.example.cistronuser.R;
 import com.example.cistronuser.SalesAndservice.Activity.FinalizeNow;
+import com.example.cistronuser.ServiceEngineer.Adapter.SpareReqAdapter;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.io.File;
@@ -105,6 +111,13 @@ public class UpcomingCallReport extends AppCompatActivity  {
     ArrayList<CallStatusModel> callStatusModels = new ArrayList<>();
     ArrayList<String> strStatus = new ArrayList<>();
     ArrayAdapter callStatusAdapter;
+
+    //SpareReq
+    SpareReqAdapter spareReqAdapter;
+    ArrayList<ServiceSpareRequestModel>serviceSpareRequestModels=new ArrayList<>();
+    RecyclerView rvReq;
+    ImageView ivClose;
+    String SerialID1,SerialID2;
 
 
     @SuppressLint("MissingInflatedId")
@@ -175,6 +188,11 @@ public class UpcomingCallReport extends AppCompatActivity  {
                         tvProdSerial.setText(response.body().getUpcomingCallReportModel().getCallInfoModel().getProSerial());
                         tvCreated.setText(response.body().getUpcomingCallReportModel().getCallInfoModel().getCreatedBy());
                         tvReportby.setText(response.body().getUpcomingCallReportModel().getCallInfoModel().getReportBy());
+
+                        SerialID1=response.body().getUpcomingCallReportModel().getSeriesid1();
+                        SerialID2=response.body().getUpcomingCallReportModel().getSeriesid2();
+
+
 
                         if (response.body().getUpcomingCallReportModel().getCompliantRequired().trim().equals("1")) {
                             rlComplaint.setVisibility(View.VISIBLE);
@@ -440,9 +458,54 @@ public class UpcomingCallReport extends AppCompatActivity  {
 
     private void CallRequiredSpareDialog() {
         Dialog dialog=new Dialog(this);
-        dialog.setContentView(R.layout.sales_quote_update_dialog_recycleview);
+        dialog.setContentView(R.layout.spare_request_dialog_recycleview);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
+        ivClose=dialog.findViewById(R.id.ivClose);
+        rvReq=dialog.findViewById(R.id.rvReq);
+
+        CallSpareReq();
+        spareReqAdapter=new SpareReqAdapter(this,serviceSpareRequestModels);
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
+        rvReq.setLayoutManager(linearLayoutManager);
+        rvReq.setAdapter(spareReqAdapter);
+
+        ivClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+    }
+
+    private void CallSpareReq() {
+        final ProgressDialog progressDialog = new ProgressDialog(this, R.style.ProgressBarDialog);
+        progressDialog.setMessage("Loading...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        ServiceSpareRequestInterface spareRequestInterface=APIClient.getClient().create(ServiceSpareRequestInterface.class);
+        spareRequestInterface.CallReq("onRequireSparesCallStatus",SerialID1,SerialID2).enqueue(new Callback<ServiceSpareRequestResponse>() {
+            @Override
+            public void onResponse(Call<ServiceSpareRequestResponse> call, Response<ServiceSpareRequestResponse> response) {
+                try {
+                    if (response.isSuccessful()){
+                        progressDialog.dismiss();
+                        spareReqAdapter.serviceSpareRequestModels=response.body().getServiceSpareRequestModels();
+                        spareReqAdapter.notifyDataSetChanged();
+                    }
+
+                }catch (Exception e){
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ServiceSpareRequestResponse> call, Throwable t) {
+
+            }
+        });
     }
 
     private void setSpinnerError(Spinner spinner, String error) {
