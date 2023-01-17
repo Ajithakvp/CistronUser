@@ -24,9 +24,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cistronuser.API.APIClient;
 import com.example.cistronuser.API.Interface.ServiceSpareListInterface;
+import com.example.cistronuser.API.Interface.SpareSendReqListInterface;
 import com.example.cistronuser.API.Model.ServiceSpareListModel;
 import com.example.cistronuser.API.Model.ServiceSpareRequestModel;
+import com.example.cistronuser.API.Model.SpareSendReqListModel;
 import com.example.cistronuser.API.Response.ServiceSpareResponse;
+import com.example.cistronuser.API.Response.SpareSendReqListResponse;
 import com.example.cistronuser.Common.PreferenceManager;
 import com.example.cistronuser.R;
 
@@ -38,15 +41,21 @@ import retrofit2.Response;
 
 public class SpareReqAdapter extends RecyclerView.Adapter<SpareReqAdapter.ViewHolder> {
 
+    public ArrayList<ServiceSpareRequestModel> serviceSpareRequestModels;
     Activity activity;
-    public ArrayList<ServiceSpareRequestModel>serviceSpareRequestModels;
-
-    //SpareList
+    // **********  Spare List **********//
     RecyclerView rvSpareList;
     EditText edSearch;
     SpareSendReqListAdapter spareSendReqListAdapter;
-    ArrayList<ServiceSpareListModel>serviceSpareListModels=new ArrayList<>();
+    ArrayList<ServiceSpareListModel> serviceSpareListModels = new ArrayList<>();
+    // **********  Spare List End **********//
 
+
+    // ********** Send Spare List **********//
+    RecyclerView rvSendReqSpareList;
+    SpareReqListAdapter spareReqListAdapter;
+    ArrayList<SpareSendReqListModel> sendReqListModels = new ArrayList<>();
+    // ********** Send Spare List End **********//
 
 //    @NonNull
 //    private ItemClickListener onItemClick;
@@ -70,26 +79,26 @@ public class SpareReqAdapter extends RecyclerView.Adapter<SpareReqAdapter.ViewHo
         holder.tvReq.setText(serviceSpareRequestModels.get(position).getText());
 
 
-
         holder.rbReq.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 if (isChecked) {
 
-                    Dialog dialog=new Dialog(activity);
+                    Dialog dialog = new Dialog(activity);
                     dialog.setContentView(R.layout.spare_send_request_dialog_recycleview);
+                    dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
                     dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     dialog.show();
 
-                    ImageView ivClose=dialog.findViewById(R.id.ivClose);
-                    edSearch=dialog.findViewById(R.id.edSearch);
-                    rvSpareList=dialog.findViewById(R.id.rvSpareList);
-                    ImageView ivListView=dialog.findViewById(R.id.ivListView);
+                    ImageView ivClose = dialog.findViewById(R.id.ivClose);
+                    edSearch = dialog.findViewById(R.id.edSearch);
+                    rvSpareList = dialog.findViewById(R.id.rvSpareList);
+                    ImageView ivListView = dialog.findViewById(R.id.ivListView);
 
                     CallSendSpareList(serviceSpareRequestModels.get(position).getId());
-                    spareSendReqListAdapter=new SpareSendReqListAdapter(activity,serviceSpareListModels);
-                    LinearLayoutManager linearLayoutManager=new LinearLayoutManager(activity);
+                    spareSendReqListAdapter = new SpareSendReqListAdapter(activity, serviceSpareListModels);
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity);
                     linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
                     rvSpareList.setAdapter(spareSendReqListAdapter);
                     rvSpareList.setLayoutManager(linearLayoutManager);
@@ -140,6 +149,57 @@ public class SpareReqAdapter extends RecyclerView.Adapter<SpareReqAdapter.ViewHo
 
     private void CallSendReqListView() {
 
+        Dialog dialog = new Dialog(activity);
+        dialog.setContentView(R.layout.spare_send_request_list_dialog_recycleview);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
+
+        ImageView ivClose = dialog.findViewById(R.id.ivClose);
+        rvSendReqSpareList = dialog.findViewById(R.id.rvSendReqSpareList);
+
+        CallSendReqList();
+        spareReqListAdapter = new SpareReqListAdapter(activity, sendReqListModels);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity);
+        linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
+        rvSendReqSpareList.setLayoutManager(linearLayoutManager);
+        rvSendReqSpareList.setAdapter(spareReqListAdapter);
+        ivClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+    }
+
+    private void CallSendReqList() {
+        final ProgressDialog progressDialog = new ProgressDialog(activity, R.style.ProgressBarDialog);
+        progressDialog.setMessage("Request Spare List...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        SpareSendReqListInterface spareSendReqListInterface = APIClient.getClient().create(SpareSendReqListInterface.class);
+        spareSendReqListInterface.CallSpareList("spareRequestTmp", PreferenceManager.getEmpID(activity)).enqueue(new Callback<SpareSendReqListResponse>() {
+            @Override
+            public void onResponse(Call<SpareSendReqListResponse> call, Response<SpareSendReqListResponse> response) {
+                try {
+                    if (response.isSuccessful()) {
+                        progressDialog.dismiss();
+                        spareReqListAdapter.spareSendReqListModels = response.body().getSpareSendReqListModels();
+                        spareReqListAdapter.notifyDataSetChanged();
+                    }
+
+                } catch (Exception e) {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SpareSendReqListResponse> call, Throwable t) {
+
+            }
+        });
+
     }
 
     private void CallSendSpareList(String id) {
@@ -147,19 +207,19 @@ public class SpareReqAdapter extends RecyclerView.Adapter<SpareReqAdapter.ViewHo
         progressDialog.setMessage("Spare List...");
         progressDialog.setCancelable(false);
         progressDialog.show();
-        ServiceSpareListInterface serviceSpareListInterface= APIClient.getClient().create(ServiceSpareListInterface.class);
-        serviceSpareListInterface.CallSpareList("getSparePartsList",id, PreferenceManager.getEmpID(activity)).enqueue(new Callback<ServiceSpareResponse>() {
+        ServiceSpareListInterface serviceSpareListInterface = APIClient.getClient().create(ServiceSpareListInterface.class);
+        serviceSpareListInterface.CallSpareList("getSparePartsList", id, PreferenceManager.getEmpID(activity)).enqueue(new Callback<ServiceSpareResponse>() {
             @Override
             public void onResponse(Call<ServiceSpareResponse> call, Response<ServiceSpareResponse> response) {
                 try {
-                    if (response.isSuccessful()){
+                    if (response.isSuccessful()) {
                         progressDialog.dismiss();
-                        spareSendReqListAdapter.serviceSpareListModels=response.body().getServiceSpareListModels();
+                        spareSendReqListAdapter.serviceSpareListModels = response.body().getServiceSpareListModels();
                         spareSendReqListAdapter.searchAdapter(response.body().getServiceSpareListModels());
                         spareSendReqListAdapter.notifyDataSetChanged();
                     }
 
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
 
@@ -177,7 +237,7 @@ public class SpareReqAdapter extends RecyclerView.Adapter<SpareReqAdapter.ViewHo
         return serviceSpareRequestModels.size();
     }
 
-    public interface ItemClickListener  {
+    public interface ItemClickListener {
         void onItemCheck(ServiceSpareRequestModel ServiceSpareRequestModel);
 
     }
@@ -190,8 +250,8 @@ public class SpareReqAdapter extends RecyclerView.Adapter<SpareReqAdapter.ViewHo
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            tvReq=itemView.findViewById(R.id.tvReq);
-            rbReq=itemView.findViewById(R.id.rbReq);
+            tvReq = itemView.findViewById(R.id.tvReq);
+            rbReq = itemView.findViewById(R.id.rbReq);
         }
     }
 }

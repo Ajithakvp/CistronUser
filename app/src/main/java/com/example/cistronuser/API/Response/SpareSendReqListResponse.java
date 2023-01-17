@@ -13,7 +13,7 @@ public class SpareSendReqListResponse {
     @SerializedName("action")
     private String  action;
 
-    @SerializedName("action")
+    @SerializedName("response")
     private ArrayList<SpareSendReqListModel>spareSendReqListModels=new ArrayList<>();
 
     public String getAction() {

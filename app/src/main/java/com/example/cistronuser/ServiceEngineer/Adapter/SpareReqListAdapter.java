@@ -2,20 +2,34 @@ package com.example.cistronuser.ServiceEngineer.Adapter;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.cistronuser.API.APIClient;
+import com.example.cistronuser.API.Interface.DeletedAPIInterface;
+import com.example.cistronuser.API.Interface.ServiceSpareReqDeleteListInterface;
 import com.example.cistronuser.API.Model.SpareSendReqListModel;
+import com.example.cistronuser.API.Response.DeleteResponse;
+import com.example.cistronuser.API.Response.ServiceSpareReqDeleteListResponse;
+import com.example.cistronuser.Common.PreferenceManager;
 import com.example.cistronuser.R;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SpareReqListAdapter extends RecyclerView.Adapter<SpareReqListAdapter.ViewHolder> {
     
@@ -56,8 +70,61 @@ public class SpareReqListAdapter extends RecyclerView.Adapter<SpareReqListAdapte
     }
 
     private void CallSpareDelete(String id) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity,R.style.AlertDialogCustom);
+        builder.setMessage("Are you sure you want to delete Spare Request List?");
+        builder.setTitle("Deleted!");
+        builder.setIcon(R.drawable.ic_baseline_delete_24);
+        builder.setCancelable(false);
+        builder.setPositiveButton("yes", (new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                final ProgressDialog progressDialog = new ProgressDialog(activity,R.style.ProgressBarDialog);
+                progressDialog.setMessage("Loading...");
+                progressDialog.setCancelable(false);
+                progressDialog.show();
+                ServiceSpareReqDeleteListInterface serviceSpareReqDeleteListInterface=APIClient.getClient().create(ServiceSpareReqDeleteListInterface.class);
+                serviceSpareReqDeleteListInterface.CallDelete("deleteSpareRequestTmp",id).enqueue(new Callback<ServiceSpareReqDeleteListResponse>() {
+                    @Override
+                    public void onResponse(Call<ServiceSpareReqDeleteListResponse> call, Response<ServiceSpareReqDeleteListResponse> response) {
+                        try{
+                            if (response.isSuccessful()){
+                                progressDialog.dismiss();
+                                Toast.makeText(activity, response.body().getResponse(), Toast.LENGTH_SHORT).show();
+                                activity.finish();
+                                activity.overridePendingTransition(0, 0);
+                                activity.startActivity(activity.getIntent());
+                                activity.overridePendingTransition(0, 0);
+                            }
+
+                        }catch (Exception e){
+
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ServiceSpareReqDeleteListResponse> call, Throwable t) {
+
+                    }
+                });
+
+
+
+            }
+        }));
+
+
+        builder.setNegativeButton("No", (new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+            }
+        }));
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
 
     }
+
 
     @Override
     public int getItemCount() {

@@ -92,6 +92,7 @@ public class UpcomingCallAdapter extends RecyclerView.Adapter<UpcomingCallAdapte
             public void onClick(View v) {
                 Dialog dialog=new Dialog(activity);
                 dialog.setContentView(R.layout.serivice_details_dialog);
+                dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 ivClose=dialog.findViewById(R.id.ivClose);
                 rvServiceDetails=dialog.findViewById(R.id.rvServiceDetails);
