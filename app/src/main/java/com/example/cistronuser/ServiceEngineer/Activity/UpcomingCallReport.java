@@ -19,6 +19,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
@@ -158,6 +159,8 @@ public class UpcomingCallReport extends AppCompatActivity  {
         spSubComplaint = findViewById(R.id.spSubComplaint);
 
 
+
+
         // ************ File Access Permission ***********//
         ActivityCompat.requestPermissions(this,
                 new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -169,6 +172,7 @@ public class UpcomingCallReport extends AppCompatActivity  {
         String id = getIntent().getStringExtra("id");
         strRating= String.valueOf(ratingBar.getRating());
         // *********** GetString End **********//
+
 
         //********Customer Detalils ******************//
         final ProgressDialog progressDialog = new ProgressDialog(this, R.style.ProgressBarDialog);
@@ -274,6 +278,13 @@ public class UpcomingCallReport extends AppCompatActivity  {
         spCallType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if(callTypeModels.get(position).getText().trim().equals("Paid")){
+                    tvCusInvoice.setVisibility(View.VISIBLE);
+
+                }else{
+                    tvCusInvoice.setVisibility(View.GONE);
+                }
 
 
             }

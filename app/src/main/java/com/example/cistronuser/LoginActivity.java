@@ -94,6 +94,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
         edPass.setText(PreferenceManager.getLoginPwd(this));
 
 
+
         // *****LocationPermission ******//
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(getApplicationContext(),
@@ -173,7 +174,18 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
             public void onAuthenticationSucceeded(
                     @NonNull BiometricPrompt.AuthenticationResult result) {
                 super.onAuthenticationSucceeded(result);
-                CallLogin(EmpID, Pass, Latitude, Longtitude, AddressLine, ip);
+
+                if (edName.getText().toString().trim().length() == 0) {
+                    edName.setError("Enter the Employee ID");
+                    edName.requestFocus();
+                    tvfailed.setVisibility(View.GONE);
+                } else if (edPass.getText().toString().trim().length() == 0) {
+                    edPass.setError("Enter the Password");
+                    edPass.requestFocus();
+                    tvfailed.setVisibility(View.GONE);
+                } else {
+                    CallLogin( Latitude, Longtitude, AddressLine, ip);
+                }
               //  Toast.makeText(getApplicationContext(),"Authentication succeeded!", Toast.LENGTH_SHORT).show();
             }
 
@@ -214,7 +226,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
                     edPass.requestFocus();
                     tvfailed.setVisibility(View.GONE);
                 } else {
-                    CallLogin(EmpID, Pass, Latitude, Longtitude, AddressLine, ip);
+                    CallLogin( Latitude, Longtitude, AddressLine, ip);
 
                     // Toast.makeText(LoginActivity.this, "Incorrect Employee ID and Password", Toast.LENGTH_SHORT).show();
                 }
@@ -269,7 +281,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
 
 
 
-    private void CallLogin(String empID, String pass, double latitude, double longtitude, String addressLine, String ip) {
+    private void CallLogin(double latitude, double longtitude, String addressLine, String ip) {
         final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Employee Login...");
         progressDialog.setCancelable(false);
@@ -299,7 +311,6 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
                        PreferenceManager.setEmpCompany(LoginActivity.this,response.body().getCompany());
                        PreferenceManager.set_ismanager(LoginActivity.this,response.body().getIs_manager());
                        Intent intent=new Intent(LoginActivity.this,DashboardActivity.class);
-                       intent.putExtra("Pass",pass);
                        intent.putExtra("EmpID",response.body().getEmpid());
                        intent.putExtra("Name",response.body().getName());
                        intent.putExtra("Branch",response.body().getBranch());
