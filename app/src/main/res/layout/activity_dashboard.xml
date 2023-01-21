@@ -755,7 +755,7 @@
                                 android:layout_height="40dp"
                                 android:layout_centerVertical="true"
                                 android:layout_marginLeft="30dp"
-                                android:src="@drawable/expensereport"
+                                android:src="@drawable/upcomingcall"
                                 android:tint="@color/white"
                                 tools:ignore="UseAppTint" />
 
@@ -829,7 +829,7 @@
                                 android:layout_height="40dp"
                                 android:layout_centerVertical="true"
                                 android:layout_marginLeft="30dp"
-                                android:src="@drawable/expensereport"
+                                android:src="@drawable/pendingcall"
                                 android:tint="@color/white"
                                 tools:ignore="UseAppTint" />
 

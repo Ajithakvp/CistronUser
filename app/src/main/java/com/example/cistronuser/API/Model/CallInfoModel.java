@@ -10,6 +10,8 @@ public class CallInfoModel {
     //            "proSerial": "10580820",
     //            "createdBy": "(e000) System Generated",
     //            "reportBy": "Dr. sujay sada - 9848522663"
+    //"logistics_bp_install": "68440",
+    //      "logistics_bp_installr": "0"
 
 
     @SerializedName("custDetail")
@@ -27,6 +29,28 @@ public class CallInfoModel {
     @SerializedName("reportBy")
     private String reportBy;
 
+    @SerializedName("logistics_bp_install")
+    private String logistics_bp_install;
+
+    @SerializedName("logistics_bp_installr")
+    private String logistics_bp_installr;
+
+
+    public String getLogistics_bp_install() {
+        return logistics_bp_install;
+    }
+
+    public void setLogistics_bp_install(String logistics_bp_install) {
+        this.logistics_bp_install = logistics_bp_install;
+    }
+
+    public String getLogistics_bp_installr() {
+        return logistics_bp_installr;
+    }
+
+    public void setLogistics_bp_installr(String logistics_bp_installr) {
+        this.logistics_bp_installr = logistics_bp_installr;
+    }
 
     public String getCustDetail() {
         return custDetail;

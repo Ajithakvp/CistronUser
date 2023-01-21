@@ -263,7 +263,7 @@ public class DashboardActivity extends Activity {
                 progressDialog.setCancelable(false);
                 progressDialog.show();
                 AlertDialog.Builder builder = new AlertDialog.Builder(DashboardActivity.this, R.style.AlertDialogCustom);
-                builder.setMessage("Do you want to LogOut");
+                builder.setMessage("Do you want to LogOut ?");
                 builder.setTitle("Log Out!");
                 builder.setIcon(R.drawable.logout);
                 builder.setCancelable(false);
