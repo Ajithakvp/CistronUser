@@ -7,5 +7,12 @@
         android:topLeftRadius="1000dp"
         android:topRightRadius="100dp"
         />
+    <gradient
+        android:angle="180"
+        android:centerColor="@color/whiteLite2"
+        android:endColor="#6495ED"
+        android:startColor="#6495ED"
+        android:type="linear" />
+
 
 </shape>

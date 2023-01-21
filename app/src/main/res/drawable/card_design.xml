@@ -8,4 +8,11 @@
         android:bottomRightRadius="100dp"
         />
 
+    <gradient
+        android:angle="90"
+        android:centerColor="@color/whiteLite2"
+        android:endColor="#6495ED"
+        android:startColor="#6495ED"
+        android:type="linear" />
+
 </shape>

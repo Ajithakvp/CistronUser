@@ -11,14 +11,12 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:background="@drawable/login_cardleft"
-        android:backgroundTint="#6495ED"
         android:layout_height="250dp"
        />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:background="@drawable/login_card"
-        android:backgroundTint="#6495ED"
         android:layout_alignParentBottom="true"
         android:layout_height="250dp"
         />
