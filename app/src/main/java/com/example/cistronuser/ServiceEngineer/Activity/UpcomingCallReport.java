@@ -83,10 +83,35 @@ public class UpcomingCallReport extends AppCompatActivity {
     TextView tvCusInvoice, tvFollowUpDate, tvStartingTime, tvEndTime, tvserviceReportAttach, tvSubmit;
     EditText edName, edMobile, edWorkdone, edEngineerAdvice, edReason, edPendingReason;
     RadioGroup rbGrp;
+    int ConsumerSpareYorN;
     TextInputLayout tvReason, tvPendingReason;
     RadioButton rbYes, rbNo;
     CheckBox cbAttach;
     RatingBar ratingBar;
+
+    //Received pending sales payment
+    RelativeLayout rlRevPaymentPending;
+    RadioGroup rbGrp1;
+    int paymentYorNID;
+    RadioButton rbPaymentYes, rbPOaymentNo;
+    TextView tvSaleORserviceAmtTag, tvRevPendingPaymnet;
+    EditText edSaleORserviceAmt, edSpareAmt;
+
+    // Yes Received Payment
+    RelativeLayout rlYesRevPayment;
+    TextView tvDepositedDate;
+    EditText edCheckUTRno;
+
+    // No ed Payment
+    RelativeLayout rlNoRevPayment;
+    RadioGroup rbGrp2;
+    RadioButton rbPaymentCloseYes, rbPaymentCloseNo;
+
+    // Spare Consumer
+    RelativeLayout rlDCConsumerSpareFile;
+    File spareFile1, spareFile2, spareFile3;
+    TextView tvSpareFile1, tvSpareFile2, tvSpareFile3;
+    String strsparefile1, strsparefile2, strsparefile3;
 
     //Installation
     CardView cvInstallation;
@@ -181,6 +206,38 @@ public class UpcomingCallReport extends AppCompatActivity {
         tvTotalamt = findViewById(R.id.tvTotalamt);
         // *********** Installation End *********** //
 
+
+        // *********** Consumer spare *********** //
+        rlDCConsumerSpareFile = findViewById(R.id.rlDCConsumerSpareFile);
+        tvSpareFile1 = findViewById(R.id.tvSpareFile1);
+        tvSpareFile2 = findViewById(R.id.tvSpareFile2);
+        tvSpareFile3 = findViewById(R.id.tvSpareFile3);
+        // *********** Consumer spare End *********** //
+
+
+        // *********** Yes OR No Payment Received *********** //
+        rlYesRevPayment = findViewById(R.id.rlYesRevPayment);
+        tvDepositedDate = findViewById(R.id.tvDepositedDate);
+        edCheckUTRno = findViewById(R.id.edCheckUTRno);
+        rlNoRevPayment = findViewById(R.id.rlNoRevPayment);
+        rbGrp2 = findViewById(R.id.rbGrp2);
+        rbPaymentCloseYes = findViewById(R.id.rbPaymentCloseYes);
+        rbPaymentCloseNo = findViewById(R.id.rbPaymentCloseNo);
+        // *********** Yes OR No Payment Received End *********** //
+
+
+        // *********** Received pending sales payment *********** //
+        rlRevPaymentPending = findViewById(R.id.rlRevPaymentPending);
+        rbGrp1 = findViewById(R.id.rbGrp1);
+        rbPaymentYes = findViewById(R.id.rbPaymentYes);
+        rbPOaymentNo = findViewById(R.id.rbPOaymentNo);
+        tvSaleORserviceAmtTag = findViewById(R.id.tvSaleORserviceAmtTag);
+        edSaleORserviceAmt = findViewById(R.id.edSaleORserviceAmt);
+        tvRevPendingPaymnet = findViewById(R.id.tvRevPendingPaymnet);
+        edSpareAmt = findViewById(R.id.edSpareAmt);
+        // *********** Received pending sales payment End *********** //
+
+
         // ************ File Access Permission ***********//
         ActivityCompat.requestPermissions(this,
                 new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -219,7 +276,8 @@ public class UpcomingCallReport extends AppCompatActivity {
                         tvReportby.setText(response.body().getUpcomingCallReportModel().getCallInfoModel().getReportBy());
                         tvPaymentInstallation.setText(response.body().getUpcomingCallReportModel().getCallInfoModel().getLogistics_bp_install());
                         tvRecvPaymentInstallation.setText(response.body().getUpcomingCallReportModel().getCallInfoModel().getLogistics_bp_installr());
-
+                        tvRevPendingPaymnet.setText(response.body().getUpcomingCallReportModel().getLabelModel().getLabel1());
+                        tvSaleORserviceAmtTag.setText(response.body().getUpcomingCallReportModel().getLabelModel().getLabel2());
                         SerialID1 = response.body().getUpcomingCallReportModel().getSeriesid1();
                         SerialID2 = response.body().getUpcomingCallReportModel().getSeriesid2();
 
@@ -362,13 +420,52 @@ public class UpcomingCallReport extends AppCompatActivity {
                 if (callStatusModels.get(position).getText().trim().equals("Pending")) {
                     tvPendingReason.setVisibility(View.VISIBLE);
                     tvFollowUpDate.setVisibility(View.VISIBLE);
+
+
+                    tvserviceReportAttach.setVisibility(View.VISIBLE);
+                    tvReason.setVisibility(View.GONE);
+                    tvInstallationImage1.setVisibility(View.GONE);
+                    tvInstallationImage2.setVisibility(View.GONE);
+                    tvInstallationImage3.setVisibility(View.GONE);
+                    tvWarrentycard.setVisibility(View.GONE);
+                    tvInstallReportAttach.setVisibility(View.GONE);
+
                 } else {
                     tvPendingReason.setVisibility(View.GONE);
                     tvFollowUpDate.setVisibility(View.GONE);
                 }
                 if (callStatusModels.get(position).getText().trim().equals("Require Spare's")) {
+                    tvserviceReportAttach.setVisibility(View.VISIBLE);
+                    tvReason.setVisibility(View.GONE);
+                    tvInstallationImage1.setVisibility(View.GONE);
+                    tvInstallationImage2.setVisibility(View.GONE);
+                    tvInstallationImage3.setVisibility(View.GONE);
+                    tvWarrentycard.setVisibility(View.GONE);
+                    tvInstallReportAttach.setVisibility(View.GONE);
+
                     CallRequiredSpareDialog();
                 }
+
+
+                if (spCallType.getSelectedItem().equals("Installation") && spCallStatus.getSelectedItem().equals("Closed")) {
+                    tvInstallationImage1.setVisibility(View.VISIBLE);
+                    tvInstallationImage2.setVisibility(View.VISIBLE);
+                    tvInstallationImage3.setVisibility(View.VISIBLE);
+                    tvWarrentycard.setVisibility(View.VISIBLE);
+                    tvInstallReportAttach.setVisibility(View.VISIBLE);
+                    tvserviceReportAttach.setVisibility(View.GONE);
+                    tvReason.setVisibility(View.GONE);
+
+                } else if (callStatusModels.get(position).getText().trim().equals("Closed")) {
+                    rlRevPaymentPending.setVisibility(View.VISIBLE);
+                    rlDCConsumerSpareFile.setVisibility(View.VISIBLE);
+
+                } else {
+
+                    rlRevPaymentPending.setVisibility(View.GONE);
+                    rlDCConsumerSpareFile.setVisibility(View.GONE);
+                }
+
 
             }
 
@@ -399,7 +496,7 @@ public class UpcomingCallReport extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    if (spCallType.getSelectedItem().equals("Installation")) {
+                    if (spCallType.getSelectedItem().equals("Installation") && spCallStatus.getSelectedItem().equals("Closed")) {
                         tvInstallationImage1.setVisibility(View.VISIBLE);
                         tvInstallationImage2.setVisibility(View.VISIBLE);
                         tvInstallationImage3.setVisibility(View.VISIBLE);
@@ -410,7 +507,13 @@ public class UpcomingCallReport extends AppCompatActivity {
                     } else {
                         tvserviceReportAttach.setVisibility(View.VISIBLE);
                         tvReason.setVisibility(View.GONE);
+                        tvInstallationImage1.setVisibility(View.GONE);
+                        tvInstallationImage2.setVisibility(View.GONE);
+                        tvInstallationImage3.setVisibility(View.GONE);
+                        tvWarrentycard.setVisibility(View.GONE);
+                        tvInstallReportAttach.setVisibility(View.GONE);
                     }
+
 
                 } else {
                     tvReason.setVisibility(View.VISIBLE);
@@ -421,6 +524,8 @@ public class UpcomingCallReport extends AppCompatActivity {
                     tvWarrentycard.setVisibility(View.GONE);
                     tvInstallReportAttach.setVisibility(View.GONE);
                 }
+
+
             }
         });
 
@@ -516,11 +621,84 @@ public class UpcomingCallReport extends AppCompatActivity {
             }
         });
 
+        tvSpareFile1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                    intent.setType("*/*");
+                    startActivityForResult(intent, 8);
+                } catch (Exception e) {
+
+                }
+            }
+        });
+
+        tvSpareFile2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                    intent.setType("*/*");
+                    startActivityForResult(intent, 9);
+                } catch (Exception e) {
+
+                }
+            }
+        });
+
+        tvSpareFile3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                    intent.setType("*/*");
+                    startActivityForResult(intent, 10);
+                } catch (Exception e) {
+
+                }
+            }
+        });
+
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
             }
+        });
+
+        tvDepositedDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar calendar = Calendar.getInstance();
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(UpcomingCallReport.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                        String moth, dt;
+
+                        moth = ((month + 1) > 9) ? "" + (month + 1) : ("0" + (month + 1));
+
+                        dt = (day > 9) ? "" + day : ("0" + day);
+
+
+                        String strDate = year + "-" + moth + "-" + dt;
+                        tvDepositedDate.setText(strDate);
+
+                    }
+
+                }, year, month, dayOfMonth);
+
+                datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
+
+
+                datePickerDialog.show();
+
+
+            }
+
         });
 
         tvFollowUpDate.setOnClickListener(new View.OnClickListener() {
@@ -600,6 +778,53 @@ public class UpcomingCallReport extends AppCompatActivity {
                 timePickerDialog.show();
             }
         });
+
+        //  ************** Do you want to consume spares Check ************** //
+
+        rbGrp.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                View view = rbGrp.findViewById(checkedId);
+                int rb = rbGrp.indexOfChild(view);
+                switch (rb) {
+                    case 0:
+                        Dialog dialog = new Dialog(UpcomingCallReport.this);
+                        dialog.setContentView(R.layout.consumer_spare_dialog_recycleview);
+                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        dialog.show();
+                        break;
+                    case 1:
+                        break;
+                }
+            }
+        });
+
+
+        //  ************** Do you want to consume spares Check End ************** //
+
+
+        //  ************** Received pending sales payment Check ************** //
+        rbGrp1.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                View view = rbGrp1.findViewById(checkedId);
+
+                int rb1 = rbGrp1.indexOfChild(view);
+                switch (rb1) {
+                    case 0:
+                        rlYesRevPayment.setVisibility(View.VISIBLE);
+                        rlNoRevPayment.setVisibility(View.GONE);
+                        break;
+                    case 1:
+                        rlYesRevPayment.setVisibility(View.GONE);
+                        rlNoRevPayment.setVisibility(View.VISIBLE);
+                        break;
+
+                }
+
+            }
+        });
+        //  ************** Received pending sales payment Check End ************** //
 
     }
 
@@ -958,6 +1183,120 @@ public class UpcomingCallReport extends AppCompatActivity {
 
                     try {
                         fileinstallReport = FileUtli.from(this, contentUri);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+                break;
+
+
+            case 8:
+                if (resultCode == RESULT_OK) {
+                    Uri contentUri = data.getData();
+                    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+                    strsparefile1 = timeStamp + "." + getFileExt(contentUri);
+                    Toast.makeText(this, "File Name" + strsparefile1, Toast.LENGTH_SHORT).show();
+
+                    try {
+                        if (strsparefile1.length() > 0) {
+//                            String myStr = strSerAttach;
+//                            int index=myStr.lastIndexOf(".");
+//                            String extension = myStr.substring(index);
+//                            if(extension.equals(".pdf") || extension.equals(".jpeg")  || extension.equals(".png")){
+                            tvSpareFile1.setText(strsparefile1);
+//                            }else{
+//                                AlertDialog.Builder builder=new AlertDialog.Builder(this,R.style.AlertDialogCustom);
+//                                builder.setMessage("Please Select Pdf and Image File Only ..");
+//                                AlertDialog dialog=builder.create();
+//                                dialog.show();
+//                            }
+
+
+                        }
+
+                    } catch (Exception e) {
+
+                    }
+
+                    try {
+                        spareFile1 = FileUtli.from(this, contentUri);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+                break;
+
+
+            case 9:
+                if (resultCode == RESULT_OK) {
+                    Uri contentUri = data.getData();
+                    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+                    strsparefile2 = timeStamp + "." + getFileExt(contentUri);
+                    Toast.makeText(this, "File Name" + strsparefile2, Toast.LENGTH_SHORT).show();
+
+                    try {
+                        if (strsparefile2.length() > 0) {
+//                            String myStr = strSerAttach;
+//                            int index=myStr.lastIndexOf(".");
+//                            String extension = myStr.substring(index);
+//                            if(extension.equals(".pdf") || extension.equals(".jpeg")  || extension.equals(".png")){
+                            tvSpareFile2.setText(strsparefile2);
+//                            }else{
+//                                AlertDialog.Builder builder=new AlertDialog.Builder(this,R.style.AlertDialogCustom);
+//                                builder.setMessage("Please Select Pdf and Image File Only ..");
+//                                AlertDialog dialog=builder.create();
+//                                dialog.show();
+//                            }
+
+
+                        }
+
+                    } catch (Exception e) {
+
+                    }
+
+                    try {
+                        spareFile2 = FileUtli.from(this, contentUri);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+                break;
+
+
+            case 10:
+                if (resultCode == RESULT_OK) {
+                    Uri contentUri = data.getData();
+                    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+                    strsparefile3 = timeStamp + "." + getFileExt(contentUri);
+                    Toast.makeText(this, "File Name" + strsparefile3, Toast.LENGTH_SHORT).show();
+
+                    try {
+                        if (strsparefile3.length() > 0) {
+//                            String myStr = strSerAttach;
+//                            int index=myStr.lastIndexOf(".");
+//                            String extension = myStr.substring(index);
+//                            if(extension.equals(".pdf") || extension.equals(".jpeg")  || extension.equals(".png")){
+                            tvSpareFile3.setText(strsparefile3);
+//                            }else{
+//                                AlertDialog.Builder builder=new AlertDialog.Builder(this,R.style.AlertDialogCustom);
+//                                builder.setMessage("Please Select Pdf and Image File Only ..");
+//                                AlertDialog dialog=builder.create();
+//                                dialog.show();
+//                            }
+
+
+                        }
+
+                    } catch (Exception e) {
+
+                    }
+
+                    try {
+                        spareFile3 = FileUtli.from(this, contentUri);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

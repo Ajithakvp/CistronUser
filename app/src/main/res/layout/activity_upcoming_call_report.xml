@@ -74,171 +74,167 @@
                     android:orientation="vertical">
 
 
-
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        app:cardCornerRadius="10dp"
-                        app:cardElevation="10dp"
                         android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
                         android:layout_marginRight="10dp"
-                        android:layout_height="wrap_content">
+                        android:layout_marginBottom="10dp"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="10dp">
 
 
-
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:background="@color/whiteLite4"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/tvCusDetailsTag"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="10dp"
-                            android:fontFamily="@font/openssansreqular"
-                            android:text="Customer Details :"
-                            android:textColor="@color/RoseRed"
-                            android:textSize="16dp" />
-
-                        <TextView
-                            android:id="@+id/tvCusDetails"
+                        <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="6dp"
-                            android:textAlignment="center"
-                            android:layout_marginRight="4dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_below="@+id/tvCusDetailsTag"
-                            android:fontFamily="@font/openssansreqular"
-                            android:textColor="@color/blue"
-                            android:textSize="16dp" />
+                            android:background="@color/whiteLite4">
+
+                            <TextView
+                                android:id="@+id/tvCusDetailsTag"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="10dp"
+                                android:fontFamily="@font/openssansreqular"
+                                android:text="Customer Details :"
+                                android:textColor="@color/RoseRed"
+                                android:textSize="16dp" />
+
+                            <TextView
+                                android:id="@+id/tvCusDetails"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/tvCusDetailsTag"
+                                android:layout_marginLeft="6dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginRight="4dp"
+                                android:fontFamily="@font/openssansreqular"
+                                android:textAlignment="center"
+                                android:textColor="@color/blue"
+                                android:textSize="16dp" />
 
 
-                        <TextView
-                            android:id="@+id/tvProdDetailsTag"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/tvCusDetails"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="10dp"
-                            android:fontFamily="@font/openssansreqular"
-                            android:text="Product Details :"
-                            android:textColor="@color/RoseRed"
-                            android:textSize="16dp" />
+                            <TextView
+                                android:id="@+id/tvProdDetailsTag"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/tvCusDetails"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="10dp"
+                                android:fontFamily="@font/openssansreqular"
+                                android:text="Product Details :"
+                                android:textColor="@color/RoseRed"
+                                android:textSize="16dp" />
 
-                        <TextView
-                            android:id="@+id/tvProdDetails"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/tvProdDetailsTag"
-                            android:layout_marginLeft="6dp"
-                            android:textAlignment="center"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginRight="4dp"
-                            android:fontFamily="@font/openssansreqular"
-                            android:textColor="@color/blue"
-                            android:textSize="16dp" />
+                            <TextView
+                                android:id="@+id/tvProdDetails"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/tvProdDetailsTag"
+                                android:layout_marginLeft="6dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginRight="4dp"
+                                android:fontFamily="@font/openssansreqular"
+                                android:textAlignment="center"
+                                android:textColor="@color/blue"
+                                android:textSize="16dp" />
 
-                        <TextView
-                            android:id="@+id/tvProdSerialTag"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/tvProdDetails"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="10dp"
-                            android:fontFamily="@font/openssansreqular"
-                            android:text="Product Serial # :"
-                            android:textColor="@color/RoseRed"
-                            android:textSize="16dp" />
+                            <TextView
+                                android:id="@+id/tvProdSerialTag"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/tvProdDetails"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="10dp"
+                                android:fontFamily="@font/openssansreqular"
+                                android:text="Product Serial # :"
+                                android:textColor="@color/RoseRed"
+                                android:textSize="16dp" />
 
-                        <TextView
-                            android:id="@+id/tvProdSerial"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/tvProdSerialTag"
-                            android:layout_marginLeft="6dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginRight="4dp"
-                            android:textAlignment="center"
-                            android:fontFamily="@font/openssansreqular"
-                            android:textColor="@color/blue"
-                            android:textSize="16dp" />
-
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="0.9dp"
-                            android:layout_marginTop="7dp"
-                            android:id="@+id/view"
-                            android:layout_below="@id/tvProdSerial"
-                            android:background="@color/black"/>
+                            <TextView
+                                android:id="@+id/tvProdSerial"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/tvProdSerialTag"
+                                android:layout_marginLeft="6dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginRight="4dp"
+                                android:fontFamily="@font/openssansreqular"
+                                android:textAlignment="center"
+                                android:textColor="@color/blue"
+                                android:textSize="16dp" />
 
 
-                        <TextView
-                            android:id="@+id/tvCreatedTag"
-                            android:layout_width="120dp"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/view"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="10dp"
-                            android:fontFamily="@font/openssansbold"
-                            android:text="Created by    :"
-                            android:textColor="@color/RoseRed"
-                            android:textSize="16dp" />
-
-                        <TextView
-                            android:id="@+id/tvCreated"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/view"
-                            android:layout_marginLeft="6dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_toRightOf="@+id/tvCreatedTag"
-                            android:fontFamily="@font/openssansbold"
-                            android:textColor="@color/blue"
-                            android:textSize="16dp" />
-
-                        <TextView
-                            android:id="@+id/tvReportbyTag"
-                            android:layout_width="120dp"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/tvCreated"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="10dp"
-                            android:fontFamily="@font/openssansbold"
-                            android:text="Reported by :"
-                            android:textColor="@color/RoseRed"
-                            android:textSize="16dp" />
-
-                        <TextView
-                            android:id="@+id/tvReportby"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/tvCreated"
-                            android:layout_marginLeft="6dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_toRightOf="@+id/tvReportbyTag"
-                            android:fontFamily="@font/openssansbold"
-                            android:textColor="@color/blue"
-                            android:textSize="16dp" />
+                            <View
+                                android:id="@+id/view"
+                                android:layout_width="match_parent"
+                                android:layout_height="0.9dp"
+                                android:layout_below="@id/tvProdSerial"
+                                android:layout_marginTop="7dp"
+                                android:background="@color/black" />
 
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="0.9dp"
-                            android:layout_marginTop="7dp"
-                            android:layout_below="@id/tvReportby"
-                    android:layout_marginBottom="8dp"/>
+                            <TextView
+                                android:id="@+id/tvCreatedTag"
+                                android:layout_width="120dp"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/view"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="10dp"
+                                android:fontFamily="@font/openssansbold"
+                                android:text="Created by    :"
+                                android:textColor="@color/RoseRed"
+                                android:textSize="16dp" />
+
+                            <TextView
+                                android:id="@+id/tvCreated"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/view"
+                                android:layout_marginLeft="6dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_toRightOf="@+id/tvCreatedTag"
+                                android:fontFamily="@font/openssansbold"
+                                android:textColor="@color/blue"
+                                android:textSize="16dp" />
+
+                            <TextView
+                                android:id="@+id/tvReportbyTag"
+                                android:layout_width="120dp"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/tvCreated"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="10dp"
+                                android:fontFamily="@font/openssansbold"
+                                android:text="Reported by :"
+                                android:textColor="@color/RoseRed"
+                                android:textSize="16dp" />
+
+                            <TextView
+                                android:id="@+id/tvReportby"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/tvCreated"
+                                android:layout_marginLeft="6dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_toRightOf="@+id/tvReportbyTag"
+                                android:fontFamily="@font/openssansbold"
+                                android:textColor="@color/blue"
+                                android:textSize="16dp" />
 
 
-                    </RelativeLayout>
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="0.9dp"
+                                android:layout_below="@id/tvReportby"
+                                android:layout_marginTop="7dp"
+                                android:layout_marginBottom="8dp" />
+
+
+                        </RelativeLayout>
 
                     </androidx.cardview.widget.CardView>
-
 
 
                     <TextView
@@ -284,19 +280,19 @@
                         android:visibility="visible" />
 
                     <androidx.cardview.widget.CardView
-                        android:layout_width="match_parent"
-                        android:layout_marginTop="18dp"
-                        app:cardCornerRadius="10dp"
                         android:id="@+id/cvInstallation"
-                        android:visibility="gone"
-                        android:layout_marginRight="8dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
-                        android:layout_height="wrap_content">
+                        android:layout_marginTop="18dp"
+                        android:layout_marginRight="8dp"
+                        android:visibility="gone"
+                        app:cardCornerRadius="10dp">
 
                         <RelativeLayout
                             android:layout_width="match_parent"
-                            android:background="@color/whiteLite4"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:background="@color/whiteLite4">
 
 
                             <TextView
@@ -314,8 +310,8 @@
                                 android:id="@+id/tvInstallterm"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
                                 android:layout_below="@+id/tvInstallDateTag"
+                                android:layout_marginLeft="10dp"
                                 android:layout_marginTop="10dp"
                                 android:fontFamily="@font/openssanssemibold"
                                 android:text=" Installation Date is call closing date.\n Please note: warranty is calculated from Installation Date. "
@@ -327,8 +323,8 @@
                                 android:id="@+id/tvInstallDate"
                                 android:layout_width="match_parent"
                                 android:layout_height="60dp"
-                                android:layout_marginLeft="8dp"
                                 android:layout_below="@+id/tvInstallterm"
+                                android:layout_marginLeft="8dp"
                                 android:layout_marginTop="18dp"
                                 android:layout_marginRight="8dp"
                                 android:background="@drawable/edittext"
@@ -345,8 +341,8 @@
                                 android:id="@+id/tvPaymentInstallationTag"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
                                 android:layout_below="@+id/tvInstallDate"
+                                android:layout_marginLeft="10dp"
                                 android:layout_marginTop="10dp"
                                 android:fontFamily="@font/openssansbold"
                                 android:text="Payment on Installation : "
@@ -357,8 +353,8 @@
                                 android:id="@+id/tvPaymentInstallation"
                                 android:layout_width="match_parent"
                                 android:layout_height="60dp"
-                                android:layout_marginLeft="8dp"
                                 android:layout_below="@+id/tvPaymentInstallationTag"
+                                android:layout_marginLeft="8dp"
                                 android:layout_marginTop="18dp"
                                 android:layout_marginRight="8dp"
                                 android:background="@drawable/edittext"
@@ -376,8 +372,8 @@
                                 android:id="@+id/tvRecvPaymentInstallationTag"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
                                 android:layout_below="@+id/tvPaymentInstallation"
+                                android:layout_marginLeft="10dp"
                                 android:layout_marginTop="10dp"
                                 android:fontFamily="@font/openssansbold"
                                 android:text="Received Payment on Installation : "
@@ -388,8 +384,8 @@
                                 android:id="@+id/tvRecvPaymentInstallation"
                                 android:layout_width="match_parent"
                                 android:layout_height="60dp"
-                                android:layout_marginLeft="8dp"
                                 android:layout_below="@+id/tvRecvPaymentInstallationTag"
+                                android:layout_marginLeft="8dp"
                                 android:layout_marginTop="18dp"
                                 android:layout_marginRight="8dp"
                                 android:background="@drawable/edittext"
@@ -407,8 +403,8 @@
                                 android:id="@+id/tvTotalamt"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="15dp"
                                 android:layout_below="@+id/tvRecvPaymentInstallation"
+                                android:layout_marginLeft="15dp"
                                 android:layout_marginTop="18dp"
                                 android:layout_marginBottom="20dp"
                                 android:fontFamily="@font/openssansbold"
@@ -422,14 +418,11 @@
                     </androidx.cardview.widget.CardView>
 
 
-
-
-
                     <RelativeLayout
-                        android:layout_width="match_parent"
                         android:id="@+id/rlComplaint"
-                        android:visibility="gone"
-                        android:layout_height="wrap_content">
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone">
 
                         <TextView
                             android:id="@+id/tvComplaint"
@@ -450,22 +443,22 @@
                             android:layout_marginLeft="8dp"
                             android:layout_marginTop="18dp"
                             android:layout_marginRight="8dp"
-                            app:hintText="Select a Complaint"
                             android:background="@drawable/edittext"
                             android:backgroundTint="@color/whiteLite2"
                             android:fontFamily="@font/semibold"
                             android:gravity="left"
                             android:paddingLeft="10dp"
-                            android:visibility="visible" />
+                            android:visibility="visible"
+                            app:hintText="Select a Complaint" />
 
 
                         <TextView
                             android:id="@+id/tvSubComplaint"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_below="@id/spComplaint"
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="10dp"
-                            android:layout_below="@id/spComplaint"
                             android:fontFamily="@font/openssansbold"
                             android:text="Complaint Subcategory :"
                             android:textColor="@color/RoseRed"
@@ -479,15 +472,13 @@
                             android:layout_marginLeft="8dp"
                             android:layout_marginTop="18dp"
                             android:layout_marginRight="8dp"
-                            app:hintText="Select Complaint SubCategory"
                             android:background="@drawable/edittext"
                             android:backgroundTint="@color/whiteLite2"
                             android:fontFamily="@font/semibold"
                             android:gravity="left"
                             android:paddingLeft="10dp"
-                            android:visibility="visible" />
-
-
+                            android:visibility="visible"
+                            app:hintText="Select Complaint SubCategory" />
 
 
                     </RelativeLayout>
@@ -519,14 +510,13 @@
                         android:visibility="visible" />
 
 
-
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/tvPendingReason"
                         style="@style/textInput2"
-                        android:visibility="gone"
                         android:layout_marginLeft="8dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginRight="8dp"
+                        android:visibility="gone"
                         app:endIconMode="clear_text"
                         app:errorEnabled="true">
 
@@ -571,6 +561,7 @@
                                 android:id="@+id/rbYes"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/openssansbold"
                                 android:text="Yes" />
 
 
@@ -579,6 +570,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="20dp"
+                                android:fontFamily="@font/openssansbold"
                                 android:text="No" />
 
 
@@ -588,10 +580,85 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/rbGrp"
+                            android:id="@+id/rvSpareConsumer"
                             android:layout_centerHorizontal="true"
                             android:layout_marginLeft="5dp"
                             android:layout_marginRight="5dp"
                             android:visibility="gone" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_below="@+id/rvSpareConsumer"
+                            android:id="@+id/rlDCConsumerSpareFile"
+                            android:visibility="gone"
+                            android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tvDCInvoiceConsumerSpare"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/openssansreqular"
+                            android:text="DC/Invoice for Consumed spares"
+                            android:textColor="@color/RoseRed"
+                            android:textSize="14dp" />
+
+
+                        <TextView
+                            android:id="@+id/tvSpareFile1"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="18dp"
+                            android:layout_below="@+id/tvDCInvoiceConsumerSpare"
+                            android:layout_marginRight="8dp"
+                            android:background="@drawable/edittext"
+                            android:backgroundTint="@color/whiteLite2"
+                            android:fontFamily="@font/semibold"
+                            android:gravity="center_vertical"
+                            android:hint=" File 1"
+                            android:paddingLeft="10dp"
+                            android:textColor="@color/black"
+                            android:textSize="18dp"
+                            android:visibility="visible" />
+
+                        <TextView
+                            android:id="@+id/tvSpareFile2"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="18dp"
+                            android:layout_below="@+id/tvSpareFile1"
+                            android:layout_marginRight="8dp"
+                            android:background="@drawable/edittext"
+                            android:backgroundTint="@color/whiteLite2"
+                            android:fontFamily="@font/semibold"
+                            android:gravity="center_vertical"
+                            android:hint=" File 2"
+                            android:paddingLeft="10dp"
+                            android:textColor="@color/black"
+                            android:textSize="18dp"
+                            android:visibility="visible" />
+
+                        <TextView
+                            android:id="@+id/tvSpareFile3"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="18dp"
+                            android:layout_below="@+id/tvSpareFile2"
+                            android:layout_marginRight="8dp"
+                            android:background="@drawable/edittext"
+                            android:backgroundTint="@color/whiteLite2"
+                            android:fontFamily="@font/semibold"
+                            android:gravity="center_vertical"
+                            android:hint=" File 3"
+                            android:paddingLeft="10dp"
+                            android:textColor="@color/black"
+                            android:textSize="18dp"
+                            android:visibility="visible" />
+                        </RelativeLayout>
 
                     </RelativeLayout>
 
@@ -736,6 +803,217 @@
                             android:textSize="18dp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
+
+                    <RelativeLayout
+                        android:id="@+id/rlRevPaymentPending"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/tvRevPendingPaymnet"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/openssansbold"
+                            android:text="Received pending sales payment "
+                            android:textColor="@color/RoseRed"
+                            android:textSize="18dp" />
+
+                        <RadioGroup
+                            android:id="@+id/rbGrp1"
+                            android:layout_width="200dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tvRevPendingPaymnet"
+                            android:layout_marginLeft="30dp"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/rbPaymentYes"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/openssansbold"
+                                android:text="Yes" />
+
+
+                            <RadioButton
+                                android:id="@+id/rbPOaymentNo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:fontFamily="@font/openssansbold"
+                                android:text="No" />
+
+
+                        </RadioGroup>
+
+                        <RelativeLayout
+                            android:id="@+id/rlYesOrNoRevPayment"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/rbGrp1"
+                            android:visibility="visible">
+
+                            <RelativeLayout
+                                android:id="@+id/rlYesRevPayment"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone">
+                                <TextView
+                                    android:id="@+id/tvDepositedDate"
+                                    style="@android:style/Widget.EditText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="60dp"
+                                    android:layout_marginLeft="8dp"
+                                    android:layout_marginTop="15dp"
+                                    android:layout_marginRight="8dp"
+                                    android:background="@drawable/edittext"
+                                    android:backgroundTint="@color/whiteLite2"
+                                    android:fontFamily="@font/semibold"
+                                    android:gravity="center_vertical"
+                                    android:hint="Deposited Date"
+                                    android:paddingLeft="10dp"
+                                    android:textColor="@color/black"
+                                    android:textSize="18dp"
+                                    android:visibility="visible" />
+
+                                <EditText
+                                    android:id="@+id/edCheckUTRno"
+                                    style="@android:style/Widget.EditText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="60dp"
+                                    android:layout_below="@+id/tvDepositedDate"
+                                    android:layout_marginLeft="8dp"
+                                    android:layout_marginTop="15dp"
+                                    android:layout_marginRight="8dp"
+                                    android:background="@drawable/edittext"
+                                    android:backgroundTint="@color/whiteLite2"
+                                    android:fontFamily="@font/semibold"
+                                    android:gravity="center_vertical"
+                                    android:hint="Cheque/UTR no"
+                                    android:paddingLeft="10dp"
+                                    android:textColor="@color/black"
+                                    android:textSize="18dp"
+                                    android:visibility="visible" />
+
+
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:id="@+id/rlNoRevPayment"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone">
+
+                                <TextView
+                                    android:id="@+id/tvReallyClosePayment"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginTop="10dp"
+                                    android:fontFamily="@font/openssansbold"
+                                    android:text="Do you really want to close the call without getting payment? "
+                                    android:textColor="@color/RoseRed"
+                                    android:textSize="18dp" />
+
+                                <RadioGroup
+                                    android:id="@+id/rbGrp2"
+                                    android:layout_width="200dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/tvReallyClosePayment"
+                                    android:layout_marginLeft="30dp"
+                                    android:orientation="horizontal">
+
+                                    <RadioButton
+                                        android:id="@+id/rbPaymentCloseYes"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/openssansbold"
+                                        android:text="Yes" />
+
+
+                                    <RadioButton
+                                        android:id="@+id/rbPaymentCloseNo"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="20dp"
+                                        android:fontFamily="@font/openssansbold"
+                                        android:text="No" />
+
+                                </RadioGroup>
+                            </RelativeLayout>
+                        </RelativeLayout>
+
+                        <TextView
+                            android:id="@+id/tvSaleORserviceAmtTag"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/rlYesOrNoRevPayment"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/openssansbold"
+                            android:text="Sales Amount :"
+                            android:textColor="@color/RoseRed"
+                            android:textSize="18dp" />
+
+
+                        <EditText
+                            android:id="@+id/edSaleORserviceAmt"
+                            style="@android:style/Widget.EditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:layout_below="@+id/tvSaleORserviceAmtTag"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginRight="8dp"
+                            android:background="@drawable/edittext"
+                            android:backgroundTint="@color/whiteLite2"
+                            android:fontFamily="@font/semibold"
+                            android:gravity="center_vertical"
+                            android:hint="Amout"
+                            android:paddingLeft="10dp"
+                            android:textColor="@color/black"
+                            android:textSize="18dp"
+                            android:visibility="visible" />
+
+
+                        <TextView
+                            android:id="@+id/tvSpareAmtTag"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/edSaleORserviceAmt"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/openssansbold"
+                            android:text="Spare Amount :"
+                            android:textColor="@color/RoseRed"
+                            android:textSize="18dp" />
+
+
+                        <EditText
+                            android:id="@+id/edSpareAmt"
+                            style="@android:style/Widget.EditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:layout_below="@+id/tvSpareAmtTag"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginRight="8dp"
+                            android:background="@drawable/edittext"
+                            android:backgroundTint="@color/whiteLite2"
+                            android:fontFamily="@font/semibold"
+                            android:gravity="center_vertical"
+                            android:hint="Amout"
+                            android:paddingLeft="10dp"
+                            android:textColor="@color/black"
+                            android:textSize="18dp"
+                            android:visibility="visible" />
+
+
+                    </RelativeLayout>
+
+
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
@@ -753,22 +1031,21 @@
 
                         <CheckBox
                             android:id="@+id/cbAttach"
-                            android:layout_toRightOf="@id/tvServie"
                             android:layout_width="wrap_content"
-                            android:checked="true"
-                            android:layout_marginLeft="8dp"
                             android:layout_height="wrap_content"
-                            />
+                            android:layout_marginLeft="8dp"
+                            android:layout_toRightOf="@id/tvServie"
+                            android:checked="true" />
 
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/tvReason"
                             style="@style/textInput2"
-                            android:layout_marginLeft="8dp"
-                            android:visibility="gone"
-                            android:layout_marginRight="8dp"
-                            android:layout_marginTop="8dp"
                             android:layout_below="@+id/tvServie"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginRight="8dp"
+                            android:visibility="gone"
                             app:endIconMode="clear_text"
                             app:errorEnabled="true">
 
@@ -788,8 +1065,8 @@
                             android:id="@+id/tvserviceReportAttach"
                             android:layout_width="match_parent"
                             android:layout_height="60dp"
-                            android:layout_marginLeft="8dp"
                             android:layout_below="@id/tvReason"
+                            android:layout_marginLeft="8dp"
                             android:layout_marginTop="18dp"
                             android:layout_marginRight="8dp"
                             android:background="@drawable/edittext"
@@ -807,8 +1084,8 @@
                             android:id="@+id/tvInstallationImage1"
                             android:layout_width="match_parent"
                             android:layout_height="60dp"
-                            android:layout_marginLeft="8dp"
                             android:layout_below="@id/tvserviceReportAttach"
+                            android:layout_marginLeft="8dp"
                             android:layout_marginTop="18dp"
                             android:layout_marginRight="8dp"
                             android:background="@drawable/edittext"
@@ -825,8 +1102,8 @@
                             android:id="@+id/tvInstallationImage2"
                             android:layout_width="match_parent"
                             android:layout_height="60dp"
-                            android:layout_marginLeft="8dp"
                             android:layout_below="@id/tvInstallationImage1"
+                            android:layout_marginLeft="8dp"
                             android:layout_marginTop="18dp"
                             android:layout_marginRight="8dp"
                             android:background="@drawable/edittext"
@@ -843,8 +1120,8 @@
                             android:id="@+id/tvInstallationImage3"
                             android:layout_width="match_parent"
                             android:layout_height="60dp"
-                            android:layout_marginLeft="8dp"
                             android:layout_below="@id/tvInstallationImage2"
+                            android:layout_marginLeft="8dp"
                             android:layout_marginTop="18dp"
                             android:layout_marginRight="8dp"
                             android:background="@drawable/edittext"
@@ -861,8 +1138,8 @@
                             android:id="@+id/tvWarrentycard"
                             android:layout_width="match_parent"
                             android:layout_height="60dp"
-                            android:layout_marginLeft="8dp"
                             android:layout_below="@id/tvInstallationImage3"
+                            android:layout_marginLeft="8dp"
                             android:layout_marginTop="18dp"
                             android:layout_marginRight="8dp"
                             android:background="@drawable/edittext"
@@ -879,8 +1156,8 @@
                             android:id="@+id/tvInstallReportAttach"
                             android:layout_width="match_parent"
                             android:layout_height="60dp"
-                            android:layout_marginLeft="8dp"
                             android:layout_below="@id/tvWarrentycard"
+                            android:layout_marginLeft="8dp"
                             android:layout_marginTop="18dp"
                             android:layout_marginRight="8dp"
                             android:background="@drawable/edittext"
@@ -892,9 +1169,6 @@
                             android:textColor="@color/black"
                             android:textSize="18dp"
                             android:visibility="gone" />
-
-
-
 
 
                     </RelativeLayout>
@@ -916,8 +1190,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="72dp"
-                        android:theme="@style/RatingBar"
                         android:layout_marginTop="30dp"
+                        android:theme="@style/RatingBar"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -926,8 +1200,8 @@
                         android:layout_width="200dp"
                         android:layout_height="50dp"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="25dp"
                         android:layout_gravity="center"
+                        android:layout_marginTop="25dp"
                         android:layout_marginBottom="30dp"
                         android:background="@drawable/size"
                         android:backgroundTint="#6495ED"

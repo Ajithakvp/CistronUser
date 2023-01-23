@@ -7,12 +7,14 @@ import java.util.ArrayList;
 public class UpcomingCallReportModel {
 
 
-
+//"label":
     // "callInfo": {
     //  "callType": {
     //"callStatus": [
     //"compliantRequired": 1,
     //"complaintCategory": [
+
+
 
     @SerializedName("callInfo")
     private CallInfoModel callInfoModel;
@@ -35,6 +37,17 @@ public class UpcomingCallReportModel {
 
     @SerializedName("seriesid2")
     private String seriesid2;
+
+    @SerializedName("label")
+    private LabelModel labelModel;
+
+    public LabelModel getLabelModel() {
+        return labelModel;
+    }
+
+    public void setLabelModel(LabelModel labelModel) {
+        this.labelModel = labelModel;
+    }
 
     public String getSeriesid1() {
         return seriesid1;
