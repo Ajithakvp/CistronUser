@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -13,6 +14,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
+            android:id="@+id/cvView"
             android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp"
             app:cardCornerRadius="8dp"
@@ -22,43 +24,47 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+
+
                 <TextView
-                    android:id="@+id/tvPartName"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/tvCRNo"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
                     android:layout_alignParentStart="true"
-                    android:layout_toLeftOf="@id/tvPartNoTag"
-                    android:fontFamily="@font/openssansbold"
-                    android:text="Cistron System"
+                    android:fontFamily="@font/roboblod"
+                    android:text="CR#23010502"
                     android:textColor="@color/blue"
                     android:textSize="17dp" />
 
 
+
+
                 <TextView
-                    android:id="@+id/tvDateTag"
+                    android:id="@+id/tvPartTag"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
-                    android:layout_below="@+id/tvPartName"
+                    android:layout_below="@+id/tvCRNo"
                     android:layout_marginTop="8dp"
                     android:fontFamily="@font/semibold"
-                    android:text="Consumption Date :"
+                    android:text="Part # :"
                     android:textColor="@color/black"
                     android:textSize="15dp" />
 
 
                 <TextView
-                    android:id="@+id/tvDate"
-                    android:layout_toRightOf="@+id/tvDateTag"
+                    android:id="@+id/tvPart"
+                    android:layout_toRightOf="@+id/tvPartTag"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvPartName"
+                    android:layout_below="@+id/tvCRNo"
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="8dp"
                     android:fontFamily="@font/semibold"
-                    android:text="2023-01-23"
+                    android:text="MSPSCBTA"
                     android:textColor="@color/Burgundy"
                     android:textSize="15dp" />
 
@@ -67,91 +73,60 @@
 
 
                 <TextView
-                    android:id="@+id/tvPartNoTag"
+                    android:id="@+id/tvPartNameTag"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@id/tvPartNo"
                     android:layout_marginLeft="8dp"
+                    android:layout_below="@+id/tvPart"
                     android:layout_marginTop="8dp"
                     android:fontFamily="@font/semibold"
-                    android:text="Part No :"
+                    android:text="Part Name :"
                     android:visibility="visible"
                     android:textColor="@color/black"
                     android:textSize="15dp" />
 
                 <TextView
-                    android:id="@+id/tvPartNo"
+                    android:id="@+id/tvPartName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="8dp"
+                    android:layout_below="@+id/tvPart"
+                    android:layout_toRightOf="@+id/tvPartNameTag"
                     android:visibility="visible"
                     android:layout_marginRight="10dp"
-                    android:layout_alignParentRight="true"
                     android:fontFamily="@font/semibold"
-                    android:text="Cl"
+                    android:text="100ML CARTRIDGE BREAKER TOP PIPE - AUTOMATIC"
                     android:textColor="@color/Radio"
                     android:textSize="15dp" />
 
 
                 <TextView
-                    android:id="@+id/tvUnitPriceTag"
+                    android:id="@+id/tvReqQtyTag"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/tvDate"
                     android:layout_marginLeft="8dp"
+                    android:layout_below="@+id/tvPartName"
                     android:layout_marginTop="8dp"
-                    android:visibility="visible"
                     android:fontFamily="@font/semibold"
-                    android:text="Unit Price :"
+                    android:text="Requested Qty :"
                     android:textColor="@color/black"
                     android:textSize="15dp" />
 
-                <TextView
-                    android:id="@+id/tvUnitPrice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/tvDate"
-                    android:layout_marginBottom="4dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="8dp"
-                    android:visibility="visible"
-                    android:layout_toRightOf="@id/tvUnitPriceTag"
-                    android:fontFamily="@font/semibold"
-                    android:text="100"
-                    android:textColor="@color/RoseRed"
-                    android:textSize="15dp" />
 
                 <TextView
-                    android:id="@+id/tvStoreQtyTag"
+                    android:id="@+id/tvReqQty"
+                    android:layout_toRightOf="@+id/tvReqQtyTag"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/tvUnitPrice"
-                    android:layout_below="@id/tvDate"
+                    android:layout_below="@+id/tvPartName"
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="8dp"
-                    android:visibility="visible"
+                    android:layout_marginBottom="10dp"
                     android:fontFamily="@font/semibold"
-                    android:text="Consumed Qty:"
-                    android:textColor="@color/black"
+                    android:text="1"
+                    android:textColor="@color/Burgundy"
                     android:textSize="15dp" />
-
-                <TextView
-                    android:id="@+id/tvStoreQty"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/tvDate"
-                    android:layout_marginBottom="4dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="3dp"
-                    android:layout_marginTop="8dp"
-                    android:visibility="visible"
-                    android:layout_toRightOf="@id/tvStoreQtyTag"
-                    android:fontFamily="@font/semibold"
-                    android:text="100"
-                    android:textColor="@color/RoseRed"
-                    android:textSize="15dp" />
-
 
 
 

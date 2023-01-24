@@ -11,7 +11,7 @@ public class ServiceSpareListModel {
 //             "coordQty": 0,
 //             "storeQty": "48.00",
 //             "engQty": 0,
-//           p": "539",
+//             p": "539",
 //            "pcat": " ",
 //            "s": "1",
     //suk_cis

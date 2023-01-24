@@ -13,6 +13,7 @@ public class UpcomingCallReportModel {
     //"callStatus": [
     //"compliantRequired": 1,
     //"complaintCategory": [
+    //sparesConsumed
 
 
 
@@ -31,7 +32,6 @@ public class UpcomingCallReportModel {
     @SerializedName("complaintCategory")
     private ArrayList<ComplaintCategoryModel>complaintCategoryModels=new ArrayList<>();
 
-
     @SerializedName("seriesid1")
     private String seriesid1;
 
@@ -41,30 +41,20 @@ public class UpcomingCallReportModel {
     @SerializedName("label")
     private LabelModel labelModel;
 
-    public LabelModel getLabelModel() {
-        return labelModel;
+    @SerializedName("sparesConsumed")
+    private SparesConsumedModel sparesConsumedModel;
+
+    @SerializedName("spareRequests")
+    private SpareRequestsModel spareRequestsModel;
+
+
+    public SpareRequestsModel getSpareRequestsModel() {
+        return spareRequestsModel;
     }
 
-    public void setLabelModel(LabelModel labelModel) {
-        this.labelModel = labelModel;
+    public void setSpareRequestsModel(SpareRequestsModel spareRequestsModel) {
+        this.spareRequestsModel = spareRequestsModel;
     }
-
-    public String getSeriesid1() {
-        return seriesid1;
-    }
-
-    public void setSeriesid1(String seriesid1) {
-        this.seriesid1 = seriesid1;
-    }
-
-    public String getSeriesid2() {
-        return seriesid2;
-    }
-
-    public void setSeriesid2(String seriesid2) {
-        this.seriesid2 = seriesid2;
-    }
-
 
     public CallInfoModel getCallInfoModel() {
         return callInfoModel;
@@ -104,5 +94,37 @@ public class UpcomingCallReportModel {
 
     public void setComplaintCategoryModels(ArrayList<ComplaintCategoryModel> complaintCategoryModels) {
         this.complaintCategoryModels = complaintCategoryModels;
+    }
+
+    public String getSeriesid1() {
+        return seriesid1;
+    }
+
+    public void setSeriesid1(String seriesid1) {
+        this.seriesid1 = seriesid1;
+    }
+
+    public String getSeriesid2() {
+        return seriesid2;
+    }
+
+    public void setSeriesid2(String seriesid2) {
+        this.seriesid2 = seriesid2;
+    }
+
+    public LabelModel getLabelModel() {
+        return labelModel;
+    }
+
+    public void setLabelModel(LabelModel labelModel) {
+        this.labelModel = labelModel;
+    }
+
+    public SparesConsumedModel getSparesConsumedModel() {
+        return sparesConsumedModel;
+    }
+
+    public void setSparesConsumedModel(SparesConsumedModel sparesConsumedModel) {
+        this.sparesConsumedModel = sparesConsumedModel;
     }
 }

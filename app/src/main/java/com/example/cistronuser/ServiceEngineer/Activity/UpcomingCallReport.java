@@ -1,7 +1,5 @@
 package com.example.cistronuser.ServiceEngineer.Activity;
 
-import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
@@ -10,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -18,15 +15,11 @@ import android.app.TimePickerDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
@@ -36,7 +29,6 @@ import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RatingBar;
@@ -55,13 +47,17 @@ import com.example.cistronuser.API.Model.CallStatusModel;
 import com.example.cistronuser.API.Model.CallTypeModel;
 import com.example.cistronuser.API.Model.ComplaintCategoryModel;
 import com.example.cistronuser.API.Model.ServiceSpareRequestModel;
+import com.example.cistronuser.API.Model.SpareRequestsRecordModel;
+import com.example.cistronuser.API.Model.SparesConsumedRecordModel;
 import com.example.cistronuser.API.Response.CallReportComplaintSubCategoryResponse;
 import com.example.cistronuser.API.Response.ServiceSpareRequestResponse;
 import com.example.cistronuser.API.Response.UpcomingCallReportResponse;
 import com.example.cistronuser.Common.FileUtli;
+import com.example.cistronuser.Common.PreferenceManager;
 import com.example.cistronuser.R;
-import com.example.cistronuser.SalesAndservice.Activity.FinalizeNow;
+import com.example.cistronuser.ServiceEngineer.Adapter.PendingRequestupSpareAdapter;
 import com.example.cistronuser.ServiceEngineer.Adapter.SpareReqAdapter;
+import com.example.cistronuser.ServiceEngineer.Adapter.SparesConsumedAdapter;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.io.File;
@@ -70,7 +66,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -108,10 +103,21 @@ public class UpcomingCallReport extends AppCompatActivity {
     RadioButton rbPaymentCloseYes, rbPaymentCloseNo;
 
     // Spare Consumer
-    RelativeLayout rlDCConsumerSpareFile;
+    RelativeLayout rlDCConsumerSpareFile, rlSpareConsumed;
     File spareFile1, spareFile2, spareFile3;
-    TextView tvSpareFile1, tvSpareFile2, tvSpareFile3;
+    RecyclerView rvSpareConsumer;
+    TextView tvSpareFile1, tvSpareFile2, tvSpareFile3, tvSpareConsumedCount;
     String strsparefile1, strsparefile2, strsparefile3;
+    SparesConsumedAdapter sparesConsumedAdapter;
+    ArrayList<SparesConsumedRecordModel> sparesConsumedRecordModels = new ArrayList<>();
+
+    // Spare Request
+    RelativeLayout rlSpareRequest;
+    RecyclerView rvSpareRequest;
+    TextView tvSpareRequestCount;
+    PendingRequestupSpareAdapter pendingRequestupSpareAdapter;
+    ArrayList<SpareRequestsRecordModel> spareRequestsRecordModels = new ArrayList<>();
+
 
     //Installation
     CardView cvInstallation;
@@ -207,12 +213,22 @@ public class UpcomingCallReport extends AppCompatActivity {
         // *********** Installation End *********** //
 
 
-        // *********** Consumer spare *********** //
+        // ***********  spare Consumer *********** //
+        rlSpareConsumed = findViewById(R.id.rlSpareConsumed);
+        rvSpareConsumer = findViewById(R.id.rvSpareConsumer);
+        tvSpareConsumedCount = findViewById(R.id.tvSpareConsumedCount);
         rlDCConsumerSpareFile = findViewById(R.id.rlDCConsumerSpareFile);
         tvSpareFile1 = findViewById(R.id.tvSpareFile1);
         tvSpareFile2 = findViewById(R.id.tvSpareFile2);
         tvSpareFile3 = findViewById(R.id.tvSpareFile3);
-        // *********** Consumer spare End *********** //
+        // *********** spare Consumer  End *********** //
+
+        // ***********  Spare Request *********** //
+        rlSpareRequest = findViewById(R.id.rlSpareRequest);
+        rvSpareRequest = findViewById(R.id.rvSpareRequest);
+        tvSpareRequestCount = findViewById(R.id.tvSpareRequestCount);
+
+        // ***********  Spare Request End *********** //
 
 
         // *********** Yes OR No Payment Received *********** //
@@ -262,7 +278,7 @@ public class UpcomingCallReport extends AppCompatActivity {
         progressDialog.setCancelable(false);
         progressDialog.show();
         UpcomingCallReportInterface upcomingCallReportInterface = APIClient.getClient().create(UpcomingCallReportInterface.class);
-        upcomingCallReportInterface.CallUpcomingCallReport("callReporting", id).enqueue(new Callback<UpcomingCallReportResponse>() {
+        upcomingCallReportInterface.CallUpcomingCallReport("callReporting", id, PreferenceManager.getEmpID(this)).enqueue(new Callback<UpcomingCallReportResponse>() {
             @Override
             public void onResponse(Call<UpcomingCallReportResponse> call, Response<UpcomingCallReportResponse> response) {
 
@@ -280,6 +296,32 @@ public class UpcomingCallReport extends AppCompatActivity {
                         tvSaleORserviceAmtTag.setText(response.body().getUpcomingCallReportModel().getLabelModel().getLabel2());
                         SerialID1 = response.body().getUpcomingCallReportModel().getSeriesid1();
                         SerialID2 = response.body().getUpcomingCallReportModel().getSeriesid2();
+
+
+                        // ********** Spare Consumed  ********** //
+
+                        if (response.body().getUpcomingCallReportModel().getSparesConsumedModel().getCount().trim().equals("0")) {
+                            rlSpareConsumed.setVisibility(View.GONE);
+                            rlDCConsumerSpareFile.setVisibility(View.GONE);
+                        } else {
+                            rlSpareConsumed.setVisibility(View.VISIBLE);
+                            rlDCConsumerSpareFile.setVisibility(View.VISIBLE);
+                        }
+                        tvSpareConsumedCount.setText(response.body().getUpcomingCallReportModel().getSparesConsumedModel().getCount());
+                        sparesConsumedAdapter.sparesConsumedRecordModels = response.body().getUpcomingCallReportModel().getSparesConsumedModel().getSparesConsumedRecordModels();
+                        sparesConsumedAdapter.notifyDataSetChanged();
+                        // ********** Spare Consumed End  ********** //
+
+                        // ********** Spare Request  ********** //
+                        if (response.body().getUpcomingCallReportModel().getSpareRequestsModel().getCount().trim().equals("0")) {
+                            rlSpareRequest.setVisibility(View.GONE);
+                        } else {
+                            rlSpareRequest.setVisibility(View.VISIBLE);
+                        }
+                        tvSpareRequestCount.setText(response.body().getUpcomingCallReportModel().getSpareRequestsModel().getCount());
+                        pendingRequestupSpareAdapter.spareRequestsRecordModels = response.body().getUpcomingCallReportModel().getSpareRequestsModel().getSpareRequestsRecordModels();
+                        pendingRequestupSpareAdapter.notifyDataSetChanged();
+                        // ********** Spare Request End  ********** //
 
                         // ********** InstallpaymentCalc ********** //
 
@@ -344,6 +386,26 @@ public class UpcomingCallReport extends AppCompatActivity {
             }
         });
         //********Customer Detalils End ******************//
+
+
+        //******** Spare Counsumed Recycleview ******************//
+
+        sparesConsumedAdapter = new SparesConsumedAdapter(this, sparesConsumedRecordModels);
+        LinearLayoutManager spareCounsumed = new LinearLayoutManager(this);
+        spareCounsumed.setOrientation(RecyclerView.VERTICAL);
+        rvSpareConsumer.setAdapter(sparesConsumedAdapter);
+        rvSpareConsumer.setLayoutManager(spareCounsumed);
+
+        //******** Spare Counsumed Recycleview End ******************//
+
+        //******** Spare Request Recycleview ******************//
+        pendingRequestupSpareAdapter = new PendingRequestupSpareAdapter(this, spareRequestsRecordModels);
+        LinearLayoutManager spareReq = new LinearLayoutManager(this);
+        spareReq.setOrientation(RecyclerView.VERTICAL);
+        rvSpareRequest.setLayoutManager(spareReq);
+        rvSpareRequest.setAdapter(pendingRequestupSpareAdapter);
+
+        //******** Spare Request Recycleview End ******************//
 
 
         //Complaint Details
@@ -420,9 +482,9 @@ public class UpcomingCallReport extends AppCompatActivity {
                 if (callStatusModels.get(position).getText().trim().equals("Pending")) {
                     tvPendingReason.setVisibility(View.VISIBLE);
                     tvFollowUpDate.setVisibility(View.VISIBLE);
-
-
                     tvserviceReportAttach.setVisibility(View.VISIBLE);
+
+
                     tvReason.setVisibility(View.GONE);
                     tvInstallationImage1.setVisibility(View.GONE);
                     tvInstallationImage2.setVisibility(View.GONE);
@@ -434,8 +496,12 @@ public class UpcomingCallReport extends AppCompatActivity {
                     tvPendingReason.setVisibility(View.GONE);
                     tvFollowUpDate.setVisibility(View.GONE);
                 }
+
+
                 if (callStatusModels.get(position).getText().trim().equals("Require Spare's")) {
                     tvserviceReportAttach.setVisibility(View.VISIBLE);
+
+
                     tvReason.setVisibility(View.GONE);
                     tvInstallationImage1.setVisibility(View.GONE);
                     tvInstallationImage2.setVisibility(View.GONE);
@@ -464,6 +530,12 @@ public class UpcomingCallReport extends AppCompatActivity {
 
                     rlRevPaymentPending.setVisibility(View.GONE);
                     rlDCConsumerSpareFile.setVisibility(View.GONE);
+                }
+
+                if (tvSpareConsumedCount.getText().toString().trim().equals("0") && callStatusModels.get(position).getText().trim().equals("Closed")) {
+                    rlRevPaymentPending.setVisibility(View.VISIBLE);
+                    rlDCConsumerSpareFile.setVisibility(View.GONE);
+
                 }
 
 
@@ -827,6 +899,7 @@ public class UpcomingCallReport extends AppCompatActivity {
         //  ************** Received pending sales payment Check End ************** //
 
     }
+
 
     private void CallRequiredSpareDialog() {
         Dialog dialog = new Dialog(this);

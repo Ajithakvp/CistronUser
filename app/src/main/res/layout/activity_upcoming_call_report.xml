@@ -576,89 +576,227 @@
 
                         </RadioGroup>
 
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:layout_width="wrap_content"
+                        <RelativeLayout
+                            android:id="@+id/rlSpareConsumed"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/rbGrp"
-                            android:id="@+id/rvSpareConsumer"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginRight="5dp"
-                            android:visibility="gone" />
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="8dp"
+                            android:background="@drawable/edittext"
+                            android:backgroundTint="@color/yellow"
+                            android:visibility="visible">
+
+                            <TextView
+                                android:id="@+id/tvSpareConsumedName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="10dp"
+                                android:fontFamily="@font/openssansbold"
+                                android:text=" SPARES CONSUMED "
+                                android:textColor="@color/RoseRed"
+                                android:textSize="16dp" />
+
+                            <TextView
+                                android:id="@+id/tvSpareConsumedCountStart"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_toRightOf="@id/tvSpareConsumedName"
+                                android:fontFamily="@font/openssansbold"
+                                android:text="( "
+                                android:textColor="@color/black"
+                                android:textSize="16dp" />
+
+                            <TextView
+                                android:id="@+id/tvSpareConsumedCount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_toRightOf="@id/tvSpareConsumedCountStart"
+                                android:fontFamily="@font/openssansbold"
+                                android:text=" 6 "
+                                android:textColor="@color/blue"
+                                android:textSize="16dp" />
+
+                            <TextView
+                                android:id="@+id/tvSpareConsumedCountEnd"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_toRightOf="@id/tvSpareConsumedCount"
+                                android:fontFamily="@font/openssansbold"
+                                android:text=")"
+                                android:textColor="@color/black"
+                                android:textSize="16dp" />
+
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/rvSpareConsumer"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/tvSpareConsumedName"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginRight="5dp"
+                                android:visibility="visible" />
+
+                        </RelativeLayout>
 
                         <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_below="@+id/rvSpareConsumer"
                             android:id="@+id/rlDCConsumerSpareFile"
-                            android:visibility="gone"
-                            android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/tvDCInvoiceConsumerSpare"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="10dp"
-                            android:fontFamily="@font/openssansreqular"
-                            android:text="DC/Invoice for Consumed spares"
-                            android:textColor="@color/RoseRed"
-                            android:textSize="14dp" />
+                            android:layout_below="@+id/rlSpareConsumed"
+                            android:visibility="visible">
+
+                            <TextView
+                                android:id="@+id/tvDCInvoiceConsumerSpare"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="10dp"
+                                android:fontFamily="@font/openssansreqular"
+                                android:text="DC/Invoice for Consumed spares"
+                                android:textColor="@color/RoseRed"
+                                android:textSize="14dp" />
 
 
-                        <TextView
-                            android:id="@+id/tvSpareFile1"
-                            android:layout_width="match_parent"
-                            android:layout_height="60dp"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginTop="18dp"
-                            android:layout_below="@+id/tvDCInvoiceConsumerSpare"
-                            android:layout_marginRight="8dp"
-                            android:background="@drawable/edittext"
-                            android:backgroundTint="@color/whiteLite2"
-                            android:fontFamily="@font/semibold"
-                            android:gravity="center_vertical"
-                            android:hint=" File 1"
-                            android:paddingLeft="10dp"
-                            android:textColor="@color/black"
-                            android:textSize="18dp"
-                            android:visibility="visible" />
+                            <TextView
+                                android:id="@+id/tvSpareFile1"
+                                android:layout_width="match_parent"
+                                android:layout_height="60dp"
+                                android:layout_below="@+id/tvDCInvoiceConsumerSpare"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginTop="18dp"
+                                android:layout_marginRight="8dp"
+                                android:background="@drawable/edittext"
+                                android:backgroundTint="@color/whiteLite2"
+                                android:fontFamily="@font/semibold"
+                                android:gravity="center_vertical"
+                                android:hint=" File 1"
+                                android:paddingLeft="10dp"
+                                android:textColor="@color/black"
+                                android:textSize="18dp"
+                                android:visibility="visible" />
 
-                        <TextView
-                            android:id="@+id/tvSpareFile2"
-                            android:layout_width="match_parent"
-                            android:layout_height="60dp"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginTop="18dp"
-                            android:layout_below="@+id/tvSpareFile1"
-                            android:layout_marginRight="8dp"
-                            android:background="@drawable/edittext"
-                            android:backgroundTint="@color/whiteLite2"
-                            android:fontFamily="@font/semibold"
-                            android:gravity="center_vertical"
-                            android:hint=" File 2"
-                            android:paddingLeft="10dp"
-                            android:textColor="@color/black"
-                            android:textSize="18dp"
-                            android:visibility="visible" />
+                            <TextView
+                                android:id="@+id/tvSpareFile2"
+                                android:layout_width="match_parent"
+                                android:layout_height="60dp"
+                                android:layout_below="@+id/tvSpareFile1"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginTop="18dp"
+                                android:layout_marginRight="8dp"
+                                android:background="@drawable/edittext"
+                                android:backgroundTint="@color/whiteLite2"
+                                android:fontFamily="@font/semibold"
+                                android:gravity="center_vertical"
+                                android:hint=" File 2"
+                                android:paddingLeft="10dp"
+                                android:textColor="@color/black"
+                                android:textSize="18dp"
+                                android:visibility="visible" />
 
-                        <TextView
-                            android:id="@+id/tvSpareFile3"
-                            android:layout_width="match_parent"
-                            android:layout_height="60dp"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginTop="18dp"
-                            android:layout_below="@+id/tvSpareFile2"
-                            android:layout_marginRight="8dp"
-                            android:background="@drawable/edittext"
-                            android:backgroundTint="@color/whiteLite2"
-                            android:fontFamily="@font/semibold"
-                            android:gravity="center_vertical"
-                            android:hint=" File 3"
-                            android:paddingLeft="10dp"
-                            android:textColor="@color/black"
-                            android:textSize="18dp"
-                            android:visibility="visible" />
+                            <TextView
+                                android:id="@+id/tvSpareFile3"
+                                android:layout_width="match_parent"
+                                android:layout_height="60dp"
+                                android:layout_below="@+id/tvSpareFile2"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginTop="18dp"
+                                android:layout_marginRight="8dp"
+                                android:background="@drawable/edittext"
+                                android:backgroundTint="@color/whiteLite2"
+                                android:fontFamily="@font/semibold"
+                                android:gravity="center_vertical"
+                                android:hint=" File 3"
+                                android:paddingLeft="10dp"
+                                android:textColor="@color/black"
+                                android:textSize="18dp"
+                                android:visibility="visible" />
                         </RelativeLayout>
+
+
+<!--                        Spare Req-->
+
+                        <RelativeLayout
+                            android:id="@+id/rlSpareRequest"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/edittext"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginBottom="8dp"
+                            android:backgroundTint="@color/GoldYellow"
+                            android:layout_below="@id/rlDCConsumerSpareFile"
+                            android:visibility="visible">
+
+                            <TextView
+                                android:id="@+id/tvSpareRequestName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="10dp"
+                                android:fontFamily="@font/openssansbold"
+                                android:text=" PENDING REQUEST "
+                                android:textColor="@color/RoseRed"
+                                android:textSize="16dp" />
+
+                            <TextView
+                                android:id="@+id/tvSpareRequestCountStart"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_toRightOf="@id/tvSpareRequestName"
+                                android:fontFamily="@font/openssansbold"
+                                android:text="( "
+                                android:textColor="@color/black"
+                                android:textSize="16dp" />
+
+                            <TextView
+                                android:id="@+id/tvSpareRequestCount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_toRightOf="@id/tvSpareRequestCountStart"
+                                android:fontFamily="@font/openssansbold"
+                                android:text=" 6 "
+                                android:textColor="@color/blue"
+                                android:textSize="16dp" />
+
+                            <TextView
+                                android:id="@+id/tvSpareRequestCountEnd"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_toRightOf="@id/tvSpareRequestCount"
+                                android:fontFamily="@font/openssansbold"
+                                android:text=")"
+                                android:textColor="@color/black"
+                                android:textSize="16dp" />
+
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/rvSpareRequest"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/tvSpareRequestName"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginRight="5dp"
+                                android:visibility="visible" />
+
+                        </RelativeLayout>
+
 
                     </RelativeLayout>
 
@@ -860,6 +998,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:visibility="gone">
+
                                 <TextView
                                     android:id="@+id/tvDepositedDate"
                                     style="@android:style/Widget.EditText"
