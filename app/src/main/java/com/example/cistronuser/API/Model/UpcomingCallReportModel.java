@@ -14,6 +14,7 @@ public class UpcomingCallReportModel {
     //"compliantRequired": 1,
     //"complaintCategory": [
     //sparesConsumed
+    //"customerPo": {
 
 
 
@@ -47,6 +48,16 @@ public class UpcomingCallReportModel {
     @SerializedName("spareRequests")
     private SpareRequestsModel spareRequestsModel;
 
+    @SerializedName("customerPo")
+    private CustomerPoModel customerPoModel;
+
+    public CustomerPoModel getCustomerPoModel() {
+        return customerPoModel;
+    }
+
+    public void setCustomerPoModel(CustomerPoModel customerPoModel) {
+        this.customerPoModel = customerPoModel;
+    }
 
     public SpareRequestsModel getSpareRequestsModel() {
         return spareRequestsModel;

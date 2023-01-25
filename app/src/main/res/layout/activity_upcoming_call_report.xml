@@ -412,6 +412,24 @@
                                 android:textColor="@color/blue"
                                 android:textSize="14dp" />
 
+
+                            <TextView
+                                android:id="@+id/tvEscalate"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:gravity="center"
+                                android:layout_marginBottom="10dp"
+                                android:layout_marginRight="70dp"
+                                android:layout_marginLeft="70dp"
+                                android:text="Escalate"
+                                android:visibility="visible"
+                                android:fontFamily="@font/roboblod"
+                                android:textColor="@color/white"
+                                android:textSize="17dp"
+                                android:background="@drawable/edittext"
+                                android:backgroundTint="@color/Burgundy"
+                                android:layout_below="@+id/tvTotalamt"/>
+
                         </RelativeLayout>
 
 
@@ -532,6 +550,115 @@
                             android:textColor="@color/black"
                             android:textSize="18dp" />
                     </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <RelativeLayout
+                        android:id="@+id/rlCustomerPO"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/rbGrp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@drawable/edittext"
+                        android:backgroundTint="#00FA9A"
+                        android:visibility="visible">
+
+                        <TextView
+                            android:id="@+id/tvCustomerPOName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/openssansbold"
+                            android:text=" CUSTOMER PO "
+                            android:textColor="@color/RoseRed"
+                            android:textSize="16dp" />
+
+                        <TextView
+                            android:id="@+id/rlCustomerPOCountStart"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_toRightOf="@id/tvCustomerPOName"
+                            android:fontFamily="@font/openssansbold"
+                            android:text="( "
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
+
+                        <TextView
+                            android:id="@+id/tvCustomerPOCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_toRightOf="@id/rlCustomerPOCountStart"
+                            android:fontFamily="@font/openssansbold"
+                            android:text=" 6 "
+                            android:textColor="@color/blue"
+                            android:textSize="16dp" />
+
+                        <TextView
+                            android:id="@+id/tvCustomerPOCountEnd"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_toRightOf="@id/tvCustomerPOCount"
+                            android:fontFamily="@font/openssansbold"
+                            android:text=")"
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
+
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvCustomerPO"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tvCustomerPOName"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginRight="5dp"
+                            android:visibility="visible" />
+
+
+                        <TextView
+                            android:id="@+id/tvCustomerPoAtt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_below="@+id/rvCustomerPO"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/openssansreqular"
+                            android:text="*Attach Invoice"
+                            android:textColor="@color/RoseRed"
+                            android:textSize="14dp" />
+
+
+                        <TextView
+                            android:id="@+id/tvCusPOFileInvoiceAttch"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_below="@+id/tvCustomerPoAtt"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="18dp"
+                            android:layout_marginRight="8dp"
+                            android:background="@drawable/edittext"
+                            android:backgroundTint="@color/mikwhite"
+                            android:fontFamily="@font/semibold"
+                            android:gravity="center_vertical"
+                            android:hint=" Attach Invoice "
+                            android:paddingLeft="10dp"
+                            android:textColor="@color/black"
+                            android:textSize="18dp"
+                            android:visibility="visible" />
+
+
+                    </RelativeLayout>
+
+
 
 
                     <RelativeLayout

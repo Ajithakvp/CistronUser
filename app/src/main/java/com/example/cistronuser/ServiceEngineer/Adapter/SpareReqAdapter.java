@@ -1,5 +1,7 @@
 package com.example.cistronuser.ServiceEngineer.Adapter;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
@@ -17,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,11 +28,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.cistronuser.API.APIClient;
 import com.example.cistronuser.API.Interface.ServiceSpareListInterface;
 import com.example.cistronuser.API.Interface.SpareSendReqListInterface;
+import com.example.cistronuser.API.Interface.SubmitSpareReqTmpInterface;
 import com.example.cistronuser.API.Model.ServiceSpareListModel;
 import com.example.cistronuser.API.Model.ServiceSpareRequestModel;
 import com.example.cistronuser.API.Model.SpareSendReqListModel;
 import com.example.cistronuser.API.Response.ServiceSpareResponse;
 import com.example.cistronuser.API.Response.SpareSendReqListResponse;
+import com.example.cistronuser.API.Response.SubmitSpareReqTmpResponse;
 import com.example.cistronuser.Common.PreferenceManager;
 import com.example.cistronuser.R;
 
@@ -45,7 +50,12 @@ public class SpareReqAdapter extends RecyclerView.Adapter<SpareReqAdapter.ViewHo
     Activity activity;
     // **********  Spare List **********//
     RecyclerView rvSpareList;
+
     EditText edSearch;
+
+    ArrayList<String>strMyQty=new ArrayList<String>();
+    String MyQty;
+
     SpareSendReqListAdapter spareSendReqListAdapter;
     ArrayList<ServiceSpareListModel> serviceSpareListModels = new ArrayList<>();
     // **********  Spare List End **********//
@@ -87,7 +97,7 @@ public class SpareReqAdapter extends RecyclerView.Adapter<SpareReqAdapter.ViewHo
 
                     Dialog dialog = new Dialog(activity);
                     dialog.setContentView(R.layout.spare_send_request_dialog_recycleview);
-                    dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+                    dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                     dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     dialog.show();
 
@@ -151,19 +161,26 @@ public class SpareReqAdapter extends RecyclerView.Adapter<SpareReqAdapter.ViewHo
 
         Dialog dialog = new Dialog(activity);
         dialog.setContentView(R.layout.spare_send_request_list_dialog_recycleview);
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
 
         ImageView ivClose = dialog.findViewById(R.id.ivClose);
         rvSendReqSpareList = dialog.findViewById(R.id.rvSendReqSpareList);
+        TextView tvSubmit=dialog.findViewById(R.id.tvSubmit);
+
+
 
         CallSendReqList();
-        spareReqListAdapter = new SpareReqListAdapter(activity, sendReqListModels);
+        spareReqListAdapter = new SpareReqListAdapter(sendReqListModels, activity);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         rvSendReqSpareList.setLayoutManager(linearLayoutManager);
         rvSendReqSpareList.setAdapter(spareReqListAdapter);
+
+
+
+
         ivClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -171,7 +188,58 @@ public class SpareReqAdapter extends RecyclerView.Adapter<SpareReqAdapter.ViewHo
             }
         });
 
+        tvSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                strMyQty.clear();
+                for (int i=0;i<rvSendReqSpareList.getAdapter().getItemCount();i++){
+                    v=rvSendReqSpareList.getChildAt(i);
+                    EditText edQty=(EditText) v.findViewById(R.id.edMyQty);
+                    strMyQty.add(i,edQty.getText().toString());
+
+                }
+                MyQty= android.text.TextUtils.join(",", strMyQty);
+
+                final ProgressDialog progressDialog = new ProgressDialog(activity, R.style.ProgressBarDialog);
+                progressDialog.setMessage("Please Wait...");
+                progressDialog.setCancelable(false);
+                progressDialog.show();
+
+                SubmitSpareReqTmpInterface submitSpareReqTmpInterface=APIClient.getClient().create(SubmitSpareReqTmpInterface.class);
+                submitSpareReqTmpInterface.submitSpare("submitSpareRequestsTmp",PreferenceManager.getEmpID(activity),MyQty,PreferenceManager.getCallNo(activity)).enqueue(new Callback<SubmitSpareReqTmpResponse>() {
+                    @Override
+                    public void onResponse(Call<SubmitSpareReqTmpResponse> call, Response<SubmitSpareReqTmpResponse> response) {
+
+                        if (response.isSuccessful()){
+                            progressDialog.dismiss();
+                            Toast.makeText(activity, response.body().getResponse(), Toast.LENGTH_SHORT).show();
+                            activity.finish();
+                            activity.overridePendingTransition(0, 0);
+                            activity.startActivity(activity.getIntent());
+                            activity.overridePendingTransition(0, 0);
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<SubmitSpareReqTmpResponse> call, Throwable t) {
+
+                    }
+                });
+
+
+
+
+            }
+        });
+
+
+
+
+
     }
+
+
 
     private void CallSendReqList() {
         final ProgressDialog progressDialog = new ProgressDialog(activity, R.style.ProgressBarDialog);
@@ -237,10 +305,7 @@ public class SpareReqAdapter extends RecyclerView.Adapter<SpareReqAdapter.ViewHo
         return serviceSpareRequestModels.size();
     }
 
-    public interface ItemClickListener {
-        void onItemCheck(ServiceSpareRequestModel ServiceSpareRequestModel);
 
-    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 

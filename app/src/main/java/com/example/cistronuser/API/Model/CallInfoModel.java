@@ -12,6 +12,10 @@ public class CallInfoModel {
     //            "reportBy": "Dr. sujay sada - 9848522663"
     //"logistics_bp_install": "68440",
     //      "logistics_bp_installr": "0"
+    //"callId": "19087",
+    //      "callNo": "23010502",
+    //      "logisticsId": "1242",
+    //logistics_esc_ins
 
 
     @SerializedName("custDetail")
@@ -29,12 +33,55 @@ public class CallInfoModel {
     @SerializedName("reportBy")
     private String reportBy;
 
+    @SerializedName("callId")
+    private String callId;
+
+    @SerializedName("callNo")
+    private String callNo;
+
     @SerializedName("logistics_bp_install")
     private String logistics_bp_install;
 
     @SerializedName("logistics_bp_installr")
     private String logistics_bp_installr;
 
+    @SerializedName("logisticsId")
+    private String logisticsId;
+
+    @SerializedName("logistics_esc_ins")
+    private String logistics_esc_ins;
+
+    public String getLogistics_esc_ins() {
+        return logistics_esc_ins;
+    }
+
+    public void setLogistics_esc_ins(String logistics_esc_ins) {
+        this.logistics_esc_ins = logistics_esc_ins;
+    }
+
+    public String getLogisticsId() {
+        return logisticsId;
+    }
+
+    public void setLogisticsId(String logisticsId) {
+        this.logisticsId = logisticsId;
+    }
+
+    public String getCallId() {
+        return callId;
+    }
+
+    public void setCallId(String callId) {
+        this.callId = callId;
+    }
+
+    public String getCallNo() {
+        return callNo;
+    }
+
+    public void setCallNo(String callNo) {
+        this.callNo = callNo;
+    }
 
     public String getLogistics_bp_install() {
         return logistics_bp_install;

@@ -238,6 +238,21 @@ public class PreferenceManager {
 
 
 
+    //Service Engineer Call No
+
+    public static void saveCallNo(Activity activity, String CallNo) {
+        SharedPreferences preferences;
+        preferences = activity.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
+        preferences.edit().putString("callNo", CallNo).apply();
+    }
+    public static String getCallNo(Context activity) {
+        SharedPreferences preferences;
+        preferences = activity.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
+        return preferences.getString("callNo", "");
+    }
+
+
+
     //Category
 
     public static void saveLoginEmpID(Activity activity, String Empid) {

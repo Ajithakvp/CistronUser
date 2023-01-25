@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,14 +34,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SpareReqListAdapter extends RecyclerView.Adapter<SpareReqListAdapter.ViewHolder> {
-    
-    Activity activity;
-    
-    public ArrayList<SpareSendReqListModel>spareSendReqListModels;
 
-    public SpareReqListAdapter(Activity activity, ArrayList<SpareSendReqListModel> spareSendReqListModels) {
-        this.activity = activity;
+    public ArrayList<SpareSendReqListModel> spareSendReqListModels;
+    Activity activity;
+
+    public SpareReqListAdapter(ArrayList<SpareSendReqListModel> spareSendReqListModels, Activity activity) {
         this.spareSendReqListModels = spareSendReqListModels;
+        this.activity = activity;
     }
 
     @NonNull
@@ -51,26 +52,28 @@ public class SpareReqListAdapter extends RecyclerView.Adapter<SpareReqListAdapte
 
     @Override
     public void onBindViewHolder(@NonNull SpareReqListAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        
+
         holder.tvPartName.setText(spareSendReqListModels.get(position).getPartName());
         holder.tvCoQty.setText(spareSendReqListModels.get(position).getCoordQty());
         holder.tvPartNo.setText(spareSendReqListModels.get(position).getPartNo());
         holder.tvStoreQty.setText(spareSendReqListModels.get(position).getStoreQty());
         holder.tvUnitPrice.setText(spareSendReqListModels.get(position).getUnitPrice());
-        
+
+
+
+
         holder.ivDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 CallSpareDelete(spareSendReqListModels.get(position).getId());
             }
         });
-       
 
 
     }
 
     private void CallSpareDelete(String id) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity,R.style.AlertDialogCustom);
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity, R.style.AlertDialogCustom);
         builder.setMessage("Are you sure you want to delete Spare Request List?");
         builder.setTitle("Deleted!");
         builder.setIcon(R.drawable.ic_baseline_delete_24);
@@ -78,16 +81,16 @@ public class SpareReqListAdapter extends RecyclerView.Adapter<SpareReqListAdapte
         builder.setPositiveButton("yes", (new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                final ProgressDialog progressDialog = new ProgressDialog(activity,R.style.ProgressBarDialog);
+                final ProgressDialog progressDialog = new ProgressDialog(activity, R.style.ProgressBarDialog);
                 progressDialog.setMessage("Loading...");
                 progressDialog.setCancelable(false);
                 progressDialog.show();
-                ServiceSpareReqDeleteListInterface serviceSpareReqDeleteListInterface=APIClient.getClient().create(ServiceSpareReqDeleteListInterface.class);
-                serviceSpareReqDeleteListInterface.CallDelete("deleteSpareRequestTmp",id).enqueue(new Callback<ServiceSpareReqDeleteListResponse>() {
+                ServiceSpareReqDeleteListInterface serviceSpareReqDeleteListInterface = APIClient.getClient().create(ServiceSpareReqDeleteListInterface.class);
+                serviceSpareReqDeleteListInterface.CallDelete("deleteSpareRequestTmp", id).enqueue(new Callback<ServiceSpareReqDeleteListResponse>() {
                     @Override
                     public void onResponse(Call<ServiceSpareReqDeleteListResponse> call, Response<ServiceSpareReqDeleteListResponse> response) {
-                        try{
-                            if (response.isSuccessful()){
+                        try {
+                            if (response.isSuccessful()) {
                                 progressDialog.dismiss();
                                 Toast.makeText(activity, response.body().getResponse(), Toast.LENGTH_SHORT).show();
                                 activity.finish();
@@ -96,7 +99,7 @@ public class SpareReqListAdapter extends RecyclerView.Adapter<SpareReqListAdapte
                                 activity.overridePendingTransition(0, 0);
                             }
 
-                        }catch (Exception e){
+                        } catch (Exception e) {
 
                         }
                     }
@@ -106,7 +109,6 @@ public class SpareReqListAdapter extends RecyclerView.Adapter<SpareReqListAdapte
 
                     }
                 });
-
 
 
             }
@@ -131,9 +133,10 @@ public class SpareReqListAdapter extends RecyclerView.Adapter<SpareReqListAdapte
         return spareSendReqListModels.size();
     }
 
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvPartName,tvPartNo,tvUnitPrice,tvStoreQty,tvCoQty;
+        TextView tvPartName, tvPartNo, tvUnitPrice, tvStoreQty, tvCoQty;
         EditText edMyQty;
         ImageView ivDelete;
 
@@ -141,13 +144,20 @@ public class SpareReqListAdapter extends RecyclerView.Adapter<SpareReqListAdapte
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            tvPartName=itemView.findViewById(R.id.tvPartName);
-            tvPartNo=itemView.findViewById(R.id.tvPartNo);
-            tvUnitPrice=itemView.findViewById(R.id.tvUnitPrice);
-            tvStoreQty=itemView.findViewById(R.id.tvStoreQty);
-            tvCoQty=itemView.findViewById(R.id.tvCoQty);
-            edMyQty=itemView.findViewById(R.id.edMyQty);
-            ivDelete=itemView.findViewById(R.id.ivDelete);
+            tvPartName = itemView.findViewById(R.id.tvPartName);
+            tvPartNo = itemView.findViewById(R.id.tvPartNo);
+            tvUnitPrice = itemView.findViewById(R.id.tvUnitPrice);
+            tvStoreQty = itemView.findViewById(R.id.tvStoreQty);
+            tvCoQty = itemView.findViewById(R.id.tvCoQty);
+            edMyQty = itemView.findViewById(R.id.edMyQty);
+            ivDelete = itemView.findViewById(R.id.ivDelete);
+
+
         }
+
+
+
     }
+
+
 }
