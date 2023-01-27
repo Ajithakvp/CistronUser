@@ -47,7 +47,7 @@ public class CustomerPoAdapter extends RecyclerView.Adapter<CustomerPoAdapter.Vi
 
         String Pdf=customerPoResponseModels.get(position).getPoRefLink();
 
-        holder.tvPoRef.setOnClickListener(new View.OnClickListener() {
+        holder.rlPdf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Uri uri=Uri.parse(Pdf);
@@ -72,7 +72,7 @@ public class CustomerPoAdapter extends RecyclerView.Adapter<CustomerPoAdapter.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        RelativeLayout rlId;
+        RelativeLayout rlId,rlPdf;
         RadioButton rbId;
         TextView tvrbId,tvPONo,tvPoDate,tvPoRef;
 
@@ -86,6 +86,7 @@ public class CustomerPoAdapter extends RecyclerView.Adapter<CustomerPoAdapter.Vi
             tvrbId=itemView.findViewById(R.id.tvrbId);
             tvPONo=itemView.findViewById(R.id.tvPONo);
             tvPoDate=itemView.findViewById(R.id.tvPoDate);
+            rlPdf=itemView.findViewById(R.id.rlPdf);
 
         }
     }

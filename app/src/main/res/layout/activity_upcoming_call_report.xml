@@ -560,7 +560,7 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="8dp"
                         android:background="@drawable/edittext"
-                        android:backgroundTint="#00FA9A"
+                        android:backgroundTint="#CD7F32"
                         android:visibility="visible">
 
                         <TextView
@@ -571,7 +571,7 @@
                             android:layout_marginTop="10dp"
                             android:fontFamily="@font/openssansbold"
                             android:text=" CUSTOMER PO "
-                            android:textColor="@color/RoseRed"
+                            android:textColor="@color/Radio"
                             android:textSize="16dp" />
 
                         <TextView
@@ -632,7 +632,7 @@
                             android:layout_marginTop="10dp"
                             android:fontFamily="@font/openssansreqular"
                             android:text="*Attach Invoice"
-                            android:textColor="@color/RoseRed"
+                            android:textColor="@color/Radio"
                             android:textSize="14dp" />
 
 

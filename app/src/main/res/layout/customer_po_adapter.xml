@@ -20,52 +20,48 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_marginBottom="10dp"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp">
 
 
+                <RelativeLayout
+                    android:id="@+id/rlId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible">
 
-              <RelativeLayout
-                  android:layout_width="match_parent"
-                  android:id="@+id/rlId"
-                  android:visibility="visible"
-                  android:layout_height="wrap_content">
-
-                  <RadioButton
-                      android:id="@+id/rbId"
-                      android:layout_width="wrap_content"
-                      android:layout_marginLeft="8dp"
-                      android:layout_height="wrap_content"/>
-
-
-                  <TextView
-                      android:id="@+id/tvrbId"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:layout_marginLeft="1dp"
-                      android:visibility="visible"
-                      android:layout_marginTop="13dp"
-                      android:layout_toRightOf="@id/rbId"
-                      android:fontFamily="@font/openssansbold"
-                      android:text="Hyderabad"
-                      android:textColor="@color/DarkRed"
-                      android:textSize="15dp" />
+                    <RadioButton
+                        android:id="@+id/rbId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp" />
 
 
+                    <TextView
+                        android:id="@+id/tvrbId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginTop="13dp"
+                        android:layout_toRightOf="@id/rbId"
+                        android:fontFamily="@font/openssansbold"
+                        android:text="Hyderabad"
+                        android:textColor="@color/DarkRed"
+                        android:textSize="15dp"
+                        android:visibility="visible" />
 
-              </RelativeLayout>
 
-
+                </RelativeLayout>
 
 
                 <TextView
                     android:id="@+id/tvPONo"
-                    android:layout_below="@+id/rlId"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/rlId"
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="8dp"
-                    android:fontFamily="@font/bold"
+                    android:fontFamily="@font/openssansbold"
                     android:text="Cistron System"
                     android:textColor="@color/blue"
                     android:textSize="18dp" />
@@ -79,9 +75,9 @@
                     android:layout_marginTop="8dp"
                     android:fontFamily="@font/semibold"
                     android:text="Po Date :"
-                    android:visibility="visible"
                     android:textColor="@color/Radio"
-                    android:textSize="15dp" />
+                    android:textSize="15dp"
+                    android:visibility="visible" />
 
                 <TextView
                     android:id="@+id/tvPoDate"
@@ -89,14 +85,13 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tvPONo"
                     android:layout_marginLeft="8dp"
-                    android:visibility="visible"
                     android:layout_marginTop="8dp"
                     android:layout_toRightOf="@id/tvPoDateTag"
-                    android:fontFamily="@font/semibold"
+                    android:fontFamily="@font/openssanssemibold"
                     android:text="Hyderabad"
                     android:textColor="@color/black"
-                    android:textSize="15dp" />
-
+                    android:textSize="15dp"
+                    android:visibility="visible" />
 
 
                 <TextView
@@ -105,29 +100,43 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tvPoDate"
                     android:layout_marginLeft="8dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="13dp"
                     android:fontFamily="@font/semibold"
                     android:text="Po Ref :"
                     android:textColor="@color/Radio"
                     android:textSize="16dp" />
 
-                <TextView
-                    android:id="@+id/tvPoRef"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:id="@+id/rlPdf"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tvPoDate"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="8dp"
-                    android:text="Pdf"
-                    android:layout_toRightOf="@id/tvPoRefTag"
-                    android:fontFamily="@font/semibold"
-                    android:src="@drawable/pdffile"
-                    android:textColor="@color/black"
-                    android:textSize="16dp" />
+                    android:layout_toRightOf="@id/tvPoRefTag">
 
 
+                    <ImageView
+                        android:id="@+id/ivPdf"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="5dp"
+                        android:src="@drawable/pdffile" />
 
+                    <TextView
+                        android:id="@+id/tvPoRef"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:gravity="center_vertical"
+                        android:layout_marginRight="2dp"
+                        android:layout_marginTop="14dp"
+                        android:layout_toRightOf="@id/ivPdf"
+                        android:fontFamily="@font/openssansreqular"
+                        android:src="@drawable/pdffile"
+                        android:text="Pdf"
+                        android:textColor="@color/black"
+                        android:textSize="14dp" />
 
+                </RelativeLayout>
 
 
             </RelativeLayout>
