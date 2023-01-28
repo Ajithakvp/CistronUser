@@ -3,26 +3,35 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/skyblue"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:layout_height="150dp">
 
     <ImageView
+        android:id="@+id/ivhead"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/ivhead"
         android:layout_centerInParent="true"
-        android:src="@drawable/logo_top"/>
+        android:src="@drawable/logo_top"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/ivClose"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5dp"
+        android:src="@drawable/ic_baseline_close_24"
+        android:visibility="visible" />
 
     <TextView
+        android:id="@+id/tvCode"
         android:layout_width="wrap_content"
-        android:layout_below="@id/ivhead"
-        android:layout_centerHorizontal="true"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/semibold"
-        android:text="Cistron Systems Private Ltd"
-        />
-
+        android:layout_below="@id/ivhead"
+        android:textSize="25dp"
+        android:layout_centerInParent="true"
+        android:fontFamily="@font/roboblod"
+        android:textColor="@color/Radio"
+        android:text="Cistron Systems Private Ltd" />
 
 
 </RelativeLayout>
