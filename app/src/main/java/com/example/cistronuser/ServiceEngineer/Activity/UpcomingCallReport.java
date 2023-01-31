@@ -1152,7 +1152,8 @@ public class UpcomingCallReport extends AppCompatActivity {
                                 tvCusInvoice.setText(strCusInvoiceAttach);
                             } else if (extension.equals(".png")) {
                                 tvCusInvoice.setText(strCusInvoiceAttach);
-
+                            } else if (extension.equals(".jpeg")) {
+                                tvCusInvoice.setText(strCusInvoiceAttach);
                             } else {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                                 builder.setMessage("Please Select Pdf and Image File Only ..");
@@ -1196,6 +1197,8 @@ public class UpcomingCallReport extends AppCompatActivity {
                             } else if (extension.equals(".jpg")) {
                                 tvserviceReportAttach.setText(strSerAttach);
                             } else if (extension.equals(".png")) {
+                                tvserviceReportAttach.setText(strSerAttach);
+                            } else if (extension.equals(".jpeg")) {
                                 tvserviceReportAttach.setText(strSerAttach);
                             } else {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialogCustom);
@@ -1242,24 +1245,26 @@ public class UpcomingCallReport extends AppCompatActivity {
 
 
                         if (strInstallImg1.length() > 0) {
-                               String myStr = strInstallImg1;
-                               int index = myStr.lastIndexOf(".");
-                               String extension = myStr.substring(index);
-                               if (extension.equals(".pdf")) {
-                                   tvInstallationImage1.setText(strInstallImg1);
-                               } else if (extension.equals(".jpg")) {
-                                   tvInstallationImage1.setText(strInstallImg1);
-                               } else if (extension.equals(".png")) {
-                                   tvInstallationImage1.setText(strInstallImg1);
-                               } else {
-                                   AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialogCustom);
-                                   builder.setMessage("Please Select Pdf and Image File Only ..");
-                                   AlertDialog dialog = builder.create();
-                                   dialog.show();
-                               }
+                            String myStr = strInstallImg1;
+                            int index = myStr.lastIndexOf(".");
+                            String extension = myStr.substring(index);
+                            if (extension.equals(".pdf")) {
+                                tvInstallationImage1.setText(strInstallImg1);
+                            } else if (extension.equals(".jpg")) {
+                                tvInstallationImage1.setText(strInstallImg1);
+                            } else if (extension.equals(".png")) {
+                                tvInstallationImage1.setText(strInstallImg1);
+                            } else if (extension.equals(".jpeg")) {
+                                tvInstallationImage1.setText(strInstallImg1);
+                            } else {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialogCustom);
+                                builder.setMessage("Please Select Pdf and Image File Only ..");
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
+                            }
 
-                           }
-                          
+                        }
+
 
                     } catch (Exception e) {
 
@@ -1290,6 +1295,8 @@ public class UpcomingCallReport extends AppCompatActivity {
                             } else if (extension.equals(".jpg")) {
                                 tvInstallationImage2.setText(strInstallImg2);
                             } else if (extension.equals(".png")) {
+                                tvInstallationImage2.setText(strInstallImg2);
+                            } else if (extension.equals(".jpeg")) {
                                 tvInstallationImage2.setText(strInstallImg2);
                             } else {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialogCustom);
@@ -1332,6 +1339,8 @@ public class UpcomingCallReport extends AppCompatActivity {
                                 tvInstallationImage3.setText(strInstallImg3);
                             } else if (extension.equals(".png")) {
                                 tvInstallationImage3.setText(strInstallImg3);
+                            } else if (extension.equals(".jpeg")) {
+                                tvInstallationImage3.setText(strInstallImg3);
                             } else {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialogCustom);
                                 builder.setMessage("Please Select Pdf and Image File Only ..");
@@ -1373,6 +1382,8 @@ public class UpcomingCallReport extends AppCompatActivity {
                                 tvWarrentycard.setText(strWarrenty);
                             } else if (extension.equals(".png")) {
                                 tvWarrentycard.setText(strWarrenty);
+                            } else if (extension.equals(".jpeg")) {
+                                tvWarrentycard.setText(strWarrenty);
                             } else {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialogCustom);
                                 builder.setMessage("Please Select Pdf and Image File Only ..");
@@ -1413,6 +1424,8 @@ public class UpcomingCallReport extends AppCompatActivity {
                             } else if (extension.equals(".jpg")) {
                                 tvInstallReportAttach.setText(strInstallReport);
                             } else if (extension.equals(".png")) {
+                                tvInstallReportAttach.setText(strInstallReport);
+                            } else if (extension.equals(".jpeg")) {
                                 tvInstallReportAttach.setText(strInstallReport);
                             } else {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialogCustom);
@@ -1456,6 +1469,8 @@ public class UpcomingCallReport extends AppCompatActivity {
                                 tvSpareFile1.setText(strsparefile1);
                             } else if (extension.equals(".png")) {
                                 tvSpareFile1.setText(strsparefile1);
+                            } else if (extension.equals(".jpeg")) {
+                                tvSpareFile1.setText(strsparefile1);
                             } else {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialogCustom);
                                 builder.setMessage("Please Select Pdf and Image File Only ..");
@@ -1497,6 +1512,8 @@ public class UpcomingCallReport extends AppCompatActivity {
                             } else if (extension.equals(".jpg")) {
                                 tvSpareFile2.setText(strsparefile2);
                             } else if (extension.equals(".png")) {
+                                tvSpareFile2.setText(strsparefile2);
+                            } else if (extension.equals(".jpeg")) {
                                 tvSpareFile2.setText(strsparefile2);
                             } else {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialogCustom);
@@ -1540,6 +1557,8 @@ public class UpcomingCallReport extends AppCompatActivity {
                                 tvSpareFile3.setText(strsparefile3);
                             } else if (extension.equals(".png")) {
                                 tvSpareFile3.setText(strsparefile3);
+                            } else if (extension.equals(".jpeg")) {
+                                tvSpareFile3.setText(strsparefile3);
                             } else {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialogCustom);
                                 builder.setMessage("Please Select Pdf and Image File Only ..");
@@ -1581,6 +1600,8 @@ public class UpcomingCallReport extends AppCompatActivity {
                             } else if (extension.equals(".jpg")) {
                                 tvCusPOFileInvoiceAttch.setText(strCustomerPo);
                             } else if (extension.equals(".png")) {
+                                tvCusPOFileInvoiceAttch.setText(strCustomerPo);
+                            } else if (extension.equals(".jpeg")) {
                                 tvCusPOFileInvoiceAttch.setText(strCustomerPo);
                             } else {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialogCustom);

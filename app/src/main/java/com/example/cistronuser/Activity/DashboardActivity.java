@@ -199,6 +199,8 @@ public class DashboardActivity extends Activity {
         tvUpcomingCallCount=findViewById(R.id.tvUpcomingCallCount);
         tvPendingCallCount=findViewById(R.id.tvPendingCallCount);
         rlService=findViewById(R.id.rlService);
+
+
         rlUpcomingCallLayout=findViewById(R.id.rlUpcomingCallLayout);
         rlPendingingCallLayout=findViewById(R.id.rlPendingingCallLayout);
 

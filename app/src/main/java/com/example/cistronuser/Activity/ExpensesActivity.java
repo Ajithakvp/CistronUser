@@ -423,6 +423,8 @@ public class ExpensesActivity extends Activity {
                 }
                 if (isfilled) {
 
+
+
                     // Log.e(TAG, "onClick: 5");
                     Callsubmitexpense();
                     if (fileconvency != null) {
@@ -445,6 +447,23 @@ public class ExpensesActivity extends Activity {
 
                         Callsaveother();
                     }
+
+
+                    AlertDialog.Builder alert = new AlertDialog.Builder(ExpensesActivity.this);
+                    alert.setMessage("Expense Saved Successfully");
+                    alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            clearoldForm();
+                            tvDate.setText("");
+                            tvStartdate.setText("");
+                            tvto.setText("");
+                            tvEnddate.setText("");
+                        }
+                    });
+
+                    AlertDialog alertDialog = alert.create();
+                    alertDialog.show();
 
 
                 }
@@ -846,6 +865,7 @@ public class ExpensesActivity extends Activity {
                         tvLodgingEmptyDoc.setVisibility(View.VISIBLE);
                         ivLodgingDoc.setVisibility(View.VISIBLE);
                         tvLodgingDoc.setVisibility(View.GONE);
+                        tvLodgingDoc.setText("");
                         ivpreviewtlodging.setVisibility(View.GONE);
 
                         if (response.body().getSelecteddtExpenses().getFilename_l().trim().equals("")) {
@@ -889,6 +909,7 @@ public class ExpensesActivity extends Activity {
 
                         ivpreviewtTicket.setVisibility(View.GONE);
                         tvTicketDoc.setVisibility(View.GONE);
+                        tvTicketDoc.setText("");
                         tvTicketEmptyDoc.setVisibility(View.VISIBLE);
                         ivTicketDoc.setVisibility(View.VISIBLE);
                         ivDeleteTicket.setVisibility(View.GONE);
@@ -926,7 +947,8 @@ public class ExpensesActivity extends Activity {
                     if (response.isSuccessful()) {
                         Toast.makeText(ExpensesActivity.this, "Remove", Toast.LENGTH_SHORT).show();
                         ivpreviewOther.setVisibility(View.GONE);
-                        tvOtherDoc.setVisibility(View.VISIBLE);
+                        tvOtherDoc.setVisibility(View.GONE);
+                        tvOtherDoc.setText("");
                         tvOtherEmptyDoc.setVisibility(View.VISIBLE);
                         ivotherDoc.setVisibility(View.VISIBLE);
                         ivDeleteOther.setVisibility(View.GONE);
@@ -959,7 +981,7 @@ public class ExpensesActivity extends Activity {
 
     private void Callsaveother() {
 
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Please Wait...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -984,28 +1006,31 @@ public class ExpensesActivity extends Activity {
         convency.CallOther(action, EmpId, Date, OtherFile).enqueue(new Callback<ExpenseResponse>() {
             @Override
             public void onResponse(Call<ExpenseResponse> call, Response<ExpenseResponse> response) {
-
-                progressDialog.dismiss();
-                AlertDialog.Builder alert = new AlertDialog.Builder(ExpensesActivity.this);
-                alert.setMessage("Expense Saved Successfully");
-                alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        clearoldForm();
-                        tvDate.setText("");
-                        tvStartdate.setText("");
-                        tvto.setText("");
-                        tvEnddate.setText("");
-
-                    }
-                });
-
-                AlertDialog alertDialog = alert.create();
-                alertDialog.show();
+                if(response.isSuccessful()) {
+                    progressDialog.dismiss();
+//                    AlertDialog.Builder alert = new AlertDialog.Builder(ExpensesActivity.this);
+//                    alert.setMessage("Expense Saved Successfully");
+//                    alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            progressDialog.dismiss();
+//                            clearoldForm();
+//                            tvDate.setText("");
+//                            tvStartdate.setText("");
+//                            tvto.setText("");
+//                            tvEnddate.setText("");
+//
+//                        }
+//                    });
+//
+//                    AlertDialog alertDialog = alert.create();
+//                    alertDialog.show();
+                }
             }
 
             @Override
             public void onFailure(Call<ExpenseResponse> call, Throwable t) {
+                progressDialog.dismiss();
 
             }
         });
@@ -1039,31 +1064,34 @@ public class ExpensesActivity extends Activity {
         convency.CallTicket(action, EmpId, Date, TicketFile).enqueue(new Callback<ExpenseResponse>() {
             @Override
             public void onResponse(Call<ExpenseResponse> call, Response<ExpenseResponse> response) {
-                progressDialog.dismiss();
-               // Log.e(TAG, "onResponse: 3");
-                progressDialog.dismiss();
-                AlertDialog.Builder alert = new AlertDialog.Builder(ExpensesActivity.this);
-                alert.setMessage("Expense Saved Successfully");
-                alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        clearoldForm();
-                        tvDate.setText("");
-                        tvStartdate.setText("");
-                        tvto.setText("");
-                        tvEnddate.setText("");
+                if(response.isSuccessful()) {
+                    progressDialog.dismiss();
+                    AlertDialog.Builder alert = new AlertDialog.Builder(ExpensesActivity.this);
+//                    alert.setMessage("Expense Saved Successfully");
+//                    alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            progressDialog.dismiss();
+//                            clearoldForm();
+//                            tvDate.setText("");
+//                            tvStartdate.setText("");
+//                            tvto.setText("");
+//                            tvEnddate.setText("");
+//
+//                        }
+//                    });
+//
+//                    AlertDialog alertDialog = alert.create();
+//                    alertDialog.show();
+//
 
-                    }
-                });
-
-                AlertDialog alertDialog = alert.create();
-                alertDialog.show();
-
-
+                }
             }
 
             @Override
             public void onFailure(Call<ExpenseResponse> call, Throwable t) {
+                progressDialog.dismiss();
+                Log.e(TAG, "onFailure: "+t.getMessage() );
 
             }
         });
@@ -1095,31 +1123,34 @@ public class ExpensesActivity extends Activity {
         convency.CallLodging(action, EmpId, Date, LodgingFile).enqueue(new Callback<ExpenseResponse>() {
             @Override
             public void onResponse(Call<ExpenseResponse> call, Response<ExpenseResponse> response) {
-               // Log.e(TAG, "onResponse: 2");
 
-                progressDialog.dismiss();
-
-                AlertDialog.Builder alert = new AlertDialog.Builder(ExpensesActivity.this);
-                alert.setMessage("Expense Saved Successfully");
-                alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        clearoldForm();
-                        tvDate.setText("");
-                        tvStartdate.setText("");
-                        tvto.setText("");
-                        tvEnddate.setText("");
-
-                    }
-                });
-
-                AlertDialog alertDialog = alert.create();
-                alertDialog.show();
-
+                if(response.isSuccessful()) {
+                    progressDialog.dismiss();
+//
+//                    AlertDialog.Builder alert = new AlertDialog.Builder(ExpensesActivity.this);
+//                    alert.setMessage("Expense Saved Successfully");
+//                    alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            progressDialog.dismiss();
+//                            clearoldForm();
+//                            tvDate.setText("");
+//                            tvStartdate.setText("");
+//                            tvto.setText("");
+//                            tvEnddate.setText("");
+//
+//                        }
+//                    });
+//
+//                    AlertDialog alertDialog = alert.create();
+//                    alertDialog.show();
+                }
             }
 
             @Override
             public void onFailure(Call<ExpenseResponse> call, Throwable t) {
+                progressDialog.dismiss();
+                Log.e(TAG, "onFailure: "+t.getMessage() );
 
             }
         });
@@ -1153,29 +1184,34 @@ public class ExpensesActivity extends Activity {
         convency.CallConvency(action, EmpId, Date, ConvencyFile).enqueue(new Callback<ExpenseResponse>() {
             @Override
             public void onResponse(Call<ExpenseResponse> call, Response<ExpenseResponse> response) {
-               // Log.e(TAG, "onResponse: 1");
+                if(response.isSuccessful()){
                 progressDialog.dismiss();
-                AlertDialog.Builder alert = new AlertDialog.Builder(ExpensesActivity.this);
-                alert.setMessage("Expense Saved Successfully");
-                alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        clearoldForm();
-                        tvDate.setText("");
-                        tvStartdate.setText("");
-                        tvto.setText("");
-                        tvEnddate.setText("");
+//                AlertDialog.Builder alert = new AlertDialog.Builder(ExpensesActivity.this);
+//                alert.setMessage("Expense Saved Successfully");
+//                alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        progressDialog.dismiss();
+//                        clearoldForm();
+//                        tvDate.setText("");
+//                        tvStartdate.setText("");
+//                        tvto.setText("");
+//                        tvEnddate.setText("");
+//
+//                    }
+//                });
+//
+//                AlertDialog alertDialog = alert.create();
+//                alertDialog.show();
 
-                    }
-                });
-
-                AlertDialog alertDialog = alert.create();
-                alertDialog.show();
+                }
 
             }
 
             @Override
             public void onFailure(Call<ExpenseResponse> call, Throwable t) {
+                progressDialog.dismiss();
+                Log.e(TAG, "onFailure: "+t.getMessage() );
 
             }
         });
@@ -1192,6 +1228,7 @@ public class ExpensesActivity extends Activity {
 
                         ivConvencyDelete.setVisibility(View.GONE);
                         tvConveyanceDoc.setVisibility(View.GONE);
+                        tvConveyanceDoc.setText("");
                         tvConveyanceEmptyDoc.setVisibility(View.VISIBLE);
                         ivConvencydoc.setVisibility(View.VISIBLE);
                         ivConvencypreview.setVisibility(View.GONE);
@@ -1331,6 +1368,7 @@ public class ExpensesActivity extends Activity {
                         alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                progressDialog.dismiss();
                                 finish();
                             }
                         });
@@ -1347,6 +1385,7 @@ public class ExpensesActivity extends Activity {
 
             @Override
             public void onFailure(Call<WeeklySubmitExpensesResponse> call, Throwable t) {
+                progressDialog.dismiss();
 
             }
         });
@@ -1377,6 +1416,7 @@ public class ExpensesActivity extends Activity {
                         alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                progressDialog.dismiss();
                                 finish();
 
                             }
@@ -1394,6 +1434,7 @@ public class ExpensesActivity extends Activity {
 
             @Override
             public void onFailure(Call<WeeklySubmitExpensesResponse> call, Throwable t) {
+                progressDialog.dismiss();
 
             }
         });
@@ -1432,21 +1473,7 @@ public class ExpensesActivity extends Activity {
                     if (response.isSuccessful()) {
                        // Log.e(TAG, "onResponse: All");
                         progressDialog.dismiss();
-                        AlertDialog.Builder alert = new AlertDialog.Builder(ExpensesActivity.this);
-                        alert.setMessage("Expense Saved Successfully");
-                        alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                clearoldForm();
-                                tvDate.setText("");
-                                tvStartdate.setText("");
-                                tvto.setText("");
-                                tvEnddate.setText("");
-                            }
-                        });
 
-                        AlertDialog alertDialog = alert.create();
-                        alertDialog.show();
                     }
 
                 } catch (Exception e) {
@@ -1457,6 +1484,7 @@ public class ExpensesActivity extends Activity {
 
             @Override
             public void onFailure(Call<ExpenseResponse> call, Throwable t) {
+                progressDialog.dismiss();
 
             }
         });
@@ -1497,6 +1525,7 @@ public class ExpensesActivity extends Activity {
                             public void onResponse(Call<SelectWeekResponse> call, Response<SelectWeekResponse> response) {
                                 try {
                                     if (response.isSuccessful()) {
+                                        progressDialog.dismiss();
 
                                         if (Integer.parseInt(response.body().getGrandSum().trim()) == 0) {
                                             tvViewWeeklyreport.setVisibility(View.GONE);
@@ -1505,7 +1534,7 @@ public class ExpensesActivity extends Activity {
                                         }
 
 
-                                        progressDialog.dismiss();
+
                                         if (response.body().getError().trim().equals("1")) {
                                             rlExpenseLayout.setVisibility(View.GONE);
                                             rlErrormsg.setVisibility(View.VISIBLE);
@@ -1603,13 +1632,6 @@ public class ExpensesActivity extends Activity {
                 try {
                     if (response.isSuccessful()) {
 
-
-                        if (!response.body().getSelecteddtExpenses().getWorkreport().trim().equals("")) {
-                            edWorkReport.setError(null);
-                        }
-
-                        edWorkReport.setText(response.body().getSelecteddtExpenses().getWorkreport());
-
                         if (response.body().getSelecteddtExpenses().getC_amo().trim().equals("0")) {
                             response.body().getSelecteddtExpenses().setC_amo("");
                             response.body().getSelecteddtExpenses().setFilename_all("");
@@ -1627,6 +1649,7 @@ public class ExpensesActivity extends Activity {
                             response.body().getSelecteddtExpenses().setFilename_o("");
                         }
 
+                        edWorkReport.setText(response.body().getSelecteddtExpenses().getWorkreport());
                         edConveyance.setText(response.body().getSelecteddtExpenses().getC_amo());
                         tvTicket.setText(response.body().getSelecteddtExpenses().getT_amo());
                         tvLodging.setText(response.body().getSelecteddtExpenses().getL_amo());
@@ -1649,13 +1672,6 @@ public class ExpensesActivity extends Activity {
                         filelod = response.body().getSelecteddtExpenses().getFilename_l();
                         fileot = response.body().getSelecteddtExpenses().getFilename_o();
                         filetic = response.body().getSelecteddtExpenses().getFilename_t();
-
-                        if (Integer.parseInt(edConveyance.getText().toString().trim()) == 0) {
-                            rlUpload.setVisibility(View.GONE);
-
-                        } else {
-                            //rlUpload.setVisibility(View.VISIBLE);
-                        }
 
 
 //                        if (response.body().getSelecteddtExpenses().getFilename_all().trim().equals("")) {
@@ -1722,6 +1738,18 @@ public class ExpensesActivity extends Activity {
                             ivpreviewtlodging.setVisibility(View.VISIBLE);
 
 
+                        }
+
+
+                        if (!response.body().getSelecteddtExpenses().getWorkreport().trim().equals("")) {
+                            edWorkReport.setError(null);
+                        }
+
+                        if (Integer.parseInt(edConveyance.getText().toString().trim()) == 0) {
+                            rlUpload.setVisibility(View.GONE);
+
+                        } else {
+                            //rlUpload.setVisibility(View.VISIBLE);
                         }
 
 

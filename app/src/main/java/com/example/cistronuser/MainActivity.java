@@ -25,7 +25,7 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    String AppVersion = "cistron 1.0";
+    String AppVersion = "cistron 1.1"; //change expense and biometric Version "cistron 1.1"
 
     TextView tvVersion;
 
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
                     if (response.body().getMessage().trim().equals(AppVersion)) {
                         CallLoginPage();
                     } else {
-                        AlertDialog.Builder update = new AlertDialog.Builder(MainActivity.this);
+                        AlertDialog.Builder update = new AlertDialog.Builder(MainActivity.this,R.style.AlertDialogCustom);
                         update.setCancelable(false);
                         update.setTitle("Update Required !");
                         update.setMessage("You must update to Continue");

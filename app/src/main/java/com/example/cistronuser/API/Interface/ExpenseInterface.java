@@ -28,7 +28,7 @@ public interface ExpenseInterface {
                                             @Part("active") RequestBody active,
                                             @Part("startdate") RequestBody startdate,
                                             @Part("enddate") RequestBody enddate,
-                                            @Part("date")RequestBody date,
+                                            @Part("date") RequestBody date,
                                             @Part("workreport") RequestBody workreport
 
     );
@@ -37,9 +37,9 @@ public interface ExpenseInterface {
     @Multipart
     @POST("expenses.php")
     Call<ExpenseResponse> CallConvency(@Part("action") RequestBody action,
-                                            @Part("empid") RequestBody empid,
-                                            @Part("date")RequestBody date,
-                                            @Part MultipartBody.Part filename_all
+                                       @Part("empid") RequestBody empid,
+                                       @Part("date") RequestBody date,
+                                       @Part MultipartBody.Part filename_all
 
     );
 
@@ -47,18 +47,18 @@ public interface ExpenseInterface {
     @Multipart
     @POST("expenses.php")
     Call<ExpenseResponse> CallTicket(@Part("action") RequestBody action,
-                                       @Part("empid") RequestBody empid,
-                                       @Part("date")RequestBody date,
-                                       @Part MultipartBody.Part filename_t
+                                     @Part("empid") RequestBody empid,
+                                     @Part("date") RequestBody date,
+                                     @Part MultipartBody.Part filename_t
 
     );
 
     @Multipart
     @POST("expenses.php")
     Call<ExpenseResponse> CallLodging(@Part("action") RequestBody action,
-                                     @Part("empid") RequestBody empid,
-                                     @Part("date")RequestBody date,
-                                     @Part MultipartBody.Part filename_l
+                                      @Part("empid") RequestBody empid,
+                                      @Part("date") RequestBody date,
+                                      @Part MultipartBody.Part filename_l
 
     );
 
@@ -66,9 +66,9 @@ public interface ExpenseInterface {
     @Multipart
     @POST("expenses.php")
     Call<ExpenseResponse> CallOther(@Part("action") RequestBody action,
-                                      @Part("empid") RequestBody empid,
-                                      @Part("date")RequestBody date,
-                                      @Part MultipartBody.Part filename_o
+                                    @Part("empid") RequestBody empid,
+                                    @Part("date") RequestBody date,
+                                    @Part MultipartBody.Part filename_o
 
     );
 
@@ -76,13 +76,11 @@ public interface ExpenseInterface {
     @Multipart
     @POST("expenses.php")
     Call<ExpenseResponse> Callsubmit(@Part("action") RequestBody action,
-                                    @Part("empid") RequestBody empid,
-                                    @Part("date")RequestBody date,
-                                    @Part MultipartBody.Part filename_r
+                                     @Part("empid") RequestBody empid,
+                                     @Part("date") RequestBody date,
+                                     @Part MultipartBody.Part filename_r
 
     );
-
-
 
 
 }
