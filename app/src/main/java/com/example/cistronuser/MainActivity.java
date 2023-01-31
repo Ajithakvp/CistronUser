@@ -25,9 +25,26 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
+    //Current Version
     String AppVersion = "cistron 1.1"; //change expense and biometric Version "cistron 1.1"
 
     TextView tvVersion;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //*******APP Version***********//
+        CallApiVersionCheck();
+        /* **************App Version End************* */
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        //*******APP Version***********//
+        CallApiVersionCheck();
+        /* **************App Version End************* */
+    }
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -40,6 +57,13 @@ public class MainActivity extends AppCompatActivity {
 
 
         //*******APP Version***********//
+        CallApiVersionCheck();
+        /* **************App Version End************* */
+
+
+    }
+
+    private void CallApiVersionCheck() {
         AppVersionInterface appVersionInterface = APIClient.getClient().create(AppVersionInterface.class);
         appVersionInterface.callVersion("getAppVersion").enqueue(new Callback<AppVersionResponse>() {
             @Override
@@ -75,10 +99,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-        /* **************App Version End************* */
-
-
     }
 
     private void CallLoginPage() {

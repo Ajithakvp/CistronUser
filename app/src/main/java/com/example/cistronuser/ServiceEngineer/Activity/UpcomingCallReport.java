@@ -1140,15 +1140,26 @@ public class UpcomingCallReport extends AppCompatActivity {
                     strCusInvoiceAttach = timeStamp + "." + getFileExt(contentUri);
                     Toast.makeText(this, "File Name" + strCusInvoiceAttach, Toast.LENGTH_SHORT).show();
 
+
                     try {
-                        if (strCusInvoiceAttach.length() > 0) {
+                        fileinvoice = FileUtli.from(this, contentUri);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    long mb = fileinvoice.length();
+                    mb = mb / 1024;
+
+                    try {
+                        if (mb < 5120) {
                             String myStr = strCusInvoiceAttach;
+                            tvCusInvoice.setError(null);
                             int index = myStr.lastIndexOf(".");
                             String extension = myStr.substring(index);
                             System.out.println(extension);
                             if (extension.equals(".pdf")) {
                                 tvCusInvoice.setText(strCusInvoiceAttach);
-                            } else if (extension.equals(".jpeg")) {
+                            } else if (extension.equals(".jpg")) {
                                 tvCusInvoice.setText(strCusInvoiceAttach);
                             } else if (extension.equals(".png")) {
                                 tvCusInvoice.setText(strCusInvoiceAttach);
@@ -1162,18 +1173,14 @@ public class UpcomingCallReport extends AppCompatActivity {
                             }
 
                         } else {
-                            Toast.makeText(this, "Plese 5 mb", Toast.LENGTH_SHORT).show();
+                            tvCusInvoice.setError("Sorry, your file is too large. Upload files up to 5 MB in size below.");
+                            tvCusInvoice.requestFocus();
                         }
 
                     } catch (Exception e) {
 
                     }
 
-                    try {
-                        fileinvoice = FileUtli.from(this, contentUri);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
 
                 }
                 break;
@@ -1185,13 +1192,22 @@ public class UpcomingCallReport extends AppCompatActivity {
                     strSerAttach = timeStamp + "." + getFileExt(contentUri);
                     Toast.makeText(this, "File Name" + strSerAttach, Toast.LENGTH_SHORT).show();
 
+                    try {
+                        fileservice = FileUtli.from(this, contentUri);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    long mb = fileservice.length();
+                    mb = mb / 1024;
+
 
                     try {
-                        if (strSerAttach.length() > 0) {
+                        if (5120 > mb) {
+                            tvserviceReportAttach.setError(null);
                             String myStr = strSerAttach;
                             int index = myStr.lastIndexOf(".");
                             String extension = myStr.substring(index);
-
                             if (extension.equals(".pdf")) {
                                 tvserviceReportAttach.setText(strSerAttach);
                             } else if (extension.equals(".jpg")) {
@@ -1208,17 +1224,15 @@ public class UpcomingCallReport extends AppCompatActivity {
                             }
 
 
+                        } else {
+                            tvserviceReportAttach.setError("Sorry, your file is too large. Upload files up to 5 MB in size below.");
+                            tvserviceReportAttach.requestFocus();
                         }
 
                     } catch (Exception e) {
 
                     }
 
-                    try {
-                        fileservice = FileUtli.from(this, contentUri);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
 
                 }
                 break;
@@ -1231,20 +1245,22 @@ public class UpcomingCallReport extends AppCompatActivity {
                     strInstallImg1 = timeStamp + "." + getFileExt(contentUri);
                     Toast.makeText(this, "File Name" + strInstallImg1, Toast.LENGTH_SHORT).show();
 
+                    try {
+                        fileinstallImg1 = FileUtli.from(this, contentUri);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    long mb = fileinstallImg1.length();
+                    mb = mb / 1024;
+
 
                     try {
 //                        String mb= Formatter.formatShortFileSize(this,fileinstallImg1.length());
 //                        Log.e(TAG, "onActivityResult: "+mb.replace("MB"," ") );
-//                        int MB= Integer.parseInt(mb.replace("MB"," "));
-//                        Log.e(TAG, "onActivityResult: hgh"+MB );
-
-//                        int maxFileSize = 5 * 1024 * 1024;
-//                        Long l = fileinstallImg1.length();
-//                        String fileSize = l.toString();
-//                        int finalFileSize = Integer.parseInt(fileSize);
-
-
-                        if (strInstallImg1.length() > 0) {
+                        if (mb < 5120) {
+                            tvInstallationImage1.setError(null);
                             String myStr = strInstallImg1;
                             int index = myStr.lastIndexOf(".");
                             String extension = myStr.substring(index);
@@ -1263,6 +1279,9 @@ public class UpcomingCallReport extends AppCompatActivity {
                                 dialog.show();
                             }
 
+                        } else {
+                            tvInstallationImage1.setError("Sorry, your file is too large. Upload files up to 5 MB in size below.");
+                            tvInstallationImage1.requestFocus();
                         }
 
 
@@ -1270,11 +1289,6 @@ public class UpcomingCallReport extends AppCompatActivity {
 
                     }
 
-                    try {
-                        fileinstallImg1 = FileUtli.from(this, contentUri);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
 
                 }
                 break;
@@ -1286,7 +1300,17 @@ public class UpcomingCallReport extends AppCompatActivity {
                     Toast.makeText(this, "File Name" + strInstallImg2, Toast.LENGTH_SHORT).show();
 
                     try {
-                        if (strInstallImg2.length() > 0) {
+                        fileinstallImg2 = FileUtli.from(this, contentUri);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    long mb = fileinstallImg2.length();
+                    mb = mb / 1024;
+
+                    try {
+                        if (5120 > mb) {
+                            tvInstallationImage2.setError(null);
                             String myStr = strInstallImg2;
                             int index = myStr.lastIndexOf(".");
                             String extension = myStr.substring(index);
@@ -1306,17 +1330,15 @@ public class UpcomingCallReport extends AppCompatActivity {
                             }
 
 
+                        } else {
+                            tvInstallationImage2.setError("Sorry, your file is too large. Upload files up to 5 MB in size below.");
+                            tvInstallationImage2.requestFocus();
                         }
 
                     } catch (Exception e) {
 
                     }
 
-                    try {
-                        fileinstallImg2 = FileUtli.from(this, contentUri);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
 
                 }
                 break;
@@ -1329,7 +1351,17 @@ public class UpcomingCallReport extends AppCompatActivity {
                     Toast.makeText(this, "File Name" + strInstallImg3, Toast.LENGTH_SHORT).show();
 
                     try {
-                        if (strInstallImg3.length() > 0) {
+                        fileinstallImg3 = FileUtli.from(this, contentUri);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    long mb = fileinstallImg3.length();
+                    mb = mb / 1024;
+
+                    try {
+                        if (5120 > mb) {
+                            tvInstallationImage3.setError(null);
                             String myStr = strInstallImg3;
                             int index = myStr.lastIndexOf(".");
                             String extension = myStr.substring(index);
@@ -1349,17 +1381,15 @@ public class UpcomingCallReport extends AppCompatActivity {
                             }
 
 
+                        } else {
+                            tvInstallationImage3.setError("Sorry, your file is too large. Upload files up to 5 MB in size below.");
+                            tvInstallationImage3.requestFocus();
                         }
 
                     } catch (Exception e) {
 
                     }
 
-                    try {
-                        fileinstallImg3 = FileUtli.from(this, contentUri);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
 
                 }
                 break;
@@ -1372,7 +1402,17 @@ public class UpcomingCallReport extends AppCompatActivity {
                     Toast.makeText(this, "File Name" + strWarrenty, Toast.LENGTH_SHORT).show();
 
                     try {
-                        if (strWarrenty.length() > 0) {
+                        fileWarrentyCard = FileUtli.from(this, contentUri);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    long mb = fileWarrentyCard.length();
+                    mb = mb / 1024;
+
+                    try {
+                        if (5120 > mb) {
+                            tvWarrentycard.setError(null);
                             String myStr = strWarrenty;
                             int index = myStr.lastIndexOf(".");
                             String extension = myStr.substring(index);
@@ -1392,17 +1432,15 @@ public class UpcomingCallReport extends AppCompatActivity {
                             }
 
 
+                        } else {
+                            tvWarrentycard.setError("Sorry, your file is too large. Upload files up to 5 MB in size below.");
+                            tvWarrentycard.requestFocus();
                         }
 
                     } catch (Exception e) {
 
                     }
 
-                    try {
-                        fileWarrentyCard = FileUtli.from(this, contentUri);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
 
                 }
                 break;
@@ -1415,7 +1453,18 @@ public class UpcomingCallReport extends AppCompatActivity {
                     Toast.makeText(this, "File Name" + strInstallReport, Toast.LENGTH_SHORT).show();
 
                     try {
-                        if (strInstallReport.length() > 0) {
+                        fileinstallReport = FileUtli.from(this, contentUri);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    long mb = fileinstallReport.length();
+                    mb = mb / 1024;
+
+
+                    try {
+                        if (5120 > mb) {
+                            tvInstallReportAttach.setError(null);
                             String myStr = strInstallReport;
                             int index = myStr.lastIndexOf(".");
                             String extension = myStr.substring(index);
@@ -1435,17 +1484,15 @@ public class UpcomingCallReport extends AppCompatActivity {
                             }
 
 
+                        } else {
+                            tvInstallReportAttach.setError("Sorry, your file is too large. Upload files up to 5 MB in size below.");
+                            tvInstallReportAttach.requestFocus();
                         }
 
                     } catch (Exception e) {
 
                     }
 
-                    try {
-                        fileinstallReport = FileUtli.from(this, contentUri);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
 
                 }
                 break;
@@ -1459,7 +1506,16 @@ public class UpcomingCallReport extends AppCompatActivity {
                     Toast.makeText(this, "File Name" + strsparefile1, Toast.LENGTH_SHORT).show();
 
                     try {
-                        if (strsparefile1.length() > 0) {
+                        spareFile1 = FileUtli.from(this, contentUri);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    long mb = spareFile1.length();
+                    mb = mb / 1024;
+
+                    try {
+                        if (5120 > mb) {
+                            tvSpareFile1.setError(null);
                             String myStr = strsparefile1;
                             int index = myStr.lastIndexOf(".");
                             String extension = myStr.substring(index);
@@ -1479,17 +1535,15 @@ public class UpcomingCallReport extends AppCompatActivity {
                             }
 
 
+                        } else {
+                            tvSpareFile1.setError("Sorry, your file is too large. Upload files up to 5 MB in size below.");
+                            tvSpareFile1.requestFocus();
                         }
 
                     } catch (Exception e) {
 
                     }
 
-                    try {
-                        spareFile1 = FileUtli.from(this, contentUri);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
 
                 }
                 break;
@@ -1503,7 +1557,17 @@ public class UpcomingCallReport extends AppCompatActivity {
                     Toast.makeText(this, "File Name" + strsparefile2, Toast.LENGTH_SHORT).show();
 
                     try {
-                        if (strsparefile2.length() > 0) {
+                        spareFile2 = FileUtli.from(this, contentUri);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    long mb = spareFile2.length();
+                    mb = mb / 1024;
+
+                    try {
+                        if (5120 > mb) {
+                            tvSpareFile2.setError(null);
                             String myStr = strsparefile2;
                             int index = myStr.lastIndexOf(".");
                             String extension = myStr.substring(index);
@@ -1523,17 +1587,15 @@ public class UpcomingCallReport extends AppCompatActivity {
                             }
 
 
+                        } else {
+                            tvSpareFile2.setError("Sorry, your file is too large. Upload files up to 5 MB in size below.");
+                            tvSpareFile2.requestFocus();
                         }
 
                     } catch (Exception e) {
 
                     }
 
-                    try {
-                        spareFile2 = FileUtli.from(this, contentUri);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
 
                 }
                 break;
@@ -1547,7 +1609,17 @@ public class UpcomingCallReport extends AppCompatActivity {
                     Toast.makeText(this, "File Name" + strsparefile3, Toast.LENGTH_SHORT).show();
 
                     try {
-                        if (strsparefile3.length() > 0) {
+                        spareFile3 = FileUtli.from(this, contentUri);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    long mb = spareFile3.length();
+                    mb = mb / 1024;
+
+                    try {
+                        if (5120 > mb) {
+                            tvSpareFile3.setError(null);
                             String myStr = strsparefile3;
                             int index = myStr.lastIndexOf(".");
                             String extension = myStr.substring(index);
@@ -1567,17 +1639,15 @@ public class UpcomingCallReport extends AppCompatActivity {
                             }
 
 
+                        } else {
+                            tvSpareFile3.setError("Sorry, your file is too large. Upload files up to 5 MB in size below.");
+                            tvSpareFile3.requestFocus();
                         }
 
                     } catch (Exception e) {
 
                     }
 
-                    try {
-                        spareFile3 = FileUtli.from(this, contentUri);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
 
                 }
                 break;
@@ -1591,7 +1661,17 @@ public class UpcomingCallReport extends AppCompatActivity {
                     Toast.makeText(this, "File Name" + strCustomerPo, Toast.LENGTH_SHORT).show();
 
                     try {
-                        if (strCustomerPo.length() > 0) {
+                        fileCustomerPO = FileUtli.from(this, contentUri);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    long mb = fileCustomerPO.length();
+                    mb = mb / 1024;
+
+                    try {
+                        if (5120 > mb) {
+                            tvCusPOFileInvoiceAttch.setError(null);
                             String myStr = strCustomerPo;
                             int index = myStr.lastIndexOf(".");
                             String extension = myStr.substring(index);
@@ -1611,17 +1691,15 @@ public class UpcomingCallReport extends AppCompatActivity {
                             }
 
 
+                        } else {
+                            tvCusPOFileInvoiceAttch.setError("Sorry, your file is too large. Upload files up to 5 MB in size below.");
+                            tvCusPOFileInvoiceAttch.requestFocus();
                         }
 
                     } catch (Exception e) {
 
                     }
 
-                    try {
-                        fileCustomerPO = FileUtli.from(this, contentUri);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
 
                 }
                 break;
