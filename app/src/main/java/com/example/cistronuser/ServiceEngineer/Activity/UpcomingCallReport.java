@@ -1671,7 +1671,7 @@ public class UpcomingCallReport extends AppCompatActivity {
 
                     try {
                         if (5120 > mb) {
-                            tvCusPOFileInvoiceAttch.setError(null);
+                            tvCusPOFileInvoiceAttch.setError(null  );
                             String myStr = strCustomerPo;
                             int index = myStr.lastIndexOf(".");
                             String extension = myStr.substring(index);
