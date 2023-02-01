@@ -442,7 +442,7 @@
                         android:id="@+id/rlComplaint"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:visibility="gone">
+                        android:visibility="visible">
 
                         <TextView
                             android:id="@+id/tvComplaint"
@@ -479,6 +479,7 @@
                             android:layout_below="@id/spComplaint"
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="10dp"
+                            android:visibility="visible"
                             android:fontFamily="@font/openssansbold"
                             android:text="Complaint Subcategory :"
                             android:textColor="@color/RoseRed"
@@ -499,6 +500,66 @@
                             android:paddingLeft="10dp"
                             android:visibility="visible"
                             app:hintText="Select Complaint SubCategory" />
+
+
+                        <TextView
+                            android:id="@+id/tvTypeComplaintCat"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/spSubComplaint"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
+                            android:visibility="gone"
+                            android:fontFamily="@font/openssansbold"
+                            android:text="Type Complaint Category :"
+                            android:textColor="@color/RoseRed"
+                            android:textSize="18dp" />
+
+                        <EditText
+                            android:id="@+id/edTypeComplaintCat"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minHeight="60dp"
+                            android:layout_below="@id/tvTypeComplaintCat"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="18dp"
+                            android:layout_marginRight="8dp"
+                            android:background="@drawable/edittext"
+                            android:backgroundTint="@color/whiteLite2"
+                            android:fontFamily="@font/semibold"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="10dp"
+                            android:visibility="gone"
+                            android:hint="Select Type Complaint Category" />
+
+                        <TextView
+                            android:id="@+id/tvTypeSubComplaintCat"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/edTypeComplaintCat"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
+                            android:visibility="gone"
+                            android:fontFamily="@font/openssansbold"
+                            android:text="Type Complaint SubCategory :"
+                            android:textColor="@color/RoseRed"
+                            android:textSize="18dp" />
+
+                        <EditText
+                            android:id="@+id/edTypeSubComplaintCat"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minHeight="60dp"                            android:layout_below="@id/tvTypeSubComplaintCat"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="18dp"
+                            android:layout_marginRight="8dp"
+                            android:background="@drawable/edittext"
+                            android:backgroundTint="@color/whiteLite2"
+                            android:fontFamily="@font/semibold"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="10dp"
+                            android:visibility="gone"
+                            android:hint="Select Type Complaint SubCategory" />
 
 
                     </RelativeLayout>

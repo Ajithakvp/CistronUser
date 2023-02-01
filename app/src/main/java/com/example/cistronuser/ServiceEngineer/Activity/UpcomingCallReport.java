@@ -155,6 +155,8 @@ public class UpcomingCallReport extends AppCompatActivity {
     //Complaint & subComplaint
     RelativeLayout rlComplaint;
     Spinner spComplaint, spSubComplaint;
+    EditText edTypeComplaintCat,edTypeSubComplaintCat ;
+    TextView tvTypeComplaintCat,tvTypeSubComplaintCat,tvSubComplaint;
     ArrayList<ComplaintCategoryModel> complaintCategoryModels = new ArrayList<>();
     ArrayList<CallReportComplaintSubCategoryModel> callReportComplaintSubCategoryModels = new ArrayList<>();
     ArrayList<String> strSubCom = new ArrayList<>();
@@ -217,6 +219,11 @@ public class UpcomingCallReport extends AppCompatActivity {
         rlComplaint = findViewById(R.id.rlComplaint);
         spComplaint = findViewById(R.id.spComplaint);
         spSubComplaint = findViewById(R.id.spSubComplaint);
+        edTypeComplaintCat=findViewById(R.id.edTypeComplaintCat);
+        edTypeSubComplaintCat=findViewById(R.id.edTypeSubComplaintCat);
+        tvTypeComplaintCat=findViewById(R.id.tvTypeComplaintCat);
+        tvTypeSubComplaintCat=findViewById(R.id.tvTypeSubComplaintCat);
+        tvSubComplaint=findViewById(R.id.tvSubComplaint);
 
 
         // *********** Installation *********** //
@@ -480,6 +487,22 @@ public class UpcomingCallReport extends AppCompatActivity {
                 String ComplaintID = complaintCategoryModels.get(position).getId();
                 CallSubComplaint(ComplaintID);
 
+                if (complaintCategoryModels.get(position).getText().trim().equals("Others")){
+                    tvSubComplaint.setVisibility(View.GONE);
+                    spSubComplaint.setVisibility(View.GONE);
+                    tvTypeComplaintCat.setVisibility(View.VISIBLE);
+                    tvTypeSubComplaintCat.setVisibility(View.VISIBLE);
+                    edTypeComplaintCat.setVisibility(View.VISIBLE);
+                    edTypeSubComplaintCat.setVisibility(View.VISIBLE);
+                }else {
+                    tvSubComplaint.setVisibility(View.VISIBLE);
+                    spSubComplaint.setVisibility(View.VISIBLE);
+                    tvTypeComplaintCat.setVisibility(View.GONE);
+                    tvTypeSubComplaintCat.setVisibility(View.GONE);
+                    edTypeComplaintCat.setVisibility(View.GONE);
+                    edTypeSubComplaintCat.setVisibility(View.GONE);
+                }
+
             }
 
             @Override
@@ -620,6 +643,18 @@ public class UpcomingCallReport extends AppCompatActivity {
         spSubComplaint.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if (callReportComplaintSubCategoryModels.get(position).getText().trim().equals("Others")){
+                    tvTypeComplaintCat.setVisibility(View.VISIBLE);
+                    edTypeComplaintCat.setVisibility(View.VISIBLE);
+                    tvTypeSubComplaintCat.setVisibility(View.GONE);
+                    edTypeSubComplaintCat.setVisibility(View.GONE);
+                }else {
+                    tvTypeComplaintCat.setVisibility(View.GONE);
+                    edTypeComplaintCat.setVisibility(View.GONE);
+                    tvTypeSubComplaintCat.setVisibility(View.GONE);
+                    edTypeSubComplaintCat.setVisibility(View.GONE);
+                }
 
             }
 
@@ -1671,7 +1706,7 @@ public class UpcomingCallReport extends AppCompatActivity {
 
                     try {
                         if (5120 > mb) {
-                            tvCusPOFileInvoiceAttch.setError(null  );
+                            tvCusPOFileInvoiceAttch.setError(null);
                             String myStr = strCustomerPo;
                             int index = myStr.lastIndexOf(".");
                             String extension = myStr.substring(index);
