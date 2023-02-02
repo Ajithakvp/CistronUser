@@ -2,6 +2,8 @@ package com.example.cistronuser.ServiceEngineer.Activity;
 
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
+import static okhttp3.RequestBody.create;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -46,6 +48,7 @@ import android.widget.Toast;
 
 import com.example.cistronuser.API.APIClient;
 import com.example.cistronuser.API.Interface.CallReportComplaintSubCategoryInterface;
+import com.example.cistronuser.API.Interface.CallReportSubmitInterface;
 import com.example.cistronuser.API.Interface.DeletedAPIInterface;
 import com.example.cistronuser.API.Interface.EscalatePaymentSubmitInterface;
 import com.example.cistronuser.API.Interface.ServiceSpareRequestInterface;
@@ -59,6 +62,11 @@ import com.example.cistronuser.API.Model.ServiceSpareRequestModel;
 import com.example.cistronuser.API.Model.SpareRequestsRecordModel;
 import com.example.cistronuser.API.Model.SparesConsumedRecordModel;
 import com.example.cistronuser.API.Response.CallReportComplaintSubCategoryResponse;
+import com.example.cistronuser.API.Response.CallReportServiceSubmitResponse;
+import com.example.cistronuser.API.Response.CallReportSpareConsumedSubmitResponse;
+import com.example.cistronuser.API.Response.CallReportSubmitCusPoRespones;
+import com.example.cistronuser.API.Response.CallReportSubmitResponse;
+import com.example.cistronuser.API.Response.CallReportsubmitCusInvoiceResponse;
 import com.example.cistronuser.API.Response.DeleteResponse;
 import com.example.cistronuser.API.Response.EscalatePaymentSubmitResponse;
 import com.example.cistronuser.API.Response.ServiceSpareRequestResponse;
@@ -79,6 +87,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -181,6 +192,9 @@ public class UpcomingCallReport extends AppCompatActivity {
     RecyclerView rvReq;
     ImageView ivClose;
     String SerialID1, SerialID2;
+
+
+    String CallAssignId,CallStatusID,CallTypePayoptionsID,Spc,CusPoradiobID;
 
 
     @SuppressLint("MissingInflatedId")
@@ -332,6 +346,11 @@ public class UpcomingCallReport extends AppCompatActivity {
                         tvSaleORserviceAmtTag.setText(response.body().getUpcomingCallReportModel().getLabelModel().getLabel2());
                         SerialID1 = response.body().getUpcomingCallReportModel().getSeriesid1();
                         SerialID2 = response.body().getUpcomingCallReportModel().getSeriesid2();
+                        CallAssignId=response.body().getUpcomingCallReportModel().getCallInfoModel().getCallAssignId();
+                        Spc=response.body().getUpcomingCallReportModel().getHiddenValuesModel().getSpc();
+
+
+                        Log.e(TAG, "onResponse: "+response.body().getUpcomingCallReportModel().getCallTypeModels().get(0).getText());
 
 
                         // ********** Escalate ********** //
@@ -467,7 +486,12 @@ public class UpcomingCallReport extends AppCompatActivity {
 
 
         // ***********  Customer PO Recycleview *********** //
-        customerPoAdapter = new CustomerPoAdapter(this, customerPoResponseModels);
+        customerPoAdapter = new CustomerPoAdapter(this, customerPoResponseModels, new CustomerPoAdapter.OnitemCheckListener() {
+            @Override
+            public void onitemCheck(String customerPoResponseModel) {
+                CusPoradiobID=customerPoResponseModel.toString();
+            }
+        });
         LinearLayoutManager custPO = new LinearLayoutManager(this);
         custPO.setOrientation(RecyclerView.VERTICAL);
         rvCustomerPO.setLayoutManager(custPO);
@@ -518,6 +542,7 @@ public class UpcomingCallReport extends AppCompatActivity {
         spCallType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                CallTypePayoptionsID=callTypeModels.get(position).getId();
 
                 if (callTypeModels.get(position).getText().trim().equals("Paid")) {
                     tvCusInvoice.setVisibility(View.VISIBLE);
@@ -562,6 +587,8 @@ public class UpcomingCallReport extends AppCompatActivity {
         spCallStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+               CallStatusID=callStatusModels.get(position).getId();
 
                 if (callStatusModels.get(position).getText().trim().equals("Pending")) {
                     tvPendingReason.setVisibility(View.VISIBLE);
@@ -1062,6 +1089,159 @@ public class UpcomingCallReport extends AppCompatActivity {
             }
         });
         //  ************** Received pending sales payment Check End ************** //
+
+
+        tvSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+
+
+
+
+                if (fileCustomerPO != null){
+                    callCusPoFile();
+                }else if (fileinstallImg1 != null && fileinstallImg2  != null && fileinstallImg3  != null && fileWarrentyCard  != null && fileinstallReport != null){
+                    CallInstallImg();
+
+                }else if (spareFile1 != null && spareFile2 != null && spareFile3 != null){
+                    callspareConsumedFile();
+
+                }else if (fileinvoice != null){
+                    callcusInvoice();
+                }else  if (fileservice != null){
+                    callServicefile();
+                }else {
+                    Toast.makeText(UpcomingCallReport.this, "Plesae Select image", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
+    }
+
+    private void callServicefile() {
+        RequestBody action=RequestBody.create(MediaType.parse("text/plain"),"uploadLR");
+        RequestBody call_status=RequestBody.create(MediaType.parse("text/plain"),CallStatusID);
+        RequestBody pay_option=RequestBody.create(MediaType.parse("text/plain"),CallTypePayoptionsID);
+        RequestBody callassignid=RequestBody.create(MediaType.parse("text/plain"),CallAssignId);
+        RequestBody empid=RequestBody.create(MediaType.parse("text/plain"),PreferenceManager.getEmpID(this));
+        RequestBody attachReport=RequestBody.create(MediaType.parse("multipart/form-data"),fileservice);
+        MultipartBody.Part FileService=MultipartBody.Part.createFormData("file_inlr",fileservice.getName(),attachReport);
+        CallReportSubmitInterface callReportSubmitInterface=APIClient.getClient().create(CallReportSubmitInterface.class);
+        callReportSubmitInterface.CallReportFile(action,call_status,pay_option,callassignid,empid,FileService).enqueue(new Callback<CallReportServiceSubmitResponse>() {
+            @Override
+            public void onResponse(Call<CallReportServiceSubmitResponse> call, Response<CallReportServiceSubmitResponse> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<CallReportServiceSubmitResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void callcusInvoice() {
+
+        RequestBody action=RequestBody.create(MediaType.parse("text/plain"),"uploadCustomerInvoice");
+        RequestBody pay_option=RequestBody.create(MediaType.parse("text/plain"),CallTypePayoptionsID);
+        RequestBody callassignid=RequestBody.create(MediaType.parse("text/plain"),CallAssignId);
+        RequestBody cuspofile=RequestBody.create(MediaType.parse("multipart/form-data"),fileinvoice);
+        MultipartBody.Part fileCusPO=MultipartBody.Part.createFormData("file_in1",fileinvoice.getName(),cuspofile);
+        CallReportSubmitInterface callReportSubmitInterface=APIClient.getClient().create(CallReportSubmitInterface.class);
+        callReportSubmitInterface.CallUploadCusInvoice(action,pay_option,callassignid,fileCusPO).enqueue(new Callback<CallReportsubmitCusInvoiceResponse>() {
+            @Override
+            public void onResponse(Call<CallReportsubmitCusInvoiceResponse> call, Response<CallReportsubmitCusInvoiceResponse> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<CallReportsubmitCusInvoiceResponse> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+    private void callspareConsumedFile() {
+        RequestBody action=RequestBody.create(MediaType.parse("text/plain"),"uploadDCForSparesConsumed");
+        RequestBody spc=RequestBody.create(MediaType.parse("text/plain"),Spc);
+        RequestBody call_status=RequestBody.create(MediaType.parse("text/plain"),CallStatusID);
+        RequestBody callassignid=RequestBody.create(MediaType.parse("text/plain"),CallAssignId);
+        RequestBody file1=RequestBody.create(MediaType.parse("multipart/form-data"),spareFile1);
+        MultipartBody.Part filespc1=MultipartBody.Part.createFormData("file_in",spareFile1.getName(),file1);
+        RequestBody file2=RequestBody.create(MediaType.parse("multipart/form-data"),spareFile2);
+        MultipartBody.Part filespc2=MultipartBody.Part.createFormData("file_in2sc",spareFile2.getName(),file2);
+        RequestBody file3=RequestBody.create(MediaType.parse("multipart/form-data"),spareFile3);
+        MultipartBody.Part filespc3=MultipartBody.Part.createFormData("file_in3sc",spareFile3.getName(),file3);
+        CallReportSubmitInterface callReportSubmitInterface=APIClient.getClient().create(CallReportSubmitInterface.class);
+        callReportSubmitInterface.CallSpareConsumedFile(action,spc,call_status,callassignid,filespc1,filespc2,filespc3).enqueue(new Callback<CallReportSpareConsumedSubmitResponse>() {
+            @Override
+            public void onResponse(Call<CallReportSpareConsumedSubmitResponse> call, Response<CallReportSpareConsumedSubmitResponse> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<CallReportSpareConsumedSubmitResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void callCusPoFile() {
+        RequestBody action=RequestBody.create(MediaType.parse("text/plain"),"uploadInvoice");
+        RequestBody sqid=RequestBody.create(MediaType.parse("text/plain"),CusPoradiobID);
+        RequestBody callassignid=RequestBody.create(MediaType.parse("text/plain"),CallAssignId);
+        RequestBody cusinvoice=RequestBody.create(MediaType.parse("multipart/form-data"),fileCustomerPO);
+        MultipartBody.Part filecusInvoice=MultipartBody.Part.createFormData("file_in4sc",fileCustomerPO.getName(),cusinvoice);
+        CallReportSubmitInterface callReportSubmitInterface=APIClient.getClient().create(CallReportSubmitInterface.class);
+        callReportSubmitInterface.CallUploadInvoice(action,sqid,callassignid,filecusInvoice).enqueue(new Callback<CallReportSubmitCusPoRespones>() {
+            @Override
+            public void onResponse(Call<CallReportSubmitCusPoRespones> call, Response<CallReportSubmitCusPoRespones> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<CallReportSubmitCusPoRespones> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void CallInstallImg() {
+
+        RequestBody action=RequestBody.create(MediaType.parse("text/plain"),"uploadInstallationImages");
+        RequestBody call_status=RequestBody.create(MediaType.parse("text/plain"),CallStatusID);
+        RequestBody callassignid=RequestBody.create(MediaType.parse("text/plain"),CallAssignId);
+        RequestBody empid=RequestBody.create(MediaType.parse("text/plain"),PreferenceManager.getEmpID(this));
+        RequestBody installimg1 = create(MediaType.parse("multipart/form-data"), fileinstallImg1);
+        MultipartBody.Part fileInstallimg1 = MultipartBody.Part.createFormData("installImg1", fileinstallImg1.getName(), installimg1);
+        RequestBody installimg2=RequestBody.create(MediaType.parse("multipart/form-data"),fileinstallImg2);
+        MultipartBody.Part fileInstallimg2=MultipartBody.Part.createFormData("installImg2",fileinstallImg1.getName(),installimg2);
+        RequestBody installimg3=RequestBody.create(MediaType.parse("multipart/form-data"),fileinstallImg3);
+        MultipartBody.Part fileInstallimg3=MultipartBody.Part.createFormData("installImg3",fileinstallImg3.getName(),installimg3);
+        RequestBody installimg4=RequestBody.create(MediaType.parse("multipart/form-data"),fileWarrentyCard);
+        MultipartBody.Part fileInstallimg4=MultipartBody.Part.createFormData("installImg4",fileWarrentyCard.getName(),installimg4);
+        RequestBody installimg5=RequestBody.create(MediaType.parse("multipart/form-data"),fileinstallReport);
+        MultipartBody.Part fileInstallimg5=MultipartBody.Part.createFormData("installImg5",fileinstallReport.getName(),installimg5);
+
+
+        CallReportSubmitInterface callReportSubmitInterface=APIClient.getClient().create(CallReportSubmitInterface.class);
+        callReportSubmitInterface.CallInstallationFile(action,call_status,callassignid,empid,fileInstallimg1,fileInstallimg2,fileInstallimg3,fileInstallimg4,fileInstallimg5).enqueue(new Callback<CallReportSubmitResponse>() {
+            @Override
+            public void onResponse(Call<CallReportSubmitResponse> call, Response<CallReportSubmitResponse> response) {
+                if (response.isSuccessful()){
+                    Toast.makeText(UpcomingCallReport.this, "install", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CallReportSubmitResponse> call, Throwable t) {
+
+            }
+        });
 
     }
 

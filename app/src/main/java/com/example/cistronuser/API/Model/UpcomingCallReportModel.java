@@ -15,8 +15,21 @@ public class UpcomingCallReportModel {
     //"complaintCategory": [
     //sparesConsumed
     //"customerPo": {
+    //hiddenValues
+
+    //"compliantRequired": 1,
+    //    "seriesid1": "1",
+    //    "seriesid2": "",
 
 
+    @SerializedName("compliantRequired")
+    private String compliantRequired;
+
+    @SerializedName("seriesid1")
+    private String seriesid1;
+
+    @SerializedName("seriesid2")
+    private String seriesid2;
 
     @SerializedName("callInfo")
     private CallInfoModel callInfoModel;
@@ -27,20 +40,8 @@ public class UpcomingCallReportModel {
     @SerializedName("callStatus")
     private ArrayList<CallStatusModel>callStatusModels=new ArrayList<>();
 
-    @SerializedName("compliantRequired")
-    private String compliantRequired;
-
     @SerializedName("complaintCategory")
     private ArrayList<ComplaintCategoryModel>complaintCategoryModels=new ArrayList<>();
-
-    @SerializedName("seriesid1")
-    private String seriesid1;
-
-    @SerializedName("seriesid2")
-    private String seriesid2;
-
-    @SerializedName("label")
-    private LabelModel labelModel;
 
     @SerializedName("sparesConsumed")
     private SparesConsumedModel sparesConsumedModel;
@@ -51,20 +52,35 @@ public class UpcomingCallReportModel {
     @SerializedName("customerPo")
     private CustomerPoModel customerPoModel;
 
-    public CustomerPoModel getCustomerPoModel() {
-        return customerPoModel;
+    @SerializedName("label")
+    private LabelModel labelModel;
+
+    @SerializedName("hiddenValues")
+    private HiddenValuesModel hiddenValuesModel;
+
+
+    public String getCompliantRequired() {
+        return compliantRequired;
     }
 
-    public void setCustomerPoModel(CustomerPoModel customerPoModel) {
-        this.customerPoModel = customerPoModel;
+    public void setCompliantRequired(String compliantRequired) {
+        this.compliantRequired = compliantRequired;
     }
 
-    public SpareRequestsModel getSpareRequestsModel() {
-        return spareRequestsModel;
+    public String getSeriesid1() {
+        return seriesid1;
     }
 
-    public void setSpareRequestsModel(SpareRequestsModel spareRequestsModel) {
-        this.spareRequestsModel = spareRequestsModel;
+    public void setSeriesid1(String seriesid1) {
+        this.seriesid1 = seriesid1;
+    }
+
+    public String getSeriesid2() {
+        return seriesid2;
+    }
+
+    public void setSeriesid2(String seriesid2) {
+        this.seriesid2 = seriesid2;
     }
 
     public CallInfoModel getCallInfoModel() {
@@ -91,14 +107,6 @@ public class UpcomingCallReportModel {
         this.callStatusModels = callStatusModels;
     }
 
-    public String getCompliantRequired() {
-        return compliantRequired;
-    }
-
-    public void setCompliantRequired(String compliantRequired) {
-        this.compliantRequired = compliantRequired;
-    }
-
     public ArrayList<ComplaintCategoryModel> getComplaintCategoryModels() {
         return complaintCategoryModels;
     }
@@ -107,20 +115,28 @@ public class UpcomingCallReportModel {
         this.complaintCategoryModels = complaintCategoryModels;
     }
 
-    public String getSeriesid1() {
-        return seriesid1;
+    public SparesConsumedModel getSparesConsumedModel() {
+        return sparesConsumedModel;
     }
 
-    public void setSeriesid1(String seriesid1) {
-        this.seriesid1 = seriesid1;
+    public void setSparesConsumedModel(SparesConsumedModel sparesConsumedModel) {
+        this.sparesConsumedModel = sparesConsumedModel;
     }
 
-    public String getSeriesid2() {
-        return seriesid2;
+    public SpareRequestsModel getSpareRequestsModel() {
+        return spareRequestsModel;
     }
 
-    public void setSeriesid2(String seriesid2) {
-        this.seriesid2 = seriesid2;
+    public void setSpareRequestsModel(SpareRequestsModel spareRequestsModel) {
+        this.spareRequestsModel = spareRequestsModel;
+    }
+
+    public CustomerPoModel getCustomerPoModel() {
+        return customerPoModel;
+    }
+
+    public void setCustomerPoModel(CustomerPoModel customerPoModel) {
+        this.customerPoModel = customerPoModel;
     }
 
     public LabelModel getLabelModel() {
@@ -131,11 +147,11 @@ public class UpcomingCallReportModel {
         this.labelModel = labelModel;
     }
 
-    public SparesConsumedModel getSparesConsumedModel() {
-        return sparesConsumedModel;
+    public HiddenValuesModel getHiddenValuesModel() {
+        return hiddenValuesModel;
     }
 
-    public void setSparesConsumedModel(SparesConsumedModel sparesConsumedModel) {
-        this.sparesConsumedModel = sparesConsumedModel;
+    public void setHiddenValuesModel(HiddenValuesModel hiddenValuesModel) {
+        this.hiddenValuesModel = hiddenValuesModel;
     }
 }

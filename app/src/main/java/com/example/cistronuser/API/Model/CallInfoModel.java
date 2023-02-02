@@ -8,6 +8,7 @@ public class CallInfoModel {
     // "custDetail": "<b>20AP251749-</b> Shine speciality hospital / Ramalingapuram - Nellore - AP",
     //            "prodDetail": "HHS Steam Sterilizer (18 Kw) - SD - 20x48 - 236 Litres (HHS03)",
     //            "proSerial": "10580820",
+    //callAssignId
     //            "createdBy": "(e000) System Generated",
     //            "reportBy": "Dr. sujay sada - 9848522663"
     //"logistics_bp_install": "68440",
@@ -26,6 +27,9 @@ public class CallInfoModel {
 
     @SerializedName("proSerial")
     private String proSerial;
+
+    @SerializedName("callAssignId")
+    private String callAssignId;
 
     @SerializedName("createdBy")
     private String createdBy;
@@ -50,6 +54,15 @@ public class CallInfoModel {
 
     @SerializedName("logistics_esc_ins")
     private String logistics_esc_ins;
+
+
+    public String getCallAssignId() {
+        return callAssignId;
+    }
+
+    public void setCallAssignId(String callAssignId) {
+        this.callAssignId = callAssignId;
+    }
 
     public String getLogistics_esc_ins() {
         return logistics_esc_ins;

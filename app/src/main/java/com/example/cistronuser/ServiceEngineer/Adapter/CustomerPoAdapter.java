@@ -6,7 +6,7 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -25,9 +25,14 @@ public class CustomerPoAdapter extends RecyclerView.Adapter<CustomerPoAdapter.Vi
 
     public ArrayList<CustomerPoResponseModel>customerPoResponseModels;
 
-    public CustomerPoAdapter(Activity activity, ArrayList<CustomerPoResponseModel> customerPoResponseModels) {
+    @NonNull
+     private  OnitemCheckListener onitemCheckListener;
+
+
+    public CustomerPoAdapter(Activity activity, ArrayList<CustomerPoResponseModel> customerPoResponseModels, OnitemCheckListener onitemCheckListener) {
         this.activity = activity;
         this.customerPoResponseModels = customerPoResponseModels;
+        this.onitemCheckListener = onitemCheckListener;
     }
 
     @NonNull
@@ -45,7 +50,19 @@ public class CustomerPoAdapter extends RecyclerView.Adapter<CustomerPoAdapter.Vi
         holder.tvrbId.setText(customerPoResponseModels.get(position).getId());
         holder.tvPoRef.setText(customerPoResponseModels.get(position).getPoRef());
 
+        CustomerPoResponseModel id=customerPoResponseModels.get(position);
+
         String Pdf=customerPoResponseModels.get(position).getPoRefLink();
+
+        holder.rbId.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if (isChecked){
+                    onitemCheckListener.onitemCheck(id.getId());
+                }
+            }
+        });
 
         holder.rlPdf.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,6 +86,12 @@ public class CustomerPoAdapter extends RecyclerView.Adapter<CustomerPoAdapter.Vi
     public int getItemCount() {
         return customerPoResponseModels.size();
     }
+
+    public interface OnitemCheckListener {
+        void onitemCheck(String customerPoResponseModel);
+
+    }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 

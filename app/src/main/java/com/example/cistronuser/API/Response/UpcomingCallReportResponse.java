@@ -7,8 +7,9 @@ public class UpcomingCallReportResponse {
 
 //    "action": "callReporting",
 //            "response": {
-    // "seriesid1": "",
-    //        "seriesid2": "26"
+
+
+
 
 
     @SerializedName("action")
