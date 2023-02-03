@@ -166,8 +166,8 @@ public class UpcomingCallReport extends AppCompatActivity {
     //Complaint & subComplaint
     RelativeLayout rlComplaint;
     Spinner spComplaint, spSubComplaint;
-    EditText edTypeComplaintCat,edTypeSubComplaintCat ;
-    TextView tvTypeComplaintCat,tvTypeSubComplaintCat,tvSubComplaint;
+    EditText edTypeComplaintCat, edTypeSubComplaintCat;
+    TextView tvTypeComplaintCat, tvTypeSubComplaintCat, tvSubComplaint;
     ArrayList<ComplaintCategoryModel> complaintCategoryModels = new ArrayList<>();
     ArrayList<CallReportComplaintSubCategoryModel> callReportComplaintSubCategoryModels = new ArrayList<>();
     ArrayList<String> strSubCom = new ArrayList<>();
@@ -194,7 +194,7 @@ public class UpcomingCallReport extends AppCompatActivity {
     String SerialID1, SerialID2;
 
 
-    String CallAssignId,CallStatusID,CallTypePayoptionsID,Spc,CusPoradiobID;
+    String CallAssignId, CallStatusID, CallTypePayoptionsID, Spc, CusPoradiobID;
 
 
     @SuppressLint("MissingInflatedId")
@@ -233,11 +233,11 @@ public class UpcomingCallReport extends AppCompatActivity {
         rlComplaint = findViewById(R.id.rlComplaint);
         spComplaint = findViewById(R.id.spComplaint);
         spSubComplaint = findViewById(R.id.spSubComplaint);
-        edTypeComplaintCat=findViewById(R.id.edTypeComplaintCat);
-        edTypeSubComplaintCat=findViewById(R.id.edTypeSubComplaintCat);
-        tvTypeComplaintCat=findViewById(R.id.tvTypeComplaintCat);
-        tvTypeSubComplaintCat=findViewById(R.id.tvTypeSubComplaintCat);
-        tvSubComplaint=findViewById(R.id.tvSubComplaint);
+        edTypeComplaintCat = findViewById(R.id.edTypeComplaintCat);
+        edTypeSubComplaintCat = findViewById(R.id.edTypeSubComplaintCat);
+        tvTypeComplaintCat = findViewById(R.id.tvTypeComplaintCat);
+        tvTypeSubComplaintCat = findViewById(R.id.tvTypeSubComplaintCat);
+        tvSubComplaint = findViewById(R.id.tvSubComplaint);
 
 
         // *********** Installation *********** //
@@ -346,11 +346,8 @@ public class UpcomingCallReport extends AppCompatActivity {
                         tvSaleORserviceAmtTag.setText(response.body().getUpcomingCallReportModel().getLabelModel().getLabel2());
                         SerialID1 = response.body().getUpcomingCallReportModel().getSeriesid1();
                         SerialID2 = response.body().getUpcomingCallReportModel().getSeriesid2();
-                        CallAssignId=response.body().getUpcomingCallReportModel().getCallInfoModel().getCallAssignId();
-                        Spc=response.body().getUpcomingCallReportModel().getHiddenValuesModel().getSpc();
-
-
-                        Log.e(TAG, "onResponse: "+response.body().getUpcomingCallReportModel().getCallTypeModels().get(0).getText());
+                        CallAssignId = response.body().getUpcomingCallReportModel().getCallInfoModel().getCallAssignId();
+                        Spc = response.body().getUpcomingCallReportModel().getHiddenValuesModel().getSpc();
 
 
                         // ********** Escalate ********** //
@@ -489,7 +486,7 @@ public class UpcomingCallReport extends AppCompatActivity {
         customerPoAdapter = new CustomerPoAdapter(this, customerPoResponseModels, new CustomerPoAdapter.OnitemCheckListener() {
             @Override
             public void onitemCheck(String customerPoResponseModel) {
-                CusPoradiobID=customerPoResponseModel.toString();
+                CusPoradiobID = customerPoResponseModel.toString();
             }
         });
         LinearLayoutManager custPO = new LinearLayoutManager(this);
@@ -511,14 +508,14 @@ public class UpcomingCallReport extends AppCompatActivity {
                 String ComplaintID = complaintCategoryModels.get(position).getId();
                 CallSubComplaint(ComplaintID);
 
-                if (complaintCategoryModels.get(position).getText().trim().equals("Others")){
+                if (complaintCategoryModels.get(position).getText().trim().equals("Others")) {
                     tvSubComplaint.setVisibility(View.GONE);
                     spSubComplaint.setVisibility(View.GONE);
                     tvTypeComplaintCat.setVisibility(View.VISIBLE);
                     tvTypeSubComplaintCat.setVisibility(View.VISIBLE);
                     edTypeComplaintCat.setVisibility(View.VISIBLE);
                     edTypeSubComplaintCat.setVisibility(View.VISIBLE);
-                }else {
+                } else {
                     tvSubComplaint.setVisibility(View.VISIBLE);
                     spSubComplaint.setVisibility(View.VISIBLE);
                     tvTypeComplaintCat.setVisibility(View.GONE);
@@ -542,7 +539,7 @@ public class UpcomingCallReport extends AppCompatActivity {
         spCallType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                CallTypePayoptionsID=callTypeModels.get(position).getId();
+                CallTypePayoptionsID = callTypeModels.get(position).getId();
 
                 if (callTypeModels.get(position).getText().trim().equals("Paid")) {
                     tvCusInvoice.setVisibility(View.VISIBLE);
@@ -588,7 +585,7 @@ public class UpcomingCallReport extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-               CallStatusID=callStatusModels.get(position).getId();
+                CallStatusID = callStatusModels.get(position).getId();
 
                 if (callStatusModels.get(position).getText().trim().equals("Pending")) {
                     tvPendingReason.setVisibility(View.VISIBLE);
@@ -671,12 +668,12 @@ public class UpcomingCallReport extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                if (callReportComplaintSubCategoryModels.get(position).getText().trim().equals("Others")){
+                if (callReportComplaintSubCategoryModels.get(position).getText().trim().equals("Others")) {
                     tvTypeComplaintCat.setVisibility(View.VISIBLE);
                     edTypeComplaintCat.setVisibility(View.VISIBLE);
                     tvTypeSubComplaintCat.setVisibility(View.GONE);
                     edTypeSubComplaintCat.setVisibility(View.GONE);
-                }else {
+                } else {
                     tvTypeComplaintCat.setVisibility(View.GONE);
                     edTypeComplaintCat.setVisibility(View.GONE);
                     tvTypeSubComplaintCat.setVisibility(View.GONE);
@@ -1096,23 +1093,19 @@ public class UpcomingCallReport extends AppCompatActivity {
             public void onClick(View v) {
 
 
-
-
-
-
-                if (fileCustomerPO != null){
+                if (fileCustomerPO != null) {
                     callCusPoFile();
-                }else if (fileinstallImg1 != null && fileinstallImg2  != null && fileinstallImg3  != null && fileWarrentyCard  != null && fileinstallReport != null){
+                } else if (fileinstallImg1 != null && fileinstallImg2 != null && fileinstallImg3 != null && fileWarrentyCard != null && fileinstallReport != null) {
                     CallInstallImg();
 
-                }else if (spareFile1 != null && spareFile2 != null && spareFile3 != null){
+                } else if (spareFile1 != null && spareFile2 != null && spareFile3 != null) {
                     callspareConsumedFile();
 
-                }else if (fileinvoice != null){
+                } else if (fileinvoice != null) {
                     callcusInvoice();
-                }else  if (fileservice != null){
+                } else if (fileservice != null) {
                     callServicefile();
-                }else {
+                } else {
                     Toast.makeText(UpcomingCallReport.this, "Plesae Select image", Toast.LENGTH_SHORT).show();
                 }
 
@@ -1122,15 +1115,15 @@ public class UpcomingCallReport extends AppCompatActivity {
     }
 
     private void callServicefile() {
-        RequestBody action=RequestBody.create(MediaType.parse("text/plain"),"uploadLR");
-        RequestBody call_status=RequestBody.create(MediaType.parse("text/plain"),CallStatusID);
-        RequestBody pay_option=RequestBody.create(MediaType.parse("text/plain"),CallTypePayoptionsID);
-        RequestBody callassignid=RequestBody.create(MediaType.parse("text/plain"),CallAssignId);
-        RequestBody empid=RequestBody.create(MediaType.parse("text/plain"),PreferenceManager.getEmpID(this));
-        RequestBody attachReport=RequestBody.create(MediaType.parse("multipart/form-data"),fileservice);
-        MultipartBody.Part FileService=MultipartBody.Part.createFormData("file_inlr",fileservice.getName(),attachReport);
-        CallReportSubmitInterface callReportSubmitInterface=APIClient.getClient().create(CallReportSubmitInterface.class);
-        callReportSubmitInterface.CallReportFile(action,call_status,pay_option,callassignid,empid,FileService).enqueue(new Callback<CallReportServiceSubmitResponse>() {
+        RequestBody action = RequestBody.create(MediaType.parse("text/plain"), "uploadLR");
+        RequestBody call_status = RequestBody.create(MediaType.parse("text/plain"), CallStatusID);
+        RequestBody pay_option = RequestBody.create(MediaType.parse("text/plain"), CallTypePayoptionsID);
+        RequestBody callassignid = RequestBody.create(MediaType.parse("text/plain"), CallAssignId);
+        RequestBody empid = RequestBody.create(MediaType.parse("text/plain"), PreferenceManager.getEmpID(this));
+        RequestBody attachReport = RequestBody.create(MediaType.parse("multipart/form-data"), fileservice);
+        MultipartBody.Part FileService = MultipartBody.Part.createFormData("file_inlr", fileservice.getName(), attachReport);
+        CallReportSubmitInterface callReportSubmitInterface = APIClient.getClient().create(CallReportSubmitInterface.class);
+        callReportSubmitInterface.CallReportFile(action, call_status, pay_option, callassignid, empid, FileService).enqueue(new Callback<CallReportServiceSubmitResponse>() {
             @Override
             public void onResponse(Call<CallReportServiceSubmitResponse> call, Response<CallReportServiceSubmitResponse> response) {
 
@@ -1145,13 +1138,13 @@ public class UpcomingCallReport extends AppCompatActivity {
 
     private void callcusInvoice() {
 
-        RequestBody action=RequestBody.create(MediaType.parse("text/plain"),"uploadCustomerInvoice");
-        RequestBody pay_option=RequestBody.create(MediaType.parse("text/plain"),CallTypePayoptionsID);
-        RequestBody callassignid=RequestBody.create(MediaType.parse("text/plain"),CallAssignId);
-        RequestBody cuspofile=RequestBody.create(MediaType.parse("multipart/form-data"),fileinvoice);
-        MultipartBody.Part fileCusPO=MultipartBody.Part.createFormData("file_in1",fileinvoice.getName(),cuspofile);
-        CallReportSubmitInterface callReportSubmitInterface=APIClient.getClient().create(CallReportSubmitInterface.class);
-        callReportSubmitInterface.CallUploadCusInvoice(action,pay_option,callassignid,fileCusPO).enqueue(new Callback<CallReportsubmitCusInvoiceResponse>() {
+        RequestBody action = RequestBody.create(MediaType.parse("text/plain"), "uploadCustomerInvoice");
+        RequestBody pay_option = RequestBody.create(MediaType.parse("text/plain"), CallTypePayoptionsID);
+        RequestBody callassignid = RequestBody.create(MediaType.parse("text/plain"), CallAssignId);
+        RequestBody cuspofile = RequestBody.create(MediaType.parse("multipart/form-data"), fileinvoice);
+        MultipartBody.Part fileCusPO = MultipartBody.Part.createFormData("file_in1", fileinvoice.getName(), cuspofile);
+        CallReportSubmitInterface callReportSubmitInterface = APIClient.getClient().create(CallReportSubmitInterface.class);
+        callReportSubmitInterface.CallUploadCusInvoice(action, pay_option, callassignid, fileCusPO).enqueue(new Callback<CallReportsubmitCusInvoiceResponse>() {
             @Override
             public void onResponse(Call<CallReportsubmitCusInvoiceResponse> call, Response<CallReportsubmitCusInvoiceResponse> response) {
 
@@ -1166,18 +1159,18 @@ public class UpcomingCallReport extends AppCompatActivity {
     }
 
     private void callspareConsumedFile() {
-        RequestBody action=RequestBody.create(MediaType.parse("text/plain"),"uploadDCForSparesConsumed");
-        RequestBody spc=RequestBody.create(MediaType.parse("text/plain"),Spc);
-        RequestBody call_status=RequestBody.create(MediaType.parse("text/plain"),CallStatusID);
-        RequestBody callassignid=RequestBody.create(MediaType.parse("text/plain"),CallAssignId);
-        RequestBody file1=RequestBody.create(MediaType.parse("multipart/form-data"),spareFile1);
-        MultipartBody.Part filespc1=MultipartBody.Part.createFormData("file_in",spareFile1.getName(),file1);
-        RequestBody file2=RequestBody.create(MediaType.parse("multipart/form-data"),spareFile2);
-        MultipartBody.Part filespc2=MultipartBody.Part.createFormData("file_in2sc",spareFile2.getName(),file2);
-        RequestBody file3=RequestBody.create(MediaType.parse("multipart/form-data"),spareFile3);
-        MultipartBody.Part filespc3=MultipartBody.Part.createFormData("file_in3sc",spareFile3.getName(),file3);
-        CallReportSubmitInterface callReportSubmitInterface=APIClient.getClient().create(CallReportSubmitInterface.class);
-        callReportSubmitInterface.CallSpareConsumedFile(action,spc,call_status,callassignid,filespc1,filespc2,filespc3).enqueue(new Callback<CallReportSpareConsumedSubmitResponse>() {
+        RequestBody action = RequestBody.create(MediaType.parse("text/plain"), "uploadDCForSparesConsumed");
+        RequestBody spc = RequestBody.create(MediaType.parse("text/plain"), Spc);
+        RequestBody call_status = RequestBody.create(MediaType.parse("text/plain"), CallStatusID);
+        RequestBody callassignid = RequestBody.create(MediaType.parse("text/plain"), CallAssignId);
+        RequestBody file1 = RequestBody.create(MediaType.parse("multipart/form-data"), spareFile1);
+        MultipartBody.Part filespc1 = MultipartBody.Part.createFormData("file_in", spareFile1.getName(), file1);
+        RequestBody file2 = RequestBody.create(MediaType.parse("multipart/form-data"), spareFile2);
+        MultipartBody.Part filespc2 = MultipartBody.Part.createFormData("file_in2sc", spareFile2.getName(), file2);
+        RequestBody file3 = RequestBody.create(MediaType.parse("multipart/form-data"), spareFile3);
+        MultipartBody.Part filespc3 = MultipartBody.Part.createFormData("file_in3sc", spareFile3.getName(), file3);
+        CallReportSubmitInterface callReportSubmitInterface = APIClient.getClient().create(CallReportSubmitInterface.class);
+        callReportSubmitInterface.CallSpareConsumedFile(action, spc, call_status, callassignid, filespc1, filespc2, filespc3).enqueue(new Callback<CallReportSpareConsumedSubmitResponse>() {
             @Override
             public void onResponse(Call<CallReportSpareConsumedSubmitResponse> call, Response<CallReportSpareConsumedSubmitResponse> response) {
 
@@ -1191,13 +1184,13 @@ public class UpcomingCallReport extends AppCompatActivity {
     }
 
     private void callCusPoFile() {
-        RequestBody action=RequestBody.create(MediaType.parse("text/plain"),"uploadInvoice");
-        RequestBody sqid=RequestBody.create(MediaType.parse("text/plain"),CusPoradiobID);
-        RequestBody callassignid=RequestBody.create(MediaType.parse("text/plain"),CallAssignId);
-        RequestBody cusinvoice=RequestBody.create(MediaType.parse("multipart/form-data"),fileCustomerPO);
-        MultipartBody.Part filecusInvoice=MultipartBody.Part.createFormData("file_in4sc",fileCustomerPO.getName(),cusinvoice);
-        CallReportSubmitInterface callReportSubmitInterface=APIClient.getClient().create(CallReportSubmitInterface.class);
-        callReportSubmitInterface.CallUploadInvoice(action,sqid,callassignid,filecusInvoice).enqueue(new Callback<CallReportSubmitCusPoRespones>() {
+        RequestBody action = RequestBody.create(MediaType.parse("text/plain"), "uploadInvoice");
+        RequestBody sqid = RequestBody.create(MediaType.parse("text/plain"), CusPoradiobID);
+        RequestBody callassignid = RequestBody.create(MediaType.parse("text/plain"), CallAssignId);
+        RequestBody cusinvoice = RequestBody.create(MediaType.parse("multipart/form-data"), fileCustomerPO);
+        MultipartBody.Part filecusInvoice = MultipartBody.Part.createFormData("file_in4sc", fileCustomerPO.getName(), cusinvoice);
+        CallReportSubmitInterface callReportSubmitInterface = APIClient.getClient().create(CallReportSubmitInterface.class);
+        callReportSubmitInterface.CallUploadInvoice(action, sqid, callassignid, filecusInvoice).enqueue(new Callback<CallReportSubmitCusPoRespones>() {
             @Override
             public void onResponse(Call<CallReportSubmitCusPoRespones> call, Response<CallReportSubmitCusPoRespones> response) {
 
@@ -1212,27 +1205,27 @@ public class UpcomingCallReport extends AppCompatActivity {
 
     private void CallInstallImg() {
 
-        RequestBody action=RequestBody.create(MediaType.parse("text/plain"),"uploadInstallationImages");
-        RequestBody call_status=RequestBody.create(MediaType.parse("text/plain"),CallStatusID);
-        RequestBody callassignid=RequestBody.create(MediaType.parse("text/plain"),CallAssignId);
-        RequestBody empid=RequestBody.create(MediaType.parse("text/plain"),PreferenceManager.getEmpID(this));
+        RequestBody action = RequestBody.create(MediaType.parse("text/plain"), "uploadInstallationImages");
+        RequestBody call_status = RequestBody.create(MediaType.parse("text/plain"), CallStatusID);
+        RequestBody callassignid = RequestBody.create(MediaType.parse("text/plain"), CallAssignId);
+        RequestBody empid = RequestBody.create(MediaType.parse("text/plain"), PreferenceManager.getEmpID(this));
         RequestBody installimg1 = create(MediaType.parse("multipart/form-data"), fileinstallImg1);
         MultipartBody.Part fileInstallimg1 = MultipartBody.Part.createFormData("installImg1", fileinstallImg1.getName(), installimg1);
-        RequestBody installimg2=RequestBody.create(MediaType.parse("multipart/form-data"),fileinstallImg2);
-        MultipartBody.Part fileInstallimg2=MultipartBody.Part.createFormData("installImg2",fileinstallImg1.getName(),installimg2);
-        RequestBody installimg3=RequestBody.create(MediaType.parse("multipart/form-data"),fileinstallImg3);
-        MultipartBody.Part fileInstallimg3=MultipartBody.Part.createFormData("installImg3",fileinstallImg3.getName(),installimg3);
-        RequestBody installimg4=RequestBody.create(MediaType.parse("multipart/form-data"),fileWarrentyCard);
-        MultipartBody.Part fileInstallimg4=MultipartBody.Part.createFormData("installImg4",fileWarrentyCard.getName(),installimg4);
-        RequestBody installimg5=RequestBody.create(MediaType.parse("multipart/form-data"),fileinstallReport);
-        MultipartBody.Part fileInstallimg5=MultipartBody.Part.createFormData("installImg5",fileinstallReport.getName(),installimg5);
+        RequestBody installimg2 = RequestBody.create(MediaType.parse("multipart/form-data"), fileinstallImg2);
+        MultipartBody.Part fileInstallimg2 = MultipartBody.Part.createFormData("installImg2", fileinstallImg1.getName(), installimg2);
+        RequestBody installimg3 = RequestBody.create(MediaType.parse("multipart/form-data"), fileinstallImg3);
+        MultipartBody.Part fileInstallimg3 = MultipartBody.Part.createFormData("installImg3", fileinstallImg3.getName(), installimg3);
+        RequestBody installimg4 = RequestBody.create(MediaType.parse("multipart/form-data"), fileWarrentyCard);
+        MultipartBody.Part fileInstallimg4 = MultipartBody.Part.createFormData("installImg4", fileWarrentyCard.getName(), installimg4);
+        RequestBody installimg5 = RequestBody.create(MediaType.parse("multipart/form-data"), fileinstallReport);
+        MultipartBody.Part fileInstallimg5 = MultipartBody.Part.createFormData("installImg5", fileinstallReport.getName(), installimg5);
 
 
-        CallReportSubmitInterface callReportSubmitInterface=APIClient.getClient().create(CallReportSubmitInterface.class);
-        callReportSubmitInterface.CallInstallationFile(action,call_status,callassignid,empid,fileInstallimg1,fileInstallimg2,fileInstallimg3,fileInstallimg4,fileInstallimg5).enqueue(new Callback<CallReportSubmitResponse>() {
+        CallReportSubmitInterface callReportSubmitInterface = APIClient.getClient().create(CallReportSubmitInterface.class);
+        callReportSubmitInterface.CallInstallationFile(action, call_status, callassignid, empid, fileInstallimg1, fileInstallimg2, fileInstallimg3, fileInstallimg4, fileInstallimg5).enqueue(new Callback<CallReportSubmitResponse>() {
             @Override
             public void onResponse(Call<CallReportSubmitResponse> call, Response<CallReportSubmitResponse> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     Toast.makeText(UpcomingCallReport.this, "install", Toast.LENGTH_SHORT).show();
                 }
             }
