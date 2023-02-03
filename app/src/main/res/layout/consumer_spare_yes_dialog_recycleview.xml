@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_backgroud"
+    android:backgroundTint="@color/liteYellow"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/roboblod"
+        android:gravity="center"
+        android:text="Spares List"
+        android:textColor="@color/RoseRed"
+        android:textSize="20dp" />
+
+
+    <ImageView
+        android:id="@+id/ivClose"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="4dp"
+        android:src="@drawable/ic_baseline_close_24"
+        android:tint="@color/blue"
+        tools:ignore="UseAppTint" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivClose">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <RelativeLayout
+                android:id="@+id/rlCustomerPOSpares"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp">
+
+                <RelativeLayout
+                    android:id="@+id/rlcus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/tvCusPoSpareName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboblod"
+                        android:text="CUSTOMER PO SPARES"
+                        android:textColor="@color/Burgundy"
+                        android:textSize="20dp" />
+
+
+                    <TextView
+                        android:id="@+id/tvCusPoSpareStart"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@id/tvCusPoSpareName"
+                        android:fontFamily="@font/openssansbold"
+                        android:text="("
+                        android:textSize="20dp" />
+
+                    <TextView
+                        android:id="@+id/tvCusPoSpareCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@id/tvCusPoSpareStart"
+                        android:fontFamily="@font/openssansbold"
+                        android:text="100"
+                        android:textColor="@color/blue"
+                        android:textSize="20dp" />
+
+                    <TextView
+                        android:id="@+id/tvCusPoSpareend"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@id/tvCusPoSpareCount"
+                        android:fontFamily="@font/openssansbold"
+                        android:text=")"
+                        android:textSize="20dp" />
+
+
+                </RelativeLayout>
+
+
+                <View
+                    android:id="@+id/view1"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.9dp"
+                    android:layout_below="@+id/rlcus"
+                    android:layout_margin="5dp"
+                    android:background="@color/white" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvCustPoSpareYes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/view1"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginBottom="15dp" />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/rlConsumeSpares"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rlCustomerPOSpares"
+                android:layout_marginTop="16dp">
+
+                <RelativeLayout
+                    android:id="@+id/rlConsume"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/tvConsumeSpareName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboblod"
+                        android:text="CONSUME SPARES"
+                        android:textColor="@color/Burgundy"
+                        android:textSize="20dp" />
+
+
+                    <TextView
+                        android:id="@+id/tvConsumeSpareStart"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@id/tvConsumeSpareName"
+                        android:fontFamily="@font/openssansbold"
+                        android:text="("
+                        android:textSize="20dp" />
+
+                    <TextView
+                        android:id="@+id/tvConsumeSpareCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@id/tvConsumeSpareStart"
+                        android:fontFamily="@font/openssansbold"
+                        android:text="100"
+                        android:textColor="@color/blue"
+                        android:textSize="20dp" />
+
+                    <TextView
+                        android:id="@+id/tvConsumeSpareend"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@id/tvConsumeSpareCount"
+                        android:fontFamily="@font/openssansbold"
+                        android:text=")"
+                        android:textSize="20dp" />
+
+
+                </RelativeLayout>
+
+
+                <View
+                    android:id="@+id/view2"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.9dp"
+                    android:layout_below="@+id/rlConsume"
+                    android:layout_margin="5dp"
+                    android:background="@color/white" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvConsumespareYes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/view2"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginBottom="15dp" />
+
+                <TextView
+                    android:id="@+id/tvYesConsume"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_below="@+id/rvConsumespareYes"
+                    android:layout_marginLeft="70dp"
+                    android:layout_marginRight="70dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="@drawable/edittext"
+                    android:backgroundTint="@color/Burgundy"
+                    android:fontFamily="@font/openssanssemibold"
+                    android:gravity="center"
+                    android:text="Consume"
+                    android:textColor="@color/white"
+                    android:textSize="17dp" />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/rlConsumecusSpares"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rlConsumeSpares"
+                android:layout_marginTop="16dp">
+
+                <RelativeLayout
+                    android:id="@+id/rlConsumecus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/tvConsumecusSpareName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboblod"
+                        android:text="CONSUME CUSTOMER SPARES"
+                        android:textColor="@color/Burgundy"
+                        android:textSize="20dp" />
+
+
+                    <TextView
+                        android:id="@+id/tvConsumecusSpareStart"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@id/tvConsumecusSpareName"
+                        android:fontFamily="@font/openssansbold"
+                        android:text="("
+                        android:textSize="20dp" />
+
+                    <TextView
+                        android:id="@+id/tvConsumecusSpareCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@id/tvConsumecusSpareStart"
+                        android:fontFamily="@font/openssansbold"
+                        android:text="100"
+                        android:textColor="@color/blue"
+                        android:textSize="20dp" />
+
+                    <TextView
+                        android:id="@+id/tvConsumecusSpareend"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@id/tvConsumecusSpareCount"
+                        android:fontFamily="@font/openssansbold"
+                        android:text=")"
+                        android:textSize="20dp" />
+
+
+                </RelativeLayout>
+
+
+                <View
+                    android:id="@+id/view3"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.9dp"
+                    android:layout_below="@+id/rlConsumecus"
+                    android:layout_margin="5dp"
+                    android:background="@color/white" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvConsumeCusSpareYes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/view3"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginBottom="15dp" />
+
+                <TextView
+                    android:id="@+id/tvYesConsumeCusSpare"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_below="@+id/rvConsumeCusSpareYes"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="40dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="@drawable/edittext"
+                    android:backgroundTint="@color/Burgundy"
+                    android:fontFamily="@font/openssanssemibold"
+                    android:gravity="center"
+                    android:text="Consume Customer Spares"
+                    android:textColor="@color/white"
+                    android:textSize="17dp" />
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</RelativeLayout>

@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<AppVersionResponse> call, Response<AppVersionResponse> response) {
                 if (response.isSuccessful()) {
-                    Log.e(TAG, "onResponse: " + response.body().getMessage());
+                    //Log.e(TAG, "onResponse: " + response.body().getMessage());
                     if (response.body().getMessage().trim().equals(AppVersion)) {
                         CallLoginPage();
                     } else {

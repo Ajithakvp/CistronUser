@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -21,18 +22,17 @@ import java.util.ArrayList;
 
 public class CustomerPoAdapter extends RecyclerView.Adapter<CustomerPoAdapter.ViewHolder> {
 
+
+
+    int selectedPosition =-1;
     Activity activity;
-
     public ArrayList<CustomerPoResponseModel>customerPoResponseModels;
+     private  ItemClickListener itemClickListener;
 
-    @NonNull
-     private  OnitemCheckListener onitemCheckListener;
-
-
-    public CustomerPoAdapter(Activity activity, ArrayList<CustomerPoResponseModel> customerPoResponseModels, OnitemCheckListener onitemCheckListener) {
+    public CustomerPoAdapter(Activity activity, ArrayList<CustomerPoResponseModel> customerPoResponseModels, ItemClickListener itemClickListener) {
         this.activity = activity;
         this.customerPoResponseModels = customerPoResponseModels;
-        this.onitemCheckListener = onitemCheckListener;
+        this.itemClickListener = itemClickListener;
     }
 
     @NonNull
@@ -54,15 +54,24 @@ public class CustomerPoAdapter extends RecyclerView.Adapter<CustomerPoAdapter.Vi
 
         String Pdf=customerPoResponseModels.get(position).getPoRefLink();
 
+        holder.rbId.setChecked(position == selectedPosition);
+
         holder.rbId.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 if (isChecked){
-                    onitemCheckListener.onitemCheck(id.getId());
+
+                    selectedPosition = holder.getAdapterPosition();
+                    itemClickListener.onClick(id.getId());
                 }
             }
         });
+
+
+
+
+
 
         holder.rlPdf.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,8 +96,8 @@ public class CustomerPoAdapter extends RecyclerView.Adapter<CustomerPoAdapter.Vi
         return customerPoResponseModels.size();
     }
 
-    public interface OnitemCheckListener {
-        void onitemCheck(String customerPoResponseModel);
+    public interface ItemClickListener  {
+        void onClick(String customerPoResponseModel);
 
     }
 
@@ -97,6 +106,7 @@ public class CustomerPoAdapter extends RecyclerView.Adapter<CustomerPoAdapter.Vi
 
         RelativeLayout rlId,rlPdf;
         RadioButton rbId;
+
         TextView tvrbId,tvPONo,tvPoDate,tvPoRef;
 
         public ViewHolder(@NonNull View itemView) {

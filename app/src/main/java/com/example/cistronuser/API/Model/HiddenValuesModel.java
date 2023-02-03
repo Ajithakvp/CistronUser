@@ -7,6 +7,7 @@ public class HiddenValuesModel {
     //"hpidd": "14900",
     //    "pdtidd": "136",
     //    "spc": 3,
+    //jsonPartIds
     //    "chk1": 1
 
     @SerializedName("hpidd")
@@ -20,6 +21,17 @@ public class HiddenValuesModel {
 
     @SerializedName("chk1")
     private String chk1;
+
+    @SerializedName("jsonPartIds")
+    private String jsonPartIds;
+
+    public String getJsonPartIds() {
+        return jsonPartIds;
+    }
+
+    public void setJsonPartIds(String jsonPartIds) {
+        this.jsonPartIds = jsonPartIds;
+    }
 
     public String getHpidd() {
         return hpidd;

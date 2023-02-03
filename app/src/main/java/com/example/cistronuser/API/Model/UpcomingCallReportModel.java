@@ -17,6 +17,7 @@ public class UpcomingCallReportModel {
     //"customerPo": {
     //hiddenValues
 
+    //id
     //"compliantRequired": 1,
     //    "seriesid1": "1",
     //    "seriesid2": "",
@@ -58,6 +59,17 @@ public class UpcomingCallReportModel {
     @SerializedName("hiddenValues")
     private HiddenValuesModel hiddenValuesModel;
 
+    @SerializedName("id")
+    private String id;
+
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getCompliantRequired() {
         return compliantRequired;

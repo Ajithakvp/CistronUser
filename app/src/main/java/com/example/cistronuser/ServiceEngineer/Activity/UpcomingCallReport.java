@@ -29,6 +29,7 @@ import android.text.format.DateFormat;
 import android.text.format.Formatter;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -49,15 +50,21 @@ import android.widget.Toast;
 import com.example.cistronuser.API.APIClient;
 import com.example.cistronuser.API.Interface.CallReportComplaintSubCategoryInterface;
 import com.example.cistronuser.API.Interface.CallReportSubmitInterface;
+import com.example.cistronuser.API.Interface.ConsumeCusSpareSubmitInterface;
+import com.example.cistronuser.API.Interface.ConsumeSpareSubmitInterface;
 import com.example.cistronuser.API.Interface.DeletedAPIInterface;
 import com.example.cistronuser.API.Interface.EscalatePaymentSubmitInterface;
 import com.example.cistronuser.API.Interface.ServiceSpareRequestInterface;
 import com.example.cistronuser.API.Interface.UpcomingCallReportInterface;
+import com.example.cistronuser.API.Interface.YesDoYouConsumeSpareInterface;
 import com.example.cistronuser.API.Model.CallReportComplaintSubCategoryModel;
 import com.example.cistronuser.API.Model.CallStatusModel;
 import com.example.cistronuser.API.Model.CallTypeModel;
 import com.example.cistronuser.API.Model.ComplaintCategoryModel;
+import com.example.cistronuser.API.Model.ConsumeSpareRecordModel;
+import com.example.cistronuser.API.Model.ConsumerCustSpareRecordModel;
 import com.example.cistronuser.API.Model.CustomerPoResponseModel;
+import com.example.cistronuser.API.Model.CustomerPoSpareRecordModel;
 import com.example.cistronuser.API.Model.ServiceSpareRequestModel;
 import com.example.cistronuser.API.Model.SpareRequestsRecordModel;
 import com.example.cistronuser.API.Model.SparesConsumedRecordModel;
@@ -67,13 +74,19 @@ import com.example.cistronuser.API.Response.CallReportSpareConsumedSubmitRespons
 import com.example.cistronuser.API.Response.CallReportSubmitCusPoRespones;
 import com.example.cistronuser.API.Response.CallReportSubmitResponse;
 import com.example.cistronuser.API.Response.CallReportsubmitCusInvoiceResponse;
+import com.example.cistronuser.API.Response.ConsumeSpareSubmitResponse;
+import com.example.cistronuser.API.Response.ConsumerCusSpareSubmitResponse;
 import com.example.cistronuser.API.Response.DeleteResponse;
 import com.example.cistronuser.API.Response.EscalatePaymentSubmitResponse;
 import com.example.cistronuser.API.Response.ServiceSpareRequestResponse;
 import com.example.cistronuser.API.Response.UpcomingCallReportResponse;
+import com.example.cistronuser.API.Response.YesDoYouConsumeSpareResponse;
 import com.example.cistronuser.Common.FileUtli;
 import com.example.cistronuser.Common.PreferenceManager;
 import com.example.cistronuser.R;
+import com.example.cistronuser.ServiceEngineer.Adapter.ConsumeCusSpareYesAdapter;
+import com.example.cistronuser.ServiceEngineer.Adapter.ConsumePoSpareYesAdapter;
+import com.example.cistronuser.ServiceEngineer.Adapter.ConsumeSpareYesAdapter;
 import com.example.cistronuser.ServiceEngineer.Adapter.CustomerPoAdapter;
 import com.example.cistronuser.ServiceEngineer.Adapter.PendingRequestupSpareAdapter;
 import com.example.cistronuser.ServiceEngineer.Adapter.SpareReqAdapter;
@@ -193,8 +206,19 @@ public class UpcomingCallReport extends AppCompatActivity {
     ImageView ivClose;
     String SerialID1, SerialID2;
 
-
     String CallAssignId, CallStatusID, CallTypePayoptionsID, Spc, CusPoradiobID;
+
+
+    //Yes DoYouConsumeSpares
+    RecyclerView rvCustPoSpareYes, rvConsumespareYes, rvConsumeCusSpareYes;
+    TextView tvCusPoSpareCount, tvConsumeSpareCount, tvConsumecusSpareCount;
+    ConsumeCusSpareYesAdapter consumeCusSpareYesAdapter;
+    ArrayList<ConsumerCustSpareRecordModel> consumerCustSpareRecordModels = new ArrayList<>();
+    ConsumePoSpareYesAdapter consumePoSpareYesAdapter; // *** Customer PO Spare *** //
+    ArrayList<CustomerPoSpareRecordModel> customerPoSpareRecordModels = new ArrayList<>();
+    ConsumeSpareYesAdapter consumeSpareYesAdapter;
+    ArrayList<ConsumeSpareRecordModel> consumeSpareRecordModels = new ArrayList<>();
+    String sparePartId, Opt, UnitPrice, DoYouConsumerID, PartID;
 
 
     @SuppressLint("MissingInflatedId")
@@ -348,6 +372,8 @@ public class UpcomingCallReport extends AppCompatActivity {
                         SerialID2 = response.body().getUpcomingCallReportModel().getSeriesid2();
                         CallAssignId = response.body().getUpcomingCallReportModel().getCallInfoModel().getCallAssignId();
                         Spc = response.body().getUpcomingCallReportModel().getHiddenValuesModel().getSpc();
+                        DoYouConsumerID = response.body().getUpcomingCallReportModel().getId();
+                        PartID = response.body().getUpcomingCallReportModel().getHiddenValuesModel().getJsonPartIds();
 
 
                         // ********** Escalate ********** //
@@ -483,10 +509,20 @@ public class UpcomingCallReport extends AppCompatActivity {
 
 
         // ***********  Customer PO Recycleview *********** //
-        customerPoAdapter = new CustomerPoAdapter(this, customerPoResponseModels, new CustomerPoAdapter.OnitemCheckListener() {
+
+
+        customerPoAdapter = new CustomerPoAdapter(this, customerPoResponseModels, new CustomerPoAdapter.ItemClickListener() {
             @Override
-            public void onitemCheck(String customerPoResponseModel) {
-                CusPoradiobID = customerPoResponseModel.toString();
+            public void onClick(String s) {
+
+                CusPoradiobID = s.toString();
+                Log.e(TAG, "onClick: " + s.toString());
+                rvCustomerPO.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        customerPoAdapter.notifyDataSetChanged();
+                    }
+                });
             }
         });
         LinearLayoutManager custPO = new LinearLayoutManager(this);
@@ -1050,9 +1086,155 @@ public class UpcomingCallReport extends AppCompatActivity {
                 switch (rb) {
                     case 0:
                         Dialog dialog = new Dialog(UpcomingCallReport.this);
-                        dialog.setContentView(R.layout.consumer_spare_dialog_recycleview);
+                        dialog.setContentView(R.layout.consumer_spare_yes_dialog_recycleview);
+                        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        ImageView ivClose = dialog.findViewById(R.id.ivClose);
+                        TextView tvYesConsume = dialog.findViewById(R.id.tvYesConsume);
+                        TextView tvYesConsumeCusSpare = dialog.findViewById(R.id.tvYesConsumeCusSpare);
+                        tvConsumecusSpareCount = dialog.findViewById(R.id.tvConsumecusSpareCount);
+                        tvConsumeSpareCount = dialog.findViewById(R.id.tvConsumeSpareCount);
+                        tvCusPoSpareCount = dialog.findViewById(R.id.tvCusPoSpareCount);
+                        rvConsumeCusSpareYes = dialog.findViewById(R.id.rvConsumeCusSpareYes);
+                        rvConsumespareYes = dialog.findViewById(R.id.rvConsumespareYes);
+                        rvCustPoSpareYes = dialog.findViewById(R.id.rvCustPoSpareYes);
                         dialog.show();
+
+
+                        //***** Consume Spare *****//
+                        ArrayList<String> strConQty = new ArrayList<>();
+                        ArrayList<String> strSpareId = new ArrayList<>();
+                        ArrayList<String> strUnitPrice = new ArrayList<>();
+                        ArrayList<String> strOpt = new ArrayList<>();
+                        ArrayList<String> strMyQty = new ArrayList<>();
+                        //***** Consume Spare End *****//
+
+                        // **** Consume Customer Spare ***//
+                        ArrayList<String> strConCusMyQty=new ArrayList<>();
+                        ArrayList<String> strConCusQtyConsume=new ArrayList<>();
+                        ArrayList<String> strConCusPartId=new ArrayList<>();
+                        ArrayList<String> strConCusOpt=new ArrayList<>();
+                        ArrayList<String> strConCusCustomerStockID=new ArrayList<>();
+
+                        // **** Consume Customer Spare ***//
+
+
+                        CallYesDoYouConsumerSpare();
+                        //***** Consume Spare *****//
+                        consumeSpareYesAdapter = new ConsumeSpareYesAdapter(UpcomingCallReport.this, consumeSpareRecordModels, new ConsumeSpareYesAdapter.Reference() {
+                            @Override
+                            public void reference(ConsumeSpareRecordModel consumeSpareRecordModel) {
+
+                                strSpareId.add(consumeSpareRecordModel.getSparePartId());
+                                strUnitPrice.add(consumeSpareRecordModel.getUnitPrice());
+                                strOpt.add(consumeSpareRecordModel.getOpt());
+                                strMyQty.add(consumeSpareRecordModel.getMyQty());
+
+
+                            }
+                        });
+                        LinearLayoutManager consumeSpare = new LinearLayoutManager(UpcomingCallReport.this);
+                        consumeSpare.setOrientation(RecyclerView.VERTICAL);
+                        rvConsumespareYes.setAdapter(consumeSpareYesAdapter);
+                        rvConsumespareYes.setLayoutManager(consumeSpare);
+                        //***** Consume Spare End *****//
+
+                        //***** Consume Customer Spare *****//
+                        consumeCusSpareYesAdapter = new ConsumeCusSpareYesAdapter(UpcomingCallReport.this, consumerCustSpareRecordModels, new ConsumeCusSpareYesAdapter.GetConsumerCustSpare() {
+                            @Override
+                            public void getData(ConsumerCustSpareRecordModel consumerCustSpareRecordModel) {
+                                strConCusCustomerStockID.add(consumerCustSpareRecordModel.getCustomerStockId());
+                                strConCusMyQty.add(consumerCustSpareRecordModel.getAvlQty());
+                                strConCusPartId.add(consumerCustSpareRecordModel.getId());
+                                strConCusOpt.add(consumerCustSpareRecordModel.getOpt());
+
+
+                            }
+                        });
+                        LinearLayoutManager consumeCusSpare = new LinearLayoutManager(UpcomingCallReport.this);
+                        consumeCusSpare.setOrientation(RecyclerView.VERTICAL);
+                        rvConsumeCusSpareYes.setLayoutManager(consumeCusSpare);
+                        rvConsumeCusSpareYes.setAdapter(consumeCusSpareYesAdapter);
+                        //***** Consume Customer Spare End *****//
+
+
+                        //*****  Customer Po Spare  *****//
+                        consumePoSpareYesAdapter = new ConsumePoSpareYesAdapter(UpcomingCallReport.this, customerPoSpareRecordModels);
+                        LinearLayoutManager cusPoSpare = new LinearLayoutManager(UpcomingCallReport.this);
+                        cusPoSpare.setOrientation(RecyclerView.VERTICAL);
+                        rvCustPoSpareYes.setAdapter(consumePoSpareYesAdapter);
+                        rvCustPoSpareYes.setLayoutManager(cusPoSpare);
+                        //*****  Customer Po Spare End *****//
+
+                        ivClose.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                            }
+                        });
+
+                        tvYesConsume.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                strConQty.clear();
+                                for (int i = 0; i < rvConsumespareYes.getAdapter().getItemCount(); i++) {
+                                    v = rvConsumespareYes.getChildAt(i);
+                                    EditText consumeQty = (EditText) v.findViewById(R.id.edQtyReq);
+                                    strConQty.add(i, consumeQty.getText().toString());
+                                }
+
+                                ConsumeSpareSubmitInterface consumeSpareSubmitInterface = APIClient.getClient().create(ConsumeSpareSubmitInterface.class);
+                                consumeSpareSubmitInterface.CallSubmit("onConsumeSpares", CusPoradiobID, DoYouConsumerID, CallTypePayoptionsID, strSpareId, strMyQty, strConQty, strUnitPrice, strOpt, PreferenceManager.getEmpID(UpcomingCallReport.this)).enqueue(new Callback<ConsumeSpareSubmitResponse>() {
+                                    @Override
+                                    public void onResponse(Call<ConsumeSpareSubmitResponse> call, Response<ConsumeSpareSubmitResponse> response) {
+
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<ConsumeSpareSubmitResponse> call, Throwable t) {
+
+                                    }
+                                });
+                            }
+                        });
+                        tvYesConsumeCusSpare.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                strConCusQtyConsume.clear();
+
+                                for (int i=0;i<rvConsumeCusSpareYes.getAdapter().getItemCount();i++){
+                                    v=rvConsumeCusSpareYes.getChildAt(i);
+                                    EditText QtyConsume=(EditText)v.findViewById(R.id.edQtyReq);
+                                    strConCusQtyConsume.add(i,QtyConsume.getText().toString());
+                                }
+
+                                ConsumeCusSpareSubmitInterface consumeCusSpareSubmitInterface=APIClient.getClient().create(ConsumeCusSpareSubmitInterface.class);
+                                consumeCusSpareSubmitInterface.CallSubmit("onConsumeCustSpares",DoYouConsumerID,CusPoradiobID,strConCusPartId,strConCusMyQty,strConCusQtyConsume,strConCusOpt,strConCusCustomerStockID,PreferenceManager.getEmpID(UpcomingCallReport.this)).enqueue(new Callback<ConsumerCusSpareSubmitResponse>() {
+                                    @Override
+                                    public void onResponse(Call<ConsumerCusSpareSubmitResponse> call, Response<ConsumerCusSpareSubmitResponse> response) {
+                                        try {
+                                            if (response.isSuccessful()){
+                                                Log.e(TAG, "onResponse: "+DoYouConsumerID+"\n"+CusPoradiobID+"\n"+strConCusPartId+"\n"+strConCusMyQty+"\n"+
+                                                        strConCusQtyConsume+"\n"+ strConCusOpt+"\n"+strConCusCustomerStockID+"\n");
+                                            }
+
+                                        }catch (Exception e){
+
+                                        }
+
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<ConsumerCusSpareSubmitResponse> call, Throwable t) {
+
+                                    }
+                                });
+
+                            }
+                        });
+
                         break;
                     case 1:
                         break;
@@ -1112,6 +1294,46 @@ public class UpcomingCallReport extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void CallYesDoYouConsumerSpare() {
+        YesDoYouConsumeSpareInterface yesDoYouConsumeSpareInterface = APIClient.getClient().create(YesDoYouConsumeSpareInterface.class);
+        yesDoYouConsumeSpareInterface.CallSpare("doYouConsumeSpares", PartID, CallTypePayoptionsID, DoYouConsumerID, CusPoradiobID, PreferenceManager.getEmpID(this)).enqueue(new Callback<YesDoYouConsumeSpareResponse>() {
+            @Override
+            public void onResponse(Call<YesDoYouConsumeSpareResponse> call, Response<YesDoYouConsumeSpareResponse> response) {
+
+                try {
+                    if (response.isSuccessful()) {
+
+                        //**** Consume Spare ****//
+                        tvConsumeSpareCount.setText(response.body().getConsumeSparesModel().getCount());
+                        consumeSpareYesAdapter.consumeSpareRecordModels = response.body().getConsumeSparesModel().getConsumeSpareRecordModels();
+                        consumeSpareYesAdapter.notifyDataSetChanged();
+                        //**** Consume Spare End ****//
+
+                        //**** Consume Cus Spare  ****//
+                        tvConsumecusSpareCount.setText(response.body().getConsumeCustSparesModel().getCount());
+                        consumeCusSpareYesAdapter.consumerCustSpareRecordModels = response.body().getConsumeCustSparesModel().getConsumerCustSpareRecordModels();
+                        consumeCusSpareYesAdapter.notifyDataSetChanged();
+                        //**** Consume Cus Spare End ****//
+
+                        //****  Cus Po Spare  ****//
+                        tvCusPoSpareCount.setText(response.body().getCustomerPospareModel().getCount());
+                        consumePoSpareYesAdapter.customerPoSpareRecordModels = response.body().getCustomerPospareModel().getCustomerPoSpareRecordModels();
+                        consumePoSpareYesAdapter.notifyDataSetChanged();
+                        //****  Cus Po Spare End ****//
+                    }
+
+                } catch (Exception e) {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<YesDoYouConsumeSpareResponse> call, Throwable t) {
+
+            }
+        });
     }
 
     private void callServicefile() {
