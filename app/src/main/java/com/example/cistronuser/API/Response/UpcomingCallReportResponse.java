@@ -1,16 +1,15 @@
 package com.example.cistronuser.API.Response;
 
+import com.example.cistronuser.API.Model.CallTypeModel;
 import com.example.cistronuser.API.Model.UpcomingCallReportModel;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
 
 public class UpcomingCallReportResponse {
 
 //    "action": "callReporting",
 //            "response": {
-
-
-
-
 
     @SerializedName("action")
     private String action;

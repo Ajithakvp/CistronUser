@@ -36,7 +36,7 @@ public class UpcomingCallReportModel {
     private CallInfoModel callInfoModel;
 
     @SerializedName("callType")
-    private ArrayList<CallTypeModel>callTypeModels=new ArrayList<>();
+    private ArrayList<CallTypeModel> callTypeModels=new ArrayList<>();
 
     @SerializedName("callStatus")
     private ArrayList<CallStatusModel>callStatusModels=new ArrayList<>();
@@ -62,6 +62,14 @@ public class UpcomingCallReportModel {
     @SerializedName("id")
     private String id;
 
+
+    public ArrayList<CallTypeModel> getCallTypeModels() {
+        return callTypeModels;
+    }
+
+    public void setCallTypeModels(ArrayList<CallTypeModel> callTypeModels) {
+        this.callTypeModels = callTypeModels;
+    }
 
     public String getId() {
         return id;
@@ -103,13 +111,7 @@ public class UpcomingCallReportModel {
         this.callInfoModel = callInfoModel;
     }
 
-    public ArrayList<CallTypeModel> getCallTypeModels() {
-        return callTypeModels;
-    }
 
-    public void setCallTypeModels(ArrayList<CallTypeModel> callTypeModels) {
-        this.callTypeModels = callTypeModels;
-    }
 
     public ArrayList<CallStatusModel> getCallStatusModels() {
         return callStatusModels;
