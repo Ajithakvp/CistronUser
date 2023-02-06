@@ -4,11 +4,12 @@ import com.google.gson.annotations.SerializedName;
 
 public class HiddenValuesModel {
 
-    //"hpidd": "14900",
-    //    "pdtidd": "136",
-    //    "spc": 3,
-    //jsonPartIds
-    //    "chk1": 1
+    //    "hpidd": "13465",
+    //      "pdtidd": "90",
+    //      "spc": 0,
+    //      "cus_po": 0,
+    //      "jsonPartIds": "",
+    //      "chk1": 1
 
     @SerializedName("hpidd")
     private String hpidd;

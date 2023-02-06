@@ -51,6 +51,7 @@ import android.widget.Toast;
 import com.example.cistronuser.API.APIClient;
 import com.example.cistronuser.API.Interface.CallReportComplaintSubCategoryInterface;
 import com.example.cistronuser.API.Interface.CallReportSubmitInterface;
+import com.example.cistronuser.API.Interface.CallReportingUpComingSubmitInterface;
 import com.example.cistronuser.API.Interface.ConsumeCusSpareSubmitInterface;
 import com.example.cistronuser.API.Interface.ConsumeSpareSubmitInterface;
 import com.example.cistronuser.API.Interface.EscalatePaymentSubmitInterface;
@@ -73,6 +74,7 @@ import com.example.cistronuser.API.Response.CallReportServiceSubmitResponse;
 import com.example.cistronuser.API.Response.CallReportSpareConsumedSubmitResponse;
 import com.example.cistronuser.API.Response.CallReportSubmitCusPoRespones;
 import com.example.cistronuser.API.Response.CallReportSubmitResponse;
+import com.example.cistronuser.API.Response.CallReportingUpComingSubmitResponse;
 import com.example.cistronuser.API.Response.CallReportsubmitCusInvoiceResponse;
 import com.example.cistronuser.API.Response.ConsumeSpareSubmitResponse;
 import com.example.cistronuser.API.Response.ConsumerCusSpareSubmitResponse;
@@ -152,7 +154,6 @@ public class UpcomingCallReport extends AppCompatActivity {
     ArrayList<SpareRequestsRecordModel> spareRequestsRecordModels = new ArrayList<>();
 
     //Customer PO
-
     RelativeLayout rlCustomerPO;
     TextView tvCustomerPOCount, tvCusPOFileInvoiceAttch;
     RecyclerView rvCustomerPO;
@@ -218,7 +219,7 @@ public class UpcomingCallReport extends AppCompatActivity {
     ArrayList<CustomerPoSpareRecordModel> customerPoSpareRecordModels = new ArrayList<>();
     ConsumeSpareYesAdapter consumeSpareYesAdapter;
     ArrayList<ConsumeSpareRecordModel> consumeSpareRecordModels = new ArrayList<>();
-    String sparePartId, Opt, UnitPrice, DoYouConsumerID, PartID;
+    String  DoYouConsumerID, PartID,ComplaintID,SubComplaintCatID,CallRegID,hpidd,pdtidd,chk1,bp_install,bp_installr;
 
     //Validation
     String ComplaintValidRequired;
@@ -226,8 +227,11 @@ public class UpcomingCallReport extends AppCompatActivity {
 
 
     //rbGrup1Id
-    int rbgrpID;
+    int rbconsumerSpareID;
+    int rbClosePayID;
+    int rbRecPendingID;
     int cbSetID;
+
 
 
     @SuppressLint("MissingInflatedId")
@@ -348,7 +352,7 @@ public class UpcomingCallReport extends AppCompatActivity {
 
         // *********** Current Date **********//
         Date d = new Date();
-        CharSequence s = DateFormat.format("d /MM/yyyy ", d.getTime());
+        CharSequence s = DateFormat.format("yyyy-MM-d", d.getTime());
         tvInstallDate.setText(s);
         // *********** Current Date End **********//
 
@@ -381,9 +385,15 @@ public class UpcomingCallReport extends AppCompatActivity {
                         SerialID1 = response.body().getUpcomingCallReportModel().getSeriesid1();
                         SerialID2 = response.body().getUpcomingCallReportModel().getSeriesid2();
                         CallAssignId = response.body().getUpcomingCallReportModel().getCallInfoModel().getCallAssignId();
+                        CallRegID=response.body().getUpcomingCallReportModel().getCallInfoModel().getCallId();
                         Spc = response.body().getUpcomingCallReportModel().getHiddenValuesModel().getSpc();
+                        hpidd = response.body().getUpcomingCallReportModel().getHiddenValuesModel().getHpidd();
+                        pdtidd= response.body().getUpcomingCallReportModel().getHiddenValuesModel().getPdtidd();
+                        chk1= response.body().getUpcomingCallReportModel().getHiddenValuesModel().getChk1();
                         DoYouConsumerID = response.body().getUpcomingCallReportModel().getId();
                         PartID = response.body().getUpcomingCallReportModel().getHiddenValuesModel().getJsonPartIds();
+                        bp_installr=response.body().getUpcomingCallReportModel().getCallInfoModel().getLogistics_bp_install();
+                        bp_install=response.body().getUpcomingCallReportModel().getCallInfoModel().getLogistics_bp_installr();
 
 
                         // ***********  Customer PO  *********** //
@@ -589,7 +599,7 @@ public class UpcomingCallReport extends AppCompatActivity {
         spComplaint.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String ComplaintID = complaintCategoryModels.get(position).getId();
+                ComplaintID = complaintCategoryModels.get(position).getId();
                 CallSubComplaint(ComplaintID);
 
                 if (complaintCategoryModels.get(position).getText().trim().equals("Others")) {
@@ -755,6 +765,8 @@ public class UpcomingCallReport extends AppCompatActivity {
         spSubComplaint.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                SubComplaintCatID=callReportComplaintSubCategoryModels.get(position).getId();
 
                 if (callReportComplaintSubCategoryModels.get(position).getText().trim().equals("Others")) {
                     tvTypeComplaintCat.setVisibility(View.VISIBLE);
@@ -1134,6 +1146,28 @@ public class UpcomingCallReport extends AppCompatActivity {
             }
         });
 
+        //  ************** Do you really want to close the call without getting payment ************** //
+
+        rbGrp2.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                View view = rbGrp2.findViewById(checkedId);
+                int rb = rbGrp2.indexOfChild(view);
+                switch ((rb)){
+                    case 0:
+                        rbClosePayID=1;
+                        break;
+
+                    case 1:
+                        rbClosePayID=0;
+                        break;
+                }
+            }
+        });
+
+
+        //  ************** Do you really want to close the call without getting payment End ************** //
+
 
         //  ************** Do you want to consume spares Check ************** //
 
@@ -1144,6 +1178,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                 int rb = rbGrp.indexOfChild(view);
                 switch (rb) {
                     case 0:
+                        rbconsumerSpareID=1;
                         Dialog dialog = new Dialog(UpcomingCallReport.this);
                         dialog.setContentView(R.layout.consumer_spare_yes_dialog_recycleview);
                         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -1323,6 +1358,7 @@ public class UpcomingCallReport extends AppCompatActivity {
 
                         break;
                     case 1:
+                        rbconsumerSpareID=0;
                         break;
                 }
             }
@@ -1341,12 +1377,12 @@ public class UpcomingCallReport extends AppCompatActivity {
                 int rb1 = rbGrp1.indexOfChild(view);
                 switch (rb1) {
                     case 0:
-                        rbgrpID=1;
+                        rbRecPendingID=1;
                         rlYesRevPayment.setVisibility(View.VISIBLE);
                         rlNoRevPayment.setVisibility(View.GONE);
                         break;
                     case 1:
-                        rbgrpID=2;
+                        rbRecPendingID=0;
                         rlYesRevPayment.setVisibility(View.GONE);
                         rlNoRevPayment.setVisibility(View.VISIBLE);
                         break;
@@ -1368,12 +1404,12 @@ public class UpcomingCallReport extends AppCompatActivity {
                     boolean isfilled = true;
 
                     if (spCallType.getSelectedItem().equals("Paid") && tvCusInvoice.getText().length() == 0) {
-                        tvCusInvoice.setError("Please Attach customer invoice ");
+                        tvCusInvoice.setError("Please attach the customer invoice. ");
                         tvCusInvoice.requestFocus();
                         isfilled = false;
                     } else if (ComplaintValidRequired.trim().equals("1") && spComplaint.getSelectedItemPosition() == -1) {
-                        setSpinnerError(spComplaint, "Please Select Complaint");
-                        spComplaint.requestFocus();
+                        setSpinnerError(spComplaint, "Please Select a Complaint");
+                        Toast.makeText(UpcomingCallReport.this, "Please Select a Complaint", Toast.LENGTH_SHORT).show();
                         isfilled = false;
                     } else if (spComplaint.getSelectedItem().equals("Others") && edTypeComplaintCat.getText().toString().trim().length() == 0 && edTypeSubComplaintCat.getText().toString().trim().length() == 0) {
                         edTypeSubComplaintCat.setError("please Enter Type Complaint Category");
@@ -1382,10 +1418,11 @@ public class UpcomingCallReport extends AppCompatActivity {
                         edTypeComplaintCat.requestFocus();
                         isfilled = false;
                     } else if (spSubComplaint.getSelectedItemPosition() == -1) {
-                        setSpinnerError(spSubComplaint, "Please Select Sub Complaint");
+                        setSpinnerError(spSubComplaint, "Please Select a Sub Complaint");
+                        Toast.makeText(UpcomingCallReport.this, "Please Select a Sub Complaint", Toast.LENGTH_SHORT).show();
                         isfilled = false;
                     } else if (spSubComplaint.getSelectedItem().equals("Others") && edTypeComplaintCat.getText().toString().trim().length() == 0) {
-                        edTypeComplaintCat.setError("Please enter Type Complaint Category");
+                        edTypeComplaintCat.setError("Please enter the Type Complaint Category");
                         edTypeComplaintCat.requestFocus();
                         isfilled = false;
                     } else if (rbGrp.getCheckedRadioButtonId() == -1) {
@@ -1402,48 +1439,48 @@ public class UpcomingCallReport extends AppCompatActivity {
                         isfilled = false;
 
                     } else if (spCallStatus.getSelectedItem().equals("Pending") && edPendingReason.getText().toString().trim().length() == 0) {
-                        edPendingReason.setError("Please Enter Pending Reason");
+                        edPendingReason.setError("Please enter a pending reason.");
                         edPendingReason.requestFocus();
                         isfilled = false;
 
                     } else if (spCallStatus.getSelectedItem().equals("Pending") && tvFollowUpDate.getText().toString().trim().length() == 0) {
-                        tvFollowUpDate.setError("Please Enter FollowUp Date");
+                        tvFollowUpDate.setError("Please provide a follow-up date.");
                         tvFollowUpDate.requestFocus();
                         isfilled = false;
-                    } else if (spCallStatus.getSelectedItem().equals("Closed") && rbGrp1.getCheckedRadioButtonId()==-1) {
-                        Toast.makeText(UpcomingCallReport.this, "Please Select Received pending service payment", Toast.LENGTH_SHORT).show();
-                        isfilled = false;
-                    }else if ( edSaleORserviceAmt.getText().toString().trim().length() == 0) {
-                        edSaleORserviceAmt.setError("Please Enter Amount");
-                        edSaleORserviceAmt.requestFocus();
-                        isfilled = false;
-                    }else if ( edSpareAmt.getText().toString().trim().length() == 0) {
-                        edSpareAmt.setError("Please Enter Spare Amount");
-                        edSpareAmt.requestFocus();
-                        isfilled = false;
-                    }else if (edName.getText().toString().trim().length() == 0) {
-                        edName.setError("Please Enter Contact Person Name");
-                        edName.requestFocus();
-                        isfilled = false;
-                    }else if ( edMobile.getText().toString().trim().length() == 0) {
-                        edMobile.setError("Please Enter Contact Person Mobile No");
-                        edMobile.requestFocus();
-                        isfilled = false;
-                    }else if ( tvStartingTime.getText().toString().trim().length() == 0) {
-                        tvStartingTime.setError("Please Select a Start Time");
+                    } else if ( tvStartingTime.getText().toString().trim().length() == 0) {
+                        tvStartingTime.setError("Please select a start time.");
                         tvStartingTime.requestFocus();
                         isfilled = false;
                     }else if ( tvEndTime.getText().toString().trim().length() == 0) {
-                        tvEndTime.setError("Please Select a End Time");
+                        tvEndTime.setError("Please select an end time.");
                         tvEndTime.requestFocus();
                         isfilled = false;
+                    }else if (edName.getText().toString().trim().length() == 0) {
+                        edName.setError("Please enter the contact person's name.");
+                        edName.requestFocus();
+                        isfilled = false;
+                    }else if ( edMobile.getText().toString().trim().length() == 0) {
+                        edMobile.setError("Please enter the mobile phone number of the contact person");
+                        edMobile.requestFocus();
+                        isfilled = false;
                     }else if ( edWorkdone.getText().toString().trim().length() == 0) {
-                        edWorkdone.setError("Please Enter work Done");
+                        edWorkdone.setError("Please enter your work.");
                         edWorkdone.requestFocus();
                         isfilled = false;
                     }else if ( edEngineerAdvice.getText().toString().trim().length() == 0) {
-                        edEngineerAdvice.setError("Please Enter The Engineer Advice");
+                        edEngineerAdvice.setError("Please enter the  Engineer Advice");
                         edEngineerAdvice.requestFocus();
+                        isfilled = false;
+                    }else if (spCallStatus.getSelectedItem().equals("Closed") && rbGrp1.getCheckedRadioButtonId()==-1) {
+                        Toast.makeText(UpcomingCallReport.this, "Please select a Received pending service payment", Toast.LENGTH_SHORT).show();
+                        isfilled = false;
+                    }else if ( edSaleORserviceAmt.getText().toString().trim().length() == 0) {
+                        edSaleORserviceAmt.setError("Please Enter the Amount");
+                        edSaleORserviceAmt.requestFocus();
+                        isfilled = false;
+                    }else if ( edSpareAmt.getText().toString().trim().length() == 0) {
+                        edSpareAmt.setError("Please Enter the Spare Amount");
+                        edSpareAmt.requestFocus();
                         isfilled = false;
                     }else if (rbPOaymentNo.isChecked() && rbGrp2.getCheckedRadioButtonId() == -1  ) {
                         Toast.makeText(UpcomingCallReport.this, "Please select close the call without getting payment", Toast.LENGTH_SHORT).show();
@@ -1456,32 +1493,32 @@ public class UpcomingCallReport extends AppCompatActivity {
                         tvDepositedDate.requestFocus();
                         isfilled = false;
                     }else if (TypeValid != 6  &&  cbAttach.isChecked()==true  && tvserviceReportAttach.getText().toString().trim().length()==0) {
-                        tvserviceReportAttach.setError("Please Attach Report");
+                        tvserviceReportAttach.setError("Please Attach the Report");
                         tvserviceReportAttach.requestFocus();
                         isfilled = false;
                     }else if (spCallType.getSelectedItem().equals("Installation") && spCallStatus.getSelectedItem().equals("Pending") && cbAttach.isChecked()==true  && tvserviceReportAttach.getText().toString().trim().length()==0) {
-                        tvserviceReportAttach.setError("Please Attach Report");
+                        tvserviceReportAttach.setError("Please Attach the Report");
                         tvserviceReportAttach.requestFocus();
                         isfilled = false;
                     }
                     else if (spCallType.getSelectedItem().equals("Installation") && spCallStatus.getSelectedItem().equals("Closed") && cbAttach.isChecked()==true && tvInstallationImage1.getText().toString().trim().length()==0) {
-                        tvInstallationImage1.setError("Please Attach Installation Image 1");
+                        tvInstallationImage1.setError("Please Attach the Installation Image 1");
                         tvInstallationImage1.requestFocus();
                         isfilled = false;
                     }else if (spCallType.getSelectedItem().equals("Installation") && spCallStatus.getSelectedItem().equals("Closed") && cbAttach.isChecked()==true && tvInstallationImage2.getText().toString().trim().length()==0) {
-                        tvInstallationImage2.setError("Please Attach Installation Image 2");
+                        tvInstallationImage2.setError("Please Attach the  Installation Image 2");
                         tvInstallationImage2.requestFocus();
                         isfilled = false;
                     }else if (spCallType.getSelectedItem().equals("Installation") && spCallStatus.getSelectedItem().equals("Closed") && cbAttach.isChecked()==true && tvInstallationImage3.getText().toString().trim().length()==0) {
-                        tvInstallationImage3.setError("Please Attach Installation Image 2");
+                        tvInstallationImage3.setError("Please Attach the Installation Image 2");
                         tvInstallationImage3.requestFocus();
                         isfilled = false;
                     }else if (spCallType.getSelectedItem().equals("Installation") && spCallStatus.getSelectedItem().equals("Closed") && cbAttach.isChecked()==true && tvWarrentycard.getText().toString().trim().length()==0) {
-                        tvWarrentycard.setError("Please Attach Warranty Card ");
+                        tvWarrentycard.setError("Please Attach the Warranty Card ");
                         tvWarrentycard.requestFocus();
                         isfilled = false;
                     }else if (spCallType.getSelectedItem().equals("Installation") && spCallStatus.getSelectedItem().equals("Closed") && cbAttach.isChecked()==true && tvInstallReportAttach.getText().toString().trim().length()==0) {
-                        tvInstallationImage1.setError("Please Attach Install Report");
+                        tvInstallationImage1.setError("Please Attach the Install Report");
                         tvInstallationImage1.requestFocus();
                         isfilled = false;
                     }else if ( cbAttach.isChecked()==false && edReason.getText().toString().trim().length()==0) {
@@ -1492,7 +1529,9 @@ public class UpcomingCallReport extends AppCompatActivity {
                         Toast.makeText(UpcomingCallReport.this, "Please Select a Customer Review", Toast.LENGTH_SHORT).show();
                         isfilled = false;
                     } else {
-                        Toast.makeText(UpcomingCallReport.this, "" + spCallType.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+
+                        Toast.makeText(UpcomingCallReport.this, "submit", Toast.LENGTH_SHORT).show();
+                        CallReportSubmit();
                     }
 
                 } catch (Exception e) {
@@ -1515,6 +1554,25 @@ public class UpcomingCallReport extends AppCompatActivity {
 //                } else {
 //                    Toast.makeText(UpcomingCallReport.this, "Plesae Select image", Toast.LENGTH_SHORT).show();
 //                }
+
+            }
+        });
+
+    }
+
+    private void CallReportSubmit() {
+        CallReportingUpComingSubmitInterface callReportingUpComingSubmitInterface=APIClient.getClient().create(CallReportingUpComingSubmitInterface.class);
+        callReportingUpComingSubmitInterface.callReportSubmit("callClose",LogsitId,CallTypePayoptionsID,ComplaintID,SubComplaintCatID,edTypeComplaintCat.getText().toString(),edTypeSubComplaintCat.getText().toString(),"","","Not Detect",CallAssignId,CallRegID,CallAssignId,pdtidd,hpidd,chk1,
+                CallStatusID,"","",tvInstallDate.getText().toString(),bp_install,bp_installr,"","","", String.valueOf(rbconsumerSpareID),Spc,tvFollowUpDate.getText().toString(),
+                tvStartingTime.getText().toString(),tvEndTime.getText().toString(),edPendingReason.getText().toString(),edName.getText().toString(),edMobile.getText().toString(), String.valueOf(rbRecPendingID),tvDepositedDate.getText().toString(),edCheckUTRno.getText().toString(), String.valueOf(rbClosePayID),edSaleORserviceAmt.getText().toString(),edSpareAmt.getText().toString(),edWorkdone.getText().toString(),edEngineerAdvice.getText().toString(), String.valueOf(ratingBar.getRating()), String.valueOf(cbSetID),edReason.getText().toString(),"",
+                "","","").enqueue(new Callback<CallReportingUpComingSubmitResponse>() {
+            @Override
+            public void onResponse(Call<CallReportingUpComingSubmitResponse> call, Response<CallReportingUpComingSubmitResponse> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<CallReportingUpComingSubmitResponse> call, Throwable t) {
 
             }
         });

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -11,11 +12,8 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginBottom="8dp"
-            app:cardCornerRadius="8dp"
+            android:layout_margin="4dp"
+            app:cardCornerRadius="10dp"
             app:cardElevation="10dp">
 
             <RelativeLayout
@@ -28,7 +26,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="8dp"
-                    android:fontFamily="@font/bold"
+                    android:layout_toLeftOf="@+id/ivView"
+                    android:layout_toRightOf="@id/tvspace"
+                    android:fontFamily="@font/roboblod"
                     android:text="Cistron System"
                     android:textColor="@color/blue"
                     android:textSize="18dp" />
@@ -39,7 +39,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="8dp"
-                    android:layout_toRightOf="@id/tvName"
+                    android:layout_toRightOf="@id/tvEmpId"
                     android:fontFamily="@font/bold"
                     android:text="-"
                     android:textColor="@color/blue"
@@ -51,8 +51,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="8dp"
-                    android:layout_toRightOf="@id/tvspace"
-                    android:fontFamily="@font/bold"
+                    android:layout_marginRight="2dp"
+                    android:fontFamily="@font/openssanssemibold"
                     android:text="E367"
                     android:textColor="@color/Radio"
                     android:textSize="18dp" />
@@ -65,9 +65,9 @@
                     android:layout_below="@id/tvName"
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="8dp"
-                    android:fontFamily="@font/semibold"
+                    android:fontFamily="@font/openssanssemibold"
                     android:text="Week :"
-                    android:textColor="@color/black"
+                    android:textColor="@color/Burgundy"
                     android:textSize="16dp" />
 
                 <TextView
@@ -78,7 +78,7 @@
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_toRightOf="@id/tvWeekTag"
-                    android:fontFamily="@font/semibold"
+                    android:fontFamily="@font/openssanssemibold"
                     android:text="2022-12-22"
                     android:textColor="@color/black"
                     android:textSize="16dp" />
@@ -90,9 +90,9 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tvName"
                     android:layout_marginLeft="8dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="6dp"
                     android:layout_toRightOf="@id/tvStartDate"
-                    android:fontFamily="@font/semibold"
+                    android:fontFamily="@font/openssanssemibold"
                     android:text="-"
                     android:textColor="@color/Radio"
                     android:textSize="18dp" />
@@ -104,8 +104,9 @@
                     android:layout_below="@id/tvName"
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="8dp"
+                    android:layout_toLeftOf="@+id/ivView"
                     android:layout_toRightOf="@id/tvSpaceDate"
-                    android:fontFamily="@font/semibold"
+                    android:fontFamily="@font/openssanssemibold"
                     android:text="2022-12-22"
                     android:textColor="@color/black"
                     android:textSize="16dp" />
@@ -118,9 +119,9 @@
                     android:layout_below="@id/tvWeekTag"
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="8dp"
-                    android:fontFamily="@font/semibold"
+                    android:fontFamily="@font/openssanssemibold"
                     android:text="SubmittedOn :"
-                    android:textColor="@color/black"
+                    android:textColor="@color/Burgundy"
                     android:textSize="15dp" />
 
                 <TextView
@@ -130,8 +131,10 @@
                     android:layout_below="@id/tvWeekTag"
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_toLeftOf="@+id/ivView"
                     android:layout_toRightOf="@id/tvSubmitOnTag"
-                    android:fontFamily="@font/semibold"
+                    android:fontFamily="@font/openssanssemibold"
                     android:text="2022-12-22"
                     android:textColor="@color/black"
                     android:textSize="15dp" />
@@ -147,9 +150,9 @@
                     android:layout_toRightOf="@id/tvSubmitDate"
                     android:fontFamily="@font/semibold"
                     android:text="-"
-                    android:visibility="gone"
                     android:textColor="@color/Radio"
-                    android:textSize="15dp" />
+                    android:textSize="15dp"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/tvSubmittedTime"
@@ -157,29 +160,27 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tvWeekTag"
                     android:layout_marginLeft="8dp"
-                    android:visibility="gone"
                     android:layout_marginTop="8dp"
                     android:layout_toRightOf="@id/tvSpacetime"
                     android:fontFamily="@font/semibold"
                     android:text="18:09:20"
                     android:textColor="@color/black"
-                    android:textSize="15dp" />
+                    android:textSize="15dp"
+                    android:visibility="gone" />
 
-
-                <TextView
-                    android:id="@+id/tvView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/tvWeekTag"
+                <ImageView
+                    android:id="@+id/ivView"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_alignParentEnd="true"
+                    android:layout_centerInParent="true"
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="8dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginRight="10dp"
                     android:layout_marginBottom="8dp"
-                    android:fontFamily="@font/semibold"
-                    android:text="View -->"
-                    android:textColor="@color/blue"
-                    android:textSize="19dp" />
+                    android:src="@drawable/ic_baseline_keyboard_double_arrow_right_24"
+                    android:tint="@color/Burgundy"
+                    tools:ignore="UseAppTint" />
 
 
             </RelativeLayout>

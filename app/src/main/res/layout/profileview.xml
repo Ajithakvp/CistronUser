@@ -85,64 +85,55 @@
         android:layout_height="match_parent">
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:id="@+id/tvNameTag"
-            android:text="Name  :"
-            android:textSize="20dp"
-            android:textColor="@color/blue"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/bold"
-            android:layout_height="wrap_content"/>
-
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:id="@+id/tvName"
-            android:textSize="15dp"
-            android:textColor="@color/black"
-            android:layout_toRightOf="@id/tvNameTag"
+            android:textSize="18dp"
+            android:text="Cistron"
+            android:textColor="@color/Burgundy"
+            android:gravity="center"
+            android:layout_marginRight="2dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
-            android:fontFamily="@font/semibold"
+            android:fontFamily="@font/roboblack"
             android:layout_height="wrap_content"/>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="130dp"
             android:id="@+id/tvEmpTag"
-            android:text="EMP ID  :"
+            android:text="EMP ID             :"
             android:textColor="@color/blue"
-            android:layout_below="@id/tvNameTag"
-            android:textSize="20dp"
+            android:layout_below="@id/tvName"
+            android:textSize="18dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
-            android:fontFamily="@font/bold"
+            android:fontFamily="@font/openssansbold"
             android:layout_height="wrap_content"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:id="@+id/tvEmpId"
-            android:layout_below="@id/tvNameTag"
+            android:layout_below="@id/tvName"
             android:textSize="15dp"
             android:textColor="@color/black"
             android:layout_toRightOf="@id/tvEmpTag"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
-            android:fontFamily="@font/semibold"
+            android:fontFamily="@font/openssanssemibold"
             android:layout_height="wrap_content"/>
 
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="130dp"
             android:id="@+id/tvDesignationTag"
-            android:text="Designation  :"
+            android:text="Designation   :"
             android:textColor="@color/blue"
             android:layout_below="@id/tvEmpTag"
-            android:textSize="20dp"
+            android:textSize="18dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
-            android:fontFamily="@font/bold"
+            android:fontFamily="@font/openssansbold"
             android:layout_height="wrap_content"/>
 
         <TextView
@@ -155,20 +146,20 @@
             android:layout_toRightOf="@id/tvDesignationTag"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
-            android:fontFamily="@font/semibold"
+            android:fontFamily="@font/openssanssemibold"
             android:layout_height="wrap_content"/>
 
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="130dp"
             android:id="@+id/tvBranchTag"
-            android:text="Branch  :"
+            android:text="Branch            :"
             android:textColor="@color/blue"
             android:layout_below="@id/tvDesignation"
-            android:textSize="20dp"
+            android:textSize="18dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
-            android:fontFamily="@font/bold"
+            android:fontFamily="@font/openssansbold"
             android:layout_height="wrap_content"/>
 
         <TextView
@@ -181,21 +172,21 @@
             android:layout_toRightOf="@id/tvBranchTag"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
-            android:fontFamily="@font/semibold"
+            android:fontFamily="@font/openssanssemibold"
             android:layout_height="wrap_content"/>
 
 
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="130dp"
             android:id="@+id/tvTeamLeaderTag"
-            android:text="Team Leader  :"
+            android:text="Team Leader :"
             android:layout_below="@id/tvBranch"
-            android:textSize="20dp"
+            android:textSize="18dp"
             android:textColor="@color/blue"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
-            android:fontFamily="@font/bold"
+            android:fontFamily="@font/openssansbold"
             android:layout_height="wrap_content"/>
 
         <TextView
@@ -208,21 +199,21 @@
             android:layout_toRightOf="@id/tvTeamLeaderTag"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
-            android:fontFamily="@font/semibold"
+            android:fontFamily="@font/openssanssemibold"
             android:layout_height="wrap_content"/>
 
 
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="130dp"
             android:id="@+id/tvMobileTag"
-            android:text="Mobile No  :"
+            android:text="Mobile No      :"
             android:textColor="@color/blue"
             android:layout_below="@id/tvTeamLeader"
-            android:textSize="20dp"
+            android:textSize="18dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
-            android:fontFamily="@font/bold"
+            android:fontFamily="@font/openssansbold"
             android:layout_height="wrap_content"/>
 
         <TextView
@@ -235,19 +226,19 @@
             android:layout_toRightOf="@id/tvMobileTag"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
-            android:fontFamily="@font/semibold"
+            android:fontFamily="@font/openssanssemibold"
             android:layout_height="wrap_content"/>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="130dp"
             android:id="@+id/tvEmailTag"
-            android:text="Email  :"
+            android:text="Email               :"
             android:layout_below="@id/tvMobile"
-            android:textSize="20dp"
+            android:textSize="18dp"
             android:textColor="@color/blue"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
-            android:fontFamily="@font/bold"
+            android:fontFamily="@font/openssansbold"
             android:layout_height="wrap_content"/>
 
         <TextView
@@ -260,20 +251,20 @@
             android:layout_toRightOf="@id/tvEmailTag"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
-            android:fontFamily="@font/semibold"
+            android:fontFamily="@font/openssanssemibold"
             android:layout_height="wrap_content"/>
 
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="130dp"
             android:id="@+id/tvDobTag"
-            android:text="DOB  :"
+            android:text="DOB                 :"
             android:textColor="@color/blue"
             android:layout_below="@id/tvEmail"
-            android:textSize="20dp"
+            android:textSize="18dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
-            android:fontFamily="@font/bold"
+            android:fontFamily="@font/openssansbold"
             android:layout_height="wrap_content"/>
 
         <TextView
@@ -286,20 +277,20 @@
             android:layout_toRightOf="@id/tvDobTag"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
-            android:fontFamily="@font/semibold"
+            android:fontFamily="@font/openssanssemibold"
             android:layout_height="wrap_content"/>
 
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="130dp"
             android:id="@+id/tvDojTag"
-            android:text="DOJ  :"
+            android:text="DOJ                  :"
             android:textColor="@color/blue"
             android:layout_below="@id/tvDob"
-            android:textSize="20dp"
+            android:textSize="18dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
-            android:fontFamily="@font/bold"
+            android:fontFamily="@font/openssansbold"
             android:layout_height="wrap_content"/>
 
         <TextView
@@ -312,7 +303,7 @@
             android:layout_toRightOf="@id/tvDojTag"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
-            android:fontFamily="@font/semibold"
+            android:fontFamily="@font/openssanssemibold"
             android:layout_height="wrap_content"/>
 
 

@@ -116,7 +116,7 @@ public class ReportExpenseAdapter extends RecyclerView.Adapter<ReportExpenseAdap
         holder.tvEndDate.setText(reportExpensesModels.get(position).getEnddate());
         holder.tvSubmitDate.setText(reportExpensesModels.get(position).getTimestamp());
 
-        holder.tvView.setOnClickListener(new View.OnClickListener() {
+        holder.ivView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -782,13 +782,13 @@ public class ReportExpenseAdapter extends RecyclerView.Adapter<ReportExpenseAdap
     public class ViewHolder extends RecyclerView.ViewHolder {
 
 
-        TextView tvName, tvEmpId, tvStartDate, tvEndDate, tvSubmitDate, tvView;
-
+        TextView tvName, tvEmpId, tvStartDate, tvEndDate, tvSubmitDate;
+        ImageView ivView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            tvView = itemView.findViewById(R.id.tvView);
+            ivView = itemView.findViewById(R.id.ivView);
             tvName = itemView.findViewById(R.id.tvName);
             tvEmpId = itemView.findViewById(R.id.tvEmpId);
             tvStartDate = itemView.findViewById(R.id.tvStartDate);
