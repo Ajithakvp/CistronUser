@@ -59,25 +59,12 @@ public class UpcomingCallReportModel {
     @SerializedName("hiddenValues")
     private HiddenValuesModel hiddenValuesModel;
 
+    @SerializedName("sparesInward")
+    private SpareInwardModel spareInwardModel;
+
     @SerializedName("id")
     private String id;
 
-
-    public ArrayList<CallTypeModel> getCallTypeModels() {
-        return callTypeModels;
-    }
-
-    public void setCallTypeModels(ArrayList<CallTypeModel> callTypeModels) {
-        this.callTypeModels = callTypeModels;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getCompliantRequired() {
         return compliantRequired;
@@ -111,7 +98,13 @@ public class UpcomingCallReportModel {
         this.callInfoModel = callInfoModel;
     }
 
+    public ArrayList<CallTypeModel> getCallTypeModels() {
+        return callTypeModels;
+    }
 
+    public void setCallTypeModels(ArrayList<CallTypeModel> callTypeModels) {
+        this.callTypeModels = callTypeModels;
+    }
 
     public ArrayList<CallStatusModel> getCallStatusModels() {
         return callStatusModels;
@@ -167,5 +160,21 @@ public class UpcomingCallReportModel {
 
     public void setHiddenValuesModel(HiddenValuesModel hiddenValuesModel) {
         this.hiddenValuesModel = hiddenValuesModel;
+    }
+
+    public SpareInwardModel getSpareInwardModel() {
+        return spareInwardModel;
+    }
+
+    public void setSpareInwardModel(SpareInwardModel spareInwardModel) {
+        this.spareInwardModel = spareInwardModel;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

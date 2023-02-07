@@ -58,6 +58,7 @@ public class PendingRequestupSpareAdapter extends RecyclerView.Adapter<PendingRe
                 Dialog dialog=new Dialog(activity);
                 dialog.setContentView(R.layout.spare_req_view_dialog_recycleview);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.setCancelable(false);
                 dialog.show();
 
                 rvView=dialog.findViewById(R.id.rvView);

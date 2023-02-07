@@ -67,6 +67,7 @@ import com.example.cistronuser.API.Model.ConsumerCustSpareRecordModel;
 import com.example.cistronuser.API.Model.CustomerPoResponseModel;
 import com.example.cistronuser.API.Model.CustomerPoSpareRecordModel;
 import com.example.cistronuser.API.Model.ServiceSpareRequestModel;
+import com.example.cistronuser.API.Model.SpareInwardRecordModel;
 import com.example.cistronuser.API.Model.SpareRequestsRecordModel;
 import com.example.cistronuser.API.Model.SparesConsumedRecordModel;
 import com.example.cistronuser.API.Response.CallReportComplaintSubCategoryResponse;
@@ -90,6 +91,7 @@ import com.example.cistronuser.ServiceEngineer.Adapter.ConsumePoSpareYesAdapter;
 import com.example.cistronuser.ServiceEngineer.Adapter.ConsumeSpareYesAdapter;
 import com.example.cistronuser.ServiceEngineer.Adapter.CustomerPoAdapter;
 import com.example.cistronuser.ServiceEngineer.Adapter.PendingRequestupSpareAdapter;
+import com.example.cistronuser.ServiceEngineer.Adapter.SpareInwardListAdapter;
 import com.example.cistronuser.ServiceEngineer.Adapter.SpareReqAdapter;
 import com.example.cistronuser.ServiceEngineer.Adapter.SparesConsumedAdapter;
 import com.google.android.material.textfield.TextInputLayout;
@@ -206,7 +208,15 @@ public class UpcomingCallReport extends AppCompatActivity {
     ImageView ivClose;
     String SerialID1, SerialID2;
 
-    String CallAssignId, CallStatusID, CallTypePayoptionsID, Spc, CusPoradiobID;
+
+    //SpareInWard
+    RelativeLayout rlSpareInward;
+    TextView tvSpareInwardCount;
+    RecyclerView rvSpareInward;
+    SpareInwardListAdapter spareInwardListAdapter;
+    ArrayList<SpareInwardRecordModel>spareInwardRecordModels=new ArrayList<>();
+
+
 
 
     //Yes DoYouConsumeSpares
@@ -219,8 +229,9 @@ public class UpcomingCallReport extends AppCompatActivity {
     ArrayList<CustomerPoSpareRecordModel> customerPoSpareRecordModels = new ArrayList<>();
     ConsumeSpareYesAdapter consumeSpareYesAdapter;
     ArrayList<ConsumeSpareRecordModel> consumeSpareRecordModels = new ArrayList<>();
-    String  DoYouConsumerID, PartID,ComplaintID,SubComplaintCatID,CallRegID,hpidd,pdtidd,chk1,bp_install,bp_installr;
 
+    String  DoYouConsumerID, PartID,ComplaintID,SubComplaintCatID,CallRegID,hpidd,pdtidd,chk1,bp_install,bp_installr;
+    String CallAssignId, CallStatusID, CallTypePayoptionsID, Spc, CusPoradiobID;
     //Validation
     String ComplaintValidRequired;
     int SpareDocVaild,TypeValid;
@@ -306,9 +317,13 @@ public class UpcomingCallReport extends AppCompatActivity {
         rlSpareRequest = findViewById(R.id.rlSpareRequest);
         rvSpareRequest = findViewById(R.id.rvSpareRequest);
         tvSpareRequestCount = findViewById(R.id.tvSpareRequestCount);
-
         // ***********  Spare Request End *********** //
 
+        // ***********  Spare Inward *********** //
+        rlSpareInward=findViewById(R.id.rlSpareInward);
+        tvSpareInwardCount=findViewById(R.id.tvSpareInwardCount);
+        rvSpareInward=findViewById(R.id.rvSpareInward);
+        // ***********  Spare Inward End *********** //
 
         // ***********  Customer PO *********** //
         rlCustomerPO = findViewById(R.id.rlCustomerPO);
@@ -428,6 +443,16 @@ public class UpcomingCallReport extends AppCompatActivity {
                         pendingRequestupSpareAdapter.notifyDataSetChanged();
                         // ********** Spare Request End  ********** //
 
+                        // ********** Spare Inward  ********** //
+                        if (response.body().getUpcomingCallReportModel().getSpareInwardModel().getCount().trim().equals("0")){
+                            rlSpareInward.setVisibility(View.GONE);
+                        }else {
+                            rlSpareInward.setVisibility(View.VISIBLE);
+                        }
+                        tvSpareInwardCount.setText(response.body().getUpcomingCallReportModel().getSpareInwardModel().getCount());
+                        spareInwardListAdapter.spareInwardRecordModels=response.body().getUpcomingCallReportModel().getSpareInwardModel().getSpareInwardRecordModels();
+                        spareInwardListAdapter.notifyDataSetChanged();
+                        // ********** Spare Inward End  ********** //
 
                         if (response.body().getUpcomingCallReportModel().getCustomerPoModel().getCount().trim().equals("0")) {
                             rlCustomerPO.setVisibility(View.GONE);
@@ -548,13 +573,11 @@ public class UpcomingCallReport extends AppCompatActivity {
 
 
         //******** Spare Counsumed Recycleview ******************//
-
         sparesConsumedAdapter = new SparesConsumedAdapter(this, sparesConsumedRecordModels);
         LinearLayoutManager spareCounsumed = new LinearLayoutManager(this);
         spareCounsumed.setOrientation(RecyclerView.VERTICAL);
         rvSpareConsumer.setAdapter(sparesConsumedAdapter);
         rvSpareConsumer.setLayoutManager(spareCounsumed);
-
         //******** Spare Counsumed Recycleview End ******************//
 
         //******** Spare Request Recycleview ******************//
@@ -563,13 +586,18 @@ public class UpcomingCallReport extends AppCompatActivity {
         spareReq.setOrientation(RecyclerView.VERTICAL);
         rvSpareRequest.setLayoutManager(spareReq);
         rvSpareRequest.setAdapter(pendingRequestupSpareAdapter);
-
         //******** Spare Request Recycleview End ******************//
+
+        //******** Spare Inward Recycleview ******************//
+        spareInwardListAdapter=new SpareInwardListAdapter(this,spareInwardRecordModels);
+        LinearLayoutManager spareInward=new LinearLayoutManager(this);
+        spareInward.setOrientation(RecyclerView.VERTICAL);
+        rvSpareInward.setLayoutManager(spareInward);
+        rvSpareInward.setAdapter(spareInwardListAdapter);
+        //******** Spare Inward Recycleview End ******************//
 
 
         // ***********  Customer PO Recycleview *********** //
-
-
         customerPoAdapter = new CustomerPoAdapter(this, customerPoResponseModels, new CustomerPoAdapter.ItemClickListener() {
             @Override
             public void onClick(String s) {
@@ -587,7 +615,6 @@ public class UpcomingCallReport extends AppCompatActivity {
         custPO.setOrientation(RecyclerView.VERTICAL);
         rvCustomerPO.setLayoutManager(custPO);
         rvCustomerPO.setAdapter(customerPoAdapter);
-
         // ***********  Customer PO Recycleview End *********** //
 
 

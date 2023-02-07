@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_backgroud">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_toLeftOf="@+id/ivViewClose"
+                android:fontFamily="@font/roboblod"
+                android:gravity="center"
+                android:text="Acknowledge by clicking the checkboxes"
+                android:textColor="@color/bluegray"
+                android:textSize="14dp" />
+
+            <ImageView
+                android:id="@+id/ivViewClose"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="13dp"
+                android:src="@drawable/ic_baseline_close_24"
+                android:tint="@color/Burgundy"
+                tools:ignore="UseAppTint" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvTitle"
+                android:layout_marginTop="10dp">
+
+                <CheckBox
+                    android:id="@+id/cbDcView"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="8dp" />
+
+                <TextView
+                    android:id="@+id/tvDc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/cbDcView"
+                    android:fontFamily="@font/roboblod"
+                    android:text="DC"
+                    android:textColor="@color/Burgundy"
+                    android:textSize="15dp" />
+
+                <TextView
+                    android:id="@+id/tvDcView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/tvDc"
+                    android:fontFamily="@font/roboblod"
+                    android:text="View"
+                    android:textColor="@color/blue"
+                    android:textSize="15dp"
+                    android:visibility="visible" />
+
+
+                <EditText
+                    android:id="@+id/edDcView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvDc"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@drawable/edittext"
+                    android:backgroundTint="@color/liteYellow"
+                    android:fontFamily="@font/openssanssemibold"
+                    android:gravity="center"
+                    android:minHeight="55dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="5dp"
+                    android:textColor="@color/darkGreen"
+                    android:textSize="16dp" />
+
+
+                <RelativeLayout
+                    android:id="@+id/rlInvoice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/edDcView"
+                    android:visibility="visible">
+
+
+                    <CheckBox
+                        android:id="@+id/cbInVoiceView"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="8dp" />
+
+                    <TextView
+                        android:id="@+id/tvInVoice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:layout_toRightOf="@id/cbInVoiceView"
+                        android:fontFamily="@font/roboblod"
+                        android:text="InVoice"
+                        android:textColor="@color/Burgundy"
+                        android:textSize="15dp" />
+
+                    <TextView
+                        android:id="@+id/tvInVoiceView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_toRightOf="@id/tvInVoice"
+                        android:fontFamily="@font/roboblod"
+                        android:text="View"
+                        android:textColor="@color/blue"
+                        android:textSize="15dp"
+                        android:visibility="visible" />
+
+
+                    <EditText
+                        android:id="@+id/edInVoiceView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvInVoice"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginRight="8dp"
+                        android:background="@drawable/edittext"
+                        android:backgroundTint="@color/liteYellow"
+                        android:fontFamily="@font/openssanssemibold"
+                        android:gravity="center"
+                        android:minHeight="55dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="5dp"
+                        android:textColor="@color/darkGreen"
+                        android:textSize="16dp" />
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/rlCusPo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rlInvoice">
+
+
+                    <CheckBox
+                        android:id="@+id/cbCusPOeView"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="8dp" />
+
+                    <TextView
+                        android:id="@+id/tvCusPO"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:layout_toRightOf="@id/cbCusPOeView"
+                        android:fontFamily="@font/roboblod"
+                        android:text="Customer PO"
+                        android:textColor="@color/Burgundy"
+                        android:textSize="15dp" />
+
+                    <TextView
+                        android:id="@+id/tvCusPOView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="15dp"
+                        android:visibility="visible"
+                        android:layout_toRightOf="@id/tvCusPO"
+                        android:fontFamily="@font/roboblod"
+                        android:text="View"
+                        android:textColor="@color/blue"
+                        android:textSize="15dp" />
+
+
+                    <EditText
+                        android:id="@+id/edICusPOView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvCusPO"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginRight="8dp"
+                        android:background="@drawable/edittext"
+                        android:backgroundTint="@color/liteYellow"
+                        android:fontFamily="@font/openssanssemibold"
+                        android:gravity="center"
+                        android:minHeight="55dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="5dp"
+                        android:textColor="@color/darkGreen"
+                        android:textSize="16dp" />
+
+                </RelativeLayout>
+
+                <CheckBox
+                    android:id="@+id/cbModeOfTransport"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/rlCusPo"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp" />
+
+                <TextView
+                    android:id="@+id/tvModeOfTransport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rlCusPo"
+                    android:layout_marginTop="15dp"
+                    android:layout_toRightOf="@id/cbModeOfTransport"
+                    android:fontFamily="@font/roboblod"
+                    android:text="Mode Of Transport"
+                    android:textColor="@color/Burgundy"
+                    android:textSize="15dp" />
+
+                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                    android:id="@+id/spModeOfTransport"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvModeOfTransport"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@drawable/edittext"
+                    android:backgroundTint="@color/liteYellow"
+                    android:minHeight="55dp" />
+
+
+                <TextView
+                    android:id="@+id/tvRef"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/spModeOfTransport"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/roboblod"
+                    android:text="Ref No"
+                    android:textColor="@color/Burgundy"
+                    android:textSize="15dp" />
+
+
+                <EditText
+                    android:id="@+id/edRefNo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvRef"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@drawable/edittext"
+                    android:backgroundTint="@color/liteYellow"
+                    android:fontFamily="@font/openssanssemibold"
+                    android:gravity="center"
+                    android:minHeight="55dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="5dp"
+                    android:textColor="@color/darkGreen"
+                    android:textSize="16dp" />
+
+                <CheckBox
+                    android:id="@+id/cbDate"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/edRefNo"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp" />
+
+                <TextView
+                    android:id="@+id/tvDateTag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/edRefNo"
+                    android:layout_marginTop="16dp"
+                    android:layout_toRightOf="@id/cbDate"
+                    android:fontFamily="@font/roboblod"
+                    android:text="Date"
+                    android:textColor="@color/Burgundy"
+                    android:textSize="15dp" />
+
+                <TextView
+                    android:id="@+id/tvDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvDateTag"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@drawable/edittext"
+                    android:backgroundTint="@color/liteYellow"
+                    android:fontFamily="@font/openssanssemibold"
+                    android:gravity="center"
+                    android:hint="Please select a Date"
+                    android:minHeight="55dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="5dp"
+                    android:textColor="@color/darkGreen"
+                    android:textSize="16dp" />
+
+
+                <TextView
+                    android:id="@+id/tvTimeTag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvDate"
+                    android:layout_marginTop="16dp"
+                    android:layout_toRightOf="@id/cbDate"
+                    android:fontFamily="@font/roboblod"
+                    android:text="Time"
+                    android:textColor="@color/Burgundy"
+                    android:textSize="15dp" />
+
+                <TextView
+                    android:id="@+id/tvTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvTimeTag"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@drawable/edittext"
+                    android:backgroundTint="@color/liteYellow"
+                    android:fontFamily="@font/openssanssemibold"
+                    android:gravity="center"
+                    android:hint="Please select a Time"
+                    android:minHeight="55dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="5dp"
+                    android:textColor="@color/darkGreen"
+                    android:textSize="16dp" />
+
+
+                <TextView
+                    android:id="@+id/tvAccept"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvTime"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="50dp"
+                    android:layout_marginBottom="40dp"
+                    android:background="@drawable/edittext"
+                    android:backgroundTint="@color/Burgundy"
+                    android:fontFamily="@font/openssanssemibold"
+                    android:gravity="center"
+                    android:minHeight="55dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="5dp"
+                    android:text="Accept"
+                    android:textColor="@color/white"
+                    android:textSize="16dp" />
+
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</RelativeLayout>
