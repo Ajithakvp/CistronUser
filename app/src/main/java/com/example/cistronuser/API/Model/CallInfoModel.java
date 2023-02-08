@@ -18,6 +18,10 @@ public class CallInfoModel {
     //      "logisticsId": "1242",
     //logistics_esc_ins
 
+    //"logistics_ba_dispatch": "3000",
+    //      "logistics_ba_dispatchr": "0",
+    //      "logistics_esc_ad": "0"
+    //logistics_esc_installment
 
     @SerializedName("custDetail")
     private String custDetail;
@@ -52,9 +56,51 @@ public class CallInfoModel {
     @SerializedName("logisticsId")
     private String logisticsId;
 
+    @SerializedName("logistics_ba_dispatch")
+    private String logistics_ba_dispatch;
+
+    @SerializedName("logistics_ba_dispatchr")
+    private String logistics_ba_dispatchr;
+
+    @SerializedName("logistics_esc_ad")
+    private String logistics_esc_ad;
+
     @SerializedName("logistics_esc_ins")
     private String logistics_esc_ins;
 
+    @SerializedName("logistics_noofins")
+    private String logistics_noofins;
+
+    @SerializedName("logistics_esc_installment")
+    private String logistics_esc_installment;
+
+    @SerializedName("logistics_installments")
+    private LogisticsInstallmentsModel logisticsInstallmentsModel;
+
+
+    public String getCustDetail() {
+        return custDetail;
+    }
+
+    public void setCustDetail(String custDetail) {
+        this.custDetail = custDetail;
+    }
+
+    public String getProdDetail() {
+        return prodDetail;
+    }
+
+    public void setProdDetail(String prodDetail) {
+        this.prodDetail = prodDetail;
+    }
+
+    public String getProSerial() {
+        return proSerial;
+    }
+
+    public void setProSerial(String proSerial) {
+        this.proSerial = proSerial;
+    }
 
     public String getCallAssignId() {
         return callAssignId;
@@ -64,20 +110,20 @@ public class CallInfoModel {
         this.callAssignId = callAssignId;
     }
 
-    public String getLogistics_esc_ins() {
-        return logistics_esc_ins;
+    public String getCreatedBy() {
+        return createdBy;
     }
 
-    public void setLogistics_esc_ins(String logistics_esc_ins) {
-        this.logistics_esc_ins = logistics_esc_ins;
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
     }
 
-    public String getLogisticsId() {
-        return logisticsId;
+    public String getReportBy() {
+        return reportBy;
     }
 
-    public void setLogisticsId(String logisticsId) {
-        this.logisticsId = logisticsId;
+    public void setReportBy(String reportBy) {
+        this.reportBy = reportBy;
     }
 
     public String getCallId() {
@@ -112,43 +158,67 @@ public class CallInfoModel {
         this.logistics_bp_installr = logistics_bp_installr;
     }
 
-    public String getCustDetail() {
-        return custDetail;
+    public String getLogisticsId() {
+        return logisticsId;
     }
 
-    public void setCustDetail(String custDetail) {
-        this.custDetail = custDetail;
+    public void setLogisticsId(String logisticsId) {
+        this.logisticsId = logisticsId;
     }
 
-    public String getProdDetail() {
-        return prodDetail;
+    public String getLogistics_ba_dispatch() {
+        return logistics_ba_dispatch;
     }
 
-    public void setProdDetail(String prodDetail) {
-        this.prodDetail = prodDetail;
+    public void setLogistics_ba_dispatch(String logistics_ba_dispatch) {
+        this.logistics_ba_dispatch = logistics_ba_dispatch;
     }
 
-    public String getProSerial() {
-        return proSerial;
+    public String getLogistics_ba_dispatchr() {
+        return logistics_ba_dispatchr;
     }
 
-    public void setProSerial(String proSerial) {
-        this.proSerial = proSerial;
+    public void setLogistics_ba_dispatchr(String logistics_ba_dispatchr) {
+        this.logistics_ba_dispatchr = logistics_ba_dispatchr;
     }
 
-    public String getCreatedBy() {
-        return createdBy;
+    public String getLogistics_esc_ad() {
+        return logistics_esc_ad;
     }
 
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
+    public void setLogistics_esc_ad(String logistics_esc_ad) {
+        this.logistics_esc_ad = logistics_esc_ad;
     }
 
-    public String getReportBy() {
-        return reportBy;
+    public String getLogistics_esc_ins() {
+        return logistics_esc_ins;
     }
 
-    public void setReportBy(String reportBy) {
-        this.reportBy = reportBy;
+    public void setLogistics_esc_ins(String logistics_esc_ins) {
+        this.logistics_esc_ins = logistics_esc_ins;
+    }
+
+    public String getLogistics_noofins() {
+        return logistics_noofins;
+    }
+
+    public void setLogistics_noofins(String logistics_noofins) {
+        this.logistics_noofins = logistics_noofins;
+    }
+
+    public String getLogistics_esc_installment() {
+        return logistics_esc_installment;
+    }
+
+    public void setLogistics_esc_installment(String logistics_esc_installment) {
+        this.logistics_esc_installment = logistics_esc_installment;
+    }
+
+    public LogisticsInstallmentsModel getLogisticsInstallmentsModel() {
+        return logisticsInstallmentsModel;
+    }
+
+    public void setLogisticsInstallmentsModel(LogisticsInstallmentsModel logisticsInstallmentsModel) {
+        this.logisticsInstallmentsModel = logisticsInstallmentsModel;
     }
 }

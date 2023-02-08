@@ -85,7 +85,7 @@ public interface CallReportSubmitInterface {
                                                @Part("empid") RequestBody empid,@Part MultipartBody.Part file_inwb);
 
 
-    //*********** Report Attach **********//
+    //*********** LR **********//
     //#API: callClose.php?action=uploadLR&call_status=1&pay_option=8&callassignid=&empid=&fileName=file_inlr
     @Multipart
     @POST("callClose.php")

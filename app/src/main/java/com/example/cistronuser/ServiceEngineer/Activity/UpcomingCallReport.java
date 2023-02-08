@@ -39,6 +39,7 @@ import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RatingBar;
@@ -55,7 +56,9 @@ import com.example.cistronuser.API.Interface.CallReportingUpComingSubmitInterfac
 import com.example.cistronuser.API.Interface.ConsumeCusSpareSubmitInterface;
 import com.example.cistronuser.API.Interface.ConsumeSpareSubmitInterface;
 import com.example.cistronuser.API.Interface.EscalatePaymentSubmitInterface;
+import com.example.cistronuser.API.Interface.InstallamentEscalatedSubmitInterface;
 import com.example.cistronuser.API.Interface.ServiceSpareRequestInterface;
+import com.example.cistronuser.API.Interface.SupplyEscalatedSubmitedInterface;
 import com.example.cistronuser.API.Interface.UpcomingCallReportInterface;
 import com.example.cistronuser.API.Interface.YesDoYouConsumeSpareInterface;
 import com.example.cistronuser.API.Model.CallReportComplaintSubCategoryModel;
@@ -66,6 +69,7 @@ import com.example.cistronuser.API.Model.ConsumeSpareRecordModel;
 import com.example.cistronuser.API.Model.ConsumerCustSpareRecordModel;
 import com.example.cistronuser.API.Model.CustomerPoResponseModel;
 import com.example.cistronuser.API.Model.CustomerPoSpareRecordModel;
+import com.example.cistronuser.API.Model.InstallamentModel;
 import com.example.cistronuser.API.Model.ServiceSpareRequestModel;
 import com.example.cistronuser.API.Model.SpareInwardRecordModel;
 import com.example.cistronuser.API.Model.SpareRequestsRecordModel;
@@ -80,7 +84,9 @@ import com.example.cistronuser.API.Response.CallReportsubmitCusInvoiceResponse;
 import com.example.cistronuser.API.Response.ConsumeSpareSubmitResponse;
 import com.example.cistronuser.API.Response.ConsumerCusSpareSubmitResponse;
 import com.example.cistronuser.API.Response.EscalatePaymentSubmitResponse;
+import com.example.cistronuser.API.Response.InstallamentEscalatedSubmitResponse;
 import com.example.cistronuser.API.Response.ServiceSpareRequestResponse;
+import com.example.cistronuser.API.Response.SupplyEscalatedSubmitedResponse;
 import com.example.cistronuser.API.Response.UpcomingCallReportResponse;
 import com.example.cistronuser.API.Response.YesDoYouConsumeSpareResponse;
 import com.example.cistronuser.Common.FileUtli;
@@ -90,6 +96,7 @@ import com.example.cistronuser.ServiceEngineer.Adapter.ConsumeCusSpareYesAdapter
 import com.example.cistronuser.ServiceEngineer.Adapter.ConsumePoSpareYesAdapter;
 import com.example.cistronuser.ServiceEngineer.Adapter.ConsumeSpareYesAdapter;
 import com.example.cistronuser.ServiceEngineer.Adapter.CustomerPoAdapter;
+import com.example.cistronuser.ServiceEngineer.Adapter.InstallmentAdapter;
 import com.example.cistronuser.ServiceEngineer.Adapter.PendingRequestupSpareAdapter;
 import com.example.cistronuser.ServiceEngineer.Adapter.SpareInwardListAdapter;
 import com.example.cistronuser.ServiceEngineer.Adapter.SpareReqAdapter;
@@ -173,6 +180,16 @@ public class UpcomingCallReport extends AppCompatActivity {
     String strRating, strSerAttach, strCusInvoiceAttach, strInstallImg1, strInstallImg2, strInstallImg3, strWarrenty, strInstallReport;
     File fileservice, fileinvoice, fileinstallImg1, fileinstallImg2, fileinstallImg3, fileWarrentyCard, fileinstallReport;
 
+
+    //Supply
+    CardView cvSupply;
+    int aftPayment, RevAfrDsptch;
+    TextView tvPaymentafterDispatch, tvRecvPaymentDispatch, tvSupplyTotalamt, tvSupplyEscalate, tvSupplyEscalateDetails;
+    //Supplyupload
+    TextView tvWayBill, tvLR;
+    String strWayBill, strLR;
+    File fileWaybill, fileLR;
+
     //Customer Details
     TextView tvCusDetails, tvProdDetails, tvProdSerial, tvCreated, tvReportby;
     String strTotalPayment;
@@ -214,9 +231,17 @@ public class UpcomingCallReport extends AppCompatActivity {
     TextView tvSpareInwardCount;
     RecyclerView rvSpareInward;
     SpareInwardListAdapter spareInwardListAdapter;
-    ArrayList<SpareInwardRecordModel>spareInwardRecordModels=new ArrayList<>();
+    ArrayList<SpareInwardRecordModel> spareInwardRecordModels = new ArrayList<>();
 
-
+    //Installament
+    CardView cvInstallament;
+    RecyclerView rvInstallment;
+    int installmentVisble;
+    TextView tvTotalPOI, tvTotalRPOI, tvInstallmentTotalamt, tvInstallmentEscalate;
+    InstallmentAdapter installmentAdapter;
+    ArrayList<InstallamentModel> installamentModels = new ArrayList<>();
+    ArrayList<String>strInstallament=new ArrayList<>();
+    String tm,bp_installmentTot,bp_installmentrTot;
 
 
     //Yes DoYouConsumeSpares
@@ -230,11 +255,11 @@ public class UpcomingCallReport extends AppCompatActivity {
     ConsumeSpareYesAdapter consumeSpareYesAdapter;
     ArrayList<ConsumeSpareRecordModel> consumeSpareRecordModels = new ArrayList<>();
 
-    String  DoYouConsumerID, PartID,ComplaintID,SubComplaintCatID,CallRegID,hpidd,pdtidd,chk1,bp_install,bp_installr;
+    String DoYouConsumerID, PartID, ComplaintID, SubComplaintCatID, CallRegID, hpidd, pdtidd, chk1, bp_install, bp_installr;
     String CallAssignId, CallStatusID, CallTypePayoptionsID, Spc, CusPoradiobID;
     //Validation
     String ComplaintValidRequired;
-    int SpareDocVaild,TypeValid;
+    int SpareDocVaild, TypeValid;
 
 
     //rbGrup1Id
@@ -242,7 +267,6 @@ public class UpcomingCallReport extends AppCompatActivity {
     int rbClosePayID;
     int rbRecPendingID;
     int cbSetID;
-
 
 
     @SuppressLint("MissingInflatedId")
@@ -288,6 +312,18 @@ public class UpcomingCallReport extends AppCompatActivity {
         tvSubComplaint = findViewById(R.id.tvSubComplaint);
 
 
+        // *********** Supply *****************//
+        cvSupply = findViewById(R.id.cvSupply);
+        tvPaymentafterDispatch = findViewById(R.id.tvPaymentafterDispatch);
+        tvRecvPaymentDispatch = findViewById(R.id.tvRecvPaymentDispatch);
+        tvSupplyTotalamt = findViewById(R.id.tvSupplyTotalamt);
+        tvSupplyEscalateDetails = findViewById(R.id.tvSupplyEscalateDetails);
+        tvSupplyEscalate = findViewById(R.id.tvSupplyEscalate);
+        tvLR = findViewById(R.id.tvLR);
+        tvWayBill = findViewById(R.id.tvWayBill);
+        // *********** Supply End *****************//
+
+
         // *********** Installation *********** //
         tvInstallReportAttach = findViewById(R.id.tvInstallReportAttach);
         tvWarrentycard = findViewById(R.id.tvWarrentycard);
@@ -301,6 +337,16 @@ public class UpcomingCallReport extends AppCompatActivity {
         tvTotalamt = findViewById(R.id.tvTotalamt);
         tvEscalate = findViewById(R.id.tvEscalate);
         // *********** Installation End *********** //
+
+
+        // *********** Installament *********** //
+        cvInstallament = findViewById(R.id.cvInstallament);
+        rvInstallment = findViewById(R.id.rvInstallment);
+        tvTotalPOI = findViewById(R.id.tvTotalPOI);
+        tvTotalRPOI = findViewById(R.id.tvTotalRPOI);
+        tvInstallmentTotalamt = findViewById(R.id.tvInstallmentTotalamt);
+        tvInstallmentEscalate = findViewById(R.id.tvInstallmentEscalate);
+        // *********** Installament end *********** //
 
 
         // ***********  spare Consumer *********** //
@@ -320,9 +366,9 @@ public class UpcomingCallReport extends AppCompatActivity {
         // ***********  Spare Request End *********** //
 
         // ***********  Spare Inward *********** //
-        rlSpareInward=findViewById(R.id.rlSpareInward);
-        tvSpareInwardCount=findViewById(R.id.tvSpareInwardCount);
-        rvSpareInward=findViewById(R.id.rvSpareInward);
+        rlSpareInward = findViewById(R.id.rlSpareInward);
+        tvSpareInwardCount = findViewById(R.id.tvSpareInwardCount);
+        rvSpareInward = findViewById(R.id.rvSpareInward);
         // ***********  Spare Inward End *********** //
 
         // ***********  Customer PO *********** //
@@ -397,18 +443,20 @@ public class UpcomingCallReport extends AppCompatActivity {
                         tvRecvPaymentInstallation.setText(response.body().getUpcomingCallReportModel().getCallInfoModel().getLogistics_bp_installr());
                         tvRevPendingPaymnet.setText(response.body().getUpcomingCallReportModel().getLabelModel().getLabel1());
                         tvSaleORserviceAmtTag.setText(response.body().getUpcomingCallReportModel().getLabelModel().getLabel2());
+                        tvPaymentafterDispatch.setText(response.body().getUpcomingCallReportModel().getCallInfoModel().getLogistics_ba_dispatch());
+                        tvRecvPaymentDispatch.setText(response.body().getUpcomingCallReportModel().getCallInfoModel().getLogistics_ba_dispatchr());
                         SerialID1 = response.body().getUpcomingCallReportModel().getSeriesid1();
                         SerialID2 = response.body().getUpcomingCallReportModel().getSeriesid2();
                         CallAssignId = response.body().getUpcomingCallReportModel().getCallInfoModel().getCallAssignId();
-                        CallRegID=response.body().getUpcomingCallReportModel().getCallInfoModel().getCallId();
+                        CallRegID = response.body().getUpcomingCallReportModel().getCallInfoModel().getCallId();
                         Spc = response.body().getUpcomingCallReportModel().getHiddenValuesModel().getSpc();
                         hpidd = response.body().getUpcomingCallReportModel().getHiddenValuesModel().getHpidd();
-                        pdtidd= response.body().getUpcomingCallReportModel().getHiddenValuesModel().getPdtidd();
-                        chk1= response.body().getUpcomingCallReportModel().getHiddenValuesModel().getChk1();
+                        pdtidd = response.body().getUpcomingCallReportModel().getHiddenValuesModel().getPdtidd();
+                        chk1 = response.body().getUpcomingCallReportModel().getHiddenValuesModel().getChk1();
                         DoYouConsumerID = response.body().getUpcomingCallReportModel().getId();
                         PartID = response.body().getUpcomingCallReportModel().getHiddenValuesModel().getJsonPartIds();
-                        bp_installr=response.body().getUpcomingCallReportModel().getCallInfoModel().getLogistics_bp_install();
-                        bp_install=response.body().getUpcomingCallReportModel().getCallInfoModel().getLogistics_bp_installr();
+                        bp_installr = response.body().getUpcomingCallReportModel().getCallInfoModel().getLogistics_bp_install();
+                        bp_install = response.body().getUpcomingCallReportModel().getCallInfoModel().getLogistics_bp_installr();
 
 
                         // ***********  Customer PO  *********** //
@@ -419,7 +467,7 @@ public class UpcomingCallReport extends AppCompatActivity {
 
                         // ********** Spare Consumed  ********** //
 
-                         SpareDocVaild= Integer.parseInt(response.body().getUpcomingCallReportModel().getSparesConsumedModel().getCount());
+                        SpareDocVaild = Integer.parseInt(response.body().getUpcomingCallReportModel().getSparesConsumedModel().getCount());
                         if (response.body().getUpcomingCallReportModel().getSparesConsumedModel().getCount().trim().equals("0")) {
                             rlSpareConsumed.setVisibility(View.GONE);
                             rlDCConsumerSpareFile.setVisibility(View.GONE);
@@ -444,13 +492,13 @@ public class UpcomingCallReport extends AppCompatActivity {
                         // ********** Spare Request End  ********** //
 
                         // ********** Spare Inward  ********** //
-                        if (response.body().getUpcomingCallReportModel().getSpareInwardModel().getCount().trim().equals("0")){
+                        if (response.body().getUpcomingCallReportModel().getSpareInwardModel().getCount().trim().equals("0")) {
                             rlSpareInward.setVisibility(View.GONE);
-                        }else {
+                        } else {
                             rlSpareInward.setVisibility(View.VISIBLE);
                         }
                         tvSpareInwardCount.setText(response.body().getUpcomingCallReportModel().getSpareInwardModel().getCount());
-                        spareInwardListAdapter.spareInwardRecordModels=response.body().getUpcomingCallReportModel().getSpareInwardModel().getSpareInwardRecordModels();
+                        spareInwardListAdapter.spareInwardRecordModels = response.body().getUpcomingCallReportModel().getSpareInwardModel().getSpareInwardRecordModels();
                         spareInwardListAdapter.notifyDataSetChanged();
                         // ********** Spare Inward End  ********** //
 
@@ -510,6 +558,7 @@ public class UpcomingCallReport extends AppCompatActivity {
 
                         // ********** InstallpaymentCalc End ********** //
 
+
                         // ********** Escalate ********** //
 
                         if (response.body().getUpcomingCallReportModel().getCallInfoModel().getLogistics_esc_ins().trim().equals("0")) {
@@ -519,6 +568,56 @@ public class UpcomingCallReport extends AppCompatActivity {
                         }
 
                         // ********** Escalate End ********** //
+
+                        // ********** SupplyCalc ********** //
+                        aftPayment = Integer.parseInt(response.body().getUpcomingCallReportModel().getCallInfoModel().getLogistics_ba_dispatch());
+                        RevAfrDsptch = Integer.parseInt(response.body().getUpcomingCallReportModel().getCallInfoModel().getLogistics_ba_dispatchr());
+                        String supplyTotal = String.valueOf(aftPayment - RevAfrDsptch);
+                        tvSupplyTotalamt.setText(supplyTotal + "/- escalate payment after dispatch.");
+                        // ********** SupplyCalc End ********** //
+
+                        // ********** Escalate ********** //
+
+                        if (response.body().getUpcomingCallReportModel().getCallInfoModel().getLogistics_esc_ad().trim().equals("0")) {
+                            tvSupplyEscalate.setVisibility(View.VISIBLE);
+                            tvSupplyEscalateDetails.setVisibility(View.GONE);
+                        } else {
+                            tvSupplyEscalate.setVisibility(View.GONE);
+                            tvSupplyEscalateDetails.setVisibility(View.VISIBLE);
+                        }
+
+                        // ********** Escalate End ********** //
+
+
+                        // ********** Installament  ********** //
+
+                        installmentVisble = Integer.parseInt(response.body().getUpcomingCallReportModel().getCallInfoModel().getLogistics_noofins());
+                        tm=response.body().getUpcomingCallReportModel().getCallInfoModel().getLogisticsInstallmentsModel().getTm();
+                        bp_installmentrTot=response.body().getUpcomingCallReportModel().getCallInfoModel().getLogisticsInstallmentsModel().getBp_installmentrTot();
+                        bp_installmentTot=response.body().getUpcomingCallReportModel().getCallInfoModel().getLogisticsInstallmentsModel().getBp_installmentTot();
+                        tvTotalPOI.setText(response.body().getUpcomingCallReportModel().getCallInfoModel().getLogisticsInstallmentsModel().getBp_installmentTot());
+                        tvTotalRPOI.setText(response.body().getUpcomingCallReportModel().getCallInfoModel().getLogisticsInstallmentsModel().getBp_installmentrTot());
+                        tvInstallmentTotalamt.setText(response.body().getUpcomingCallReportModel().getCallInfoModel().getLogisticsInstallmentsModel().getBp_installmentTot() + "/- escalate payment on Installment.");
+                        installmentAdapter.installamentModels = response.body().getUpcomingCallReportModel().getCallInfoModel().getLogisticsInstallmentsModel().getInstallamentModels();
+                        installmentAdapter.notifyDataSetChanged();
+
+                        // ********** Installament End ********** //
+
+                        // ********** Escalate ********** //
+
+                        if (response.body().getUpcomingCallReportModel().getCallInfoModel().getLogistics_esc_installment().trim().equals("0")) {
+                            tvInstallmentEscalate.setVisibility(View.VISIBLE);
+                            cvInstallament.setVisibility(View.VISIBLE);
+                        } else {
+                            tvInstallmentEscalate.setVisibility(View.GONE);
+                            cvInstallament.setVisibility(View.GONE);
+
+                        }
+
+                        // ********** Escalate End ********** //
+
+
+
 
 
                     }
@@ -571,6 +670,20 @@ public class UpcomingCallReport extends AppCompatActivity {
             }
         });
 
+        //******** Installament Recycleview ******************//
+        installmentAdapter = new InstallmentAdapter(this, installamentModels, new InstallmentAdapter.GetInstallament() {
+            @Override
+            public void getData(InstallamentModel installamentModel) {
+
+                strInstallament.add(installamentModel.getAmtIns());
+
+            }
+        });
+        LinearLayoutManager installmentlayout = new LinearLayoutManager(this);
+        installmentlayout.setOrientation(RecyclerView.VERTICAL);
+        rvInstallment.setLayoutManager(installmentlayout);
+        rvInstallment.setAdapter(installmentAdapter);
+        //******** Installament Recycleview End ******************//
 
         //******** Spare Counsumed Recycleview ******************//
         sparesConsumedAdapter = new SparesConsumedAdapter(this, sparesConsumedRecordModels);
@@ -589,8 +702,8 @@ public class UpcomingCallReport extends AppCompatActivity {
         //******** Spare Request Recycleview End ******************//
 
         //******** Spare Inward Recycleview ******************//
-        spareInwardListAdapter=new SpareInwardListAdapter(this,spareInwardRecordModels);
-        LinearLayoutManager spareInward=new LinearLayoutManager(this);
+        spareInwardListAdapter = new SpareInwardListAdapter(this, spareInwardRecordModels);
+        LinearLayoutManager spareInward = new LinearLayoutManager(this);
         spareInward.setOrientation(RecyclerView.VERTICAL);
         rvSpareInward.setLayoutManager(spareInward);
         rvSpareInward.setAdapter(spareInwardListAdapter);
@@ -663,11 +776,12 @@ public class UpcomingCallReport extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 CallTypePayoptionsID = callTypeModels.get(position).getId();
 
-                TypeValid= Integer.parseInt(callTypeModels.get(position).getId());
+                TypeValid = Integer.parseInt(callTypeModels.get(position).getId());
 
 
                 if (callTypeModels.get(position).getText().trim().equals("Paid")) {
                     tvCusInvoice.setVisibility(View.VISIBLE);
+                    cvInstallation.setVisibility(View.GONE);
                     cvInstallation.setVisibility(View.GONE);
                     tvInstallationImage1.setVisibility(View.GONE);
                     tvInstallationImage2.setVisibility(View.GONE);
@@ -686,6 +800,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                 } else {
                     tvCusInvoice.setVisibility(View.GONE);
                     cvInstallation.setVisibility(View.GONE);
+                    cvInstallament.setVisibility(View.GONE);
                     tvInstallationImage1.setVisibility(View.GONE);
                     tvInstallationImage2.setVisibility(View.GONE);
                     tvInstallationImage3.setVisibility(View.GONE);
@@ -693,6 +808,23 @@ public class UpcomingCallReport extends AppCompatActivity {
                     tvInstallReportAttach.setVisibility(View.GONE);
                 }
 
+
+                if (callTypeModels.get(position).getText().trim().equals("Supply")) {
+                    tvWayBill.setVisibility(View.VISIBLE);
+                    tvLR.setVisibility(View.VISIBLE);
+                    cvSupply.setVisibility(View.VISIBLE);
+
+                } else {
+                    cvSupply.setVisibility(View.GONE);
+                    tvLR.setVisibility(View.GONE);
+                    tvWayBill.setVisibility(View.GONE);
+                }
+
+                if (callTypeModels.get(position).getText().trim().equals("Installation") && installmentVisble > 0) {
+                    cvInstallament.setVisibility(View.VISIBLE);
+                }else {
+                    cvInstallament.setVisibility(View.GONE);
+                }
 
             }
 
@@ -716,19 +848,23 @@ public class UpcomingCallReport extends AppCompatActivity {
                     tvPendingReason.setVisibility(View.VISIBLE);
                     tvFollowUpDate.setVisibility(View.VISIBLE);
                     tvserviceReportAttach.setVisibility(View.VISIBLE);
-
-
                     tvReason.setVisibility(View.GONE);
                     cvInstallation.setVisibility(View.GONE);
+                    cvInstallament.setVisibility(View.GONE);
                     tvInstallationImage1.setVisibility(View.GONE);
                     tvInstallationImage2.setVisibility(View.GONE);
                     tvInstallationImage3.setVisibility(View.GONE);
                     tvWarrentycard.setVisibility(View.GONE);
                     tvInstallReportAttach.setVisibility(View.GONE);
 
+                    cvSupply.setVisibility(View.GONE);
+                    tvLR.setVisibility(View.GONE);
+                    tvWayBill.setVisibility(View.GONE);
+
                 } else {
                     tvPendingReason.setVisibility(View.GONE);
                     tvFollowUpDate.setVisibility(View.GONE);
+
                 }
 
 
@@ -736,6 +872,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                     tvserviceReportAttach.setVisibility(View.VISIBLE);
 
                     cvInstallation.setVisibility(View.GONE);
+                    cvInstallament.setVisibility(View.GONE);
                     tvReason.setVisibility(View.GONE);
                     tvInstallationImage1.setVisibility(View.GONE);
                     tvInstallationImage2.setVisibility(View.GONE);
@@ -759,15 +896,26 @@ public class UpcomingCallReport extends AppCompatActivity {
                     rlDCConsumerSpareFile.setVisibility(View.VISIBLE);
                     rlRevPaymentPending.setVisibility(View.VISIBLE);
 
-                } else if (callStatusModels.get(position).getText().trim().equals("Closed")) {
+                }  else if (callStatusModels.get(position).getText().trim().equals("Closed")) {
                     rlRevPaymentPending.setVisibility(View.VISIBLE);
                     rlDCConsumerSpareFile.setVisibility(View.VISIBLE);
 
                 } else {
-
                     cvInstallation.setVisibility(View.GONE);
+                    cvInstallament.setVisibility(View.GONE);
                     rlRevPaymentPending.setVisibility(View.GONE);
                     rlDCConsumerSpareFile.setVisibility(View.GONE);
+                }
+
+
+                if (spCallType.getSelectedItem().equals("Supply") && spCallStatus.getSelectedItem().equals("Closed")) {
+                    tvWayBill.setVisibility(View.VISIBLE);
+                    tvLR.setVisibility(View.VISIBLE);
+                    cvSupply.setVisibility(View.VISIBLE);
+                } else {
+                    cvSupply.setVisibility(View.GONE);
+                    tvLR.setVisibility(View.GONE);
+                    tvWayBill.setVisibility(View.GONE);
                 }
 
                 if (tvSpareConsumedCount.getText().toString().trim().equals("0") && callStatusModels.get(position).getText().trim().equals("Closed")) {
@@ -775,6 +923,12 @@ public class UpcomingCallReport extends AppCompatActivity {
                     rlDCConsumerSpareFile.setVisibility(View.GONE);
 
                 }
+
+                 if (spCallType.getSelectedItem().equals("Installation") &&  callStatusModels.get(position).getText().trim().equals("Closed") && installmentVisble > 0) {
+                    cvInstallament.setVisibility(View.VISIBLE);
+                }else {
+                     cvInstallament.setVisibility(View.GONE);
+                 }
 
 
             }
@@ -793,7 +947,7 @@ public class UpcomingCallReport extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                SubComplaintCatID=callReportComplaintSubCategoryModels.get(position).getId();
+                SubComplaintCatID = callReportComplaintSubCategoryModels.get(position).getId();
 
                 if (callReportComplaintSubCategoryModels.get(position).getText().trim().equals("Others")) {
                     tvTypeComplaintCat.setVisibility(View.VISIBLE);
@@ -819,7 +973,7 @@ public class UpcomingCallReport extends AppCompatActivity {
         cbAttach.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                cbSetID=cbAttach.isChecked() ? 1 :0 ;
+                cbSetID = cbAttach.isChecked() ? 1 : 0;
                 if (isChecked) {
                     if (spCallType.getSelectedItem().equals("Installation") && spCallStatus.getSelectedItem().equals("Closed")) {
                         tvInstallationImage1.setVisibility(View.VISIBLE);
@@ -993,6 +1147,32 @@ public class UpcomingCallReport extends AppCompatActivity {
                     Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                     intent.setType("*/*");
                     startActivityForResult(intent, 11);
+                } catch (Exception e) {
+
+                }
+            }
+        });
+
+        tvWayBill.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                    intent.setType("*/*");
+                    startActivityForResult(intent, 12);
+                } catch (Exception e) {
+
+                }
+            }
+        });
+
+        tvLR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                    intent.setType("*/*");
+                    startActivityForResult(intent, 13);
                 } catch (Exception e) {
 
                 }
@@ -1173,6 +1353,114 @@ public class UpcomingCallReport extends AppCompatActivity {
             }
         });
 
+
+        tvSupplyEscalate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(UpcomingCallReport.this, R.style.AlertDialogCustom);
+                builder.setMessage("Are you sure you want to escalate?");
+                builder.setTitle("Escalate ");
+                builder.setCancelable(false);
+                builder.setPositiveButton("yes", (new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        final ProgressDialog progressDialog = new ProgressDialog(UpcomingCallReport.this, R.style.ProgressBarDialog);
+                        progressDialog.setMessage("Please Wait...");
+                        progressDialog.setCancelable(false);
+                        progressDialog.show();
+                        SupplyEscalatedSubmitedInterface supplyEscalatedSubmitedInterface = APIClient.getClient().create(SupplyEscalatedSubmitedInterface.class);
+                        supplyEscalatedSubmitedInterface.CallSubmit("onSupplyCallEscalate", PreferenceManager.getEmpID(UpcomingCallReport.this), LogsitId, tvPaymentafterDispatch.getText().toString(), tvRecvPaymentDispatch.getText().toString()).enqueue(new Callback<SupplyEscalatedSubmitedResponse>() {
+                            @Override
+                            public void onResponse(Call<SupplyEscalatedSubmitedResponse> call, Response<SupplyEscalatedSubmitedResponse> response) {
+                                try {
+                                    if (response.isSuccessful()) {
+                                        dialogInterface.dismiss();
+                                        progressDialog.dismiss();
+                                        Toast.makeText(UpcomingCallReport.this, response.body().getResponse(), Toast.LENGTH_SHORT).show();
+                                        tvSupplyEscalate.setVisibility(View.GONE);
+                                        tvSupplyEscalateDetails.setVisibility(View.VISIBLE);
+                                    }
+
+                                } catch (Exception e) {
+
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<SupplyEscalatedSubmitedResponse> call, Throwable t) {
+                                progressDialog.dismiss();
+
+                            }
+                        });
+
+
+                    }
+                }));
+                builder.setNegativeButton("No", (new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                }));
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+
+            }
+        });
+
+        tvInstallmentEscalate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(UpcomingCallReport.this, R.style.AlertDialogCustom);
+                builder.setMessage("Are you sure you want to escalate?");
+                builder.setTitle("Escalate ");
+                builder.setCancelable(false);
+                builder.setPositiveButton("yes", (new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        final ProgressDialog progressDialog = new ProgressDialog(UpcomingCallReport.this, R.style.ProgressBarDialog);
+                        progressDialog.setMessage("Please Wait...");
+                        progressDialog.setCancelable(false);
+                        progressDialog.show();
+                        InstallamentEscalatedSubmitInterface installamentEscalatedSubmitInterface=APIClient.getClient().create(InstallamentEscalatedSubmitInterface.class);
+                        installamentEscalatedSubmitInterface.CallSubmit("onInstallmentEscalate",PreferenceManager.getEmpID(UpcomingCallReport.this),LogsitId,bp_installmentTot,bp_installmentrTot,tm,strInstallament).enqueue(new Callback<InstallamentEscalatedSubmitResponse>() {
+                            @Override
+                            public void onResponse(Call<InstallamentEscalatedSubmitResponse> call, Response<InstallamentEscalatedSubmitResponse> response) {
+                                try {
+                                    if (response.isSuccessful()){
+                                        progressDialog.dismiss();
+                                        dialogInterface.dismiss();
+                                        Toast.makeText(UpcomingCallReport.this, response.body().getResponse(), Toast.LENGTH_SHORT).show();
+                                        tvInstallmentEscalate.setVisibility(View.GONE);
+                                        cvInstallament.setVisibility(View.GONE);
+                                    }
+                                }catch (Exception e){
+
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<InstallamentEscalatedSubmitResponse> call, Throwable t) {
+                                progressDialog.dismiss();
+
+                            }
+                        });
+
+                    }
+                }));
+                builder.setNegativeButton("No", (new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                }));
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            }
+        });
+
+
         //  ************** Do you really want to close the call without getting payment ************** //
 
         rbGrp2.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -1180,13 +1468,13 @@ public class UpcomingCallReport extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 View view = rbGrp2.findViewById(checkedId);
                 int rb = rbGrp2.indexOfChild(view);
-                switch ((rb)){
+                switch ((rb)) {
                     case 0:
-                        rbClosePayID=1;
+                        rbClosePayID = 1;
                         break;
 
                     case 1:
-                        rbClosePayID=0;
+                        rbClosePayID = 0;
                         break;
                 }
             }
@@ -1205,7 +1493,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                 int rb = rbGrp.indexOfChild(view);
                 switch (rb) {
                     case 0:
-                        rbconsumerSpareID=1;
+                        rbconsumerSpareID = 1;
                         Dialog dialog = new Dialog(UpcomingCallReport.this);
                         dialog.setContentView(R.layout.consumer_spare_yes_dialog_recycleview);
                         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -1385,7 +1673,7 @@ public class UpcomingCallReport extends AppCompatActivity {
 
                         break;
                     case 1:
-                        rbconsumerSpareID=0;
+                        rbconsumerSpareID = 0;
                         break;
                 }
             }
@@ -1404,12 +1692,12 @@ public class UpcomingCallReport extends AppCompatActivity {
                 int rb1 = rbGrp1.indexOfChild(view);
                 switch (rb1) {
                     case 0:
-                        rbRecPendingID=1;
+                        rbRecPendingID = 1;
                         rlYesRevPayment.setVisibility(View.VISIBLE);
                         rlNoRevPayment.setVisibility(View.GONE);
                         break;
                     case 1:
-                        rbRecPendingID=0;
+                        rbRecPendingID = 0;
                         rlYesRevPayment.setVisibility(View.GONE);
                         rlNoRevPayment.setVisibility(View.VISIBLE);
                         break;
@@ -1474,85 +1762,84 @@ public class UpcomingCallReport extends AppCompatActivity {
                         tvFollowUpDate.setError("Please provide a follow-up date.");
                         tvFollowUpDate.requestFocus();
                         isfilled = false;
-                    } else if ( tvStartingTime.getText().toString().trim().length() == 0) {
+                    } else if (tvStartingTime.getText().toString().trim().length() == 0) {
                         tvStartingTime.setError("Please select a start time.");
                         tvStartingTime.requestFocus();
                         isfilled = false;
-                    }else if ( tvEndTime.getText().toString().trim().length() == 0) {
+                    } else if (tvEndTime.getText().toString().trim().length() == 0) {
                         tvEndTime.setError("Please select an end time.");
                         tvEndTime.requestFocus();
                         isfilled = false;
-                    }else if (edName.getText().toString().trim().length() == 0) {
+                    } else if (edName.getText().toString().trim().length() == 0) {
                         edName.setError("Please enter the contact person's name.");
                         edName.requestFocus();
                         isfilled = false;
-                    }else if ( edMobile.getText().toString().trim().length() == 0) {
+                    } else if (edMobile.getText().toString().trim().length() == 0) {
                         edMobile.setError("Please enter the mobile phone number of the contact person");
                         edMobile.requestFocus();
                         isfilled = false;
-                    }else if ( edWorkdone.getText().toString().trim().length() == 0) {
+                    } else if (edWorkdone.getText().toString().trim().length() == 0) {
                         edWorkdone.setError("Please enter your work.");
                         edWorkdone.requestFocus();
                         isfilled = false;
-                    }else if ( edEngineerAdvice.getText().toString().trim().length() == 0) {
+                    } else if (edEngineerAdvice.getText().toString().trim().length() == 0) {
                         edEngineerAdvice.setError("Please enter the  Engineer Advice");
                         edEngineerAdvice.requestFocus();
                         isfilled = false;
-                    }else if (spCallStatus.getSelectedItem().equals("Closed") && rbGrp1.getCheckedRadioButtonId()==-1) {
+                    } else if (spCallStatus.getSelectedItem().equals("Closed") && rbGrp1.getCheckedRadioButtonId() == -1) {
                         Toast.makeText(UpcomingCallReport.this, "Please select a Received pending service payment", Toast.LENGTH_SHORT).show();
                         isfilled = false;
-                    }else if ( edSaleORserviceAmt.getText().toString().trim().length() == 0) {
+                    } else if (edSaleORserviceAmt.getText().toString().trim().length() == 0) {
                         edSaleORserviceAmt.setError("Please Enter the Amount");
                         edSaleORserviceAmt.requestFocus();
                         isfilled = false;
-                    }else if ( edSpareAmt.getText().toString().trim().length() == 0) {
+                    } else if (edSpareAmt.getText().toString().trim().length() == 0) {
                         edSpareAmt.setError("Please Enter the Spare Amount");
                         edSpareAmt.requestFocus();
                         isfilled = false;
-                    }else if (rbPOaymentNo.isChecked() && rbGrp2.getCheckedRadioButtonId() == -1  ) {
+                    } else if (rbPOaymentNo.isChecked() && rbGrp2.getCheckedRadioButtonId() == -1) {
                         Toast.makeText(UpcomingCallReport.this, "Please select close the call without getting payment", Toast.LENGTH_SHORT).show();
                         rbGrp2.requestFocus();
                         isfilled = false;
-                    }else if ( rbPaymentYes .isChecked() && edCheckUTRno.getText().toString().trim().length()==0 && tvDepositedDate.getText().toString().trim().length()==0) {
+                    } else if (rbPaymentYes.isChecked() && edCheckUTRno.getText().toString().trim().length() == 0 && tvDepositedDate.getText().toString().trim().length() == 0) {
                         edCheckUTRno.setError("Please Enter the Cheque/UTR no");
                         edCheckUTRno.requestFocus();
                         tvDepositedDate.setError("Please Select a Deposite Date");
                         tvDepositedDate.requestFocus();
                         isfilled = false;
-                    }else if (TypeValid != 6  &&  cbAttach.isChecked()==true  && tvserviceReportAttach.getText().toString().trim().length()==0) {
+                    } else if (TypeValid != 6 && cbAttach.isChecked() == true && tvserviceReportAttach.getText().toString().trim().length() == 0) {
                         tvserviceReportAttach.setError("Please Attach the Report");
                         tvserviceReportAttach.requestFocus();
                         isfilled = false;
-                    }else if (spCallType.getSelectedItem().equals("Installation") && spCallStatus.getSelectedItem().equals("Pending") && cbAttach.isChecked()==true  && tvserviceReportAttach.getText().toString().trim().length()==0) {
+                    } else if (spCallType.getSelectedItem().equals("Installation") && spCallStatus.getSelectedItem().equals("Pending") && cbAttach.isChecked() == true && tvserviceReportAttach.getText().toString().trim().length() == 0) {
                         tvserviceReportAttach.setError("Please Attach the Report");
                         tvserviceReportAttach.requestFocus();
                         isfilled = false;
-                    }
-                    else if (spCallType.getSelectedItem().equals("Installation") && spCallStatus.getSelectedItem().equals("Closed") && cbAttach.isChecked()==true && tvInstallationImage1.getText().toString().trim().length()==0) {
+                    } else if (spCallType.getSelectedItem().equals("Installation") && spCallStatus.getSelectedItem().equals("Closed") && cbAttach.isChecked() == true && tvInstallationImage1.getText().toString().trim().length() == 0) {
                         tvInstallationImage1.setError("Please Attach the Installation Image 1");
                         tvInstallationImage1.requestFocus();
                         isfilled = false;
-                    }else if (spCallType.getSelectedItem().equals("Installation") && spCallStatus.getSelectedItem().equals("Closed") && cbAttach.isChecked()==true && tvInstallationImage2.getText().toString().trim().length()==0) {
+                    } else if (spCallType.getSelectedItem().equals("Installation") && spCallStatus.getSelectedItem().equals("Closed") && cbAttach.isChecked() == true && tvInstallationImage2.getText().toString().trim().length() == 0) {
                         tvInstallationImage2.setError("Please Attach the  Installation Image 2");
                         tvInstallationImage2.requestFocus();
                         isfilled = false;
-                    }else if (spCallType.getSelectedItem().equals("Installation") && spCallStatus.getSelectedItem().equals("Closed") && cbAttach.isChecked()==true && tvInstallationImage3.getText().toString().trim().length()==0) {
+                    } else if (spCallType.getSelectedItem().equals("Installation") && spCallStatus.getSelectedItem().equals("Closed") && cbAttach.isChecked() == true && tvInstallationImage3.getText().toString().trim().length() == 0) {
                         tvInstallationImage3.setError("Please Attach the Installation Image 2");
                         tvInstallationImage3.requestFocus();
                         isfilled = false;
-                    }else if (spCallType.getSelectedItem().equals("Installation") && spCallStatus.getSelectedItem().equals("Closed") && cbAttach.isChecked()==true && tvWarrentycard.getText().toString().trim().length()==0) {
+                    } else if (spCallType.getSelectedItem().equals("Installation") && spCallStatus.getSelectedItem().equals("Closed") && cbAttach.isChecked() == true && tvWarrentycard.getText().toString().trim().length() == 0) {
                         tvWarrentycard.setError("Please Attach the Warranty Card ");
                         tvWarrentycard.requestFocus();
                         isfilled = false;
-                    }else if (spCallType.getSelectedItem().equals("Installation") && spCallStatus.getSelectedItem().equals("Closed") && cbAttach.isChecked()==true && tvInstallReportAttach.getText().toString().trim().length()==0) {
+                    } else if (spCallType.getSelectedItem().equals("Installation") && spCallStatus.getSelectedItem().equals("Closed") && cbAttach.isChecked() == true && tvInstallReportAttach.getText().toString().trim().length() == 0) {
                         tvInstallationImage1.setError("Please Attach the Install Report");
                         tvInstallationImage1.requestFocus();
                         isfilled = false;
-                    }else if ( cbAttach.isChecked()==false && edReason.getText().toString().trim().length()==0) {
+                    } else if (cbAttach.isChecked() == false && edReason.getText().toString().trim().length() == 0) {
                         edReason.setError("Please Enter the Reason");
                         edReason.requestFocus();
                         isfilled = false;
-                    } else if ( ratingBar.getRating()==0) {
+                    } else if (ratingBar.getRating() == 0) {
                         Toast.makeText(UpcomingCallReport.this, "Please Select a Customer Review", Toast.LENGTH_SHORT).show();
                         isfilled = false;
                     } else {
@@ -1576,9 +1863,12 @@ public class UpcomingCallReport extends AppCompatActivity {
 //
 //                } else if (fileinvoice != null) {
 //                    callcusInvoice();
-//                } else if (fileservice != null) {
-//                    callServicefile();
-//                } else {
+//                } else if (fileLR != null) {
+//                    callFileLR();
+//                }
+//                else if (fileWaybill != null) {
+//                   CallFileWayBill();
+//                }else {
 //                    Toast.makeText(UpcomingCallReport.this, "Plesae Select image", Toast.LENGTH_SHORT).show();
 //                }
 
@@ -1587,12 +1877,44 @@ public class UpcomingCallReport extends AppCompatActivity {
 
     }
 
+    private void CallFileWayBill() {
+        //#API: callClose.php?action=uploadWayBill&call_status=1&pay_option=8&callassignid=&empid=&fileName=file_inwb
+
+
+        RequestBody action = RequestBody.create(MediaType.parse("text/plain"), "uploadWayBill");
+        RequestBody call_status = RequestBody.create(MediaType.parse("text/plain"), CallStatusID);
+        RequestBody pay_option = RequestBody.create(MediaType.parse("text/plain"), CallTypePayoptionsID);
+        RequestBody callassignid = RequestBody.create(MediaType.parse("text/plain"), CallAssignId);
+        RequestBody empid = RequestBody.create(MediaType.parse("text/plain"), PreferenceManager.getEmpID(this));
+        RequestBody wb = RequestBody.create(MediaType.parse("multipart/form-data"), fileWaybill);
+        MultipartBody.Part filewb = MultipartBody.Part.createFormData("file_inwb", fileWaybill.getName(), wb);
+        CallReportSubmitInterface callReportSubmitInterface = APIClient.getClient().create(CallReportSubmitInterface.class);
+        callReportSubmitInterface.CallWaybill(action, call_status, pay_option, callassignid, empid, filewb).enqueue(new Callback<CallReportSubmitResponse>() {
+            @Override
+            public void onResponse(Call<CallReportSubmitResponse> call, Response<CallReportSubmitResponse> response) {
+                try {
+                    if (response.isSuccessful()) {
+
+                    }
+
+                } catch (Exception e) {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CallReportSubmitResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
     private void CallReportSubmit() {
-        CallReportingUpComingSubmitInterface callReportingUpComingSubmitInterface=APIClient.getClient().create(CallReportingUpComingSubmitInterface.class);
-        callReportingUpComingSubmitInterface.callReportSubmit("callClose",LogsitId,CallTypePayoptionsID,ComplaintID,SubComplaintCatID,edTypeComplaintCat.getText().toString(),edTypeSubComplaintCat.getText().toString(),"","","Not Detect",CallAssignId,CallRegID,CallAssignId,pdtidd,hpidd,chk1,
-                CallStatusID,"","",tvInstallDate.getText().toString(),bp_install,bp_installr,"","","", String.valueOf(rbconsumerSpareID),Spc,tvFollowUpDate.getText().toString(),
-                tvStartingTime.getText().toString(),tvEndTime.getText().toString(),edPendingReason.getText().toString(),edName.getText().toString(),edMobile.getText().toString(), String.valueOf(rbRecPendingID),tvDepositedDate.getText().toString(),edCheckUTRno.getText().toString(), String.valueOf(rbClosePayID),edSaleORserviceAmt.getText().toString(),edSpareAmt.getText().toString(),edWorkdone.getText().toString(),edEngineerAdvice.getText().toString(), String.valueOf(ratingBar.getRating()), String.valueOf(cbSetID),edReason.getText().toString(),"",
-                "","","").enqueue(new Callback<CallReportingUpComingSubmitResponse>() {
+        CallReportingUpComingSubmitInterface callReportingUpComingSubmitInterface = APIClient.getClient().create(CallReportingUpComingSubmitInterface.class);
+        callReportingUpComingSubmitInterface.callReportSubmit("callClose", LogsitId, CallTypePayoptionsID, ComplaintID, SubComplaintCatID, edTypeComplaintCat.getText().toString(), edTypeSubComplaintCat.getText().toString(), "", "", "Not Detect", CallAssignId, CallRegID, CallAssignId, pdtidd, hpidd, chk1,
+                CallStatusID, "", "", tvInstallDate.getText().toString(), bp_install, bp_installr, "", "", "", String.valueOf(rbconsumerSpareID), Spc, tvFollowUpDate.getText().toString(),
+                tvStartingTime.getText().toString(), tvEndTime.getText().toString(), edPendingReason.getText().toString(), edName.getText().toString(), edMobile.getText().toString(), String.valueOf(rbRecPendingID), tvDepositedDate.getText().toString(), edCheckUTRno.getText().toString(), String.valueOf(rbClosePayID), edSaleORserviceAmt.getText().toString(), edSpareAmt.getText().toString(), edWorkdone.getText().toString(), edEngineerAdvice.getText().toString(), String.valueOf(ratingBar.getRating()), String.valueOf(cbSetID), edReason.getText().toString(), "",
+                "", "", "").enqueue(new Callback<CallReportingUpComingSubmitResponse>() {
             @Override
             public void onResponse(Call<CallReportingUpComingSubmitResponse> call, Response<CallReportingUpComingSubmitResponse> response) {
 
@@ -1672,16 +1994,16 @@ public class UpcomingCallReport extends AppCompatActivity {
         });
     }
 
-    private void callServicefile() {
+    private void callFileLR() {
         RequestBody action = RequestBody.create(MediaType.parse("text/plain"), "uploadLR");
         RequestBody call_status = RequestBody.create(MediaType.parse("text/plain"), CallStatusID);
         RequestBody pay_option = RequestBody.create(MediaType.parse("text/plain"), CallTypePayoptionsID);
         RequestBody callassignid = RequestBody.create(MediaType.parse("text/plain"), CallAssignId);
         RequestBody empid = RequestBody.create(MediaType.parse("text/plain"), PreferenceManager.getEmpID(this));
-        RequestBody attachReport = RequestBody.create(MediaType.parse("multipart/form-data"), fileservice);
-        MultipartBody.Part FileService = MultipartBody.Part.createFormData("file_inlr", fileservice.getName(), attachReport);
+        RequestBody lr = RequestBody.create(MediaType.parse("multipart/form-data"), fileLR);
+        MultipartBody.Part fileLr = MultipartBody.Part.createFormData("file_inlr", fileLR.getName(), lr);
         CallReportSubmitInterface callReportSubmitInterface = APIClient.getClient().create(CallReportSubmitInterface.class);
-        callReportSubmitInterface.CallReportFile(action, call_status, pay_option, callassignid, empid, FileService).enqueue(new Callback<CallReportServiceSubmitResponse>() {
+        callReportSubmitInterface.CallReportFile(action, call_status, pay_option, callassignid, empid, fileLr).enqueue(new Callback<CallReportServiceSubmitResponse>() {
             @Override
             public void onResponse(Call<CallReportServiceSubmitResponse> call, Response<CallReportServiceSubmitResponse> response) {
 
@@ -2460,6 +2782,108 @@ public class UpcomingCallReport extends AppCompatActivity {
                         } else {
                             tvCusPOFileInvoiceAttch.setError("Sorry, your file is too large. Upload files up to 5 MB in size below.");
                             tvCusPOFileInvoiceAttch.requestFocus();
+                        }
+
+                    } catch (Exception e) {
+
+                    }
+
+
+                }
+                break;
+
+            case 12:
+                if (resultCode == RESULT_OK) {
+                    Uri contentUri = data.getData();
+                    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+                    strWayBill = timeStamp + "." + getFileExt(contentUri);
+                    Toast.makeText(this, "File Name" + strWayBill, Toast.LENGTH_SHORT).show();
+
+                    try {
+                        fileWaybill = FileUtli.from(this, contentUri);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    long mb = fileWaybill.length();
+                    mb = mb / 1024;
+
+                    try {
+                        if (5120 > mb) {
+                            tvWayBill.setError(null);
+                            String myStr = strWayBill;
+                            int index = myStr.lastIndexOf(".");
+                            String extension = myStr.substring(index);
+                            if (extension.equals(".pdf")) {
+                                tvWayBill.setText(strWayBill);
+                            } else if (extension.equals(".jpg")) {
+                                tvWayBill.setText(strWayBill);
+                            } else if (extension.equals(".png")) {
+                                tvWayBill.setText(strWayBill);
+                            } else if (extension.equals(".jpeg")) {
+                                tvWayBill.setText(strWayBill);
+                            } else {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialogCustom);
+                                builder.setMessage("Please Select Pdf and Image File Only ..");
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
+                            }
+
+
+                        } else {
+                            tvWayBill.setError("Sorry, your file is too large. Upload files up to 5 MB in size below.");
+                            tvWayBill.requestFocus();
+                        }
+
+                    } catch (Exception e) {
+
+                    }
+
+
+                }
+                break;
+
+            case 13:
+                if (resultCode == RESULT_OK) {
+                    Uri contentUri = data.getData();
+                    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+                    strLR = timeStamp + "." + getFileExt(contentUri);
+                    Toast.makeText(this, "File Name" + strLR, Toast.LENGTH_SHORT).show();
+
+                    try {
+                        fileLR = FileUtli.from(this, contentUri);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    long mb = fileLR.length();
+                    mb = mb / 1024;
+
+                    try {
+                        if (5120 > mb) {
+                            tvLR.setError(null);
+                            String myStr = strLR;
+                            int index = myStr.lastIndexOf(".");
+                            String extension = myStr.substring(index);
+                            if (extension.equals(".pdf")) {
+                                tvLR.setText(strLR);
+                            } else if (extension.equals(".jpg")) {
+                                tvLR.setText(strLR);
+                            } else if (extension.equals(".png")) {
+                                tvLR.setText(strLR);
+                            } else if (extension.equals(".jpeg")) {
+                                tvLR.setText(strLR);
+                            } else {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialogCustom);
+                                builder.setMessage("Please Select Pdf and Image File Only ..");
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
+                            }
+
+
+                        } else {
+                            tvLR.setError("Sorry, your file is too large. Upload files up to 5 MB in size below.");
+                            tvLR.requestFocus();
                         }
 
                     } catch (Exception e) {

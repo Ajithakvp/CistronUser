@@ -22,6 +22,11 @@ public class UpcomingCallReportModel {
     //    "seriesid1": "1",
     //    "seriesid2": "",
 
+    //"logistics_noofins": "10",
+    //      "logistics_installments": {
+
+    @SerializedName("id")
+    private String id;
 
     @SerializedName("compliantRequired")
     private String compliantRequired;
@@ -62,9 +67,14 @@ public class UpcomingCallReportModel {
     @SerializedName("sparesInward")
     private SpareInwardModel spareInwardModel;
 
-    @SerializedName("id")
-    private String id;
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getCompliantRequired() {
         return compliantRequired;
@@ -168,13 +178,5 @@ public class UpcomingCallReportModel {
 
     public void setSpareInwardModel(SpareInwardModel spareInwardModel) {
         this.spareInwardModel = spareInwardModel;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 }

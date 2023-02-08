@@ -438,7 +438,7 @@
                     </androidx.cardview.widget.CardView>
 
 
-<!--                    Supply-->
+                    <!--                    Supply-->
 
 
                     <androidx.cardview.widget.CardView
@@ -456,9 +456,6 @@
                             android:layout_height="wrap_content"
                             android:background="@color/whiteLite4">
 
-
-
-
                             <TextView
                                 android:id="@+id/tvPaymentDispatchTag"
                                 android:layout_width="wrap_content"
@@ -466,12 +463,12 @@
                                 android:layout_marginLeft="10dp"
                                 android:layout_marginTop="10dp"
                                 android:fontFamily="@font/openssansbold"
-                                android:text="Payment on Dispatch : "
+                                android:text="Payment after Dispatch : "
                                 android:textColor="@color/RoseRed"
                                 android:textSize="18dp" />
 
                             <TextView
-                                android:id="@+id/tvPaymentDispatch"
+                                android:id="@+id/tvPaymentafterDispatch"
                                 android:layout_width="match_parent"
                                 android:layout_height="60dp"
                                 android:layout_below="@+id/tvPaymentDispatchTag"
@@ -482,7 +479,7 @@
                                 android:backgroundTint="@color/whiteLite2"
                                 android:fontFamily="@font/semibold"
                                 android:gravity="center"
-                                android:hint="Payment on Installation Amount"
+                                android:hint="Payment after Dispatch"
                                 android:paddingLeft="10dp"
                                 android:textColor="@color/black"
                                 android:textSize="18dp"
@@ -493,11 +490,11 @@
                                 android:id="@+id/tvRecvPaymentDispatchTag"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@+id/tvPaymentDispatch"
+                                android:layout_below="@+id/tvPaymentafterDispatch"
                                 android:layout_marginLeft="10dp"
                                 android:layout_marginTop="10dp"
                                 android:fontFamily="@font/openssansbold"
-                                android:text="Received Payment on Dispatch : "
+                                android:text="Received Payment after Dispatch : "
                                 android:textColor="@color/RoseRed"
                                 android:textSize="18dp" />
 
@@ -513,7 +510,7 @@
                                 android:backgroundTint="@color/whiteLite2"
                                 android:fontFamily="@font/semibold"
                                 android:gravity="center"
-                                android:hint="Received Payment on installation amount"
+                                android:hint="Received Payment after Dispatch"
                                 android:paddingLeft="10dp"
                                 android:textColor="@color/black"
                                 android:textSize="18dp"
@@ -527,19 +524,33 @@
                                 android:layout_below="@+id/tvRecvPaymentDispatch"
                                 android:layout_marginLeft="15dp"
                                 android:layout_marginTop="18dp"
+                                android:fontFamily="@font/openssansbold"
+                                android:text="Rs.68440/- escalate payment after dispatch."
+                                android:textColor="@color/blue"
+                                android:textSize="13dp" />
+
+                            <TextView
+                                android:id="@+id/tvSupplyEscalateDetails"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/tvSupplyTotalamt"
+                                android:layout_marginLeft="15dp"
+                                android:layout_marginTop="18dp"
                                 android:layout_marginBottom="20dp"
                                 android:fontFamily="@font/openssansbold"
-                                android:text="Rs.68440/- escalate payment on installation."
+                                android:text="Escalated and waiting for approval."
                                 android:textColor="@color/blue"
-                                android:textSize="14dp" />
+                                android:textSize="13dp"
+                                android:visibility="visible" />
 
 
                             <TextView
                                 android:id="@+id/tvSupplyEscalate"
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
-                                android:layout_below="@+id/tvSupplyTotalamt"
+                                android:layout_below="@+id/tvSupplyEscalateDetails"
                                 android:layout_marginLeft="70dp"
+                                android:layout_marginTop="20dp"
                                 android:layout_marginRight="70dp"
                                 android:layout_marginBottom="10dp"
                                 android:background="@drawable/edittext"
@@ -557,6 +568,234 @@
                     </androidx.cardview.widget.CardView>
 
 
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cvInstallament"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="18dp"
+                        android:layout_marginRight="8dp"
+                        android:visibility="visible"
+                        app:cardCornerRadius="10dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:background="#DCDCDC"
+                            android:layout_height="wrap_content">
+
+
+                            <LinearLayout
+                                android:id="@+id/llInstallment"
+                                android:weightSum="3"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+
+                                <TextView
+                                    android:layout_width="50dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginTop="10dp"
+                                    android:fontFamily="@font/openssansbold"
+                                    android:text="S.NO"
+                                    android:textColor="@color/RoseRed"
+                                    android:textSize="13dp" />
+
+                                <TextView
+                                    android:layout_width="180dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/openssansbold"
+                                    android:text="Payment on installment \n (as per OA terms)"
+                                    android:textColor="@color/RoseRed"
+                                    android:textSize="13dp" />
+
+                                <TextView
+                                    android:layout_width="120dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_weight="2"
+                                    android:layout_marginRight="4dp"
+                                    android:fontFamily="@font/openssansbold"
+                                    android:minWidth="100dp"
+                                    android:text="Received Payment on Installment"
+                                    android:textColor="@color/RoseRed"
+                                    android:textSize="13dp" />
+
+                            </LinearLayout>
+
+
+                            <View
+                                android:id="@+id/viewll"
+                                android:layout_width="match_parent"
+                                android:layout_height="0.9dp"
+                                android:layout_marginTop="6dp"
+                                android:background="@color/Burgundy"
+                                android:layout_marginBottom="10dp"
+                                android:layout_below="@+id/llInstallment" />
+
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/rvInstallment"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginBottom="8dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/viewll" />
+
+
+                            <LinearLayout
+                                android:id="@+id/llTotalTag"
+                                android:weightSum="3"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/rvInstallment"
+                                android:orientation="horizontal">
+
+
+                                <TextView
+                                    android:layout_width="50dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginTop="10dp"
+                                    android:fontFamily="@font/openssansbold"
+                                    android:textColor="@color/RoseRed"
+                                    android:textSize="15dp" />
+
+                                <TextView
+                                    android:layout_width="180dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginTop="10dp"
+                                    android:fontFamily="@font/openssansbold"
+                                    android:text="Total :"
+                                    android:layout_weight="1"
+                                    android:textColor="@color/RoseRed"
+                                    android:textSize="14dp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginTop="10dp"
+                                    android:fontFamily="@font/openssansbold"
+                                    android:minWidth="100dp"
+                                    android:layout_weight="2"
+                                    android:text="Total :"
+                                    android:textColor="@color/RoseRed"
+                                    android:textSize="14dp" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/llTotal"
+                                android:weightSum="3"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/llTotalTag"
+                                android:orientation="horizontal">
+
+
+                                <TextView
+                                    android:layout_width="50dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginTop="10dp"
+                                    android:fontFamily="@font/openssansbold"
+                                    android:textColor="@color/RoseRed"
+                                    android:textSize="13dp" />
+
+                                <TextView
+                                    android:id="@+id/tvTotalPOI"
+                                    android:layout_width="180dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/edittext"
+                                    android:backgroundTint="@color/bluegray"
+                                    android:fontFamily="@font/openssansbold"
+                                    android:gravity="center"
+                                    android:minHeight="40dp"
+                                    android:text="6000"
+                                    android:textColor="@color/white"
+                                    android:textSize="13dp" />
+
+                                <TextView
+                                    android:id="@+id/tvTotalRPOI"
+                                    android:layout_width="120dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginTop="10dp"
+                                    android:background="@drawable/edittext"
+                                    android:backgroundTint="@color/bluegray"
+                                    android:fontFamily="@font/openssansbold"
+                                    android:gravity="center"
+                                    android:layout_marginRight="4dp"
+                                    android:minHeight="40dp"
+                                    android:layout_weight="2"
+                                    android:text="600000000"
+                                    android:textColor="@color/white"
+                                    android:textSize="13dp" />
+
+                            </LinearLayout>
+
+
+                            <TextView
+                                android:id="@+id/tvInstallmentTotalamt"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/llTotal"
+                                android:layout_marginLeft="15dp"
+                                android:layout_marginTop="18dp"
+                                android:layout_marginBottom="20dp"
+                                android:fontFamily="@font/openssansbold"
+                                android:text="Rs.68440/- escalate payment after dispatch."
+                                android:textColor="@color/blue"
+                                android:textSize="13dp" />
+
+                            <TextView
+                                android:id="@+id/tvInstallmentEscalateDetails"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/tvInstallmentTotalamt"
+                                android:layout_marginLeft="15dp"
+                                android:layout_marginTop="18dp"
+                                android:layout_marginBottom="20dp"
+                                android:fontFamily="@font/openssansbold"
+                                android:text="Escalated and waiting for approval."
+                                android:textColor="@color/blue"
+                                android:textSize="13dp"
+                                android:visibility="gone" />
+
+
+                            <TextView
+                                android:id="@+id/tvInstallmentEscalate"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:layout_below="@+id/tvInstallmentTotalamt"
+                                android:layout_marginLeft="70dp"
+                                android:layout_marginTop="20dp"
+                                android:layout_marginRight="70dp"
+                                android:layout_marginBottom="10dp"
+                                android:background="@drawable/edittext"
+                                android:backgroundTint="@color/Burgundy"
+                                android:fontFamily="@font/roboblod"
+                                android:gravity="center"
+                                android:text="Escalate"
+                                android:textColor="@color/white"
+                                android:textSize="17dp"
+                                android:visibility="visible" />
+
+
+                        </RelativeLayout>
+
+
+                    </androidx.cardview.widget.CardView>
 
 
                     <RelativeLayout
@@ -1112,9 +1351,7 @@
                         </RelativeLayout>
 
 
-
-
-<!--                        Spare Inward-->
+                        <!--                        Spare Inward-->
 
                         <RelativeLayout
                             android:id="@+id/rlSpareInward"
@@ -1612,6 +1849,44 @@
                             android:textColor="@color/black"
                             android:textSize="18dp"
                             android:visibility="visible" />
+
+                        <TextView
+                            android:id="@+id/tvWayBill"
+                            style="@android:style/Widget.EditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:layout_below="@id/tvserviceReportAttach"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="18dp"
+                            android:layout_marginRight="8dp"
+                            android:background="@drawable/edittext"
+                            android:backgroundTint="@color/whiteLite2"
+                            android:fontFamily="@font/semibold"
+                            android:gravity="center_vertical"
+                            android:hint=" Way Bill"
+                            android:paddingLeft="10dp"
+                            android:textColor="@color/black"
+                            android:textSize="18dp"
+                            android:visibility="gone" />
+
+                        <TextView
+                            android:id="@+id/tvLR"
+                            style="@android:style/Widget.EditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:layout_below="@id/tvWayBill"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="18dp"
+                            android:layout_marginRight="8dp"
+                            android:background="@drawable/edittext"
+                            android:backgroundTint="@color/whiteLite2"
+                            android:fontFamily="@font/semibold"
+                            android:gravity="center_vertical"
+                            android:hint=" LR "
+                            android:paddingLeft="10dp"
+                            android:textColor="@color/black"
+                            android:textSize="18dp"
+                            android:visibility="gone" />
 
 
                         <TextView
