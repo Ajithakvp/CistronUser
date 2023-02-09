@@ -1,5 +1,6 @@
 package com.example.cistronuser.API.Interface;
 
+import com.example.cistronuser.API.Response.CallReportAttachServiceResponse;
 import com.example.cistronuser.API.Response.CallReportServiceSubmitResponse;
 import com.example.cistronuser.API.Response.CallReportSpareConsumedSubmitResponse;
 import com.example.cistronuser.API.Response.CallReportSubmitCusPoRespones;
@@ -94,5 +95,11 @@ public interface CallReportSubmitInterface {
                                                          @Part("empid") RequestBody empid, @Part MultipartBody.Part file_inlr);
 
 
+    // callClose.php?action=uploadServiceReport&call_status&callassignid=&empid=&fileName=serviceReport
 
+    @Multipart
+    @POST("callClose.php")
+    Call<CallReportAttachServiceResponse> CallReportAttachFile(@Part("action") RequestBody action, @Part("call_status") RequestBody call_status,
+                                                               @Part("callassignid") RequestBody callassignid,
+                                                               @Part("empid") RequestBody empid, @Part MultipartBody.Part serviceReport);
 }

@@ -74,6 +74,7 @@ import com.example.cistronuser.API.Model.ServiceSpareRequestModel;
 import com.example.cistronuser.API.Model.SpareInwardRecordModel;
 import com.example.cistronuser.API.Model.SpareRequestsRecordModel;
 import com.example.cistronuser.API.Model.SparesConsumedRecordModel;
+import com.example.cistronuser.API.Response.CallReportAttachServiceResponse;
 import com.example.cistronuser.API.Response.CallReportComplaintSubCategoryResponse;
 import com.example.cistronuser.API.Response.CallReportServiceSubmitResponse;
 import com.example.cistronuser.API.Response.CallReportSpareConsumedSubmitResponse;
@@ -870,7 +871,7 @@ public class UpcomingCallReport extends AppCompatActivity {
 
                 if (callStatusModels.get(position).getText().trim().equals("Require Spare's")) {
                     tvserviceReportAttach.setVisibility(View.VISIBLE);
-
+                    tvFollowUpDate.setVisibility(View.VISIBLE); 
                     cvInstallation.setVisibility(View.GONE);
                     cvInstallament.setVisibility(View.GONE);
                     tvReason.setVisibility(View.GONE);
@@ -1868,6 +1869,8 @@ public class UpcomingCallReport extends AppCompatActivity {
 //                }
 //                else if (fileWaybill != null) {
 //                   CallFileWayBill();
+//                }else if (fileservice != null) {
+//                    CallServiceReport();
 //                }else {
 //                    Toast.makeText(UpcomingCallReport.this, "Plesae Select image", Toast.LENGTH_SHORT).show();
 //                }
@@ -1877,9 +1880,39 @@ public class UpcomingCallReport extends AppCompatActivity {
 
     }
 
+    private void CallServiceReport() {
+
+        // callClose.php?action=uploadServiceReport&call_status&callassignid=&empid=&fileName=serviceReport
+
+        RequestBody action=RequestBody.create(MediaType.parse("text/plain"),"uploadServiceReport");
+        RequestBody call_status=RequestBody.create(MediaType.parse("text/plain"),CallStatusID);
+        RequestBody callassignid=RequestBody.create(MediaType.parse("text/plain"),CallAssignId);
+        RequestBody empid= RequestBody.create(MediaType.parse("text/plain"),PreferenceManager.getEmpID(this));
+        RequestBody reportfile=RequestBody.create(MediaType.parse("multipart/form-data"),fileservice);
+        MultipartBody.Part fileAttchReport=MultipartBody.Part.createFormData("serviceReport",fileservice.getName(),reportfile);
+
+        CallReportSubmitInterface callReportSubmitInterface=APIClient.getClient().create(CallReportSubmitInterface.class);
+        callReportSubmitInterface.CallReportAttachFile(action,call_status,callassignid,empid,fileAttchReport).enqueue(new Callback<CallReportAttachServiceResponse>() {
+            @Override
+            public void onResponse(Call<CallReportAttachServiceResponse> call, Response<CallReportAttachServiceResponse> response) {
+
+                try {
+
+                }catch (Exception e){
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CallReportAttachServiceResponse> call, Throwable t) {
+
+            }
+        });
+
+    }
+
     private void CallFileWayBill() {
         //#API: callClose.php?action=uploadWayBill&call_status=1&pay_option=8&callassignid=&empid=&fileName=file_inwb
-
 
         RequestBody action = RequestBody.create(MediaType.parse("text/plain"), "uploadWayBill");
         RequestBody call_status = RequestBody.create(MediaType.parse("text/plain"), CallStatusID);
@@ -2903,6 +2936,5 @@ public class UpcomingCallReport extends AppCompatActivity {
         MimeTypeMap mime = MimeTypeMap.getSingleton();
         return mime.getExtensionFromMimeType(c.getType(contentUri));
     }
-
 
 }
