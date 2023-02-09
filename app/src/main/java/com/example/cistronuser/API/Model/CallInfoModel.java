@@ -17,7 +17,7 @@ public class CallInfoModel {
     //      "callNo": "23010502",
     //      "logisticsId": "1242",
     //logistics_esc_ins
-
+//cft
     //"logistics_ba_dispatch": "3000",
     //      "logistics_ba_dispatchr": "0",
     //      "logistics_esc_ad": "0"
@@ -67,6 +67,9 @@ public class CallInfoModel {
 
     @SerializedName("logistics_esc_ins")
     private String logistics_esc_ins;
+
+    @SerializedName("cft")
+    private String cft;
 
     @SerializedName("logistics_noofins")
     private String logistics_noofins;
@@ -196,6 +199,14 @@ public class CallInfoModel {
 
     public void setLogistics_esc_ins(String logistics_esc_ins) {
         this.logistics_esc_ins = logistics_esc_ins;
+    }
+
+    public String getCft() {
+        return cft;
+    }
+
+    public void setCft(String cft) {
+        this.cft = cft;
     }
 
     public String getLogistics_noofins() {

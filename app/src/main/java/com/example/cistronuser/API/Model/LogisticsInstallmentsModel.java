@@ -23,7 +23,7 @@ public class LogisticsInstallmentsModel {
     @SerializedName("bp_installmentrTot")
     private String  bp_installmentrTot;
 
-    @SerializedName("balinspayamt")
+    @SerializedName("balinspay")
     private String  balinspayamt;
 
     @SerializedName("tm")
