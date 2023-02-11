@@ -826,8 +826,7 @@
                             android:fontFamily="@font/semibold"
                             android:gravity="left"
                             android:paddingLeft="10dp"
-                            android:visibility="visible"
-                            app:hintText="Select a Complaint" />
+                            android:visibility="visible" />
 
 
                         <TextView
@@ -857,7 +856,7 @@
                             android:gravity="left"
                             android:paddingLeft="10dp"
                             android:visibility="visible"
-                            app:hintText="Select Complaint SubCategory" />
+                             />
 
 
                         <TextView

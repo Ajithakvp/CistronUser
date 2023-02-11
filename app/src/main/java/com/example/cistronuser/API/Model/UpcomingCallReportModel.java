@@ -49,6 +49,9 @@ public class UpcomingCallReportModel {
     @SerializedName("complaintCategory")
     private ArrayList<ComplaintCategoryModel>complaintCategoryModels=new ArrayList<>();
 
+    @SerializedName("subComplaintCategory")
+   private String subComplaintCategory;
+
     @SerializedName("sparesConsumed")
     private SparesConsumedModel sparesConsumedModel;
 
@@ -130,6 +133,14 @@ public class UpcomingCallReportModel {
 
     public void setComplaintCategoryModels(ArrayList<ComplaintCategoryModel> complaintCategoryModels) {
         this.complaintCategoryModels = complaintCategoryModels;
+    }
+
+    public String getSubComplaintCategory() {
+        return subComplaintCategory;
+    }
+
+    public void setSubComplaintCategory(String subComplaintCategory) {
+        this.subComplaintCategory = subComplaintCategory;
     }
 
     public SparesConsumedModel getSparesConsumedModel() {

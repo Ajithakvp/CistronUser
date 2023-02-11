@@ -61,7 +61,7 @@ public class UpComingCallActivity extends AppCompatActivity {
         progressDialog.setCancelable(false);
         progressDialog.show();
         UpcomingCallListInterface upcomingCallListInterface= APIClient.getClient().create(UpcomingCallListInterface.class);
-        upcomingCallListInterface.CallUpcomingCallReport("getUpcomingCallsRecord", PreferenceManager.getEmpID(this)).enqueue(new Callback<UpcomingCallListResponse>() {
+        upcomingCallListInterface.CallUpcomingCallReport("getUpcomingCallsRecord", PreferenceManager.getEmpID(this),"upcoming").enqueue(new Callback<UpcomingCallListResponse>() {
             @Override
             public void onResponse(Call<UpcomingCallListResponse> call, Response<UpcomingCallListResponse> response) {
                 try {

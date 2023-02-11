@@ -11,5 +11,5 @@ public interface UpcomingCallListInterface {
     //service_engineers.php?action=getUpcomingCallsRecord&empid=tempyugan
 
     @GET("service_engineers.php")
-    Call<UpcomingCallListResponse> CallUpcomingCallReport(@Query("action")String action, @Query("empid")String empid);
+    Call<UpcomingCallListResponse> CallUpcomingCallReport(@Query("action")String action, @Query("empid")String empid, @Query("category")String category);
 }

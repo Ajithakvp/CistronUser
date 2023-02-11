@@ -13,6 +13,17 @@ public class CallReportComplaintSubCategoryModel {
     @SerializedName("text")
     private String text;
 
+    @SerializedName("selected")
+    private String selected;
+
+    public String getSelected() {
+        return selected;
+    }
+
+    public void setSelected(String selected) {
+        this.selected = selected;
+    }
+
     public String getId() {
         return id;
     }

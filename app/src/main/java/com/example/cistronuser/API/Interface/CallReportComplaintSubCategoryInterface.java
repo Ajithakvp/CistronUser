@@ -12,5 +12,5 @@ public interface CallReportComplaintSubCategoryInterface {
     //http://192.168.29.173/beta1/app/service_engineers.php?action=getCompliantSubcategory&complaintId=21
 
     @GET("service_engineers.php")
-    Call<CallReportComplaintSubCategoryResponse>CallSubCat(@Query("action")String action, @Query("complaintId")String complaintId);
+    Call<CallReportComplaintSubCategoryResponse>CallSubCat(@Query("action")String action, @Query("complaintId")String complaintId,@Query("subProblemId")String subProblemId);
 }

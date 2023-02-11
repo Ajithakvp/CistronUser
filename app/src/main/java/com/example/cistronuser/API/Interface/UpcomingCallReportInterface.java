@@ -14,7 +14,7 @@ public interface UpcomingCallReportInterface {
 
 
     @GET("service_engineers.php")
-    Call<UpcomingCallReportResponse> CallUpcomingCallReport(@Query("action")String action, @Query("id")String id,@Query("empId")String empId);
+    Call<UpcomingCallReportResponse> CallUpcomingCallReport(@Query("action")String action, @Query("id")String id,@Query("empId")String empId );
 
 
 }

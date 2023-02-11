@@ -4,6 +4,7 @@ import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 import static okhttp3.RequestBody.create;
 
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -39,7 +40,6 @@ import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RatingBar;
@@ -144,6 +144,8 @@ public class UpcomingCallReport extends AppCompatActivity {
     TextView tvDepositedDate;
     EditText edCheckUTRno;
 
+    int count = 0;
+
     // No ed Payment
     RelativeLayout rlNoRevPayment;
     RadioGroup rbGrp2;
@@ -208,6 +210,7 @@ public class UpcomingCallReport extends AppCompatActivity {
     ArrayList<String> strSubCom = new ArrayList<>();
     ArrayList<String> strComplaint = new ArrayList<>();
     ArrayAdapter complaintAdapter, subComplaintAdapter;
+    String SelectSubComplaintID;
 
 
     //CallType
@@ -462,6 +465,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                         bp_installr = response.body().getUpcomingCallReportModel().getCallInfoModel().getLogistics_bp_install();
                         bp_install = response.body().getUpcomingCallReportModel().getCallInfoModel().getLogistics_bp_installr();
                         cft = response.body().getUpcomingCallReportModel().getCallInfoModel().getCft();
+                        SelectSubComplaintID = response.body().getUpcomingCallReportModel().getSubComplaintCategory();
 
 
                         // ***********  Customer PO  *********** //
@@ -545,12 +549,33 @@ public class UpcomingCallReport extends AppCompatActivity {
                             rlComplaint.setVisibility(View.GONE);
                         }
 
+                        // strComplaint.add("Select a Complaint Category");
                         complaintCategoryModels = response.body().getUpcomingCallReportModel().getComplaintCategoryModels();
                         for (int i = 0; i < complaintCategoryModels.size(); i++) {
                             strComplaint.add(complaintCategoryModels.get(i).getText());
+                            if (complaintCategoryModels.get(i).getSelected().trim().equals("1")) {
+                                spComplaint.setSelection(i);
+                            }
                         }
                         complaintAdapter.notifyDataSetChanged();
                         // ***********  Complaint Category End  ******** //
+
+
+                        // ***********  SubComplaint Category  ******** //
+
+
+//                        callReportComplaintSubCategoryModels = response.body().getUpcomingCallReportModel().getCallReportComplaintSubCategoryModels();
+//                        for (int i = 0; i < callReportComplaintSubCategoryModels.size(); i++) {
+//                            strSubCom.add(callReportComplaintSubCategoryModels.get(i).getText());
+//
+//                            if (callReportComplaintSubCategoryModels.get(i).getSelected().trim().equals("1")) {
+//                                spSubComplaint.setSelection(i);
+//                                Log.e(TAG, "onResponse: "+i );
+//                            }
+//                        }
+//                        subComplaintAdapter.notifyDataSetChanged();
+
+                        // ***********  SubComplaint Category End  ******** //
 
 
                         // ********** InstallpaymentCalc ********** //
@@ -621,7 +646,6 @@ public class UpcomingCallReport extends AppCompatActivity {
                         }
 
                         // ********** Escalate End ********** //
-
 
                     }
 
@@ -719,7 +743,9 @@ public class UpcomingCallReport extends AppCompatActivity {
             @Override
             public void onClick(String s) {
 
+
                 CusPoradiobID = s.toString();
+
                 rvCustomerPO.post(new Runnable() {
                     @Override
                     public void run() {
@@ -744,7 +770,13 @@ public class UpcomingCallReport extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 ComplaintID = complaintCategoryModels.get(position).getId();
-                CallSubComplaint(ComplaintID);
+
+                if (count == 0)
+                    CallSubComplaint(ComplaintID, SelectSubComplaintID);
+                else
+                    CallSubComplaint(ComplaintID, "0");
+                count++;
+
 
                 if (complaintCategoryModels.get(position).getText().trim().equals("Others")) {
                     tvSubComplaint.setVisibility(View.GONE);
@@ -861,6 +893,11 @@ public class UpcomingCallReport extends AppCompatActivity {
                     tvWarrentycard.setVisibility(View.GONE);
                     tvInstallReportAttach.setVisibility(View.GONE);
 
+                    rbGrp1.clearCheck();
+                    rbGrp2.clearCheck();
+                    rlNoRevPayment.setVisibility(View.GONE);
+
+
                     cvSupply.setVisibility(View.GONE);
                     tvLR.setVisibility(View.GONE);
                     tvWayBill.setVisibility(View.GONE);
@@ -883,6 +920,10 @@ public class UpcomingCallReport extends AppCompatActivity {
                     tvInstallationImage3.setVisibility(View.GONE);
                     tvWarrentycard.setVisibility(View.GONE);
                     tvInstallReportAttach.setVisibility(View.GONE);
+
+                    rbGrp1.clearCheck();
+                    rbGrp2.clearCheck();
+                    rlNoRevPayment.setVisibility(View.GONE);
 
                     CallRequiredSpareDialog();
                 }
@@ -1595,86 +1636,117 @@ public class UpcomingCallReport extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
 
-                                strConQty.clear();
-                                for (int i = 0; i < rvConsumespareYes.getAdapter().getItemCount(); i++) {
-                                    v = rvConsumespareYes.getChildAt(i);
-                                    EditText consumeQty = (EditText) v.findViewById(R.id.edQtyReq);
-                                    strConQty.add(i, consumeQty.getText().toString());
-                                }
 
-                                final ProgressDialog progressDialog = new ProgressDialog(UpcomingCallReport.this, R.style.ProgressBarDialog);
-                                progressDialog.setMessage("Please Wait...");
-                                progressDialog.setCancelable(false);
-                                progressDialog.show();
+                                try {
 
-                                ConsumeSpareSubmitInterface consumeSpareSubmitInterface = APIClient.getClient().create(ConsumeSpareSubmitInterface.class);
-                                consumeSpareSubmitInterface.CallSubmit("onConsumeSpares", CusPoradiobID, DoYouConsumerID, CallTypePayoptionsID, strSpareId, strMyQty, strConQty, strUnitPrice, strOpt, PreferenceManager.getEmpID(UpcomingCallReport.this)).enqueue(new Callback<ConsumeSpareSubmitResponse>() {
-                                    @Override
-                                    public void onResponse(Call<ConsumeSpareSubmitResponse> call, Response<ConsumeSpareSubmitResponse> response) {
-
-                                        try {
-                                            if (response.isSuccessful()) {
-                                                progressDialog.dismiss();
-                                                dialog.dismiss();
-                                                Toast.makeText(UpcomingCallReport.this, response.body().getResult(), Toast.LENGTH_SHORT).show();
-                                            }
-
-                                        } catch (Exception e) {
-
+                                    strConQty.clear();
+                                    int vaild = 1;
+                                    for (int i = 0; i < rvConsumespareYes.getAdapter().getItemCount(); i++) {
+                                        v = rvConsumespareYes.getChildAt(i);
+                                        EditText consumeQty = (EditText) v.findViewById(R.id.edQtyReq);
+                                        strConQty.add(i, consumeQty.getText().toString());
+                                        if (Integer.parseInt(strMyQty.get(i)) < Integer.parseInt(consumeQty.getText().toString())) {
+                                            vaild = 0;
                                         }
                                     }
 
-                                    @Override
-                                    public void onFailure(Call<ConsumeSpareSubmitResponse> call, Throwable t) {
-                                        progressDialog.dismiss();
+                                    if (vaild == 0) {
+                                        Toast.makeText(UpcomingCallReport.this, "Quantity should be smaller than Stock", Toast.LENGTH_SHORT).show();
+                                    } else {
 
+                                        final ProgressDialog progressDialog = new ProgressDialog(UpcomingCallReport.this, R.style.ProgressBarDialog);
+                                        progressDialog.setMessage("Please Wait...");
+                                        progressDialog.setCancelable(false);
+                                        progressDialog.show();
+
+                                        ConsumeSpareSubmitInterface consumeSpareSubmitInterface = APIClient.getClient().create(ConsumeSpareSubmitInterface.class);
+                                        consumeSpareSubmitInterface.CallSubmit("onConsumeSpares", CusPoradiobID, DoYouConsumerID, CallTypePayoptionsID, strSpareId, strMyQty, strConQty, strUnitPrice, strOpt, PreferenceManager.getEmpID(UpcomingCallReport.this)).enqueue(new Callback<ConsumeSpareSubmitResponse>() {
+                                            @Override
+                                            public void onResponse(Call<ConsumeSpareSubmitResponse> call, Response<ConsumeSpareSubmitResponse> response) {
+
+                                                try {
+                                                    if (response.isSuccessful()) {
+                                                        progressDialog.dismiss();
+                                                        dialog.dismiss();
+
+                                                        Toast.makeText(UpcomingCallReport.this, response.body().getResult(), Toast.LENGTH_SHORT).show();
+                                                    }
+
+                                                } catch (Exception e) {
+
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call<ConsumeSpareSubmitResponse> call, Throwable t) {
+                                                progressDialog.dismiss();
+
+                                            }
+                                        });
                                     }
-                                });
+                                } catch (Exception e) {
+
+
+                                }
                             }
+
                         });
                         tvYesConsumeCusSpare.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
 
 
-                                strConCusQtyConsume.clear();
+                                try {
+                                    strConCusQtyConsume.clear();
+                                    int vaild = 1;
+                                    for (int i = 0; i < rvConsumeCusSpareYes.getAdapter().getItemCount(); i++) {
+                                        v = rvConsumeCusSpareYes.getChildAt(i);
+                                        EditText QtyConsume = (EditText) v.findViewById(R.id.edQtyReq);
+                                        strConCusQtyConsume.add(i, QtyConsume.getText().toString());
+                                        if (Integer.parseInt(strConCusMyQty.get(i)) < Integer.parseInt(QtyConsume.getText().toString())) {
+                                            vaild = 0;
+                                        }
+                                    }
+                                    if (vaild == 0) {
+                                        Toast.makeText(UpcomingCallReport.this, "Quantity should be smaller than Stock", Toast.LENGTH_SHORT).show();
+                                    } else {
 
-                                for (int i = 0; i < rvConsumeCusSpareYes.getAdapter().getItemCount(); i++) {
-                                    v = rvConsumeCusSpareYes.getChildAt(i);
-                                    EditText QtyConsume = (EditText) v.findViewById(R.id.edQtyReq);
-                                    strConCusQtyConsume.add(i, QtyConsume.getText().toString());
-                                }
+                                        final ProgressDialog progressDialog = new ProgressDialog(UpcomingCallReport.this, R.style.ProgressBarDialog);
+                                        progressDialog.setMessage("Please Wait...");
+                                        progressDialog.setCancelable(false);
+                                        progressDialog.show();
+                                        ConsumeCusSpareSubmitInterface consumeCusSpareSubmitInterface = APIClient.getClient().create(ConsumeCusSpareSubmitInterface.class);
+                                        consumeCusSpareSubmitInterface.CallSubmit("onConsumeCustSpares", DoYouConsumerID, CusPoradiobID, strConCusPartId, strConCusMyQty, strConCusQtyConsume, strConCusOpt, strConCusCustomerStockID, PreferenceManager.getEmpID(UpcomingCallReport.this)).enqueue(new Callback<ConsumerCusSpareSubmitResponse>() {
+                                            @Override
+                                            public void onResponse(Call<ConsumerCusSpareSubmitResponse> call, Response<ConsumerCusSpareSubmitResponse> response) {
+                                                try {
+                                                    if (response.isSuccessful()) {
+                                                        progressDialog.dismiss();
+                                                        dialog.dismiss();
+                                                        //getIntent();
+                                                        Toast.makeText(UpcomingCallReport.this, response.body().getResult(), Toast.LENGTH_SHORT).show();
+                                                    }
 
-                                final ProgressDialog progressDialog = new ProgressDialog(UpcomingCallReport.this, R.style.ProgressBarDialog);
-                                progressDialog.setMessage("Please Wait...");
-                                progressDialog.setCancelable(false);
-                                progressDialog.show();
-                                ConsumeCusSpareSubmitInterface consumeCusSpareSubmitInterface = APIClient.getClient().create(ConsumeCusSpareSubmitInterface.class);
-                                consumeCusSpareSubmitInterface.CallSubmit("onConsumeCustSpares", DoYouConsumerID, CusPoradiobID, strConCusPartId, strConCusMyQty, strConCusQtyConsume, strConCusOpt, strConCusCustomerStockID, PreferenceManager.getEmpID(UpcomingCallReport.this)).enqueue(new Callback<ConsumerCusSpareSubmitResponse>() {
-                                    @Override
-                                    public void onResponse(Call<ConsumerCusSpareSubmitResponse> call, Response<ConsumerCusSpareSubmitResponse> response) {
-                                        try {
-                                            if (response.isSuccessful()) {
-                                                progressDialog.dismiss();
-                                                dialog.dismiss();
-                                                Toast.makeText(UpcomingCallReport.this, response.body().getResult(), Toast.LENGTH_SHORT).show();
+                                                } catch (Exception e) {
+
+                                                }
+
                                             }
 
-                                        } catch (Exception e) {
+                                            @Override
+                                            public void onFailure(Call<ConsumerCusSpareSubmitResponse> call, Throwable t) {
 
-                                        }
+                                                progressDialog.dismiss();
+                                            }
+                                        });
 
                                     }
+                                } catch (Exception e) {
 
-                                    @Override
-                                    public void onFailure(Call<ConsumerCusSpareSubmitResponse> call, Throwable t) {
-
-                                        progressDialog.dismiss();
-                                    }
-                                });
-
+                                }
                             }
                         });
+
 
                         break;
                     case 1:
@@ -1722,10 +1794,10 @@ public class UpcomingCallReport extends AppCompatActivity {
 
                 try {
 
-                    if (spCallType.getSelectedItem().toString().trim().equals("Paid")&& tvCusInvoice.getText().length() == 0) {
+                    if (spCallType.getSelectedItem().toString().trim().equals("Paid") && tvCusInvoice.getText().length() == 0) {
                         tvCusInvoice.setError("Please attach the customer invoice. ");
                         tvCusInvoice.requestFocus();
-                    } else if (ComplaintValidRequired.trim().equals("1") && spComplaint.getSelectedItemPosition() == -1) {
+                    } else if (ComplaintValidRequired.trim().equals("1") && spComplaint.getSelectedItem().equals("Select")) {
                         setSpinnerError(spComplaint, "Please Select a Complaint");
                         Toast.makeText(UpcomingCallReport.this, "Please Select a Complaint", Toast.LENGTH_SHORT).show();
                     } else if (ComplaintValidRequired.trim().equals("1") && spComplaint.getSelectedItem().equals("Others") && edTypeComplaintCat.getText().toString().trim().length() == 0 && edTypeSubComplaintCat.getText().toString().trim().length() == 0) {
@@ -1733,12 +1805,15 @@ public class UpcomingCallReport extends AppCompatActivity {
                         edTypeComplaintCat.setError("Please Enter Type Complaint SubCategory");
                         edTypeSubComplaintCat.requestFocus();
                         edTypeComplaintCat.requestFocus();
-                    } else if (ComplaintValidRequired.trim().equals("1") && spComplaint.getSelectedItemPosition() > -1 && spSubComplaint.getSelectedItemPosition() == -1) {
+                    } else if (ComplaintValidRequired.trim().equals("1") && spComplaint.getSelectedItemPosition() > -1 && spSubComplaint.getSelectedItem().equals("Select")) {
                         setSpinnerError(spSubComplaint, "Please Select a Sub Complaint");
                         Toast.makeText(UpcomingCallReport.this, "Please Select a Sub Complaint", Toast.LENGTH_SHORT).show();
                     } else if (ComplaintValidRequired.trim().equals("1") && spSubComplaint.getSelectedItem().equals("Others") && edTypeComplaintCat.getText().toString().trim().length() == 0) {
                         edTypeComplaintCat.setError("Please enter the Type Complaint Category");
                         edTypeComplaintCat.requestFocus();
+                    } else if (spCallStatus.getSelectedItem().equals("Select")) {
+                        setSpinnerError(spCallStatus, "Please Select a Call Status");
+                        Toast.makeText(UpcomingCallReport.this, "Select a Call Status", Toast.LENGTH_SHORT).show();
                     } else if (rbGrp.getCheckedRadioButtonId() == -1) {
                         Toast.makeText(UpcomingCallReport.this, "Select a consume spares", Toast.LENGTH_SHORT).show();
                     } else if (SpareDocVaild > 0 && spCallStatus.getSelectedItem().equals("Closed") && tvSpareFile1.getText().toString().trim().length() == 0 && tvSpareFile2.getText().toString().trim().length() == 0 && tvSpareFile3.getText().toString().trim().length() == 0) {
@@ -2269,18 +2344,19 @@ public class UpcomingCallReport extends AppCompatActivity {
     }
 
 
-    private void CallSubComplaint(String complaintID) {
+    private void CallSubComplaint(String complaintID, String subcom) {
         final ProgressDialog progressDialog = new ProgressDialog(this, R.style.ProgressBarDialog);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();
         CallReportComplaintSubCategoryInterface callReportComplaintSubCategoryInterface = APIClient.getClient().create(CallReportComplaintSubCategoryInterface.class);
-        callReportComplaintSubCategoryInterface.CallSubCat("getCompliantSubcategory", complaintID).enqueue(new Callback<CallReportComplaintSubCategoryResponse>() {
+        callReportComplaintSubCategoryInterface.CallSubCat("getCompliantSubcategory", complaintID, subcom).enqueue(new Callback<CallReportComplaintSubCategoryResponse>() {
             @Override
             public void onResponse(Call<CallReportComplaintSubCategoryResponse> call, Response<CallReportComplaintSubCategoryResponse> response) {
                 try {
                     if (response.body().getCallReportComplaintSubCategoryModels().size() > 0) {
                         progressDialog.dismiss();
+                        // strSubCom.add("Select a Complaint SubCategory");
                         callReportComplaintSubCategoryModels = response.body().getCallReportComplaintSubCategoryModels();
                         strSubCom.clear();
                         for (int i = 0; i < callReportComplaintSubCategoryModels.size(); i++) {
