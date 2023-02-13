@@ -37,6 +37,7 @@ public interface CallReportingUpComingSubmitInterface {
                                                                @Query("pdtidd")String pdtidd,
                                                                @Query("hpidd")String hpidd,
                                                                @Query("chk1")String chk1,
+                                                               @Query("sqid")String sqid,
                                                                @Query("call_status")String call_status,
                                                                @Query("ba_dispatch")String ba_dispatch,
                                                                @Query("ba_dispatchr")String ba_dispatchr,

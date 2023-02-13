@@ -90,6 +90,7 @@ import com.example.cistronuser.API.Response.ServiceSpareRequestResponse;
 import com.example.cistronuser.API.Response.SupplyEscalatedSubmitedResponse;
 import com.example.cistronuser.API.Response.UpcomingCallReportResponse;
 import com.example.cistronuser.API.Response.YesDoYouConsumeSpareResponse;
+import com.example.cistronuser.Activity.DashboardActivity;
 import com.example.cistronuser.Common.FileUtli;
 import com.example.cistronuser.Common.PreferenceManager;
 import com.example.cistronuser.R;
@@ -265,8 +266,9 @@ public class UpcomingCallReport extends AppCompatActivity {
     String DoYouConsumerID, PartID, ComplaintID, SubComplaintCatID, CallRegID, hpidd, pdtidd, chk1, bp_install, bp_installr;
     String CallAssignId, CallStatusID, CallTypePayoptionsID, Spc, CusPoradiobID;
     //Validation
-    String ComplaintValidRequired;
+    String ComplaintValidRequired,CustomerVaild;
     int SpareDocVaild, TypeValid;
+     RadioButton radioButton;
 
 
     //rbGrup1Id
@@ -469,6 +471,7 @@ public class UpcomingCallReport extends AppCompatActivity {
 
 
                         // ***********  Customer PO  *********** //
+                        CustomerVaild=response.body().getUpcomingCallReportModel().getCustomerPoModel().getCount();
                         tvCustomerPOCount.setText(response.body().getUpcomingCallReportModel().getCustomerPoModel().getCount());
                         customerPoAdapter.customerPoResponseModels = response.body().getUpcomingCallReportModel().getCustomerPoModel().getCustomerPoResponseModels();
                         customerPoAdapter.notifyDataSetChanged();
@@ -1794,6 +1797,13 @@ public class UpcomingCallReport extends AppCompatActivity {
 
                 try {
 
+//                    ArrayList<String>strRadio=new ArrayList<>();
+//                    for (int i=0;i<rvCustomerPO.getAdapter().getItemCount();i++){
+//                        v=rvCustomerPO.getChildAt(i);
+//                        radioButton=(RadioButton) v.findViewById(R.id.rbId);
+//
+//                    }
+
                     if (spCallType.getSelectedItem().toString().trim().equals("Paid") && tvCusInvoice.getText().length() == 0) {
                         tvCusInvoice.setError("Please attach the customer invoice. ");
                         tvCusInvoice.requestFocus();
@@ -2001,7 +2011,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                 try {
                     if (response.isSuccessful()) {
 
-                        finish();
+
 
                     }
 
@@ -2018,8 +2028,12 @@ public class UpcomingCallReport extends AppCompatActivity {
     }
 
     private void CallReportSubmit() {
+        final ProgressDialog progressDialog = new ProgressDialog(this, R.style.ProgressBarDialog);
+        progressDialog.setMessage("Please Wait...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
         CallReportingUpComingSubmitInterface callReportingUpComingSubmitInterface = APIClient.getClient().create(CallReportingUpComingSubmitInterface.class);
-        callReportingUpComingSubmitInterface.callReportSubmit("callClose", PreferenceManager.getEmpID(UpcomingCallReport.this), id, LogsitId, CallTypePayoptionsID, ComplaintID, SubComplaintCatID, edTypeComplaintCat.getText().toString(), edTypeSubComplaintCat.getText().toString(), "Not Detect", CallAssignId, CallRegID, CallAssignId, pdtidd, hpidd, chk1,
+        callReportingUpComingSubmitInterface.callReportSubmit("callClose", PreferenceManager.getEmpID(UpcomingCallReport.this), id, LogsitId, CallTypePayoptionsID, ComplaintID, SubComplaintCatID, edTypeComplaintCat.getText().toString(), edTypeSubComplaintCat.getText().toString(), "Not Detect", CallAssignId, CallRegID, CallAssignId, pdtidd, hpidd, chk1,CusPoradiobID,
                 CallStatusID, tvPaymentafterDispatch.getText().toString(), tvRecvPaymentDispatch.getText().toString(), tvInstallDate.getText().toString(), bp_install, bp_installr, strInstallament, strInstallamentr, balinspayamt, cft, String.valueOf(rbconsumerSpareID), Spc, tvFollowUpDate.getText().toString(),
                 tvStartingTime.getText().toString(), tvEndTime.getText().toString(), edPendingReason.getText().toString(), edName.getText().toString(), edMobile.getText().toString(), String.valueOf(rbRecPendingID), tvDepositedDate.getText().toString(), edCheckUTRno.getText().toString(), String.valueOf(rbClosePayID), edSaleORserviceAmt.getText().toString(), edSpareAmt.getText().toString(), edWorkdone.getText().toString(), edEngineerAdvice.getText().toString(), String.valueOf(ratingBar.getRating()), String.valueOf(cbSetID), edReason.getText().toString()).enqueue(new Callback<CallReportingUpComingSubmitResponse>() {
             @Override
@@ -2027,7 +2041,10 @@ public class UpcomingCallReport extends AppCompatActivity {
                 try {
                     if (response.isSuccessful()) {
 
+                        progressDialog.dismiss();
                         finish();
+                        Intent intent=new Intent(UpcomingCallReport.this, DashboardActivity.class);
+                        startActivity(intent);
 
                     }
 
@@ -2038,6 +2055,7 @@ public class UpcomingCallReport extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<CallReportingUpComingSubmitResponse> call, Throwable t) {
+                progressDialog.dismiss();
 
             }
         });

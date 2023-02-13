@@ -37,6 +37,7 @@ import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.cistronuser.API.APIClient;
+import com.example.cistronuser.API.Interface.CallReportIngCheckInterface;
 import com.example.cistronuser.API.Interface.ChangePasswordInterface;
 import com.example.cistronuser.API.Interface.CompOffApprovalCountInterface;
 import com.example.cistronuser.API.Interface.DashboardCallCountInterface;
@@ -45,6 +46,7 @@ import com.example.cistronuser.API.Interface.LeaveApprovelCountInterface;
 import com.example.cistronuser.API.Interface.LogoutInterFace;
 import com.example.cistronuser.API.Interface.SalesQuoteApprovalCountInterFace;
 import com.example.cistronuser.API.Model.LoginuserModel;
+import com.example.cistronuser.API.Response.CallReportIngCheckResponse;
 import com.example.cistronuser.API.Response.ChangePasswordResponse;
 import com.example.cistronuser.API.Response.CompOffCountResponse;
 import com.example.cistronuser.API.Response.DashboardCallCountResponse;
@@ -217,6 +219,9 @@ public class DashboardActivity extends Activity {
         lWebview.setLinkTextColor(getResources().getColor(R.color.white));
 
 
+
+
+
         String user = PreferenceManager.getEmpuser(this);
 
         switch (user) {
@@ -242,6 +247,30 @@ public class DashboardActivity extends Activity {
                 rlService.setVisibility(View.GONE);
                 break;
         }
+
+        CallReportIngCheckInterface callReportIngCheckInterface=APIClient.getClient().create(CallReportIngCheckInterface.class);
+        callReportIngCheckInterface.CalLCheck("checkEmployee",PreferenceManager.getEmpID(this)).enqueue(new Callback<CallReportIngCheckResponse>() {
+            @Override
+            public void onResponse(Call<CallReportIngCheckResponse> call, Response<CallReportIngCheckResponse> response) {
+                try {
+                    if (response.body().getResponse().trim().equals("0")){
+                        rlService.setVisibility(View.GONE);
+                    }else {
+                        rlService.setVisibility(View.VISIBLE);
+                    }
+
+                }catch (Exception e){
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CallReportIngCheckResponse> call, Throwable t) {
+
+            }
+        });
+
+
 
 
         //internet

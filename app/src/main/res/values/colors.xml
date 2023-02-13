@@ -33,6 +33,19 @@
     <color name="whiteLite2">#E2DFD2</color>
     <color name="mikwhite">#FEFCFF</color>
     <color name="whiteLite4">#FFFFF0</color>
+    <color name="WhiteSmoke">#F5F5F5</color>
+    <color name="GhostWhite">#F8F8FF</color>
+    <color name="snow">#FFFAFA</color>
+    <color name="gainsboro">#DCDCDC</color>
+
+    <color name="OldLace">#FDF5E6</color>
+    <color name="ivory">#FFFFF0</color>
+    <color name="MistyRose">#FFE4E1</color>
+    <color name="grey100">#FFFFFF</color>
+    <color name="grey77">#C4C4C4</color>
+    <color name="gray80">#CCCCCC</color>
+    <color name="gray94">#F0F0F0</color>
+    <color name="darkolivegreen">#556B2F</color>
     <color name="Cistronbasecolor">#6495ED</color>
     <color name="Maroon">#800000</color>
 

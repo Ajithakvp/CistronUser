@@ -17,7 +17,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="@color/grey100"
             app:cardCornerRadius="20dp">
 
 
@@ -26,7 +26,7 @@
                 android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#FEFCFF">
+               >
 
 
                 <RelativeLayout
@@ -288,7 +288,7 @@
                     android:gravity="center"
                     android:textAlignment="center"
                     android:background="@drawable/edittext"
-                    android:backgroundTint="#EE4000"
+                    android:backgroundTint="@color/mdtp_red"
                     android:layout_marginBottom="10dp"
                     android:fontFamily="@font/bold"
                     android:text="Call Report"

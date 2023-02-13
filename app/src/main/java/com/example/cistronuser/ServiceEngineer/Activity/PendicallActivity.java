@@ -75,7 +75,7 @@ public class PendicallActivity extends AppCompatActivity {
         progressDialog.setCancelable(false);
         progressDialog.show();
         UpcomingCallListInterface upcomingCallListInterface= APIClient.getClient().create(UpcomingCallListInterface.class);
-        upcomingCallListInterface.CallUpcomingCallReport("getUpcomingCallsRecord", PreferenceManager.getEmpID(this),"pending").enqueue(new Callback<UpcomingCallListResponse>() {
+        upcomingCallListInterface.CallUpcomingCallReport("getCallsRecords", PreferenceManager.getEmpID(this),"pending").enqueue(new Callback<UpcomingCallListResponse>() {
             @Override
             public void onResponse(Call<UpcomingCallListResponse> call, Response<UpcomingCallListResponse> response) {
                 try {
