@@ -131,7 +131,7 @@ public class UpcomingCallReport extends AppCompatActivity {
     CheckBox cbAttach;
     RatingBar ratingBar;
     String cft;
-    String id;
+    String id, PM;
 
     //Received pending sales payment
     RelativeLayout rlRevPaymentPending;
@@ -251,6 +251,13 @@ public class UpcomingCallReport extends AppCompatActivity {
     ArrayList<String> strInstallamentr = new ArrayList<>();
     String tm, bp_installmentTot, bp_installmentrTot, balinspayamt;
 
+    //PM Attach
+    TextView tvPMReportAttach, tvPMReportAttach2, tvPMReportAttach3, tvPMReportAttach4;
+    String strPMReportAttach, strPMReportAttach2, strPMReportAttach3, strPMReportAttach4;
+    File filePMReportAttach = null, filePMReportAttach2 = null;
+    File filePMReportAttach3 = null, filePMReportAttach4 = null;
+    RelativeLayout rlPMReport;
+
 
     //Yes DoYouConsumeSpares
     RelativeLayout rlCustomerPOSpares, rlConsumeSpares, rlConsumecusSpares;
@@ -266,9 +273,9 @@ public class UpcomingCallReport extends AppCompatActivity {
     String DoYouConsumerID, PartID, ComplaintID, SubComplaintCatID, CallRegID, hpidd, pdtidd, chk1, bp_install, bp_installr;
     String CallAssignId, CallStatusID, CallTypePayoptionsID, Spc, CusPoradiobID;
     //Validation
-    String ComplaintValidRequired,CustomerVaild;
+    String ComplaintValidRequired, CustomerVaild;
     int SpareDocVaild, TypeValid;
-     RadioButton radioButton;
+    RadioButton radioButton;
 
 
     //rbGrup1Id
@@ -319,6 +326,11 @@ public class UpcomingCallReport extends AppCompatActivity {
         tvTypeComplaintCat = findViewById(R.id.tvTypeComplaintCat);
         tvTypeSubComplaintCat = findViewById(R.id.tvTypeSubComplaintCat);
         tvSubComplaint = findViewById(R.id.tvSubComplaint);
+        tvPMReportAttach2 = findViewById(R.id.tvPMReportAttach2);
+        tvPMReportAttach = findViewById(R.id.tvPMReportAttach);
+        tvPMReportAttach3 = findViewById(R.id.tvPMReportAttach3);
+        tvPMReportAttach4 = findViewById(R.id.tvPMReportAttach4);
+        rlPMReport = findViewById(R.id.rlPMReport);
 
 
         // *********** Supply *****************//
@@ -417,7 +429,15 @@ public class UpcomingCallReport extends AppCompatActivity {
 
         // *********** GetString **********//
         id = getIntent().getStringExtra("id");
+        PM = getIntent().getStringExtra("PM");
         strRating = String.valueOf(ratingBar.getRating());
+
+        if (PM.trim().equals("Preventive Maintenance")) {
+            rlPMReport.setVisibility(View.VISIBLE);
+        } else {
+            rlPMReport.setVisibility(View.GONE);
+
+        }
         // *********** GetString End **********//
 
         // *********** Current Date **********//
@@ -471,7 +491,7 @@ public class UpcomingCallReport extends AppCompatActivity {
 
 
                         // ***********  Customer PO  *********** //
-                        CustomerVaild=response.body().getUpcomingCallReportModel().getCustomerPoModel().getCount();
+                        CustomerVaild = response.body().getUpcomingCallReportModel().getCustomerPoModel().getCount();
                         tvCustomerPOCount.setText(response.body().getUpcomingCallReportModel().getCustomerPoModel().getCount());
                         customerPoAdapter.customerPoResponseModels = response.body().getUpcomingCallReportModel().getCustomerPoModel().getCustomerPoResponseModels();
                         customerPoAdapter.notifyDataSetChanged();
@@ -1228,6 +1248,58 @@ public class UpcomingCallReport extends AppCompatActivity {
             }
         });
 
+        tvPMReportAttach.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                    intent.setType("*/*");
+                    startActivityForResult(intent, 14);
+                } catch (Exception e) {
+
+                }
+            }
+        });
+
+        tvPMReportAttach2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                    intent.setType("*/*");
+                    startActivityForResult(intent, 15);
+                } catch (Exception e) {
+
+                }
+            }
+        });
+
+        tvPMReportAttach3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                    intent.setType("*/*");
+                    startActivityForResult(intent, 16);
+                } catch (Exception e) {
+
+                }
+            }
+        });
+
+        tvPMReportAttach4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                    intent.setType("*/*");
+                    startActivityForResult(intent, 17);
+                } catch (Exception e) {
+
+                }
+            }
+        });
+
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -1797,12 +1869,7 @@ public class UpcomingCallReport extends AppCompatActivity {
 
                 try {
 
-//                    ArrayList<String>strRadio=new ArrayList<>();
-//                    for (int i=0;i<rvCustomerPO.getAdapter().getItemCount();i++){
-//                        v=rvCustomerPO.getChildAt(i);
-//                        radioButton=(RadioButton) v.findViewById(R.id.rbId);
-//
-//                    }
+
 
                     if (spCallType.getSelectedItem().toString().trim().equals("Paid") && tvCusInvoice.getText().length() == 0) {
                         tvCusInvoice.setError("Please attach the customer invoice. ");
@@ -1826,12 +1893,18 @@ public class UpcomingCallReport extends AppCompatActivity {
                         Toast.makeText(UpcomingCallReport.this, "Select a Call Status", Toast.LENGTH_SHORT).show();
                     } else if (rbGrp.getCheckedRadioButtonId() == -1) {
                         Toast.makeText(UpcomingCallReport.this, "Select a consume spares", Toast.LENGTH_SHORT).show();
-                    } else if (SpareDocVaild > 0 && spCallStatus.getSelectedItem().equals("Closed") && tvSpareFile1.getText().toString().trim().length() == 0 && tvSpareFile2.getText().toString().trim().length() == 0 && tvSpareFile3.getText().toString().trim().length() == 0) {
+                    } else if (SpareDocVaild > 0 && spCallStatus.getSelectedItem().equals("Closed") && tvSpareFile1.getText().toString().trim().length() == 0) {
                         tvSpareFile1.setError("Please Attach DC/Invoice for Consumed spares");
-                        tvSpareFile2.setError("Please Attach DC/Invoice for Consumed spares");
-                        tvSpareFile3.setError("Please Attach DC/Invoice for Consumed spares");
                         tvSpareFile1.requestFocus();
+
+                    }else if (SpareDocVaild > 0 && spCallStatus.getSelectedItem().equals("Closed") && tvSpareFile2.getText().toString().trim().length() == 0) {
+
+                        tvSpareFile2.setError("Please Attach DC/Invoice for Consumed spares");
                         tvSpareFile2.requestFocus();
+
+                    }else if (SpareDocVaild > 0 && spCallStatus.getSelectedItem().equals("Closed")  && tvSpareFile3.getText().toString().trim().length() == 0) {
+
+                        tvSpareFile3.setError("Please Attach DC/Invoice for Consumed spares");
                         tvSpareFile3.requestFocus();
                     } else if (spCallStatus.getSelectedItem().equals("Pending") && edPendingReason.getText().toString().trim().length() == 0) {
                         edPendingReason.setError("Please enter a pending reason.");
@@ -1917,43 +1990,68 @@ public class UpcomingCallReport extends AppCompatActivity {
                         edReason.setError("Please Enter the Reason");
                         edReason.requestFocus();
 
-                    } else if (ratingBar.getRating() == 0) {
+                    } else
+                    if (PM.trim().equals("Preventive Maintenance") && tvPMReportAttach.getText().toString().trim().length() == 0 ) {
+                        tvPMReportAttach.setError("Please Attach the  Preventive Maintenance Report ");
+                        tvPMReportAttach.requestFocus();
+
+                    }  else if (PM.trim().equals("Preventive Maintenance") &&  tvPMReportAttach2.getText().toString().trim().length() == 0) {
+                        tvPMReportAttach2.setError("Please Attach the  Preventive Maintenance Report ");
+                        tvPMReportAttach2.requestFocus();
+
+                    }else if (ratingBar.getRating() == 0) {
                         Toast.makeText(UpcomingCallReport.this, "Please Select a Customer Review", Toast.LENGTH_SHORT).show();
 
                     } else {
                         CallReportSubmit();
                         Log.e(TAG, "onClick: 0");
-                        if (fileCustomerPO != null) {
-                            callCusPoFile();
-                            Log.e(TAG, "onClick: 1");
-                        }
-                        if (fileinstallImg1 != null && fileinstallImg2 != null && fileinstallImg3 != null && fileWarrentyCard != null && fileinstallReport != null) {
-                            CallInstallImg();
-                            Log.e(TAG, "onClick: 2");
-                        }
-                        if (spareFile1 != null && spareFile2 != null && spareFile3 != null) {
-                            callspareConsumedFile();
-                            Log.e(TAG, "onClick: 3");
-                        }
-                        if (fileinvoice != null) {
-                            callcusInvoice();
-                            Log.e(TAG, "onClick: 4");
-                        }
-                        if (fileLR != null) {
-                            callFileLR();
-                            Log.e(TAG, "onClick: 5");
-                        }
-                        if (fileWaybill != null) {
-                            CallFileWayBill();
-                            Log.e(TAG, "onClick: 6");
-                        }
-                        if (fileservice != null) {
-                            CallServiceReport();
-                            Log.e(TAG, "onClick: 7");
-                        }
+                    if (fileCustomerPO != null) {
+                        callCusPoFile();
+                        Log.e(TAG, "onClick: 1");
+                    }
+                    if (fileinstallImg1 != null && fileinstallImg2 != null && fileinstallImg3 != null && fileWarrentyCard != null && fileinstallReport != null) {
+                        CallInstallImg();
+                        Log.e(TAG, "onClick: 2");
+                    }
+                    if (spareFile1 != null && spareFile2 != null && spareFile3 != null) {
+                        callspareConsumedFile();
+                        Log.e(TAG, "onClick: 3");
+                    }
+                    if (fileinvoice != null) {
+                        callcusInvoice();
+                        Log.e(TAG, "onClick: 4");
+                    }
+                    if (fileLR != null) {
+                        callFileLR();
+                        Log.e(TAG, "onClick: 5");
+                    }
+                    if (fileWaybill != null) {
+                        CallFileWayBill();
+                        Log.e(TAG, "onClick: 6");
+                    }
+                    if (fileservice != null) {
+                        CallServiceReport();
+                        Log.e(TAG, "onClick: 7");
                     }
 
+
+                    if (filePMReportAttach != null && filePMReportAttach2 != null && filePMReportAttach3 != null && filePMReportAttach4 != null) {
+                        CallPMReport();
+                        Log.e(TAG, "onClick: 8");
+                    }else if (filePMReportAttach != null && filePMReportAttach2 != null && filePMReportAttach3 != null) {
+                        CallPMOptional1Report();
+                        Log.e(TAG, "onClick: 9");
+                    }else if (filePMReportAttach != null && filePMReportAttach2 != null && filePMReportAttach4 != null) {
+                        CallPMOptional2Report();
+                        Log.e(TAG, "onClick: 10");
+                    } else if (filePMReportAttach != null && filePMReportAttach2 != null) {
+                        CallPMComplsory();
+                        Log.e(TAG, "onClick: 11");
+                    }
+                   }
+
                 } catch (Exception e) {
+                    Log.e(TAG, "onClick: " + e.getMessage());
 
                 }
 
@@ -1961,6 +2059,123 @@ public class UpcomingCallReport extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void CallPMOptional2Report() {
+
+        RequestBody action = RequestBody.create(MediaType.parse("text/plain"), "uploadPMReport");
+        RequestBody callassignid = RequestBody.create(MediaType.parse("text/plain"), CallAssignId);
+        RequestBody empid = RequestBody.create(MediaType.parse("text/plain"), PreferenceManager.getEmpID(this));
+        RequestBody pmreportfile1 = RequestBody.create(MediaType.parse("multipart/form-data"), filePMReportAttach);
+        MultipartBody.Part filePmReport1 = MultipartBody.Part.createFormData("pm_report1", filePMReportAttach.getName(), pmreportfile1);
+        RequestBody pmreportfile2 = RequestBody.create(MediaType.parse("multipart/form-data"), filePMReportAttach2);
+        MultipartBody.Part filePmReport2 = MultipartBody.Part.createFormData("pm_report2", filePMReportAttach2.getName(), pmreportfile2);
+
+        RequestBody pmreportfile4 = RequestBody.create(MediaType.parse("multipart/form-data"), filePMReportAttach4);
+        MultipartBody.Part filePmReport4 = MultipartBody.Part.createFormData("pm_report4", filePMReportAttach4.getName(), pmreportfile4);
+
+        CallReportSubmitInterface callReportSubmitInterface = APIClient.getClient().create(CallReportSubmitInterface.class);
+        callReportSubmitInterface.CallComOption2PMReport(action, callassignid, empid, filePmReport1, filePmReport2, filePmReport4).enqueue(new Callback<CallReportAttachServiceResponse>() {
+            @Override
+            public void onResponse(Call<CallReportAttachServiceResponse> call, Response<CallReportAttachServiceResponse> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<CallReportAttachServiceResponse> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+    private void CallPMOptional1Report() {
+
+        RequestBody action = RequestBody.create(MediaType.parse("text/plain"), "uploadPMReport");
+        RequestBody callassignid = RequestBody.create(MediaType.parse("text/plain"), CallAssignId);
+        RequestBody empid = RequestBody.create(MediaType.parse("text/plain"), PreferenceManager.getEmpID(this));
+        RequestBody pmreportfile1 = RequestBody.create(MediaType.parse("multipart/form-data"), filePMReportAttach);
+        MultipartBody.Part filePmReport1 = MultipartBody.Part.createFormData("pm_report1", filePMReportAttach.getName(), pmreportfile1);
+        RequestBody pmreportfile2 = RequestBody.create(MediaType.parse("multipart/form-data"), filePMReportAttach2);
+        MultipartBody.Part filePmReport2 = MultipartBody.Part.createFormData("pm_report2", filePMReportAttach2.getName(), pmreportfile2);
+
+        RequestBody pmreportfile3 = RequestBody.create(MediaType.parse("multipart/form-data"), filePMReportAttach3);
+        MultipartBody.Part filePmReport3 = MultipartBody.Part.createFormData("pm_report3", filePMReportAttach3.getName(), pmreportfile3);
+
+        CallReportSubmitInterface callReportSubmitInterface = APIClient.getClient().create(CallReportSubmitInterface.class);
+
+        callReportSubmitInterface.CallComOption1PMReport(action, callassignid, empid, filePmReport1, filePmReport2, filePmReport3).enqueue(new Callback<CallReportAttachServiceResponse>() {
+            @Override
+            public void onResponse(Call<CallReportAttachServiceResponse> call, Response<CallReportAttachServiceResponse> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<CallReportAttachServiceResponse> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+
+    private void CallPMComplsory() {
+
+        RequestBody action = RequestBody.create(MediaType.parse("text/plain"), "uploadPMReport");
+        RequestBody callassignid = RequestBody.create(MediaType.parse("text/plain"), CallAssignId);
+        RequestBody empid = RequestBody.create(MediaType.parse("text/plain"), PreferenceManager.getEmpID(this));
+        RequestBody pmreportfile1 = RequestBody.create(MediaType.parse("multipart/form-data"), filePMReportAttach);
+        MultipartBody.Part filePmReport1 = MultipartBody.Part.createFormData("pm_report1", filePMReportAttach.getName(), pmreportfile1);
+        RequestBody pmreportfile2 = RequestBody.create(MediaType.parse("multipart/form-data"), filePMReportAttach2);
+        MultipartBody.Part filePmReport2 = MultipartBody.Part.createFormData("pm_report2", filePMReportAttach2.getName(), pmreportfile2);
+
+        CallReportSubmitInterface callReportSubmitInterface = APIClient.getClient().create(CallReportSubmitInterface.class);
+        callReportSubmitInterface.CallComPMReport(action, callassignid, empid, filePmReport1, filePmReport2).enqueue(new Callback<CallReportAttachServiceResponse>() {
+            @Override
+            public void onResponse(Call<CallReportAttachServiceResponse> call, Response<CallReportAttachServiceResponse> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<CallReportAttachServiceResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void CallPMReport() {
+
+        RequestBody action = RequestBody.create(MediaType.parse("text/plain"), "uploadPMReport");
+        RequestBody callassignid = RequestBody.create(MediaType.parse("text/plain"), CallAssignId);
+        RequestBody empid = RequestBody.create(MediaType.parse("text/plain"), PreferenceManager.getEmpID(this));
+        RequestBody pmreportfile1 = RequestBody.create(MediaType.parse("multipart/form-data"), filePMReportAttach);
+        MultipartBody.Part filePmReport1 = MultipartBody.Part.createFormData("pm_report1", filePMReportAttach.getName(), pmreportfile1);
+        RequestBody pmreportfile2 = RequestBody.create(MediaType.parse("multipart/form-data"), filePMReportAttach2);
+        MultipartBody.Part filePmReport2 = MultipartBody.Part.createFormData("pm_report2", filePMReportAttach2.getName(), pmreportfile2);
+        RequestBody pmreportfile3 = RequestBody.create(MediaType.parse("multipart/form-data"), filePMReportAttach3);
+        MultipartBody.Part filePmReport3 = MultipartBody.Part.createFormData("pm_report3", filePMReportAttach3.getName(), pmreportfile3);
+        RequestBody pmreportfile4 = RequestBody.create(MediaType.parse("multipart/form-data"), filePMReportAttach4);
+        MultipartBody.Part filePmReport4 = MultipartBody.Part.createFormData("pm_report4", filePMReportAttach4.getName(), pmreportfile4);
+
+        CallReportSubmitInterface callReportSubmitInterface = APIClient.getClient().create(CallReportSubmitInterface.class);
+        callReportSubmitInterface.CallPMReport(action, callassignid, empid, filePmReport1, filePmReport2, filePmReport3, filePmReport4).enqueue(new Callback<CallReportAttachServiceResponse>() {
+            @Override
+            public void onResponse(Call<CallReportAttachServiceResponse> call, Response<CallReportAttachServiceResponse> response) {
+                try {
+                    if (response.isSuccessful()) {
+
+                    }
+
+                } catch (Exception e) {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CallReportAttachServiceResponse> call, Throwable t) {
+
+            }
+        });
     }
 
     private void CallServiceReport() {
@@ -2012,7 +2227,6 @@ public class UpcomingCallReport extends AppCompatActivity {
                     if (response.isSuccessful()) {
 
 
-
                     }
 
                 } catch (Exception e) {
@@ -2033,7 +2247,7 @@ public class UpcomingCallReport extends AppCompatActivity {
         progressDialog.setCancelable(false);
         progressDialog.show();
         CallReportingUpComingSubmitInterface callReportingUpComingSubmitInterface = APIClient.getClient().create(CallReportingUpComingSubmitInterface.class);
-        callReportingUpComingSubmitInterface.callReportSubmit("callClose", PreferenceManager.getEmpID(UpcomingCallReport.this), id, LogsitId, CallTypePayoptionsID, ComplaintID, SubComplaintCatID, edTypeComplaintCat.getText().toString(), edTypeSubComplaintCat.getText().toString(), "Not Detect", CallAssignId, CallRegID, CallAssignId, pdtidd, hpidd, chk1,CusPoradiobID,
+        callReportingUpComingSubmitInterface.callReportSubmit("callClose", PreferenceManager.getEmpID(UpcomingCallReport.this), id, LogsitId, CallTypePayoptionsID, ComplaintID, SubComplaintCatID, edTypeComplaintCat.getText().toString(), edTypeSubComplaintCat.getText().toString(), "Not Detect", CallAssignId, CallRegID, CallAssignId, pdtidd, hpidd, chk1, CusPoradiobID,
                 CallStatusID, tvPaymentafterDispatch.getText().toString(), tvRecvPaymentDispatch.getText().toString(), tvInstallDate.getText().toString(), bp_install, bp_installr, strInstallament, strInstallamentr, balinspayamt, cft, String.valueOf(rbconsumerSpareID), Spc, tvFollowUpDate.getText().toString(),
                 tvStartingTime.getText().toString(), tvEndTime.getText().toString(), edPendingReason.getText().toString(), edName.getText().toString(), edMobile.getText().toString(), String.valueOf(rbRecPendingID), tvDepositedDate.getText().toString(), edCheckUTRno.getText().toString(), String.valueOf(rbClosePayID), edSaleORserviceAmt.getText().toString(), edSpareAmt.getText().toString(), edWorkdone.getText().toString(), edEngineerAdvice.getText().toString(), String.valueOf(ratingBar.getRating()), String.valueOf(cbSetID), edReason.getText().toString()).enqueue(new Callback<CallReportingUpComingSubmitResponse>() {
             @Override
@@ -2043,7 +2257,7 @@ public class UpcomingCallReport extends AppCompatActivity {
 
                         progressDialog.dismiss();
                         finish();
-                        Intent intent=new Intent(UpcomingCallReport.this, DashboardActivity.class);
+                        Intent intent = new Intent(UpcomingCallReport.this, DashboardActivity.class);
                         startActivity(intent);
 
                     }
@@ -3062,6 +3276,211 @@ public class UpcomingCallReport extends AppCompatActivity {
                         } else {
                             tvLR.setError("Sorry, your file is too large. Upload files up to 5 MB in size below.");
                             tvLR.requestFocus();
+                        }
+
+                    } catch (Exception e) {
+
+                    }
+
+
+                }
+                break;
+
+            case 14:
+                if (resultCode == RESULT_OK) {
+                    Uri contentUri = data.getData();
+                    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+                    strPMReportAttach = timeStamp + "." + getFileExt(contentUri);
+                    Toast.makeText(this, "File Name" + strPMReportAttach, Toast.LENGTH_SHORT).show();
+
+                    try {
+                        filePMReportAttach = FileUtli.from(this, contentUri);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    long mb = filePMReportAttach.length();
+                    mb = mb / 1024;
+
+                    try {
+                        if (5120 > mb) {
+                            tvPMReportAttach.setError(null);
+                            String myStr = strPMReportAttach;
+                            int index = myStr.lastIndexOf(".");
+                            String extension = myStr.substring(index);
+                            if (extension.equals(".pdf")) {
+                                tvPMReportAttach.setText(strPMReportAttach);
+                            } else if (extension.equals(".jpg")) {
+                                tvPMReportAttach.setText(strPMReportAttach);
+                            } else if (extension.equals(".png")) {
+                                tvPMReportAttach.setText(strPMReportAttach);
+                            } else if (extension.equals(".jpeg")) {
+                                tvPMReportAttach.setText(strPMReportAttach);
+                            } else {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialogCustom);
+                                builder.setMessage("Please Select Pdf and Image File Only ..");
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
+                            }
+
+
+                        } else {
+                            tvPMReportAttach.setError("Sorry, your file is too large. Upload files up to 5 MB in size below.");
+                            tvPMReportAttach.requestFocus();
+                        }
+
+                    } catch (Exception e) {
+
+                    }
+
+
+                }
+                break;
+
+            case 15:
+                if (resultCode == RESULT_OK) {
+                    Uri contentUri = data.getData();
+                    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+                    strPMReportAttach2 = timeStamp + "." + getFileExt(contentUri);
+                    Toast.makeText(this, "File Name" + strPMReportAttach2, Toast.LENGTH_SHORT).show();
+
+                    try {
+                        filePMReportAttach2 = FileUtli.from(this, contentUri);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    long mb = filePMReportAttach2.length();
+                    mb = mb / 1024;
+
+                    try {
+                        if (5120 > mb) {
+                            tvPMReportAttach2.setError(null);
+                            String myStr = strPMReportAttach2;
+                            int index = myStr.lastIndexOf(".");
+                            String extension = myStr.substring(index);
+                            if (extension.equals(".pdf")) {
+                                tvPMReportAttach2.setText(strPMReportAttach2);
+                            } else if (extension.equals(".jpg")) {
+                                tvPMReportAttach2.setText(strPMReportAttach2);
+                            } else if (extension.equals(".png")) {
+                                tvPMReportAttach2.setText(strPMReportAttach2);
+                            } else if (extension.equals(".jpeg")) {
+                                tvPMReportAttach2.setText(strPMReportAttach2);
+                            } else {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialogCustom);
+                                builder.setMessage("Please Select Pdf and Image File Only ..");
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
+                            }
+
+
+                        } else {
+                            tvPMReportAttach2.setError("Sorry, your file is too large. Upload files up to 5 MB in size below.");
+                            tvPMReportAttach2.requestFocus();
+                        }
+
+                    } catch (Exception e) {
+
+                    }
+
+
+                }
+                break;
+
+
+            case 16:
+                if (resultCode == RESULT_OK) {
+                    Uri contentUri = data.getData();
+                    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+                    strPMReportAttach3 = timeStamp + "." + getFileExt(contentUri);
+                    Toast.makeText(this, "File Name" + strPMReportAttach3, Toast.LENGTH_SHORT).show();
+
+                    try {
+                        filePMReportAttach3 = FileUtli.from(this, contentUri);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    long mb = filePMReportAttach3.length();
+                    mb = mb / 1024;
+
+                    try {
+                        if (5120 > mb) {
+                            tvPMReportAttach3.setError(null);
+                            String myStr = strPMReportAttach3;
+                            int index = myStr.lastIndexOf(".");
+                            String extension = myStr.substring(index);
+                            if (extension.equals(".pdf")) {
+                                tvPMReportAttach3.setText(strPMReportAttach3);
+                            } else if (extension.equals(".jpg")) {
+                                tvPMReportAttach3.setText(strPMReportAttach3);
+                            } else if (extension.equals(".png")) {
+                                tvPMReportAttach3.setText(strPMReportAttach3);
+                            } else if (extension.equals(".jpeg")) {
+                                tvPMReportAttach3.setText(strPMReportAttach3);
+                            } else {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialogCustom);
+                                builder.setMessage("Please Select Pdf and Image File Only ..");
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
+                            }
+
+
+                        } else {
+                            tvPMReportAttach3.setError("Sorry, your file is too large. Upload files up to 5 MB in size below.");
+                            tvPMReportAttach3.requestFocus();
+                        }
+
+                    } catch (Exception e) {
+
+                    }
+
+
+                }
+                break;
+
+            case 17:
+                if (resultCode == RESULT_OK) {
+                    Uri contentUri = data.getData();
+                    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+                    strPMReportAttach4 = timeStamp + "." + getFileExt(contentUri);
+                    Toast.makeText(this, "File Name" + strPMReportAttach4, Toast.LENGTH_SHORT).show();
+
+                    try {
+                        filePMReportAttach4 = FileUtli.from(this, contentUri);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    long mb = filePMReportAttach4.length();
+                    mb = mb / 1024;
+
+                    try {
+                        if (5120 > mb) {
+                            tvPMReportAttach4.setError(null);
+                            String myStr = strPMReportAttach4;
+                            int index = myStr.lastIndexOf(".");
+                            String extension = myStr.substring(index);
+                            if (extension.equals(".pdf")) {
+                                tvPMReportAttach4.setText(strPMReportAttach4);
+                            } else if (extension.equals(".jpg")) {
+                                tvPMReportAttach4.setText(strPMReportAttach4);
+                            } else if (extension.equals(".png")) {
+                                tvPMReportAttach4.setText(strPMReportAttach4);
+                            } else if (extension.equals(".jpeg")) {
+                                tvPMReportAttach4.setText(strPMReportAttach4);
+                            } else {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialogCustom);
+                                builder.setMessage("Please Select Pdf and Image File Only ..");
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
+                            }
+
+
+                        } else {
+                            tvPMReportAttach4.setError("Sorry, your file is too large. Upload files up to 5 MB in size below.");
+                            tvPMReportAttach4.requestFocus();
                         }
 
                     } catch (Exception e) {

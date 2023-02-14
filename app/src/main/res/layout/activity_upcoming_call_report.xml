@@ -575,7 +575,7 @@
                         android:layout_marginLeft="8dp"
                         android:layout_marginTop="18dp"
                         android:layout_marginRight="8dp"
-                        android:visibility="visible"
+                        android:visibility="gone"
                         app:cardCornerRadius="10dp">
 
                         <RelativeLayout
@@ -1847,6 +1847,8 @@
                             android:textSize="18dp"
                             android:visibility="visible" />
 
+
+
                         <TextView
                             android:id="@+id/tvWayBill"
                             style="@android:style/Widget.EditText"
@@ -1981,6 +1983,105 @@
                             android:textSize="18dp"
                             android:visibility="gone" />
 
+
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:id="@+id/rlPMReport"
+                        android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tvPMReport"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/openssansbold"
+                        android:text=" Preventive Maintenance Report :"
+                        android:textColor="@color/RoseRed"
+                        android:textSize="18dp" />
+
+                        <TextView
+                            android:id="@+id/tvPMReportAttach"
+                            style="@android:style/Widget.EditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:layout_below="@id/tvPMReport"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="18dp"
+                            android:layout_marginRight="8dp"
+                            android:background="@drawable/edittext"
+                            android:backgroundTint="@color/whiteLite2"
+                            android:fontFamily="@font/semibold"
+                            android:gravity="center_vertical"
+                            android:textColorHint="@color/Radio"
+                            android:hint=" PM Report (compulsory Attach)"
+                            android:paddingLeft="10dp"
+                            android:textColor="@color/black"
+                            android:textSize="18dp"
+                            android:visibility="visible" />
+
+                        <TextView
+                            android:id="@+id/tvPMReportAttach2"
+                            style="@android:style/Widget.EditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:layout_below="@id/tvPMReportAttach"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="18dp"
+                            android:layout_marginRight="8dp"
+                            android:background="@drawable/edittext"
+                            android:backgroundTint="@color/whiteLite2"
+                            android:fontFamily="@font/semibold"
+                            android:gravity="center_vertical"
+                            android:hint="PM Report (compulsory Attach)"
+                            android:paddingLeft="10dp"
+                            android:textColorHint="@color/Radio"
+                            android:textColor="@color/black"
+                            android:textSize="18dp"
+                            android:visibility="visible" />
+
+                        <TextView
+                            android:id="@+id/tvPMReportAttach3"
+                            style="@android:style/Widget.EditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:layout_below="@id/tvPMReportAttach2"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="18dp"
+                            android:layout_marginRight="8dp"
+                            android:background="@drawable/edittext"
+                            android:backgroundTint="@color/whiteLite2"
+                            android:fontFamily="@font/semibold"
+                            android:gravity="center_vertical"
+                            android:hint="PM Report (Optional)"
+                            android:textColorHint="@color/bluegray"
+                            android:paddingLeft="10dp"
+                            android:textColor="@color/black"
+                            android:textSize="18dp"
+                            android:visibility="visible" />
+
+                        <TextView
+                            android:id="@+id/tvPMReportAttach4"
+                            style="@android:style/Widget.EditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:layout_below="@id/tvPMReportAttach3"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="18dp"
+                            android:layout_marginRight="8dp"
+                            android:background="@drawable/edittext"
+                            android:backgroundTint="@color/whiteLite2"
+                            android:fontFamily="@font/semibold"
+                            android:gravity="center_vertical"
+                            android:hint="PM Report (Optional)"
+                            android:textColorHint="@color/bluegray"
+                            android:paddingLeft="10dp"
+                            android:textColor="@color/black"
+                            android:textSize="18dp"
+                            android:visibility="visible" />
 
                     </RelativeLayout>
 

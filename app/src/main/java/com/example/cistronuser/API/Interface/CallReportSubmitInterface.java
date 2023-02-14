@@ -95,11 +95,40 @@ public interface CallReportSubmitInterface {
                                                          @Part("empid") RequestBody empid, @Part MultipartBody.Part file_inlr);
 
 
-    // callClose.php?action=uploadServiceReport&call_status&callassignid=&empid=&fileName=serviceReport
 
+    //*********** Service Report **********//
+    // callClose.php?action=uploadServiceReport&call_status&callassignid=&empid=&fileName=serviceReport
     @Multipart
     @POST("callClose.php")
     Call<CallReportAttachServiceResponse> CallReportAttachFile(@Part("action") RequestBody action, @Part("call_status") RequestBody call_status,
                                                                @Part("callassignid") RequestBody callassignid,
                                                                @Part("empid") RequestBody empid, @Part MultipartBody.Part serviceReport);
+
+    //callClose.php?action=uploadPMReport&callassignid=
+
+    //Complsory
+    @Multipart
+    @POST("callClose.php")
+    Call<CallReportAttachServiceResponse> CallComPMReport(@Part("action") RequestBody action, @Part("callassignid") RequestBody callassignid,
+                                                       @Part("empid") RequestBody empid, @Part MultipartBody.Part pm_report1,
+                                                       @Part MultipartBody.Part pm_report2);
+
+    @Multipart
+    @POST("callClose.php")
+    Call<CallReportAttachServiceResponse> CallComOption1PMReport(@Part("action") RequestBody action, @Part("callassignid") RequestBody callassignid,
+                                                          @Part("empid") RequestBody empid, @Part MultipartBody.Part pm_report1,
+                                                          @Part MultipartBody.Part pm_report2,@Part MultipartBody.Part pm_report3);
+
+    @Multipart
+    @POST("callClose.php")
+    Call<CallReportAttachServiceResponse> CallComOption2PMReport(@Part("action") RequestBody action, @Part("callassignid") RequestBody callassignid,
+                                                          @Part("empid") RequestBody empid, @Part MultipartBody.Part pm_report1,
+                                                          @Part MultipartBody.Part pm_report2,@Part MultipartBody.Part pm_report4);
+    @Multipart
+    @POST("callClose.php")
+    Call<CallReportAttachServiceResponse> CallPMReport(@Part("action") RequestBody action, @Part("callassignid") RequestBody callassignid,
+                                                       @Part("empid") RequestBody empid, @Part MultipartBody.Part pm_report1,
+                                                       @Part MultipartBody.Part pm_report2, @Part MultipartBody.Part pm_report3,
+                                                       @Part MultipartBody.Part pm_report4);
+
 }
