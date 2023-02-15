@@ -18,7 +18,7 @@ public interface CallReportingUpComingSubmitInterface {
 
 
     //balinspay, call_status, callassignid, callregid, ccategory, cft, csubcategory, dated, ea, hpidd, ins_date, instamt, instamtr,
-    // lid, nopay, others, pay_option, pdtidd, pr, rate, service_cost, sothers, spare_cost, spc, sqid, tm, tr_ref, wd
+    // lid, nopay, others, pay_option, pdtidd, pr, rate, service_cost, sothers, spare_cost, spc, sqid, tm, tr_ref, wd,  ps,sq,wb,lr
 
     @GET("callClose.php")
     Call<CallReportingUpComingSubmitResponse> callReportSubmit(@Query("action")String action,

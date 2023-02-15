@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="10dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:paddingTop="10dp"
+                    android:id="@+id/rlSerNo"
+                    android:paddingBottom="10dp"
+                    android:background="@color/Cistronbasecolor"
+                    android:layout_height="wrap_content">
+
+
+                    <TextView
+                        android:id="@+id/tvSerialNo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/roboblod"
+                        android:text="2023013015E334146"
+                        android:textColor="@color/white"
+                        android:textSize="18dp" />
+
+                </RelativeLayout>
+
+
+
+                <TextView
+                    android:id="@+id/tvWeekTag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/rlSerNo"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/openssanssemibold"
+                    android:text="Request Date :"
+                    android:textColor="@color/Burgundy"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:id="@+id/tvReqDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/rlSerNo"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_toRightOf="@id/tvWeekTag"
+                    android:fontFamily="@font/openssanssemibold"
+                    android:text="2022-12-22"
+                    android:textColor="@color/black"
+                    android:textSize="16dp" />
+
+
+
+                <TextView
+                    android:id="@+id/tvPurposeTag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvReqDate"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/openssanssemibold"
+                    android:text="Purpose :"
+                    android:textColor="@color/Burgundy"
+                    android:textSize="15dp" />
+
+                <TextView
+                    android:id="@+id/tvPurpose"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvReqDate"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_toLeftOf="@+id/ivView"
+                    android:layout_toRightOf="@id/tvPurposeTag"
+                    android:fontFamily="@font/openssanssemibold"
+                    android:text="23012805"
+                    android:textColor="@color/black"
+                    android:textSize="15dp" />
+
+
+                <ImageView
+                    android:id="@+id/ivView"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/rlSerNo"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="8dp"
+                    android:src="@drawable/ic_baseline_keyboard_double_arrow_right_24"
+                    android:tint="@color/Radio"
+                    tools:ignore="UseAppTint" />
+
+
+            </RelativeLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

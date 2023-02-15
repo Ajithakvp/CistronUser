@@ -68,6 +68,8 @@ import com.example.cistronuser.SalesAndservice.Activity.FinalizeNow;
 import com.example.cistronuser.SalesAndservice.Activity.SalesQuote;
 import com.example.cistronuser.SalesAndservice.Activity.VisitEntry;
 import com.example.cistronuser.ServiceEngineer.Activity.PendicallActivity;
+import com.example.cistronuser.ServiceEngineer.Activity.SpareInwardActivity;
+import com.example.cistronuser.ServiceEngineer.Activity.SpareReqPendingCOActivity;
 import com.example.cistronuser.ServiceEngineer.Activity.UpComingCallActivity;
 import com.example.cistronuser.WaitingforApprovel.Activity.CompOffRequest;
 import com.example.cistronuser.WaitingforApprovel.Activity.ExpensesReport;
@@ -114,7 +116,7 @@ public class DashboardActivity extends Activity {
     RelativeLayout rlAdmin, rlWaitingApproval, rlVisitEntryReportLayout, rlWaitingSalesQuoteApprovalRequest;
 
     //Service
-    RelativeLayout rlUpcomingCallLayout,rlPendingingCallLayout;
+    RelativeLayout rlUpcomingCallLayout,rlPendingingCallLayout,rlSpareRequestPendingCoLayout,rlSpareInwardLayout;
     //Report
     RelativeLayout rlExpenseReport, rlrlAttendaceReport, rlrlLeaveReport,rlService, rlWaitingLeaveRequest, rlWaitingCompOFfRequest, rlQuoteReport;
     TextView tvwaitingCountExpense, tvCountLeaveReq, tvCountCompOffReq, tvWaitingCountSalesQuote,tvUpcomingCallCount,tvPendingCallCount;
@@ -205,6 +207,9 @@ public class DashboardActivity extends Activity {
 
         rlUpcomingCallLayout=findViewById(R.id.rlUpcomingCallLayout);
         rlPendingingCallLayout=findViewById(R.id.rlPendingingCallLayout);
+        rlSpareRequestPendingCoLayout=findViewById(R.id.rlSpareRequestPendingCoLayout);
+        rlSpareInwardLayout=findViewById(R.id.rlSpareInwardLayout);
+
 
         rlVisitEntryReportLayout = findViewById(R.id.rlVisitEntryReportLayout);
         cvVisitEntry = findViewById(R.id.cvVisitEntry);
@@ -471,6 +476,25 @@ public class DashboardActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(DashboardActivity.this, SalesQuoteReport.class);
+                startActivity(intent);
+            }
+        });
+
+
+        rlSpareRequestPendingCoLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(DashboardActivity.this, SpareReqPendingCOActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+        rlSpareInwardLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DashboardActivity.this, SpareInwardActivity.class);
                 startActivity(intent);
             }
         });

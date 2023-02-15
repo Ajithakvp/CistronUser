@@ -1990,6 +1990,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:id="@+id/rlPMReport"
+                        android:layout_marginTop="8dp"
                         android:layout_height="wrap_content">
 
                     <TextView
@@ -1999,9 +2000,17 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="10dp"
                         android:fontFamily="@font/openssansbold"
-                        android:text=" Preventive Maintenance Report :"
+                        android:text="Do you have PM Report ?"
                         android:textColor="@color/RoseRed"
                         android:textSize="18dp" />
+
+                        <CheckBox
+                            android:id="@+id/cbPMAttach"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_toRightOf="@id/tvPMReport"
+                            android:checked="true" />
 
                         <TextView
                             android:id="@+id/tvPMReportAttach"
@@ -2017,7 +2026,7 @@
                             android:fontFamily="@font/semibold"
                             android:gravity="center_vertical"
                             android:textColorHint="@color/Radio"
-                            android:hint=" PM Report (compulsory Attach)"
+                            android:hint=" PM Report (Mandatory)"
                             android:paddingLeft="10dp"
                             android:textColor="@color/black"
                             android:textSize="18dp"
@@ -2036,7 +2045,7 @@
                             android:backgroundTint="@color/whiteLite2"
                             android:fontFamily="@font/semibold"
                             android:gravity="center_vertical"
-                            android:hint="PM Report (compulsory Attach)"
+                            android:hint="PM Report (Mandatory)"
                             android:paddingLeft="10dp"
                             android:textColorHint="@color/Radio"
                             android:textColor="@color/black"

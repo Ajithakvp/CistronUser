@@ -257,6 +257,7 @@ public class UpcomingCallReport extends AppCompatActivity {
     File filePMReportAttach = null, filePMReportAttach2 = null;
     File filePMReportAttach3 = null, filePMReportAttach4 = null;
     RelativeLayout rlPMReport;
+    CheckBox cbPMAttach;
 
 
     //Yes DoYouConsumeSpares
@@ -283,6 +284,7 @@ public class UpcomingCallReport extends AppCompatActivity {
     int rbClosePayID;
     int rbRecPendingID;
     int cbSetID = 1;
+    int cbPMAttachID=1;
 
 
     @SuppressLint("MissingInflatedId")
@@ -331,6 +333,7 @@ public class UpcomingCallReport extends AppCompatActivity {
         tvPMReportAttach3 = findViewById(R.id.tvPMReportAttach3);
         tvPMReportAttach4 = findViewById(R.id.tvPMReportAttach4);
         rlPMReport = findViewById(R.id.rlPMReport);
+        cbPMAttach=findViewById(R.id.cbPMAttach);
 
 
         // *********** Supply *****************//
@@ -1074,6 +1077,28 @@ public class UpcomingCallReport extends AppCompatActivity {
                 }
 
 
+            }
+        });
+
+
+        cbPMAttach.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                cbPMAttachID= cbPMAttach.isChecked() ? 1:0;
+
+                if (isChecked){
+                    tvPMReportAttach.setVisibility(View.VISIBLE);
+                    tvPMReportAttach2.setVisibility(View.VISIBLE);
+                    tvPMReportAttach3.setVisibility(View.VISIBLE);
+                    tvPMReportAttach4.setVisibility(View.VISIBLE);
+
+                }else {
+                    tvPMReportAttach.setVisibility(View.GONE);
+                    tvPMReportAttach2.setVisibility(View.GONE);
+                    tvPMReportAttach3.setVisibility(View.GONE);
+                    tvPMReportAttach4.setVisibility(View.GONE);
+                }
             }
         });
 
@@ -1870,7 +1895,6 @@ public class UpcomingCallReport extends AppCompatActivity {
                 try {
 
 
-
                     if (spCallType.getSelectedItem().toString().trim().equals("Paid") && tvCusInvoice.getText().length() == 0) {
                         tvCusInvoice.setError("Please attach the customer invoice. ");
                         tvCusInvoice.requestFocus();
@@ -1991,11 +2015,11 @@ public class UpcomingCallReport extends AppCompatActivity {
                         edReason.requestFocus();
 
                     } else
-                    if (PM.trim().equals("Preventive Maintenance") && tvPMReportAttach.getText().toString().trim().length() == 0 ) {
+                    if ( PM.trim().equals("Preventive Maintenance") && cbPMAttach.isChecked()==true && tvPMReportAttach.getText().toString().trim().length() == 0 ) {
                         tvPMReportAttach.setError("Please Attach the  Preventive Maintenance Report ");
                         tvPMReportAttach.requestFocus();
 
-                    }  else if (PM.trim().equals("Preventive Maintenance") &&  tvPMReportAttach2.getText().toString().trim().length() == 0) {
+                    }  else if (PM.trim().equals("Preventive Maintenance") &&  cbPMAttach.isChecked()==true &&  tvPMReportAttach2.getText().toString().trim().length() == 0) {
                         tvPMReportAttach2.setError("Please Attach the  Preventive Maintenance Report ");
                         tvPMReportAttach2.requestFocus();
 
@@ -2003,8 +2027,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                         Toast.makeText(UpcomingCallReport.this, "Please Select a Customer Review", Toast.LENGTH_SHORT).show();
 
                     } else {
-                        CallReportSubmit();
-                        Log.e(TAG, "onClick: 0");
+
                     if (fileCustomerPO != null) {
                         callCusPoFile();
                         Log.e(TAG, "onClick: 1");
@@ -2034,7 +2057,6 @@ public class UpcomingCallReport extends AppCompatActivity {
                         Log.e(TAG, "onClick: 7");
                     }
 
-
                     if (filePMReportAttach != null && filePMReportAttach2 != null && filePMReportAttach3 != null && filePMReportAttach4 != null) {
                         CallPMReport();
                         Log.e(TAG, "onClick: 8");
@@ -2048,6 +2070,10 @@ public class UpcomingCallReport extends AppCompatActivity {
                         CallPMComplsory();
                         Log.e(TAG, "onClick: 11");
                     }
+
+                        CallReportSubmit();
+                        Log.e(TAG, "onClick: 0");
+
                    }
 
                 } catch (Exception e) {
@@ -2256,9 +2282,10 @@ public class UpcomingCallReport extends AppCompatActivity {
                     if (response.isSuccessful()) {
 
                         progressDialog.dismiss();
-                        finish();
-                        Intent intent = new Intent(UpcomingCallReport.this, DashboardActivity.class);
-                        startActivity(intent);
+
+//                        Intent intent = new Intent(UpcomingCallReport.this, DashboardActivity.class);
+//                        startActivity(intent);
+//                        finish();
 
                     }
 
@@ -2357,7 +2384,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                 try {
                     if (response.isSuccessful()) {
 
-                        finish();
+                       // finish();
 
                     }
 
@@ -2387,7 +2414,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                 try {
                     if (response.isSuccessful()) {
 
-                        finish();
+                      //  finish();
 
                     }
 
@@ -2422,7 +2449,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                 try {
                     if (response.isSuccessful()) {
 
-                        finish();
+                      //  finish();
 
                     }
 
@@ -2451,7 +2478,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                 try {
                     if (response.isSuccessful()) {
 
-                        finish();
+                      //  finish();
 
                     }
 
@@ -2476,7 +2503,7 @@ public class UpcomingCallReport extends AppCompatActivity {
         RequestBody installimg1 = create(MediaType.parse("multipart/form-data"), fileinstallImg1);
         MultipartBody.Part fileInstallimg1 = MultipartBody.Part.createFormData("installImg1", fileinstallImg1.getName(), installimg1);
         RequestBody installimg2 = RequestBody.create(MediaType.parse("multipart/form-data"), fileinstallImg2);
-        MultipartBody.Part fileInstallimg2 = MultipartBody.Part.createFormData("installImg2", fileinstallImg1.getName(), installimg2);
+        MultipartBody.Part fileInstallimg2 = MultipartBody.Part.createFormData("installImg2", fileinstallImg2.getName(), installimg2);
         RequestBody installimg3 = RequestBody.create(MediaType.parse("multipart/form-data"), fileinstallImg3);
         MultipartBody.Part fileInstallimg3 = MultipartBody.Part.createFormData("installImg3", fileinstallImg3.getName(), installimg3);
         RequestBody installimg4 = RequestBody.create(MediaType.parse("multipart/form-data"), fileWarrentyCard);
@@ -2492,7 +2519,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                 try {
                     if (response.isSuccessful()) {
 
-                        finish();
+                      //  finish();
 
                     }
 
