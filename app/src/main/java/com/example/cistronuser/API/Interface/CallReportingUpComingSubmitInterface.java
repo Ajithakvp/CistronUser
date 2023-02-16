@@ -66,7 +66,14 @@ public interface CallReportingUpComingSubmitInterface {
                                                                @Query("ea")String ea,
                                                                @Query("rate")String rate,
                                                                @Query("work1")String work1,
-                                                               @Query("ser_reason")String ser_reason);
+                                                               @Query("ser_reason")String ser_reason,
+                                                               @Query("ps")String ps,
+                                                               @Query("sq")String sq,
+                                                               @Query("wb")String wb,
+                                                               @Query("lr")String lr,
+                                                               @Query("sr")String sr,
+                                                               @Query("pm")String pm);
+
 
 
 }

@@ -1,10 +1,12 @@
 package com.example.cistronuser.API.Interface;
 
+import com.example.cistronuser.API.Response.CallPMReportsubmitResponse;
 import com.example.cistronuser.API.Response.CallReportAttachServiceResponse;
 import com.example.cistronuser.API.Response.CallReportServiceSubmitResponse;
 import com.example.cistronuser.API.Response.CallReportSpareConsumedSubmitResponse;
 import com.example.cistronuser.API.Response.CallReportSubmitCusPoRespones;
 import com.example.cistronuser.API.Response.CallReportSubmitResponse;
+import com.example.cistronuser.API.Response.CallReportWayBillSubmitResponse;
 import com.example.cistronuser.API.Response.CallReportsubmitCusInvoiceResponse;
 
 import okhttp3.MultipartBody;
@@ -81,9 +83,9 @@ public interface CallReportSubmitInterface {
     //#API: callClose.php?action=uploadWayBill&call_status=1&pay_option=8&callassignid=&empid=&fileName=file_inwb
     @Multipart
     @POST("callClose.php")
-    Call<CallReportSubmitResponse> CallWaybill(@Part("action") RequestBody action, @Part("call_status") RequestBody call_status,
-                                                     @Part("pay_option") RequestBody pay_option,  @Part("callassignid") RequestBody callassignid,
-                                               @Part("empid") RequestBody empid,@Part MultipartBody.Part file_inwb);
+    Call<CallReportWayBillSubmitResponse> CallWaybill(@Part("action") RequestBody action, @Part("call_status") RequestBody call_status,
+                                                      @Part("pay_option") RequestBody pay_option, @Part("callassignid") RequestBody callassignid,
+                                                      @Part("empid") RequestBody empid, @Part MultipartBody.Part file_inwb);
 
 
     //*********** LR **********//
@@ -109,24 +111,24 @@ public interface CallReportSubmitInterface {
     //Complsory
     @Multipart
     @POST("callClose.php")
-    Call<CallReportAttachServiceResponse> CallComPMReport(@Part("action") RequestBody action, @Part("callassignid") RequestBody callassignid,
-                                                       @Part("empid") RequestBody empid, @Part MultipartBody.Part pm_report1,
-                                                       @Part MultipartBody.Part pm_report2);
+    Call<CallPMReportsubmitResponse> CallComPMReport(@Part("action") RequestBody action, @Part("callassignid") RequestBody callassignid,
+                                                     @Part("empid") RequestBody empid, @Part MultipartBody.Part pm_report1,
+                                                     @Part MultipartBody.Part pm_report2);
 
     @Multipart
     @POST("callClose.php")
-    Call<CallReportAttachServiceResponse> CallComOption1PMReport(@Part("action") RequestBody action, @Part("callassignid") RequestBody callassignid,
+    Call<CallPMReportsubmitResponse> CallComOption1PMReport(@Part("action") RequestBody action, @Part("callassignid") RequestBody callassignid,
                                                           @Part("empid") RequestBody empid, @Part MultipartBody.Part pm_report1,
                                                           @Part MultipartBody.Part pm_report2,@Part MultipartBody.Part pm_report3);
 
     @Multipart
     @POST("callClose.php")
-    Call<CallReportAttachServiceResponse> CallComOption2PMReport(@Part("action") RequestBody action, @Part("callassignid") RequestBody callassignid,
+    Call<CallPMReportsubmitResponse> CallComOption2PMReport(@Part("action") RequestBody action, @Part("callassignid") RequestBody callassignid,
                                                           @Part("empid") RequestBody empid, @Part MultipartBody.Part pm_report1,
                                                           @Part MultipartBody.Part pm_report2,@Part MultipartBody.Part pm_report4);
     @Multipart
     @POST("callClose.php")
-    Call<CallReportAttachServiceResponse> CallPMReport(@Part("action") RequestBody action, @Part("callassignid") RequestBody callassignid,
+    Call<CallPMReportsubmitResponse> CallPMReport(@Part("action") RequestBody action, @Part("callassignid") RequestBody callassignid,
                                                        @Part("empid") RequestBody empid, @Part MultipartBody.Part pm_report1,
                                                        @Part MultipartBody.Part pm_report2, @Part MultipartBody.Part pm_report3,
                                                        @Part MultipartBody.Part pm_report4);

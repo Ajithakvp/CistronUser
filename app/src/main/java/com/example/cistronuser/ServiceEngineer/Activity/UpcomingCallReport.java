@@ -74,12 +74,14 @@ import com.example.cistronuser.API.Model.ServiceSpareRequestModel;
 import com.example.cistronuser.API.Model.SpareInwardRecordModel;
 import com.example.cistronuser.API.Model.SpareRequestsRecordModel;
 import com.example.cistronuser.API.Model.SparesConsumedRecordModel;
+import com.example.cistronuser.API.Response.CallPMReportsubmitResponse;
 import com.example.cistronuser.API.Response.CallReportAttachServiceResponse;
 import com.example.cistronuser.API.Response.CallReportComplaintSubCategoryResponse;
 import com.example.cistronuser.API.Response.CallReportServiceSubmitResponse;
 import com.example.cistronuser.API.Response.CallReportSpareConsumedSubmitResponse;
 import com.example.cistronuser.API.Response.CallReportSubmitCusPoRespones;
 import com.example.cistronuser.API.Response.CallReportSubmitResponse;
+import com.example.cistronuser.API.Response.CallReportWayBillSubmitResponse;
 import com.example.cistronuser.API.Response.CallReportingUpComingSubmitResponse;
 import com.example.cistronuser.API.Response.CallReportsubmitCusInvoiceResponse;
 import com.example.cistronuser.API.Response.ConsumeSpareSubmitResponse;
@@ -218,7 +220,6 @@ public class UpcomingCallReport extends AppCompatActivity {
     ArrayList<CallTypeModel> callTypeModels = new ArrayList<>();
     ArrayList<String> strType = new ArrayList<>();
     ArrayAdapter callTypeAdapter;
-    String selected;
 
     //Call Status
     ArrayList<CallStatusModel> callStatusModels = new ArrayList<>();
@@ -285,6 +286,9 @@ public class UpcomingCallReport extends AppCompatActivity {
     int rbRecPendingID;
     int cbSetID = 1;
     int cbPMAttachID=1;
+    public  static int FileUploadCount;
+    String Sr="0",Lr="0",Wb="0",Sq="0",Ps="0",Pm="0";
+
 
 
     @SuppressLint("MissingInflatedId")
@@ -2029,50 +2033,60 @@ public class UpcomingCallReport extends AppCompatActivity {
                     } else {
 
                     if (fileCustomerPO != null) {
+                        FileUploadCount++;
                         callCusPoFile();
-                        Log.e(TAG, "onClick: 1");
+                        Log.e(TAG, "onClick: 1 *"+(FileUploadCount));
                     }
                     if (fileinstallImg1 != null && fileinstallImg2 != null && fileinstallImg3 != null && fileWarrentyCard != null && fileinstallReport != null) {
+                        FileUploadCount++;
                         CallInstallImg();
-                        Log.e(TAG, "onClick: 2");
+                        Log.e(TAG, "onClick: 2 *"+(FileUploadCount));
                     }
                     if (spareFile1 != null && spareFile2 != null && spareFile3 != null) {
+                        FileUploadCount++;
                         callspareConsumedFile();
-                        Log.e(TAG, "onClick: 3");
+                        Log.e(TAG, "onClick: 3 *"+(FileUploadCount));
                     }
                     if (fileinvoice != null) {
+                        FileUploadCount++;
                         callcusInvoice();
-                        Log.e(TAG, "onClick: 4");
+                        Log.e(TAG, "onClick: 4 *"+(FileUploadCount));
                     }
                     if (fileLR != null) {
+                        FileUploadCount++;
                         callFileLR();
-                        Log.e(TAG, "onClick: 5");
+                        Log.e(TAG, "onClick: 5 *"+(FileUploadCount));
                     }
                     if (fileWaybill != null) {
+                        FileUploadCount++;
                         CallFileWayBill();
-                        Log.e(TAG, "onClick: 6");
+                        Log.e(TAG, "onClick: 6 *"+(FileUploadCount));
                     }
                     if (fileservice != null) {
+                        FileUploadCount++;
                         CallServiceReport();
-                        Log.e(TAG, "onClick: 7");
+                        Log.e(TAG, "onClick: 7 *"+(FileUploadCount));
                     }
 
                     if (filePMReportAttach != null && filePMReportAttach2 != null && filePMReportAttach3 != null && filePMReportAttach4 != null) {
+                        FileUploadCount++;
                         CallPMReport();
-                        Log.e(TAG, "onClick: 8");
+                        Log.e(TAG, "onClick: 8 *"+(FileUploadCount));
                     }else if (filePMReportAttach != null && filePMReportAttach2 != null && filePMReportAttach3 != null) {
+                        FileUploadCount++;
                         CallPMOptional1Report();
-                        Log.e(TAG, "onClick: 9");
+                        Log.e(TAG, "onClick: 9 *"+(FileUploadCount));
                     }else if (filePMReportAttach != null && filePMReportAttach2 != null && filePMReportAttach4 != null) {
+                        FileUploadCount++;
                         CallPMOptional2Report();
-                        Log.e(TAG, "onClick: 10");
+                        Log.e(TAG, "onClick: 10 *"+(FileUploadCount));
                     } else if (filePMReportAttach != null && filePMReportAttach2 != null) {
+                        FileUploadCount++;
                         CallPMComplsory();
-                        Log.e(TAG, "onClick: 11");
+                        Log.e(TAG, "onClick: 11 *"+(FileUploadCount));
                     }
 
-                        CallReportSubmit();
-                        Log.e(TAG, "onClick: 0");
+
 
                    }
 
@@ -2101,14 +2115,26 @@ public class UpcomingCallReport extends AppCompatActivity {
         MultipartBody.Part filePmReport4 = MultipartBody.Part.createFormData("pm_report4", filePMReportAttach4.getName(), pmreportfile4);
 
         CallReportSubmitInterface callReportSubmitInterface = APIClient.getClient().create(CallReportSubmitInterface.class);
-        callReportSubmitInterface.CallComOption2PMReport(action, callassignid, empid, filePmReport1, filePmReport2, filePmReport4).enqueue(new Callback<CallReportAttachServiceResponse>() {
+        callReportSubmitInterface.CallComOption2PMReport(action, callassignid, empid, filePmReport1, filePmReport2, filePmReport4).enqueue(new Callback<CallPMReportsubmitResponse>() {
             @Override
-            public void onResponse(Call<CallReportAttachServiceResponse> call, Response<CallReportAttachServiceResponse> response) {
+            public void onResponse(Call<CallPMReportsubmitResponse> call, Response<CallPMReportsubmitResponse> response) {
+                try {
 
+                    if (response.isSuccessful()){
+                        Pm=response.body().getPm();
+                        FileUploadCount--;
+                        Log.e(TAG, "onResponse: "+(FileUploadCount));
+                        if (FileUploadCount==0){
+                            CallCloseFun();
+                        }
+                    }
+                }catch (Exception e){
+
+                }
             }
 
             @Override
-            public void onFailure(Call<CallReportAttachServiceResponse> call, Throwable t) {
+            public void onFailure(Call<CallPMReportsubmitResponse> call, Throwable t) {
 
             }
         });
@@ -2130,18 +2156,30 @@ public class UpcomingCallReport extends AppCompatActivity {
 
         CallReportSubmitInterface callReportSubmitInterface = APIClient.getClient().create(CallReportSubmitInterface.class);
 
-        callReportSubmitInterface.CallComOption1PMReport(action, callassignid, empid, filePmReport1, filePmReport2, filePmReport3).enqueue(new Callback<CallReportAttachServiceResponse>() {
+        callReportSubmitInterface.CallComOption1PMReport(action, callassignid, empid, filePmReport1, filePmReport2, filePmReport3).enqueue(new Callback<CallPMReportsubmitResponse>() {
             @Override
-            public void onResponse(Call<CallReportAttachServiceResponse> call, Response<CallReportAttachServiceResponse> response) {
+            public void onResponse(Call<CallPMReportsubmitResponse> call, Response<CallPMReportsubmitResponse> response) {
+                try {
 
+                    if (response.isSuccessful()){
+                        Pm=response.body().getPm();
+
+                        FileUploadCount--;
+                        Log.e(TAG, "onResponse: "+(FileUploadCount));
+                        if (FileUploadCount==0){
+                            CallCloseFun();
+                        }
+                    }
+                }catch (Exception e){
+
+                }
             }
 
             @Override
-            public void onFailure(Call<CallReportAttachServiceResponse> call, Throwable t) {
+            public void onFailure(Call<CallPMReportsubmitResponse> call, Throwable t) {
 
             }
         });
-
     }
 
 
@@ -2156,14 +2194,26 @@ public class UpcomingCallReport extends AppCompatActivity {
         MultipartBody.Part filePmReport2 = MultipartBody.Part.createFormData("pm_report2", filePMReportAttach2.getName(), pmreportfile2);
 
         CallReportSubmitInterface callReportSubmitInterface = APIClient.getClient().create(CallReportSubmitInterface.class);
-        callReportSubmitInterface.CallComPMReport(action, callassignid, empid, filePmReport1, filePmReport2).enqueue(new Callback<CallReportAttachServiceResponse>() {
+        callReportSubmitInterface.CallComPMReport(action, callassignid, empid, filePmReport1, filePmReport2).enqueue(new Callback<CallPMReportsubmitResponse>() {
             @Override
-            public void onResponse(Call<CallReportAttachServiceResponse> call, Response<CallReportAttachServiceResponse> response) {
+            public void onResponse(Call<CallPMReportsubmitResponse> call, Response<CallPMReportsubmitResponse> response) {
+                try {
 
+                    if (response.isSuccessful()){
+                        Pm=response.body().getPm();
+                        Log.e(TAG, "onResponse: "+(FileUploadCount));
+                        FileUploadCount--;
+                        if (FileUploadCount==0){
+                            CallCloseFun();
+                        }
+                    }
+                }catch (Exception e){
+
+                }
             }
 
             @Override
-            public void onFailure(Call<CallReportAttachServiceResponse> call, Throwable t) {
+            public void onFailure(Call<CallPMReportsubmitResponse> call, Throwable t) {
 
             }
         });
@@ -2184,21 +2234,27 @@ public class UpcomingCallReport extends AppCompatActivity {
         MultipartBody.Part filePmReport4 = MultipartBody.Part.createFormData("pm_report4", filePMReportAttach4.getName(), pmreportfile4);
 
         CallReportSubmitInterface callReportSubmitInterface = APIClient.getClient().create(CallReportSubmitInterface.class);
-        callReportSubmitInterface.CallPMReport(action, callassignid, empid, filePmReport1, filePmReport2, filePmReport3, filePmReport4).enqueue(new Callback<CallReportAttachServiceResponse>() {
+        callReportSubmitInterface.CallPMReport(action, callassignid, empid, filePmReport1, filePmReport2, filePmReport3, filePmReport4).enqueue(new Callback<CallPMReportsubmitResponse>() {
             @Override
-            public void onResponse(Call<CallReportAttachServiceResponse> call, Response<CallReportAttachServiceResponse> response) {
+            public void onResponse(Call<CallPMReportsubmitResponse> call, Response<CallPMReportsubmitResponse> response) {
                 try {
-                    if (response.isSuccessful()) {
 
+                    if (response.isSuccessful()){
+
+                        Pm=response.body().getPm();
+                        Log.e(TAG, "onResponse: "+(FileUploadCount));
+                        FileUploadCount--;
+                        if (FileUploadCount==0){
+                            CallCloseFun();
+                        }
                     }
-
-                } catch (Exception e) {
+                }catch (Exception e){
 
                 }
             }
 
             @Override
-            public void onFailure(Call<CallReportAttachServiceResponse> call, Throwable t) {
+            public void onFailure(Call<CallPMReportsubmitResponse> call, Throwable t) {
 
             }
         });
@@ -2220,9 +2276,17 @@ public class UpcomingCallReport extends AppCompatActivity {
             @Override
             public void onResponse(Call<CallReportAttachServiceResponse> call, Response<CallReportAttachServiceResponse> response) {
 
+
                 try {
 
-                } catch (Exception e) {
+                    if (response.isSuccessful()){
+                        FileUploadCount--;
+                        Log.e(TAG, "onResponse: "+(FileUploadCount));
+                        if (FileUploadCount==0){
+                            CallCloseFun();
+                        }
+                    }
+                }catch (Exception e){
 
                 }
             }
@@ -2246,12 +2310,17 @@ public class UpcomingCallReport extends AppCompatActivity {
         RequestBody wb = RequestBody.create(MediaType.parse("multipart/form-data"), fileWaybill);
         MultipartBody.Part filewb = MultipartBody.Part.createFormData("file_inwb", fileWaybill.getName(), wb);
         CallReportSubmitInterface callReportSubmitInterface = APIClient.getClient().create(CallReportSubmitInterface.class);
-        callReportSubmitInterface.CallWaybill(action, call_status, pay_option, callassignid, empid, filewb).enqueue(new Callback<CallReportSubmitResponse>() {
+        callReportSubmitInterface.CallWaybill(action, call_status, pay_option, callassignid, empid, filewb).enqueue(new Callback<CallReportWayBillSubmitResponse>() {
             @Override
-            public void onResponse(Call<CallReportSubmitResponse> call, Response<CallReportSubmitResponse> response) {
+            public void onResponse(Call<CallReportWayBillSubmitResponse> call, Response<CallReportWayBillSubmitResponse> response) {
                 try {
                     if (response.isSuccessful()) {
-
+                        Wb=response.body().getWb();
+                        FileUploadCount--;
+                        Log.e(TAG, "onResponse: "+(FileUploadCount));
+                        if (FileUploadCount==0){
+                            CallCloseFun();
+                        }
 
                     }
 
@@ -2261,7 +2330,7 @@ public class UpcomingCallReport extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<CallReportSubmitResponse> call, Throwable t) {
+            public void onFailure(Call<CallReportWayBillSubmitResponse> call, Throwable t) {
 
             }
         });
@@ -2275,7 +2344,7 @@ public class UpcomingCallReport extends AppCompatActivity {
         CallReportingUpComingSubmitInterface callReportingUpComingSubmitInterface = APIClient.getClient().create(CallReportingUpComingSubmitInterface.class);
         callReportingUpComingSubmitInterface.callReportSubmit("callClose", PreferenceManager.getEmpID(UpcomingCallReport.this), id, LogsitId, CallTypePayoptionsID, ComplaintID, SubComplaintCatID, edTypeComplaintCat.getText().toString(), edTypeSubComplaintCat.getText().toString(), "Not Detect", CallAssignId, CallRegID, CallAssignId, pdtidd, hpidd, chk1, CusPoradiobID,
                 CallStatusID, tvPaymentafterDispatch.getText().toString(), tvRecvPaymentDispatch.getText().toString(), tvInstallDate.getText().toString(), bp_install, bp_installr, strInstallament, strInstallamentr, balinspayamt, cft, String.valueOf(rbconsumerSpareID), Spc, tvFollowUpDate.getText().toString(),
-                tvStartingTime.getText().toString(), tvEndTime.getText().toString(), edPendingReason.getText().toString(), edName.getText().toString(), edMobile.getText().toString(), String.valueOf(rbRecPendingID), tvDepositedDate.getText().toString(), edCheckUTRno.getText().toString(), String.valueOf(rbClosePayID), edSaleORserviceAmt.getText().toString(), edSpareAmt.getText().toString(), edWorkdone.getText().toString(), edEngineerAdvice.getText().toString(), String.valueOf(ratingBar.getRating()), String.valueOf(cbSetID), edReason.getText().toString()).enqueue(new Callback<CallReportingUpComingSubmitResponse>() {
+                tvStartingTime.getText().toString(), tvEndTime.getText().toString(), edPendingReason.getText().toString(), edName.getText().toString(), edMobile.getText().toString(), String.valueOf(rbRecPendingID), tvDepositedDate.getText().toString(), edCheckUTRno.getText().toString(), String.valueOf(rbClosePayID), edSaleORserviceAmt.getText().toString(), edSpareAmt.getText().toString(), edWorkdone.getText().toString(), edEngineerAdvice.getText().toString(), String.valueOf(ratingBar.getRating()), String.valueOf(cbSetID), edReason.getText().toString(),Ps,Sq,Wb,Lr,Sr,Pm).enqueue(new Callback<CallReportingUpComingSubmitResponse>() {
             @Override
             public void onResponse(Call<CallReportingUpComingSubmitResponse> call, Response<CallReportingUpComingSubmitResponse> response) {
                 try {
@@ -2384,7 +2453,12 @@ public class UpcomingCallReport extends AppCompatActivity {
                 try {
                     if (response.isSuccessful()) {
 
-                       // finish();
+                        Lr=response.body().getLr();
+                        Log.e(TAG, "onResponse: "+(FileUploadCount));
+                        FileUploadCount--;
+                        if (FileUploadCount==0){
+                            CallCloseFun();
+                        }
 
                     }
 
@@ -2414,7 +2488,12 @@ public class UpcomingCallReport extends AppCompatActivity {
                 try {
                     if (response.isSuccessful()) {
 
-                      //  finish();
+                        Ps=response.body().getPs();
+                        FileUploadCount--;
+                        Log.e(TAG, "onResponse: "+(FileUploadCount));
+                        if (FileUploadCount==0){
+                            CallCloseFun();
+                        }
 
                     }
 
@@ -2449,7 +2528,12 @@ public class UpcomingCallReport extends AppCompatActivity {
                 try {
                     if (response.isSuccessful()) {
 
-                      //  finish();
+                        Sr=response.body().getSr();
+                        FileUploadCount--;
+                        Log.e(TAG, "onResponse: "+(FileUploadCount));
+                        if (FileUploadCount==0){
+                            CallCloseFun();
+                        }
 
                     }
 
@@ -2478,6 +2562,13 @@ public class UpcomingCallReport extends AppCompatActivity {
                 try {
                     if (response.isSuccessful()) {
 
+                        Sq=response.body().getSq();
+                        FileUploadCount--;
+                        Log.e(TAG, "onResponse: "+(FileUploadCount));
+                        if (FileUploadCount==0){
+                            CallCloseFun();
+                        }
+
                       //  finish();
 
                     }
@@ -2492,6 +2583,11 @@ public class UpcomingCallReport extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void CallCloseFun() {
+        CallReportSubmit();
+        Log.e(TAG, "onClick: 0");
     }
 
     private void CallInstallImg() {
@@ -2518,7 +2614,11 @@ public class UpcomingCallReport extends AppCompatActivity {
             public void onResponse(Call<CallReportSubmitResponse> call, Response<CallReportSubmitResponse> response) {
                 try {
                     if (response.isSuccessful()) {
-
+                        FileUploadCount--;
+                        Log.e(TAG, "onResponse: "+(FileUploadCount));
+                        if (FileUploadCount==0){
+                            CallCloseFun();
+                        }
                       //  finish();
 
                     }
@@ -2645,7 +2745,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                     Uri contentUri = data.getData();
                     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                     strCusInvoiceAttach = timeStamp + "." + getFileExt(contentUri);
-                    Toast.makeText(this, "File Name" + strCusInvoiceAttach, Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(this, "File Name" + strCusInvoiceAttach, Toast.LENGTH_SHORT).show();
 
 
                     try {
@@ -2697,7 +2797,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                     Uri contentUri = data.getData();
                     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                     strSerAttach = timeStamp + "." + getFileExt(contentUri);
-                    Toast.makeText(this, "File Name" + strSerAttach, Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(this, "File Name" + strSerAttach, Toast.LENGTH_SHORT).show();
 
                     try {
                         fileservice = FileUtli.from(this, contentUri);
@@ -2750,7 +2850,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                     Uri contentUri = data.getData();
                     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                     strInstallImg1 = timeStamp + "." + getFileExt(contentUri);
-                    Toast.makeText(this, "File Name" + strInstallImg1, Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(this, "File Name" + strInstallImg1, Toast.LENGTH_SHORT).show();
 
                     try {
                         fileinstallImg1 = FileUtli.from(this, contentUri);
@@ -2804,7 +2904,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                     Uri contentUri = data.getData();
                     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                     strInstallImg2 = timeStamp + "." + getFileExt(contentUri);
-                    Toast.makeText(this, "File Name" + strInstallImg2, Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(this, "File Name" + strInstallImg2, Toast.LENGTH_SHORT).show();
 
                     try {
                         fileinstallImg2 = FileUtli.from(this, contentUri);
@@ -2855,7 +2955,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                     Uri contentUri = data.getData();
                     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                     strInstallImg3 = timeStamp + "." + getFileExt(contentUri);
-                    Toast.makeText(this, "File Name" + strInstallImg3, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(this, "File Name" + strInstallImg3, Toast.LENGTH_SHORT).show();
 
                     try {
                         fileinstallImg3 = FileUtli.from(this, contentUri);
@@ -2906,7 +3006,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                     Uri contentUri = data.getData();
                     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                     strWarrenty = timeStamp + "." + getFileExt(contentUri);
-                    Toast.makeText(this, "File Name" + strWarrenty, Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(this, "File Name" + strWarrenty, Toast.LENGTH_SHORT).show();
 
                     try {
                         fileWarrentyCard = FileUtli.from(this, contentUri);
@@ -2957,7 +3057,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                     Uri contentUri = data.getData();
                     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                     strInstallReport = timeStamp + "." + getFileExt(contentUri);
-                    Toast.makeText(this, "File Name" + strInstallReport, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(this, "File Name" + strInstallReport, Toast.LENGTH_SHORT).show();
 
                     try {
                         fileinstallReport = FileUtli.from(this, contentUri);
@@ -3010,7 +3110,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                     Uri contentUri = data.getData();
                     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                     strsparefile1 = timeStamp + "." + getFileExt(contentUri);
-                    Toast.makeText(this, "File Name" + strsparefile1, Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(this, "File Name" + strsparefile1, Toast.LENGTH_SHORT).show();
 
                     try {
                         spareFile1 = FileUtli.from(this, contentUri);
@@ -3061,7 +3161,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                     Uri contentUri = data.getData();
                     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                     strsparefile2 = timeStamp + "." + getFileExt(contentUri);
-                    Toast.makeText(this, "File Name" + strsparefile2, Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(this, "File Name" + strsparefile2, Toast.LENGTH_SHORT).show();
 
                     try {
                         spareFile2 = FileUtli.from(this, contentUri);
@@ -3113,7 +3213,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                     Uri contentUri = data.getData();
                     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                     strsparefile3 = timeStamp + "." + getFileExt(contentUri);
-                    Toast.makeText(this, "File Name" + strsparefile3, Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(this, "File Name" + strsparefile3, Toast.LENGTH_SHORT).show();
 
                     try {
                         spareFile3 = FileUtli.from(this, contentUri);
@@ -3165,7 +3265,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                     Uri contentUri = data.getData();
                     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                     strCustomerPo = timeStamp + "." + getFileExt(contentUri);
-                    Toast.makeText(this, "File Name" + strCustomerPo, Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(this, "File Name" + strCustomerPo, Toast.LENGTH_SHORT).show();
 
                     try {
                         fileCustomerPO = FileUtli.from(this, contentUri);
@@ -3216,7 +3316,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                     Uri contentUri = data.getData();
                     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                     strWayBill = timeStamp + "." + getFileExt(contentUri);
-                    Toast.makeText(this, "File Name" + strWayBill, Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(this, "File Name" + strWayBill, Toast.LENGTH_SHORT).show();
 
                     try {
                         fileWaybill = FileUtli.from(this, contentUri);
@@ -3267,7 +3367,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                     Uri contentUri = data.getData();
                     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                     strLR = timeStamp + "." + getFileExt(contentUri);
-                    Toast.makeText(this, "File Name" + strLR, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(this, "File Name" + strLR, Toast.LENGTH_SHORT).show();
 
                     try {
                         fileLR = FileUtli.from(this, contentUri);
@@ -3318,7 +3418,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                     Uri contentUri = data.getData();
                     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                     strPMReportAttach = timeStamp + "." + getFileExt(contentUri);
-                    Toast.makeText(this, "File Name" + strPMReportAttach, Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(this, "File Name" + strPMReportAttach, Toast.LENGTH_SHORT).show();
 
                     try {
                         filePMReportAttach = FileUtli.from(this, contentUri);
@@ -3369,7 +3469,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                     Uri contentUri = data.getData();
                     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                     strPMReportAttach2 = timeStamp + "." + getFileExt(contentUri);
-                    Toast.makeText(this, "File Name" + strPMReportAttach2, Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(this, "File Name" + strPMReportAttach2, Toast.LENGTH_SHORT).show();
 
                     try {
                         filePMReportAttach2 = FileUtli.from(this, contentUri);
@@ -3421,7 +3521,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                     Uri contentUri = data.getData();
                     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                     strPMReportAttach3 = timeStamp + "." + getFileExt(contentUri);
-                    Toast.makeText(this, "File Name" + strPMReportAttach3, Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(this, "File Name" + strPMReportAttach3, Toast.LENGTH_SHORT).show();
 
                     try {
                         filePMReportAttach3 = FileUtli.from(this, contentUri);
@@ -3472,7 +3572,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                     Uri contentUri = data.getData();
                     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                     strPMReportAttach4 = timeStamp + "." + getFileExt(contentUri);
-                    Toast.makeText(this, "File Name" + strPMReportAttach4, Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(this, "File Name" + strPMReportAttach4, Toast.LENGTH_SHORT).show();
 
                     try {
                         filePMReportAttach4 = FileUtli.from(this, contentUri);
