@@ -999,7 +999,7 @@ public class LeaveActivity extends Activity {
 
     private void CallLeave() {
 
-        simpleProgressBar.setVisibility(View.VISIBLE);
+
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this, R.style.AppBottomSheetDialogTheme);
         bottomSheetDialog.setContentView(R.layout.leave_from);
         bottomSheetDialog.show();

@@ -2352,9 +2352,9 @@ public class UpcomingCallReport extends AppCompatActivity {
 
                         progressDialog.dismiss();
 
-//                        Intent intent = new Intent(UpcomingCallReport.this, DashboardActivity.class);
-//                        startActivity(intent);
-//                        finish();
+                        Intent intent = new Intent(UpcomingCallReport.this, DashboardActivity.class);
+                        startActivity(intent);
+                        finish();
 
                     }
 
