@@ -884,7 +884,7 @@
                             android:id="@+id/rlSpareRequestPendingCoLayout"
                             android:layout_width="match_parent"
                             android:layout_height="60dp"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             android:layout_below="@id/rlPendingingCallLayout"
                             android:layout_marginTop="20dp"
                             android:background="@drawable/cardview"
@@ -957,7 +957,7 @@
                             android:id="@+id/rlSpareInwardLayout"
                             android:layout_width="match_parent"
                             android:layout_height="60dp"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             android:layout_below="@id/rlSpareRequestPendingCoLayout"
                             android:layout_marginTop="20dp"
                             android:background="@drawable/cardview"
@@ -1016,6 +1016,79 @@
                                 android:layout_centerVertical="true"
                                 android:layout_marginLeft="10dp"
                                 android:layout_toRightOf="@+id/tvSpareInwardCount"
+                                android:fontFamily="@font/semibold"
+                                android:text=")"
+                                android:textColor="#C0C0C0"
+                                android:textSize="18dp" />
+
+
+                        </RelativeLayout>
+
+
+
+                        <RelativeLayout
+                            android:id="@+id/rlReturnReqPendingCoLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:visibility="visible"
+                            android:layout_below="@id/rlSpareInwardLayout"
+                            android:layout_marginTop="20dp"
+                            android:background="@drawable/cardview"
+                            android:backgroundTint="#6495ED">
+
+                            <ImageView
+                                android:id="@+id/ivReturnReqPendingCo"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="30dp"
+                                android:src="@drawable/returnreq"
+                                android:tint="@color/white"
+                                tools:ignore="UseAppTint" />
+
+                            <TextView
+                                android:id="@+id/tvReturnReqPendingCo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="20dp"
+                                android:layout_toRightOf="@+id/ivReturnReqPendingCo"
+                                android:fontFamily="@font/semibold"
+                                android:text="Return Request "
+                                android:textColor="@color/white"
+                                android:textSize="18dp" />
+
+
+                            <TextView
+                                android:id="@+id/tvReturnReqPendingCoStart"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="10dp"
+                                android:layout_toRightOf="@+id/tvReturnReqPendingCo"
+                                android:fontFamily="@font/semibold"
+                                android:text="("
+                                android:textColor="#C0C0C0"
+                                android:textSize="18dp" />
+
+                            <TextView
+                                android:id="@+id/tvReturnReqPendingCoCount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="10dp"
+                                android:layout_toRightOf="@+id/tvReturnReqPendingCoStart"
+                                android:fontFamily="@font/bold"
+                                android:textColor="#FF0000"
+                                android:textSize="18dp" />
+
+                            <TextView
+                                android:id="@+id/tvReturnReqPendingCoEnd"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="10dp"
+                                android:layout_toRightOf="@+id/tvReturnReqPendingCoCount"
                                 android:fontFamily="@font/semibold"
                                 android:text=")"
                                 android:textColor="#C0C0C0"

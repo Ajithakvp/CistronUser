@@ -8,6 +8,10 @@ public class DashboardCallCountResponse {
 //             "upcomingCalls": 8,
 //             "pendingCalls": 142
 
+    //"spareReqPending": 25,
+    //  "sparesInward": 108,
+    //  "returnReqPending": 10
+
 
     @SerializedName("action")
     private String action;
@@ -18,6 +22,15 @@ public class DashboardCallCountResponse {
     @SerializedName("pendingCalls")
     private String pendingCalls;
 
+
+    @SerializedName("spareReqPending")
+    private String spareReqPending;
+
+    @SerializedName("sparesInward")
+    private String sparesInward;
+
+    @SerializedName("returnReqPending")
+    private String returnReqPending;
 
     public String getAction() {
         return action;
@@ -41,5 +54,29 @@ public class DashboardCallCountResponse {
 
     public void setPendingCalls(String pendingCalls) {
         this.pendingCalls = pendingCalls;
+    }
+
+    public String getSpareReqPending() {
+        return spareReqPending;
+    }
+
+    public void setSpareReqPending(String spareReqPending) {
+        this.spareReqPending = spareReqPending;
+    }
+
+    public String getSparesInward() {
+        return sparesInward;
+    }
+
+    public void setSparesInward(String sparesInward) {
+        this.sparesInward = sparesInward;
+    }
+
+    public String getReturnReqPending() {
+        return returnReqPending;
+    }
+
+    public void setReturnReqPending(String returnReqPending) {
+        this.returnReqPending = returnReqPending;
     }
 }

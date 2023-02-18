@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_backgroud"
+    android:backgroundTint="@color/Burgundy">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/rlhead"
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:fontFamily="@font/roboblack"
+                    android:text="View Return Details"
+                    android:textColor="@color/white"
+                    android:textSize="20dp" />
+
+                <ImageView
+                    android:id="@+id/ivBack"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="20dp"
+                    android:src="@drawable/ic_baseline_close_24"
+                    android:tint="@color/white"
+                    tools:ignore="UseAppTint" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlCr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rlhead"
+                android:layout_marginTop="8dp"
+                android:visibility="gone"
+                android:background="@drawable/dialog_backgroud">
+
+
+                <TextView
+                    android:id="@+id/tvCr"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/openssansbold"
+                    android:gravity="center"
+                    android:text="CR#23012805"
+                    android:textColor="@color/blue"
+                    android:textSize="18dp" />
+
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/rlDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rlCr"
+                android:visibility="gone"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/dialog_backgroud">
+
+                <TextView
+                    android:id="@+id/tvHospitalTag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/openssansbold"
+                    android:gravity="center"
+                    android:paddingLeft="8dp"
+                    android:text="Hospital :"
+                    android:textColor="@color/Burgundy"
+                    android:textSize="18dp" />
+
+
+                <TextView
+                    android:id="@+id/tvHospital"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="3dp"
+                    android:layout_toRightOf="@id/tvHospitalTag"
+                    android:fontFamily="@font/openssanssemibold"
+                    android:gravity="center"
+                    android:paddingLeft="8dp"
+                    android:text="VIZAG SPECIALITY HOSPITAL,Arilova,Visakhapatnam "
+                    android:textColor="@color/black"
+                    android:textSize="18dp" />
+
+
+                <TextView
+                    android:id="@+id/tvProductTag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvHospital"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/openssansbold"
+                    android:gravity="center"
+                    android:paddingLeft="8dp"
+                    android:text="Product :"
+                    android:textColor="@color/Burgundy"
+                    android:textSize="18dp" />
+
+
+                <TextView
+                    android:id="@+id/tvProduct"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvHospital"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="3dp"
+                    android:layout_toRightOf="@id/tvProductTag"
+                    android:fontFamily="@font/openssanssemibold"
+                    android:gravity="center"
+                    android:paddingLeft="8dp"
+                    android:text="VIZAG SPECIALITY HOSPITAL,Arilova,Visakhapatnam "
+                    android:textColor="@color/black"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:id="@+id/tvCallTypeTag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvProduct"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/openssansbold"
+                    android:gravity="center"
+                    android:paddingLeft="8dp"
+                    android:text="CallType :"
+                    android:textColor="@color/Burgundy"
+                    android:textSize="18dp" />
+
+
+                <TextView
+                    android:id="@+id/tvCallType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvProduct"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="3dp"
+                    android:layout_toRightOf="@id/tvCallTypeTag"
+                    android:fontFamily="@font/openssanssemibold"
+                    android:gravity="center"
+                    android:paddingLeft="8dp"
+                    android:text="WARRANTY "
+                    android:textColor="@color/black"
+                    android:textSize="18dp" />
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/rlReqDetils"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rlDetails"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="40dp"
+                android:background="@drawable/dialog_backgroud">
+
+                <TextView
+                    android:id="@+id/tvPendingDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/openssansbold"
+                    android:gravity="center"
+                    android:text="RETURN DETAILS"
+                    android:textColor="@color/blue"
+                    android:textSize="18dp" />
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvReqDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvPendingDetails"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp">
+
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+
+            </RelativeLayout>
+
+
+
+
+
+        </RelativeLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+
+</RelativeLayout>

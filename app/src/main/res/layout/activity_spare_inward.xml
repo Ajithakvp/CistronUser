@@ -53,13 +53,7 @@
 
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/rlcard"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:background="@drawable/card_design"
-        android:backgroundTint="@color/Cistronbasecolor"
-        android:layout_below="@+id/rltoolbar" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvSpareInward"

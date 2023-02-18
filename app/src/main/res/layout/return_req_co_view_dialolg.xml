@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="10dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:background="@color/Burgundy"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tvPartName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_toLeftOf="@id/tvPartNoTag"
+                    android:fontFamily="@font/openssansbold"
+                    android:text="Cistron System"
+                    android:textColor="@color/GoldYellow"
+                    android:textSize="17dp" />
+
+
+                <TextView
+                    android:id="@+id/tvReqQtyTag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_below="@+id/tvPartName"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/openssansbold"
+                    android:text="Returned Qty :"
+                    android:textColor="@color/AshGray"
+                    android:textSize="15dp" />
+
+
+                <TextView
+                    android:id="@+id/tvReqQty"
+                    android:layout_marginBottom="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvPartName"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_toRightOf="@+id/tvReqQtyTag"
+                    android:fontFamily="@font/openssansbold"
+                    android:text="10"
+                    android:textColor="@color/white"
+                    android:textSize="15dp" />
+
+
+
+
+
+                <TextView
+                    android:id="@+id/tvPartNoTag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@id/tvPartNo"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/openssansbold"
+                    android:text="Part No :"
+                    android:visibility="visible"
+                    android:textColor="@color/AshGray"
+                    android:textSize="15dp" />
+
+                <TextView
+                    android:id="@+id/tvPartNo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:visibility="visible"
+                    android:layout_marginRight="10dp"
+                    android:layout_alignParentRight="true"
+                    android:fontFamily="@font/openssanssemibold"
+                    android:text="Cl"
+                    android:textColor="@color/white"
+                    android:textSize="15dp" />
+
+
+
+
+
+            </RelativeLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

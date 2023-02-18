@@ -95,6 +95,7 @@
                     android:layout_below="@id/tvEmpid"
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginBottom="20dp"
                     android:layout_toRightOf="@id/tvWeekTag"
                     android:fontFamily="@font/openssanssemibold"
                     android:text="2022-12-22"
@@ -103,32 +104,6 @@
 
 
 
-                <TextView
-                    android:id="@+id/tvPurposeTag"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/tvReqDate"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="8dp"
-                    android:fontFamily="@font/openssanssemibold"
-                    android:text="Purpose :"
-                    android:textColor="@color/Burgundy"
-                    android:textSize="15dp" />
-
-                <TextView
-                    android:id="@+id/tvPurpose"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/tvReqDate"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:layout_toLeftOf="@+id/ivView"
-                    android:layout_toRightOf="@id/tvPurposeTag"
-                    android:fontFamily="@font/openssanssemibold"
-                    android:text="23012805"
-                    android:textColor="@color/black"
-                    android:textSize="15dp" />
 
 
                 <ImageView

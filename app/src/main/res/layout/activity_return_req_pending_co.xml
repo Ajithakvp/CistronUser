@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ServiceEngineer.Activity.SpareReqPendingCOActivity">
+    tools:context=".ServiceEngineer.Activity.ReturnReqPendingCoActivity">
+
     <RelativeLayout
         android:id="@+id/rltoolbar"
         android:layout_width="match_parent"
@@ -18,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:fontFamily="@font/bold"
-            android:text="Spare Request Pending with Coordinator"
+            android:text="Return Request Pending with Coordinator"
             android:textColor="@color/white"
             android:textSize="20dp" />
 
@@ -32,7 +33,7 @@
             android:backgroundTint="@color/white"
             android:src="@drawable/ic_baseline_arrow_left_24"
             android:tint="@color/white"
-            tools:ignore="UseAppTint" />
+            tools:ignore="UseAppTint"  />
 
 
         <ImageView
@@ -55,13 +56,12 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvSpareRequest"
+        android:id="@+id/rvReturnPendig"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_below="@id/rltoolbar"
         />
-
 </RelativeLayout>

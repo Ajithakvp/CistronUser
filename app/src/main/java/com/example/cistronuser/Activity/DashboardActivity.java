@@ -68,6 +68,7 @@ import com.example.cistronuser.SalesAndservice.Activity.FinalizeNow;
 import com.example.cistronuser.SalesAndservice.Activity.SalesQuote;
 import com.example.cistronuser.SalesAndservice.Activity.VisitEntry;
 import com.example.cistronuser.ServiceEngineer.Activity.PendicallActivity;
+import com.example.cistronuser.ServiceEngineer.Activity.ReturnReqPendingCoActivity;
 import com.example.cistronuser.ServiceEngineer.Activity.SpareInwardActivity;
 import com.example.cistronuser.ServiceEngineer.Activity.SpareReqPendingCOActivity;
 import com.example.cistronuser.ServiceEngineer.Activity.UpComingCallActivity;
@@ -116,10 +117,11 @@ public class DashboardActivity extends Activity {
     RelativeLayout rlAdmin, rlWaitingApproval, rlVisitEntryReportLayout, rlWaitingSalesQuoteApprovalRequest;
 
     //Service
-    RelativeLayout rlUpcomingCallLayout,rlPendingingCallLayout,rlSpareRequestPendingCoLayout,rlSpareInwardLayout;
+    RelativeLayout rlUpcomingCallLayout, rlPendingingCallLayout, rlSpareRequestPendingCoLayout, rlSpareInwardLayout,rlReturnReqPendingCoLayout;
+    TextView tvSpareInwardCount, tvSpareRequestPendingCoCount,tvReturnReqPendingCoCount;
     //Report
-    RelativeLayout rlExpenseReport, rlrlAttendaceReport, rlrlLeaveReport,rlService, rlWaitingLeaveRequest, rlWaitingCompOFfRequest, rlQuoteReport;
-    TextView tvwaitingCountExpense, tvCountLeaveReq, tvCountCompOffReq, tvWaitingCountSalesQuote,tvUpcomingCallCount,tvPendingCallCount;
+    RelativeLayout rlExpenseReport, rlrlAttendaceReport, rlrlLeaveReport, rlService, rlWaitingLeaveRequest, rlWaitingCompOFfRequest, rlQuoteReport;
+    TextView tvwaitingCountExpense, tvCountLeaveReq, tvCountCompOffReq, tvWaitingCountSalesQuote, tvUpcomingCallCount, tvPendingCallCount;
 
     Context context;
 
@@ -144,8 +146,6 @@ public class DashboardActivity extends Activity {
         CallUpComPendingCount();
 
     }
-
-
 
 
     @Override
@@ -200,15 +200,19 @@ public class DashboardActivity extends Activity {
         rlWaitingSalesQuoteApprovalRequest = findViewById(R.id.rlWaitingSalesQuoteApprovalRequest);
         tvWaitingCountSalesQuote = findViewById(R.id.tvWaitingSalesQuote);
         rlQuoteReport = findViewById(R.id.rlQuoteReport);
-        tvUpcomingCallCount=findViewById(R.id.tvUpcomingCallCount);
-        tvPendingCallCount=findViewById(R.id.tvPendingCallCount);
-        rlService=findViewById(R.id.rlService);
+        tvUpcomingCallCount = findViewById(R.id.tvUpcomingCallCount);
+        tvPendingCallCount = findViewById(R.id.tvPendingCallCount);
+        rlService = findViewById(R.id.rlService);
 
 
-        rlUpcomingCallLayout=findViewById(R.id.rlUpcomingCallLayout);
-        rlPendingingCallLayout=findViewById(R.id.rlPendingingCallLayout);
-        rlSpareRequestPendingCoLayout=findViewById(R.id.rlSpareRequestPendingCoLayout);
-        rlSpareInwardLayout=findViewById(R.id.rlSpareInwardLayout);
+        rlUpcomingCallLayout = findViewById(R.id.rlUpcomingCallLayout);
+        rlPendingingCallLayout = findViewById(R.id.rlPendingingCallLayout);
+        rlSpareRequestPendingCoLayout = findViewById(R.id.rlSpareRequestPendingCoLayout);
+        rlSpareInwardLayout = findViewById(R.id.rlSpareInwardLayout);
+        tvSpareRequestPendingCoCount = findViewById(R.id.tvSpareRequestPendingCoCount);
+        tvSpareInwardCount = findViewById(R.id.tvSpareInwardCount);
+        tvReturnReqPendingCoCount=findViewById(R.id.tvReturnReqPendingCoCount);
+        rlReturnReqPendingCoLayout=findViewById(R.id.rlReturnReqPendingCoLayout);
 
 
         rlVisitEntryReportLayout = findViewById(R.id.rlVisitEntryReportLayout);
@@ -217,14 +221,10 @@ public class DashboardActivity extends Activity {
         llview3 = findViewById(R.id.llview3);
 
 
-
         tvProfilename.setText(PreferenceManager.getEmpName(this));
 
         lWebview.setMovementMethod(LinkMovementMethod.getInstance());
         lWebview.setLinkTextColor(getResources().getColor(R.color.white));
-
-
-
 
 
         String user = PreferenceManager.getEmpuser(this);
@@ -253,18 +253,18 @@ public class DashboardActivity extends Activity {
                 break;
         }
 
-        CallReportIngCheckInterface callReportIngCheckInterface=APIClient.getClient().create(CallReportIngCheckInterface.class);
-        callReportIngCheckInterface.CalLCheck("checkEmployee",PreferenceManager.getEmpID(this)).enqueue(new Callback<CallReportIngCheckResponse>() {
+        CallReportIngCheckInterface callReportIngCheckInterface = APIClient.getClient().create(CallReportIngCheckInterface.class);
+        callReportIngCheckInterface.CalLCheck("checkEmployee", PreferenceManager.getEmpID(this)).enqueue(new Callback<CallReportIngCheckResponse>() {
             @Override
             public void onResponse(Call<CallReportIngCheckResponse> call, Response<CallReportIngCheckResponse> response) {
                 try {
-                    if (response.body().getResponse().trim().equals("0")){
+                    if (response.body().getResponse().trim().equals("0")) {
                         rlService.setVisibility(View.GONE);
-                    }else {
+                    } else {
                         rlService.setVisibility(View.VISIBLE);
                     }
 
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
             }
@@ -274,8 +274,6 @@ public class DashboardActivity extends Activity {
 
             }
         });
-
-
 
 
         //internet
@@ -294,7 +292,7 @@ public class DashboardActivity extends Activity {
         lottieAnimationView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final ProgressDialog progressDialog = new ProgressDialog(DashboardActivity.this,R.style.ProgressBarDialog);
+                final ProgressDialog progressDialog = new ProgressDialog(DashboardActivity.this, R.style.ProgressBarDialog);
                 progressDialog.setMessage("Log out...");
                 progressDialog.setCancelable(false);
                 progressDialog.show();
@@ -481,25 +479,6 @@ public class DashboardActivity extends Activity {
         });
 
 
-        rlSpareRequestPendingCoLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(DashboardActivity.this, SpareReqPendingCOActivity.class);
-                startActivity(intent);
-
-            }
-        });
-
-        rlSpareInwardLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(DashboardActivity.this, SpareInwardActivity.class);
-                startActivity(intent);
-            }
-        });
-
-
         //LeaveApprovalCount
         CallLeaveApprovalCount();
 
@@ -519,23 +498,26 @@ public class DashboardActivity extends Activity {
     }
 
     private void CallUpComPendingCount() {
-        DashboardCallCountInterface dashboardCallCountInterface=APIClient.getClient().create(DashboardCallCountInterface.class);
-        dashboardCallCountInterface.CallCount("getDashboardCounts",PreferenceManager.getEmpID(this)).enqueue(new Callback<DashboardCallCountResponse>() {
+        DashboardCallCountInterface dashboardCallCountInterface = APIClient.getClient().create(DashboardCallCountInterface.class);
+        dashboardCallCountInterface.CallCount("getDashboardCounts", PreferenceManager.getEmpID(this)).enqueue(new Callback<DashboardCallCountResponse>() {
             @Override
             public void onResponse(Call<DashboardCallCountResponse> call, Response<DashboardCallCountResponse> response) {
                 try {
-                    if (response.isSuccessful()){
+                    if (response.isSuccessful()) {
                         tvUpcomingCallCount.setText(response.body().getUpcomingCalls());
                         tvPendingCallCount.setText(response.body().getPendingCalls());
+                        tvSpareInwardCount.setText(response.body().getSparesInward());
+                        tvSpareRequestPendingCoCount.setText(response.body().getSpareReqPending());
+                        tvReturnReqPendingCoCount.setText(response.body().getReturnReqPending());
 
 
                         rlUpcomingCallLayout.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                if (response.body().getUpcomingCalls().trim().equals("0")){
+                                if (response.body().getUpcomingCalls().trim().equals("0")) {
                                     Toast.makeText(context, "No  Upcoming Call ", Toast.LENGTH_SHORT).show();
-                                }else {
-                                    Intent intent=new Intent(DashboardActivity.this, UpComingCallActivity.class);
+                                } else {
+                                    Intent intent = new Intent(DashboardActivity.this, UpComingCallActivity.class);
                                     startActivity(intent);
                                 }
                             }
@@ -545,20 +527,60 @@ public class DashboardActivity extends Activity {
                             @Override
                             public void onClick(View v) {
 
-                                if (response.body().getPendingCalls().trim().equals("0")){
+                                if (response.body().getPendingCalls().trim().equals("0")) {
                                     Toast.makeText(context, "No Pending Call ", Toast.LENGTH_SHORT).show();
-                                }else {
-                                    Intent intent=new Intent(DashboardActivity.this, PendicallActivity.class);
+                                } else {
+                                    Intent intent = new Intent(DashboardActivity.this, PendicallActivity.class);
                                     startActivity(intent);
                                 }
                             }
                         });
 
 
+                        rlSpareRequestPendingCoLayout.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                if (response.body().getSpareReqPending().trim().equals("0")) {
+                                    Toast.makeText(context, "No Spare Request ", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Intent intent = new Intent(DashboardActivity.this, SpareReqPendingCOActivity.class);
+                                    startActivity(intent);
+                                }
+
+                            }
+                        });
+
+                        rlSpareInwardLayout.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                if (response.body().getSparesInward().trim().equals("0")) {
+                                    Toast.makeText(context, "No Spare Inward ", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Intent intent = new Intent(DashboardActivity.this, SpareInwardActivity.class);
+                                    startActivity(intent);
+                                }
+                            }
+                        });
+
+                        rlReturnReqPendingCoLayout.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                if (response.body().getReturnReqPending().trim().equals("0")) {
+                                    Toast.makeText(context, "No Return Request ", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Intent intent = new Intent(DashboardActivity.this, ReturnReqPendingCoActivity.class);
+                                    startActivity(intent);
+                                }
+                            }
+                        });
+
 
                     }
 
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
 
@@ -866,7 +888,7 @@ public class DashboardActivity extends Activity {
         btnpasssubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final ProgressDialog progressDialog = new ProgressDialog(DashboardActivity.this,R.style.ProgressBarDialog);
+                final ProgressDialog progressDialog = new ProgressDialog(DashboardActivity.this, R.style.ProgressBarDialog);
                 progressDialog.setMessage("Password changing...");
                 progressDialog.setCancelable(false);
                 progressDialog.show();
