@@ -72,7 +72,8 @@
     <RelativeLayout
         android:id="@+id/rlProfile"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
+        android:minHeight="60dp"
         android:layout_below="@id/rlhead"
         android:layout_marginTop="30dp"
         android:background="@drawable/cardview"
@@ -765,7 +766,7 @@
                                 android:layout_marginLeft="20dp"
                                 android:layout_toRightOf="@+id/ivUpcomingCall"
                                 android:fontFamily="@font/semibold"
-                                android:text="Upcoming Call"
+                                android:text="Upcoming Calls"
                                 android:textColor="@color/white"
                                 android:textSize="18dp" />
 
@@ -836,7 +837,7 @@
                                 android:layout_marginLeft="20dp"
                                 android:layout_toRightOf="@+id/ivPendingingCall"
                                 android:fontFamily="@font/semibold"
-                                android:text="Pending Call"
+                                android:text="Pending Calls"
                                 android:textColor="@color/white"
                                 android:textSize="18dp" />
 

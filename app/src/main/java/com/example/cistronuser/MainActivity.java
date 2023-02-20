@@ -26,9 +26,12 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     //Current Version
-    String AppVersion = "cistron 1.1"; //change expense and biometric Version "cistron 1.1"
+    // Version Before = "cistron 1.1";
+    String AppVersion = "cistron 1.2"; //change expense and biometric Version "cistron 1.1"
+                                       //Add Service Engineering Report Version "cistron 1.2"
 
     TextView tvVersion;
+
 
     @Override
     protected void onResume() {

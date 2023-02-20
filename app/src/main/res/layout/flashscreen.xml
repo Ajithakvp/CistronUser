@@ -2,8 +2,21 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/flashdesign"
+    android:background="@color/whiteLite1"
     android:layout_height="match_parent">
+
+    <com.scwang.wave.MultiWaveHeader
+        android:id="@+id/waveHeader"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_alignParentTop="true"
+        app:mwhVelocity="1"
+        app:mwhProgress="1"
+        app:mwhGradientAngle="45"
+        app:mwhWaveHeight="90dp"
+        app:mwhColorAlpha="0.45"
+        app:mwhStartColor="@color/Cistronbasecolor"
+        app:mwhCloseColor="@color/Cistronbasecolor" />
 
 
     <ImageView
@@ -25,6 +38,23 @@
         android:text="Cistron Systems Private Ltd."
         />
 
+
+
+
+    <com.scwang.wave.MultiWaveHeader
+        android:id="@+id/waveHeaderbottom"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_alignParentBottom="true"
+        android:scaleY="-1"
+        app:mwhVelocity="1"
+        app:mwhProgress="1"
+        android:visibility="visible"
+        app:mwhGradientAngle="45"
+        app:mwhWaveHeight="90dp"
+        app:mwhColorAlpha="0.45"
+        app:mwhStartColor="@color/Cistronbasecolor"
+        app:mwhCloseColor="@color/Cistronbasecolor" />
 
     <TextView
         android:id="@+id/tvVersion"

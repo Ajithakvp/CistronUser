@@ -231,11 +231,18 @@ public class DashboardActivity extends Activity {
 
         switch (user) {
             case "user":
+                rlService.setVisibility(View.GONE);
                 rlWaitingApproval.setVisibility(View.GONE);
                 rlVisitEntryReportLayout.setVisibility(View.VISIBLE);
                 break;
             case "admin":
+                rlService.setVisibility(View.GONE);
                 rlWaitingApproval.setVisibility(View.VISIBLE);
+                rlVisitEntryReportLayout.setVisibility(View.VISIBLE);
+                break;
+            case "service engineer":
+                rlService.setVisibility(View.VISIBLE);
+                rlWaitingApproval.setVisibility(View.GONE);
                 rlVisitEntryReportLayout.setVisibility(View.VISIBLE);
                 break;
 
@@ -253,27 +260,27 @@ public class DashboardActivity extends Activity {
                 break;
         }
 
-        CallReportIngCheckInterface callReportIngCheckInterface = APIClient.getClient().create(CallReportIngCheckInterface.class);
-        callReportIngCheckInterface.CalLCheck("checkEmployee", PreferenceManager.getEmpID(this)).enqueue(new Callback<CallReportIngCheckResponse>() {
-            @Override
-            public void onResponse(Call<CallReportIngCheckResponse> call, Response<CallReportIngCheckResponse> response) {
-                try {
-                    if (response.body().getResponse().trim().equals("0")) {
-                        rlService.setVisibility(View.GONE);
-                    } else {
-                        rlService.setVisibility(View.VISIBLE);
-                    }
-
-                } catch (Exception e) {
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<CallReportIngCheckResponse> call, Throwable t) {
-
-            }
-        });
+//        CallReportIngCheckInterface callReportIngCheckInterface = APIClient.getClient().create(CallReportIngCheckInterface.class);
+//        callReportIngCheckInterface.CalLCheck("checkEmployee", PreferenceManager.getEmpID(this)).enqueue(new Callback<CallReportIngCheckResponse>() {
+//            @Override
+//            public void onResponse(Call<CallReportIngCheckResponse> call, Response<CallReportIngCheckResponse> response) {
+//                try {
+//                    if (response.body().getResponse().trim().equals("0")) {
+//                        rlService.setVisibility(View.GONE);
+//                    } else {
+//                        rlService.setVisibility(View.VISIBLE);
+//                    }
+//
+//                } catch (Exception e) {
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<CallReportIngCheckResponse> call, Throwable t) {
+//
+//            }
+//        });
 
 
         //internet

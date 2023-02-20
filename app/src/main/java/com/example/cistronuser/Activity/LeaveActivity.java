@@ -1383,7 +1383,6 @@ public class LeaveActivity extends Activity {
                                 // Toast.makeText(LeaveActivity.this, LeaveType.get(position), Toast.LENGTH_SHORT).show();
 
                                 String cl = LeaveType.get(position);
-
                                 String[] clpl = cl.split(",");
                                 rbPl.setEnabled(false);
                                 rbLcl.setEnabled(false);
@@ -1451,6 +1450,12 @@ public class LeaveActivity extends Activity {
 
 
     private void callDate() {
+
+        final ProgressDialog progressDialog = new ProgressDialog(this, R.style.ProgressBarDialog);
+        progressDialog.setMessage("Please Wait...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
         datePickerDialog = new DatePickerDialog();
         Calendar calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);
@@ -1464,6 +1469,8 @@ public class LeaveActivity extends Activity {
         max_date_c.set(Calendar.YEAR, year + 2);
         datePickerDialog.setMaxDate(max_date_c);
 
+
+
         for (Calendar loopdate = min_date_c; min_date_c.before(max_date_c); min_date_c.add(Calendar.DATE, 1), loopdate = min_date_c) {
             int dayOfWeek = loopdate.get(Calendar.DAY_OF_WEEK);
             if (dayOfWeek == Calendar.SUNDAY) {
@@ -1473,15 +1480,20 @@ public class LeaveActivity extends Activity {
             }
         }
 
+
+
+
         DateDisableInterface dateDisableInterface = APIClient.getClient().create(DateDisableInterface.class);
         dateDisableInterface.calldisble(PreferenceManager.getEmpID(this), "getDisabledDates").enqueue(new Callback<DateDisableResponse>() {
             @Override
             public void onResponse(Call<DateDisableResponse> call, Response<DateDisableResponse> response) {
 
+                progressDialog.dismiss();
 
                 try {
                     //Log.e(TAG, "onResponse: "+response.body().getDateDisableModels().size() );
                     if (response.body().getDateDisableModels().size() > 0) {
+                        progressDialog.dismiss();
                         dateDisableModels = response.body().getDateDisableModels();
 
 
@@ -1501,6 +1513,7 @@ public class LeaveActivity extends Activity {
 
 
                 } catch (Exception e) {
+                    progressDialog.dismiss();
 
                 }
 
@@ -1508,6 +1521,7 @@ public class LeaveActivity extends Activity {
 
             @Override
             public void onFailure(Call<DateDisableResponse> call, Throwable t) {
+                progressDialog.dismiss();
 
             }
         });
