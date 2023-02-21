@@ -16,10 +16,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
@@ -162,6 +164,7 @@ public class LeaveActivity extends Activity {
 
 
     String empid;
+    String sel;
 
 
     //No leave
@@ -1044,7 +1047,7 @@ public class LeaveActivity extends Activity {
 //        CharSequence s = DateFormat.format("d /MM/yyyy ", d.getTime());
 //        tvDate.setText(s);
 
-
+        CallDisableDate();
         callRes();
         Calltype();
 
@@ -1147,8 +1150,66 @@ public class LeaveActivity extends Activity {
         tvDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                callDate();
-                //  date();
+
+                final ProgressDialog progressDialog = new ProgressDialog(LeaveActivity.this, R.style.ProgressBarDialog);
+                progressDialog.setMessage("Leave Date ...");
+                progressDialog.setCancelable(false);
+                progressDialog.show();
+                DateDisableInterface dateDisableInterface = APIClient.getClient().create(DateDisableInterface.class);
+                dateDisableInterface.calldisble(PreferenceManager.getEmpID(LeaveActivity.this), "getDisabledDates").enqueue(new Callback<DateDisableResponse>() {
+                    @Override
+                    public void onResponse(Call<DateDisableResponse> call, Response<DateDisableResponse> response) {
+
+
+                        try {
+
+                            if (response.isSuccessful()) {
+                                progressDialog.dismiss();
+                                //Log.e(TAG, "onResponse: "+response.body().getDateDisableModels().size() );
+                                 callDate();
+                                //  date();
+
+                                if (response.body().getDateDisableModels().size() > 0) {
+                                    progressDialog.dismiss();
+                                    dateDisableModels = response.body().getDateDisableModels();
+                                    for (int i = 0; i < dateDisableModels.size(); i++) {
+                                        String[] dt = dateDisableModels.get(i).getDate().split("-");
+                                        Disableyear = Integer.parseInt(dt[0]);
+                                        DisableMonth = Integer.parseInt(dt[1]) - 1;
+                                        DisableDay = Integer.parseInt(dt[2]);
+
+                                        Calendar disableDt = Calendar.getInstance();
+                                        disableDt.set(Disableyear, DisableMonth, DisableDay);
+                                        Calendar[] disabledDays = new Calendar[1];
+                                        disabledDays[0] = disableDt;
+                                        datePickerDialog.setDisabledDays(disabledDays);
+                                        datePickerDialog.setHighlightedDays(disabledDays);
+                                    }
+
+                                }
+                            }else {
+                                progressDialog.dismiss();
+                            }
+
+
+                        } catch (Exception e) {
+                            progressDialog.dismiss();
+
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<DateDisableResponse> call, Throwable t) {
+
+                        progressDialog.dismiss();
+
+
+                    }
+                });
+
+
 
 
             }
@@ -1372,56 +1433,61 @@ public class LeaveActivity extends Activity {
                             @SuppressLint("SuspiciousIndentation")
                             @Override
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                try {
 
-                                if (!leave.get(position).trim().equals("----Select----"))
 
-                                    // Toast.makeText(LeaveActivity.this, leave.get(position), Toast.LENGTH_SHORT).show();
-                                    // reason = Integer.parseInt(leave.get(position));
-                                    reason = position;
-                                //reasonName=leave.get(position);
+                                    if (!leave.get(position).trim().equals("----Select----"))
 
-                                // Toast.makeText(LeaveActivity.this, LeaveType.get(position), Toast.LENGTH_SHORT).show();
+                                        // Toast.makeText(LeaveActivity.this, leave.get(position), Toast.LENGTH_SHORT).show();
+                                        // reason = Integer.parseInt(leave.get(position));
+                                        reason = position;
+                                    //reasonName=leave.get(position);
 
-                                String cl = LeaveType.get(position);
-                                String[] clpl = cl.split(",");
-                                rbPl.setEnabled(false);
-                                rbLcl.setEnabled(false);
-                                rbMl.setEnabled(false);
+                                    // Toast.makeText(LeaveActivity.this, LeaveType.get(position), Toast.LENGTH_SHORT).show();
 
-                                if (avCompOff == 0) {
+                                    String cl = LeaveType.get(position);
+                                    String[] clpl = cl.split(",");
+                                    rbPl.setEnabled(false);
+                                    rbLcl.setEnabled(false);
+                                    rbMl.setEnabled(false);
 
-                                    for (int i = 0; i < clpl.length; i++) {
+                                    if (avCompOff == 0) {
 
-                                        if (clpl[i].trim().equals("CL")) {
-                                            if (avCl > 0 || avProbl > 0) {
-                                                rbLcl.setEnabled(true);
-                                                rlUpload.setVisibility(View.GONE);
-                                            } else {
-                                                rblop.setEnabled(true);
+                                        for (int i = 0; i < clpl.length; i++) {
+
+                                            if (clpl[i].trim().equals("CL")) {
+                                                if (avCl > 0 || avProbl > 0) {
+                                                    rbLcl.setEnabled(true);
+                                                    rlUpload.setVisibility(View.GONE);
+                                                } else {
+                                                    rblop.setEnabled(true);
+                                                }
+
+                                            } else if (clpl[i].trim().equals("PL")) {
+                                                if (avPl > 0 || avProbl > 0) {
+                                                    rbPl.setEnabled(true);
+                                                    rlUpload.setVisibility(View.GONE);
+                                                } else {
+                                                    rblop.setEnabled(true);
+                                                }
+                                            } else if (clpl[i].trim().equals("ML")) {
+                                                if (avMl > 0 || avProbl > 0) {
+                                                    rblop.setEnabled(false);
+                                                    rbMl.setEnabled(true);
+                                                    rlUpload.setVisibility(View.VISIBLE);
+                                                } else {
+                                                    rblop.setEnabled(true);
+                                                }
                                             }
 
-                                        } else if (clpl[i].trim().equals("PL")) {
-                                            if (avPl > 0 || avProbl > 0) {
-                                                rbPl.setEnabled(true);
-                                                rlUpload.setVisibility(View.GONE);
-                                            } else {
-                                                rblop.setEnabled(true);
-                                            }
-                                        } else if (clpl[i].trim().equals("ML")) {
-                                            if (avMl > 0 || avProbl > 0) {
-                                                rblop.setEnabled(false);
-                                                rbMl.setEnabled(true);
-                                                rlUpload.setVisibility(View.VISIBLE);
-                                            } else {
-                                                rblop.setEnabled(true);
-                                            }
                                         }
+                                    } else {
+                                        rbCompOff.setChecked(true);
+                                        rbCompOff.setClickable(false);
+                                        rbCompOff.setVisibility(View.VISIBLE);
 
                                     }
-                                } else {
-                                    rbCompOff.setChecked(true);
-                                    rbCompOff.setClickable(false);
-                                    rbCompOff.setVisibility(View.VISIBLE);
+                                } catch (Exception e) {
 
                                 }
                             }
@@ -1451,12 +1517,9 @@ public class LeaveActivity extends Activity {
 
     private void callDate() {
 
-        final ProgressDialog progressDialog = new ProgressDialog(this, R.style.ProgressBarDialog);
-        progressDialog.setMessage("Please Wait...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
-
         datePickerDialog = new DatePickerDialog();
+        datePickerDialog.setTitle("Choose a Leave Date");
+        datePickerDialog.setAccentColor("#6495ED");
         Calendar calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);
         month = calendar.get(Calendar.MONTH);
@@ -1469,8 +1532,6 @@ public class LeaveActivity extends Activity {
         max_date_c.set(Calendar.YEAR, year + 2);
         datePickerDialog.setMaxDate(max_date_c);
 
-
-
         for (Calendar loopdate = min_date_c; min_date_c.before(max_date_c); min_date_c.add(Calendar.DATE, 1), loopdate = min_date_c) {
             int dayOfWeek = loopdate.get(Calendar.DAY_OF_WEEK);
             if (dayOfWeek == Calendar.SUNDAY) {
@@ -1480,88 +1541,101 @@ public class LeaveActivity extends Activity {
             }
         }
 
-
-
-
-        DateDisableInterface dateDisableInterface = APIClient.getClient().create(DateDisableInterface.class);
-        dateDisableInterface.calldisble(PreferenceManager.getEmpID(this), "getDisabledDates").enqueue(new Callback<DateDisableResponse>() {
-            @Override
-            public void onResponse(Call<DateDisableResponse> call, Response<DateDisableResponse> response) {
-
-                progressDialog.dismiss();
-
-                try {
-                    //Log.e(TAG, "onResponse: "+response.body().getDateDisableModels().size() );
-                    if (response.body().getDateDisableModels().size() > 0) {
-                        progressDialog.dismiss();
-                        dateDisableModels = response.body().getDateDisableModels();
-
-
-                        for (int i = 0; i < dateDisableModels.size(); i++) {
-                            String[] dt = dateDisableModels.get(i).getDate().split("-");
-                            Disableyear = Integer.parseInt(dt[0]);
-                            DisableMonth = Integer.parseInt(dt[1]) - 1;
-                            DisableDay = Integer.parseInt(dt[2]);
-
-                            Calendar disableDt = Calendar.getInstance();
-                            disableDt.set(Disableyear, DisableMonth, DisableDay);
-                            Calendar[] disabledDays = new Calendar[1];
-                            disabledDays[0] = disableDt;
-                            datePickerDialog.setDisabledDays(disabledDays);
-                        }
-                    }
-
-
-                } catch (Exception e) {
-                    progressDialog.dismiss();
-
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<DateDisableResponse> call, Throwable t) {
-                progressDialog.dismiss();
-
-            }
-        });
-
         datePickerDialog.setOnDateSetListener(new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
 
+                String monthStr;
+                String DayStr;
+                boolean isDisble = false;
                 String date = tvDate.getText().toString();
-                String selectedDt = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
-                if (!date.isEmpty()) {
-                    if (date.contains(", " + selectedDt)) {
-                        System.out.println("1\n");
-                        date = date.replace(", " + selectedDt, "");
-                    } else if (date.contains(selectedDt)) {
-                        if (date.equals(selectedDt))
-                            date = "";
-                        else
-                            date = date.replace(selectedDt + ", ", "");
-                    } else {
-                        System.out.println("3\n");
-                        date += ", " + selectedDt;
-                    }
-                } else
-                    date = selectedDt;
-                tvDate.setError(null);
-                tvDate.setText(date);
-                int count = date.split(",", -1).length;
-                if (count == 0)
-                    tvselectDate.setText("");
-                else if (count == 1)
-                    tvselectDate.setText("One day is selected");
-                else
+                monthOfYear++;
+                monthStr = (monthOfYear < 10) ? "0" + monthOfYear : "" + monthOfYear;
+                DayStr = (dayOfMonth < 10) ? "0" + dayOfMonth : "" + dayOfMonth;
 
-                    tvselectDate.setText(count + " days are selected");
+                String selectedDt = year + "-" + monthStr + "-" + DayStr;
+
+//                if (!date.isEmpty()) {
+//                    if (date.contains(", " + selectedDt)) {
+//                        date = date.replace(", " + selectedDt, "");
+//                    } else if (date.contains(selectedDt)) {
+//                        if (date.equals(selectedDt) || isDisble==true  ) {
+//                            date ="";
+//                            tvselectDate.setText("");
+//                        }
+//                        else {
+//                            date = date.replace(selectedDt + ", ", "");
+//                        }
+//                    } else {
+//                        System.out.println("3\n");
+//                        date += ", " + selectedDt;
+//                    }
+//                } else {
+//                    date = selectedDt;
+//                }
+
+
+                date = selectedDt;
+                for (int i = 0; i < dateDisableModels.size(); i++) {
+                    String dt = dateDisableModels.get(i).getDate().toString();
+
+                    if (dt.trim().equals(date)) {
+                        tvselectDate.setText("");
+                        tvDate.setText("");
+                        isDisble = true;
+                    }
+
+                }
+                tvDate.setError(null);
+
+
+                if (isDisble == false) {
+                    tvDate.setText(date);
+                } else {
+                    tvselectDate.setText("");
+                    tvDate.setText("");
+
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(LeaveActivity.this, R.style.AlertDialogCustom);
+                    alertDialog.setMessage("You Cannot Select this Date !");
+                    alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+
+                    AlertDialog dialog = alertDialog.create();
+                    dialog.show();
+
+                }
+
+//                    if (tvDate.getText().toString().length() > 0) {
+//                        Log.e(TAG, "onDateSet: "+ tvDate.getText().toString().length());
+//                        int count = date.split(",", -1).length;
+//                        Log.e(TAG, "onDateSet: c " + count);
+//                        if (count == 0)
+//                            tvselectDate.setText("");
+//                        else if (count == 1)
+//                            tvselectDate.setText("One day is selected");
+//                        else
+//
+//                            tvselectDate.setText(count + " days are selected");
+//                    }
+
+
             }
 
         });
 
+
+
+
         datePickerDialog.show(getFragmentManager(), "Leave Date");
+
+
+    }
+
+    private void CallDisableDate() {
 
 
     }
