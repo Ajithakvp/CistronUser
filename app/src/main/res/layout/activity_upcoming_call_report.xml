@@ -1199,6 +1199,8 @@
                             android:id="@+id/rlDCConsumerSpareFile"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:background="@drawable/edittext"
+                            android:backgroundTint="@color/yellow"
                             android:layout_below="@+id/rlSpareConsumed"
                             android:visibility="visible">
 
@@ -1260,6 +1262,7 @@
                                 android:layout_below="@+id/tvSpareFile2"
                                 android:layout_marginLeft="8dp"
                                 android:layout_marginTop="18dp"
+                                android:layout_marginBottom="10dp"
                                 android:layout_marginRight="8dp"
                                 android:background="@drawable/edittext"
                                 android:backgroundTint="@color/whiteLite2"

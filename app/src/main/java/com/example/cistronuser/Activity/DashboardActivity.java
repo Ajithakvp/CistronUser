@@ -235,13 +235,6 @@ public class DashboardActivity extends Activity {
         lWebview.setMovementMethod(LinkMovementMethod.getInstance());
         lWebview.setLinkTextColor(getResources().getColor(R.color.white));
 
-
-
-       
-
-
-
-
         String user = PreferenceManager.getEmpuser(this);
 
         switch (user) {
@@ -251,7 +244,7 @@ public class DashboardActivity extends Activity {
                 rlVisitEntryReportLayout.setVisibility(View.VISIBLE);
                 break;
             case "admin":
-                rlService.setVisibility(View.GONE);
+               rlService.setVisibility(View.GONE);
                 rlWaitingApproval.setVisibility(View.VISIBLE);
                 rlVisitEntryReportLayout.setVisibility(View.VISIBLE);
                 break;
