@@ -244,7 +244,7 @@ public class DashboardActivity extends Activity {
                 rlVisitEntryReportLayout.setVisibility(View.VISIBLE);
                 break;
             case "admin":
-               rlService.setVisibility(View.GONE);
+               rlService.setVisibility(View.VISIBLE);
                 rlWaitingApproval.setVisibility(View.VISIBLE);
                 rlVisitEntryReportLayout.setVisibility(View.VISIBLE);
                 break;

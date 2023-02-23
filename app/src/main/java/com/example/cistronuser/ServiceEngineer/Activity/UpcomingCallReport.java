@@ -1,5 +1,6 @@
 package com.example.cistronuser.ServiceEngineer.Activity;
 
+import static android.os.Environment.DIRECTORY_DOWNLOADS;
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 import static okhttp3.RequestBody.create;
@@ -26,6 +27,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
@@ -107,7 +109,11 @@ import com.example.cistronuser.ServiceEngineer.Adapter.SpareReqAdapter;
 import com.example.cistronuser.ServiceEngineer.Adapter.SparesConsumedAdapter;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -123,6 +129,7 @@ import retrofit2.Response;
 
 public class UpcomingCallReport extends AppCompatActivity {
 
+    public static int FileUploadCount;
     ImageView ivBack;
     Spinner spCallType, spCallStatus;
     TextView tvCusInvoice, tvFollowUpDate, tvStartingTime, tvEndTime, tvserviceReportAttach, tvSubmit;
@@ -134,26 +141,21 @@ public class UpcomingCallReport extends AppCompatActivity {
     RatingBar ratingBar;
     String cft;
     String id, PM;
-
     //Received pending sales payment
     RelativeLayout rlRevPaymentPending;
     RadioGroup rbGrp1;
     RadioButton rbPaymentYes, rbPOaymentNo;
     TextView tvSaleORserviceAmtTag, tvRevPendingPaymnet;
     EditText edSaleORserviceAmt, edSpareAmt;
-
     // Yes Received Payment
     RelativeLayout rlYesRevPayment;
     TextView tvDepositedDate;
     EditText edCheckUTRno;
-
     int count = 0;
-
     // No ed Payment
     RelativeLayout rlNoRevPayment;
     RadioGroup rbGrp2;
     RadioButton rbPaymentCloseYes, rbPaymentCloseNo;
-
     // Spare Consumer
     RelativeLayout rlDCConsumerSpareFile, rlSpareConsumed;
     File spareFile1, spareFile2, spareFile3;
@@ -162,14 +164,12 @@ public class UpcomingCallReport extends AppCompatActivity {
     String strsparefile1, strsparefile2, strsparefile3;
     SparesConsumedAdapter sparesConsumedAdapter;
     ArrayList<SparesConsumedRecordModel> sparesConsumedRecordModels = new ArrayList<>();
-
     // Spare Request
     RelativeLayout rlSpareRequest;
     RecyclerView rvSpareRequest;
     TextView tvSpareRequestCount;
     PendingRequestupSpareAdapter pendingRequestupSpareAdapter;
     ArrayList<SpareRequestsRecordModel> spareRequestsRecordModels = new ArrayList<>();
-
     //Customer PO
     RelativeLayout rlCustomerPO;
     TextView tvCustomerPOCount, tvCusPOFileInvoiceAttch;
@@ -178,17 +178,12 @@ public class UpcomingCallReport extends AppCompatActivity {
     String strCustomerPo;
     CustomerPoAdapter customerPoAdapter;
     ArrayList<CustomerPoResponseModel> customerPoResponseModels = new ArrayList<>();
-
-
     //Installation
     String LogsitId, StringCallNo;
     CardView cvInstallation;
     TextView tvInstallReportAttach, tvWarrentycard, tvInstallationImage3, tvInstallationImage2, tvInstallationImage1, tvInstallDate, tvPaymentInstallation, tvRecvPaymentInstallation, tvTotalamt, tvEscalate;
-
     String strRating, strSerAttach, strCusInvoiceAttach, strInstallImg1, strInstallImg2, strInstallImg3, strWarrenty, strInstallReport;
     File fileservice, fileinvoice, fileinstallImg1, fileinstallImg2, fileinstallImg3, fileWarrentyCard, fileinstallReport;
-
-
     //Supply
     CardView cvSupply;
     int aftPayment, RevAfrDsptch;
@@ -197,12 +192,10 @@ public class UpcomingCallReport extends AppCompatActivity {
     TextView tvWayBill, tvLR;
     String strWayBill, strLR;
     File fileWaybill, fileLR;
-
     //Customer Details
     TextView tvCusDetails, tvProdDetails, tvProdSerial, tvCreated, tvReportby;
     String strTotalPayment;
     Integer strPayment, strReceviedPayment;
-
     //Complaint & subComplaint
     RelativeLayout rlComplaint;
     Spinner spComplaint, spSubComplaint;
@@ -214,33 +207,26 @@ public class UpcomingCallReport extends AppCompatActivity {
     ArrayList<String> strComplaint = new ArrayList<>();
     ArrayAdapter complaintAdapter, subComplaintAdapter;
     String SelectSubComplaintID;
-
-
     //CallType
     ArrayList<CallTypeModel> callTypeModels = new ArrayList<>();
     ArrayList<String> strType = new ArrayList<>();
     ArrayAdapter callTypeAdapter;
-
     //Call Status
     ArrayList<CallStatusModel> callStatusModels = new ArrayList<>();
     ArrayList<String> strStatus = new ArrayList<>();
     ArrayAdapter callStatusAdapter;
-
     //SpareReq
     SpareReqAdapter spareReqAdapter;
     ArrayList<ServiceSpareRequestModel> serviceSpareRequestModels = new ArrayList<>();
     RecyclerView rvReq;
     ImageView ivClose;
     String SerialID1, SerialID2;
-
-
     //SpareInWard
     RelativeLayout rlSpareInward;
     TextView tvSpareInwardCount;
     RecyclerView rvSpareInward;
     SpareInwardListAdapter spareInwardListAdapter;
     ArrayList<SpareInwardRecordModel> spareInwardRecordModels = new ArrayList<>();
-
     //Installament
     CardView cvInstallament;
     RecyclerView rvInstallment;
@@ -251,7 +237,6 @@ public class UpcomingCallReport extends AppCompatActivity {
     ArrayList<String> strInstallament = new ArrayList<>();
     ArrayList<String> strInstallamentr = new ArrayList<>();
     String tm, bp_installmentTot, bp_installmentrTot, balinspayamt;
-
     //PM Attach
     TextView tvPMReportAttach, tvPMReportAttach2, tvPMReportAttach3, tvPMReportAttach4;
     String strPMReportAttach, strPMReportAttach2, strPMReportAttach3, strPMReportAttach4;
@@ -259,8 +244,6 @@ public class UpcomingCallReport extends AppCompatActivity {
     File filePMReportAttach3 = null, filePMReportAttach4 = null;
     RelativeLayout rlPMReport;
     CheckBox cbPMAttach;
-
-
     //Yes DoYouConsumeSpares
     RelativeLayout rlCustomerPOSpares, rlConsumeSpares, rlConsumecusSpares;
     RecyclerView rvCustPoSpareYes, rvConsumespareYes, rvConsumeCusSpareYes;
@@ -271,24 +254,23 @@ public class UpcomingCallReport extends AppCompatActivity {
     ArrayList<CustomerPoSpareRecordModel> customerPoSpareRecordModels = new ArrayList<>();
     ConsumeSpareYesAdapter consumeSpareYesAdapter;
     ArrayList<ConsumeSpareRecordModel> consumeSpareRecordModels = new ArrayList<>();
-
     String DoYouConsumerID, PartID, ComplaintID, SubComplaintCatID, CallRegID, hpidd, pdtidd, chk1, bp_install, bp_installr;
     String CallAssignId, CallStatusID, CallTypePayoptionsID, Spc, CusPoradiobID;
     //Validation
     String ComplaintValidRequired, CustomerVaild;
     int SpareDocVaild, TypeValid;
     RadioButton radioButton;
-
-
     //rbGrup1Id
     int rbconsumerSpareID;
     int rbClosePayID;
     int rbRecPendingID;
     int cbSetID = 1;
-    int cbPMAttachID=1;
-    public  static int FileUploadCount;
-    String Sr="0",Lr="0",Wb="0",Sq="0",Ps="0",Pm="0";
+    int cbPMAttachID = 1;
+    String Sr = "0", Lr = "0", Wb = "0", Sq = "0", Ps = "0", Pm = "0";
 
+
+    //temp File Store
+    String filepath, FileStoreName;
 
 
     @SuppressLint("MissingInflatedId")
@@ -337,7 +319,7 @@ public class UpcomingCallReport extends AppCompatActivity {
         tvPMReportAttach3 = findViewById(R.id.tvPMReportAttach3);
         tvPMReportAttach4 = findViewById(R.id.tvPMReportAttach4);
         rlPMReport = findViewById(R.id.rlPMReport);
-        cbPMAttach=findViewById(R.id.cbPMAttach);
+        cbPMAttach = findViewById(R.id.cbPMAttach);
 
 
         // *********** Supply *****************//
@@ -429,10 +411,6 @@ public class UpcomingCallReport extends AppCompatActivity {
         edSpareAmt = findViewById(R.id.edSpareAmt);
         // *********** Received pending sales payment End *********** //
 
-
-        // ************ File Access Permission ***********//
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, PackageManager.PERMISSION_GRANTED);
-        // ************ File Access Permission End ***********//
 
         // *********** GetString **********//
         id = getIntent().getStringExtra("id");
@@ -691,6 +669,163 @@ public class UpcomingCallReport extends AppCompatActivity {
             }
         });
         //********Customer Detalils End ******************//
+
+
+        // ************ File Access Permission ***********//
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, PackageManager.PERMISSION_GRANTED);
+        filepath = Environment.getExternalStoragePublicDirectory(DIRECTORY_DOWNLOADS) + "/";
+        FileStoreName = id + ".txt";
+        // ************ File Access Permission End ***********//
+
+        // *********** Temp Store **********//
+
+        edName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                CalltempStore();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        edMobile.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                CalltempStore();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        edWorkdone.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                CalltempStore();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        edEngineerAdvice.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                CalltempStore();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        edReason.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                CalltempStore();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        edPendingReason.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                CalltempStore();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        edSpareAmt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                CalltempStore();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        edSaleORserviceAmt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                CalltempStore();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
+        try {
+
+            CalltempReadData();
+        } catch (Exception e) {
+            Log.e(TAG, "Exception: " + e.getMessage());
+        }
+
+
+        // *********** Temp Store End **********//
+
 
         edTypeComplaintCat.addTextChangedListener(new TextWatcher() {
             @Override
@@ -1089,15 +1224,15 @@ public class UpcomingCallReport extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                cbPMAttachID= cbPMAttach.isChecked() ? 1:0;
+                cbPMAttachID = cbPMAttach.isChecked() ? 1 : 0;
 
-                if (isChecked){
+                if (isChecked) {
                     tvPMReportAttach.setVisibility(View.VISIBLE);
                     tvPMReportAttach2.setVisibility(View.VISIBLE);
                     tvPMReportAttach3.setVisibility(View.VISIBLE);
                     tvPMReportAttach4.setVisibility(View.VISIBLE);
 
-                }else {
+                } else {
                     tvPMReportAttach.setVisibility(View.GONE);
                     tvPMReportAttach2.setVisibility(View.GONE);
                     tvPMReportAttach3.setVisibility(View.GONE);
@@ -1898,6 +2033,10 @@ public class UpcomingCallReport extends AppCompatActivity {
 
                 try {
 
+                    File file = new File(getCacheDir(), FileStoreName);
+                    if (file.exists()) {
+                        file.delete();
+                    }
 
                     if (spCallType.getSelectedItem().toString().trim().equals("Paid") && tvCusInvoice.getText().length() == 0) {
                         tvCusInvoice.setError("Please attach the customer invoice. ");
@@ -1925,12 +2064,12 @@ public class UpcomingCallReport extends AppCompatActivity {
                         tvSpareFile1.setError("Please Attach DC/Invoice for Consumed spares");
                         tvSpareFile1.requestFocus();
 
-                    }else if (SpareDocVaild > 0 && spCallStatus.getSelectedItem().equals("Closed") && tvSpareFile2.getText().toString().trim().length() == 0) {
+                    } else if (SpareDocVaild > 0 && spCallStatus.getSelectedItem().equals("Closed") && tvSpareFile2.getText().toString().trim().length() == 0) {
 
                         tvSpareFile2.setError("Please Attach DC/Invoice for Consumed spares");
                         tvSpareFile2.requestFocus();
 
-                    }else if (SpareDocVaild > 0 && spCallStatus.getSelectedItem().equals("Closed")  && tvSpareFile3.getText().toString().trim().length() == 0) {
+                    } else if (SpareDocVaild > 0 && spCallStatus.getSelectedItem().equals("Closed") && tvSpareFile3.getText().toString().trim().length() == 0) {
 
                         tvSpareFile3.setError("Please Attach DC/Invoice for Consumed spares");
                         tvSpareFile3.requestFocus();
@@ -2018,77 +2157,81 @@ public class UpcomingCallReport extends AppCompatActivity {
                         edReason.setError("Please Enter the Reason");
                         edReason.requestFocus();
 
-                    } else
-                    if ( PM.trim().equals("Preventive Maintenance") && cbPMAttach.isChecked()==true && tvPMReportAttach.getText().toString().trim().length() == 0 ) {
+                    } else if (PM.trim().equals("Preventive Maintenance") && cbPMAttach.isChecked() == true && tvPMReportAttach.getText().toString().trim().length() == 0) {
                         tvPMReportAttach.setError("Please Attach the  Preventive Maintenance Report ");
                         tvPMReportAttach.requestFocus();
 
-                    }  else if (PM.trim().equals("Preventive Maintenance") &&  cbPMAttach.isChecked()==true &&  tvPMReportAttach2.getText().toString().trim().length() == 0) {
+                    } else if (PM.trim().equals("Preventive Maintenance") && cbPMAttach.isChecked() == true && tvPMReportAttach2.getText().toString().trim().length() == 0) {
                         tvPMReportAttach2.setError("Please Attach the  Preventive Maintenance Report ");
                         tvPMReportAttach2.requestFocus();
 
-                    }else if (ratingBar.getRating() == 0) {
+                    } else if (ratingBar.getRating() == 0) {
                         Toast.makeText(UpcomingCallReport.this, "Please Select a Customer Review", Toast.LENGTH_SHORT).show();
 
                     } else {
 
-                    if (fileCustomerPO != null) {
-                        FileUploadCount++;
-                        callCusPoFile();
-                        Log.e(TAG, "onClick: 1 *"+(FileUploadCount));
-                    }
-                    if (fileinstallImg1 != null && fileinstallImg2 != null && fileinstallImg3 != null && fileWarrentyCard != null && fileinstallReport != null) {
-                        FileUploadCount++;
-                        CallInstallImg();
-                        Log.e(TAG, "onClick: 2 *"+(FileUploadCount));
-                    }
-                    if (spareFile1 != null && spareFile2 != null && spareFile3 != null) {
-                        FileUploadCount++;
-                        callspareConsumedFile();
-                        Log.e(TAG, "onClick: 3 *"+(FileUploadCount));
-                    }
-                    if (fileinvoice != null) {
-                        FileUploadCount++;
-                        callcusInvoice();
-                        Log.e(TAG, "onClick: 4 *"+(FileUploadCount));
-                    }
-                    if (fileLR != null) {
-                        FileUploadCount++;
-                        callFileLR();
-                        Log.e(TAG, "onClick: 5 *"+(FileUploadCount));
-                    }
-                    if (fileWaybill != null) {
-                        FileUploadCount++;
-                        CallFileWayBill();
-                        Log.e(TAG, "onClick: 6 *"+(FileUploadCount));
-                    }
-                    if (fileservice != null) {
-                        FileUploadCount++;
-                        CallServiceReport();
-                        Log.e(TAG, "onClick: 7 *"+(FileUploadCount));
-                    }
 
-                    if (filePMReportAttach != null && filePMReportAttach2 != null && filePMReportAttach3 != null && filePMReportAttach4 != null) {
-                        FileUploadCount++;
-                        CallPMReport();
-                        Log.e(TAG, "onClick: 8 *"+(FileUploadCount));
-                    }else if (filePMReportAttach != null && filePMReportAttach2 != null && filePMReportAttach3 != null) {
-                        FileUploadCount++;
-                        CallPMOptional1Report();
-                        Log.e(TAG, "onClick: 9 *"+(FileUploadCount));
-                    }else if (filePMReportAttach != null && filePMReportAttach2 != null && filePMReportAttach4 != null) {
-                        FileUploadCount++;
-                        CallPMOptional2Report();
-                        Log.e(TAG, "onClick: 10 *"+(FileUploadCount));
-                    } else if (filePMReportAttach != null && filePMReportAttach2 != null) {
-                        FileUploadCount++;
-                        CallPMComplsory();
-                        Log.e(TAG, "onClick: 11 *"+(FileUploadCount));
+                        if (fileCustomerPO != null) {
+                            FileUploadCount++;
+                            callCusPoFile();
+                            Log.e(TAG, "onClick: 1 *" + (FileUploadCount));
+                        }
+                        if (fileinstallImg1 != null && fileinstallImg2 != null && fileinstallImg3 != null && fileWarrentyCard != null && fileinstallReport != null) {
+                            FileUploadCount++;
+                            CallInstallImg();
+                            Log.e(TAG, "onClick: 2 *" + (FileUploadCount));
+                        }
+                        if (spareFile1 != null && spareFile2 != null && spareFile3 != null) {
+                            FileUploadCount++;
+                            callspareConsumedFile();
+                            Log.e(TAG, "onClick: 3 *" + (FileUploadCount));
+                        }
+                        if (fileinvoice != null) {
+                            FileUploadCount++;
+                            callcusInvoice();
+                            Log.e(TAG, "onClick: 4 *" + (FileUploadCount));
+                        }
+                        if (fileLR != null) {
+                            FileUploadCount++;
+                            callFileLR();
+                            Log.e(TAG, "onClick: 5 *" + (FileUploadCount));
+                        }
+                        if (fileWaybill != null) {
+                            FileUploadCount++;
+                            CallFileWayBill();
+                            Log.e(TAG, "onClick: 6 *" + (FileUploadCount));
+                        }
+                        if (fileservice != null) {
+                            FileUploadCount++;
+                            CallServiceReport();
+                            Log.e(TAG, "onClick: 7 *" + (FileUploadCount));
+                        }
+
+                        if (filePMReportAttach != null && filePMReportAttach2 != null && filePMReportAttach3 != null && filePMReportAttach4 != null) {
+                            FileUploadCount++;
+                            CallPMReport();
+                            Log.e(TAG, "onClick: 8 *" + (FileUploadCount));
+                        } else if (filePMReportAttach != null && filePMReportAttach2 != null && filePMReportAttach3 != null) {
+                            FileUploadCount++;
+                            CallPMOptional1Report();
+                            Log.e(TAG, "onClick: 9 *" + (FileUploadCount));
+                        } else if (filePMReportAttach != null && filePMReportAttach2 != null && filePMReportAttach4 != null) {
+                            FileUploadCount++;
+                            CallPMOptional2Report();
+                            Log.e(TAG, "onClick: 10 *" + (FileUploadCount));
+                        } else if (filePMReportAttach != null && filePMReportAttach2 != null) {
+                            FileUploadCount++;
+                            CallPMComplsory();
+                            Log.e(TAG, "onClick: 11 *" + (FileUploadCount));
+                        }
+
+                        if (FileUploadCount == 0) {
+                            CallCloseFun();
+                            Log.e(TAG, "onClick: " + (FileUploadCount));
+                        }
+
+
                     }
-
-
-
-                   }
 
                 } catch (Exception e) {
                     Log.e(TAG, "onClick: " + e.getMessage());
@@ -2098,6 +2241,83 @@ public class UpcomingCallReport extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    private void CalltempReadData() {
+        FileReader fr = null;
+        File readfile = new File(getCacheDir(), FileStoreName);
+        // Log.e(TAG, "CalltempStore: read "+readfile );
+        try {
+
+            fr = new FileReader(readfile);
+            BufferedReader br = new BufferedReader(fr);
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] Wd = line.trim().split(":");
+                Log.e(TAG, "CalltempReadData:  " + Wd.length);
+                if (Wd[0].trim().equals("Name")) {
+                    edName.setText(Wd[1]);
+                }
+                if (Wd[0].trim().equals("Mobile")) {
+                    edMobile.setText(Wd[1]);
+                }
+                if (Wd[0].trim().equals("WorkDone")) {
+                    edWorkdone.setText(Wd[1]);
+                }
+                if (Wd[0].trim().equals("EngAdvice")) {
+                    edEngineerAdvice.setText(Wd[1]);
+                }
+                if (Wd[0].trim().equals("Reason")) {
+                    edReason.setText(Wd[1]);
+                }
+                if (Wd[0].trim().equals("Pending")) {
+                    edPendingReason.setText(Wd[1]);
+                }
+                if (Wd[0].trim().equals("Spare amt")) {
+                    edSpareAmt.setText(Wd[1]);
+                }
+                if (Wd[0].trim().equals("Service Amt")) {
+                    edSaleORserviceAmt.setText(Wd[1]);
+                }
+
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+
+        }
+    }
+
+    private void CalltempStore() {
+
+        String WorkD = edWorkdone.getText().toString();
+        String Mob = edMobile.getText().toString();
+        String Name = edName.getText().toString();
+        String EngAdv = edEngineerAdvice.getText().toString();
+        String Reason = edReason.getText().toString();
+        String SpareAmt = edSpareAmt.getText().toString();
+        String Pending = edPendingReason.getText().toString();
+        String ServiceAmt = edSaleORserviceAmt.getText().toString();
+
+        String TempStore = "WorkDone" + ":" + WorkD + "\n" + "Mobile" + ":" + Mob + "\n" + "Name" + ":" + Name + "\n" + "EngAdvice" + ":" + EngAdv + "\n" + "Pending" + ":" + Pending +
+                "\n" + "Reason" + ":" + Reason + "\n" + "Spare amt" + ":" + SpareAmt + "\n" + "Service Amt" + ":" + ServiceAmt + "\n";
+
+        File file = new File(getCacheDir(), FileStoreName);
+
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            fos.write(TempStore.getBytes());
+            //Log.e(TAG, "CalltempStore: "+TempStore );
+            fos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
     }
 
@@ -2120,15 +2340,15 @@ public class UpcomingCallReport extends AppCompatActivity {
             public void onResponse(Call<CallPMReportsubmitResponse> call, Response<CallPMReportsubmitResponse> response) {
                 try {
 
-                    if (response.isSuccessful()){
-                        Pm=response.body().getPm();
+                    if (response.isSuccessful()) {
+                        Pm = response.body().getPm();
                         FileUploadCount--;
-                        Log.e(TAG, "onResponse: "+(FileUploadCount));
-                        if (FileUploadCount==0){
+                        Log.e(TAG, "onResponse: " + (FileUploadCount));
+                        if (FileUploadCount == 0) {
                             CallCloseFun();
                         }
                     }
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
             }
@@ -2161,16 +2381,16 @@ public class UpcomingCallReport extends AppCompatActivity {
             public void onResponse(Call<CallPMReportsubmitResponse> call, Response<CallPMReportsubmitResponse> response) {
                 try {
 
-                    if (response.isSuccessful()){
-                        Pm=response.body().getPm();
+                    if (response.isSuccessful()) {
+                        Pm = response.body().getPm();
 
                         FileUploadCount--;
-                        Log.e(TAG, "onResponse: "+(FileUploadCount));
-                        if (FileUploadCount==0){
+                        Log.e(TAG, "onResponse: " + (FileUploadCount));
+                        if (FileUploadCount == 0) {
                             CallCloseFun();
                         }
                     }
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
             }
@@ -2199,15 +2419,15 @@ public class UpcomingCallReport extends AppCompatActivity {
             public void onResponse(Call<CallPMReportsubmitResponse> call, Response<CallPMReportsubmitResponse> response) {
                 try {
 
-                    if (response.isSuccessful()){
-                        Pm=response.body().getPm();
-                        Log.e(TAG, "onResponse: "+(FileUploadCount));
+                    if (response.isSuccessful()) {
+                        Pm = response.body().getPm();
+                        Log.e(TAG, "onResponse: " + (FileUploadCount));
                         FileUploadCount--;
-                        if (FileUploadCount==0){
+                        if (FileUploadCount == 0) {
                             CallCloseFun();
                         }
                     }
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
             }
@@ -2239,16 +2459,16 @@ public class UpcomingCallReport extends AppCompatActivity {
             public void onResponse(Call<CallPMReportsubmitResponse> call, Response<CallPMReportsubmitResponse> response) {
                 try {
 
-                    if (response.isSuccessful()){
+                    if (response.isSuccessful()) {
 
-                        Pm=response.body().getPm();
-                        Log.e(TAG, "onResponse: "+(FileUploadCount));
+                        Pm = response.body().getPm();
+                        Log.e(TAG, "onResponse: " + (FileUploadCount));
                         FileUploadCount--;
-                        if (FileUploadCount==0){
+                        if (FileUploadCount == 0) {
                             CallCloseFun();
                         }
                     }
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
             }
@@ -2279,14 +2499,14 @@ public class UpcomingCallReport extends AppCompatActivity {
 
                 try {
 
-                    if (response.isSuccessful()){
+                    if (response.isSuccessful()) {
                         FileUploadCount--;
-                        Log.e(TAG, "onResponse: "+(FileUploadCount));
-                        if (FileUploadCount==0){
+                        Log.e(TAG, "onResponse: " + (FileUploadCount));
+                        if (FileUploadCount == 0) {
                             CallCloseFun();
                         }
                     }
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
             }
@@ -2315,10 +2535,10 @@ public class UpcomingCallReport extends AppCompatActivity {
             public void onResponse(Call<CallReportWayBillSubmitResponse> call, Response<CallReportWayBillSubmitResponse> response) {
                 try {
                     if (response.isSuccessful()) {
-                        Wb=response.body().getWb();
+                        Wb = response.body().getWb();
                         FileUploadCount--;
-                        Log.e(TAG, "onResponse: "+(FileUploadCount));
-                        if (FileUploadCount==0){
+                        Log.e(TAG, "onResponse: " + (FileUploadCount));
+                        if (FileUploadCount == 0) {
                             CallCloseFun();
                         }
 
@@ -2344,7 +2564,7 @@ public class UpcomingCallReport extends AppCompatActivity {
         CallReportingUpComingSubmitInterface callReportingUpComingSubmitInterface = APIClient.getClient().create(CallReportingUpComingSubmitInterface.class);
         callReportingUpComingSubmitInterface.callReportSubmit("callClose", PreferenceManager.getEmpID(UpcomingCallReport.this), id, LogsitId, CallTypePayoptionsID, ComplaintID, SubComplaintCatID, edTypeComplaintCat.getText().toString(), edTypeSubComplaintCat.getText().toString(), "Not Detect", CallAssignId, CallRegID, CallAssignId, pdtidd, hpidd, chk1, CusPoradiobID,
                 CallStatusID, tvPaymentafterDispatch.getText().toString(), tvRecvPaymentDispatch.getText().toString(), tvInstallDate.getText().toString(), bp_install, bp_installr, strInstallament, strInstallamentr, balinspayamt, cft, String.valueOf(rbconsumerSpareID), Spc, tvFollowUpDate.getText().toString(),
-                tvStartingTime.getText().toString(), tvEndTime.getText().toString(), edPendingReason.getText().toString(), edName.getText().toString(), edMobile.getText().toString(), String.valueOf(rbRecPendingID), tvDepositedDate.getText().toString(), edCheckUTRno.getText().toString(), String.valueOf(rbClosePayID), edSaleORserviceAmt.getText().toString(), edSpareAmt.getText().toString(), edWorkdone.getText().toString(), edEngineerAdvice.getText().toString(), String.valueOf(ratingBar.getRating()), String.valueOf(cbSetID), edReason.getText().toString(),Ps,Sq,Wb,Lr,Sr,Pm).enqueue(new Callback<CallReportingUpComingSubmitResponse>() {
+                tvStartingTime.getText().toString(), tvEndTime.getText().toString(), edPendingReason.getText().toString(), edName.getText().toString(), edMobile.getText().toString(), String.valueOf(rbRecPendingID), tvDepositedDate.getText().toString(), edCheckUTRno.getText().toString(), String.valueOf(rbClosePayID), edSaleORserviceAmt.getText().toString(), edSpareAmt.getText().toString(), edWorkdone.getText().toString(), edEngineerAdvice.getText().toString(), String.valueOf(ratingBar.getRating()), String.valueOf(cbSetID), edReason.getText().toString(), Ps, Sq, Wb, Lr, Sr, Pm).enqueue(new Callback<CallReportingUpComingSubmitResponse>() {
             @Override
             public void onResponse(Call<CallReportingUpComingSubmitResponse> call, Response<CallReportingUpComingSubmitResponse> response) {
                 try {
@@ -2453,10 +2673,10 @@ public class UpcomingCallReport extends AppCompatActivity {
                 try {
                     if (response.isSuccessful()) {
 
-                        Lr=response.body().getLr();
-                        Log.e(TAG, "onResponse: "+(FileUploadCount));
+                        Lr = response.body().getLr();
+                        Log.e(TAG, "onResponse: " + (FileUploadCount));
                         FileUploadCount--;
-                        if (FileUploadCount==0){
+                        if (FileUploadCount == 0) {
                             CallCloseFun();
                         }
 
@@ -2488,10 +2708,10 @@ public class UpcomingCallReport extends AppCompatActivity {
                 try {
                     if (response.isSuccessful()) {
 
-                        Ps=response.body().getPs();
+                        Ps = response.body().getPs();
                         FileUploadCount--;
-                        Log.e(TAG, "onResponse: "+(FileUploadCount));
-                        if (FileUploadCount==0){
+                        Log.e(TAG, "onResponse: " + (FileUploadCount));
+                        if (FileUploadCount == 0) {
                             CallCloseFun();
                         }
 
@@ -2528,10 +2748,10 @@ public class UpcomingCallReport extends AppCompatActivity {
                 try {
                     if (response.isSuccessful()) {
 
-                        Sr=response.body().getSr();
+                        Sr = response.body().getSr();
                         FileUploadCount--;
-                        Log.e(TAG, "onResponse: "+(FileUploadCount));
-                        if (FileUploadCount==0){
+                        Log.e(TAG, "onResponse: " + (FileUploadCount));
+                        if (FileUploadCount == 0) {
                             CallCloseFun();
                         }
 
@@ -2562,14 +2782,14 @@ public class UpcomingCallReport extends AppCompatActivity {
                 try {
                     if (response.isSuccessful()) {
 
-                        Sq=response.body().getSq();
+                        Sq = response.body().getSq();
                         FileUploadCount--;
-                        Log.e(TAG, "onResponse: "+(FileUploadCount));
-                        if (FileUploadCount==0){
+                        Log.e(TAG, "onResponse: " + (FileUploadCount));
+                        if (FileUploadCount == 0) {
                             CallCloseFun();
                         }
 
-                      //  finish();
+                        //  finish();
 
                     }
 
@@ -2615,11 +2835,11 @@ public class UpcomingCallReport extends AppCompatActivity {
                 try {
                     if (response.isSuccessful()) {
                         FileUploadCount--;
-                        Log.e(TAG, "onResponse: "+(FileUploadCount));
-                        if (FileUploadCount==0){
+                        Log.e(TAG, "onResponse: " + (FileUploadCount));
+                        if (FileUploadCount == 0) {
                             CallCloseFun();
                         }
-                      //  finish();
+                        //  finish();
 
                     }
 
@@ -2745,7 +2965,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                     Uri contentUri = data.getData();
                     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                     strCusInvoiceAttach = timeStamp + "." + getFileExt(contentUri);
-                   // Toast.makeText(this, "File Name" + strCusInvoiceAttach, Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(this, "File Name" + strCusInvoiceAttach, Toast.LENGTH_SHORT).show();
 
 
                     try {
@@ -2797,7 +3017,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                     Uri contentUri = data.getData();
                     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                     strSerAttach = timeStamp + "." + getFileExt(contentUri);
-                   // Toast.makeText(this, "File Name" + strSerAttach, Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(this, "File Name" + strSerAttach, Toast.LENGTH_SHORT).show();
 
                     try {
                         fileservice = FileUtli.from(this, contentUri);
@@ -2850,7 +3070,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                     Uri contentUri = data.getData();
                     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                     strInstallImg1 = timeStamp + "." + getFileExt(contentUri);
-                   // Toast.makeText(this, "File Name" + strInstallImg1, Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(this, "File Name" + strInstallImg1, Toast.LENGTH_SHORT).show();
 
                     try {
                         fileinstallImg1 = FileUtli.from(this, contentUri);
@@ -2904,7 +3124,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                     Uri contentUri = data.getData();
                     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                     strInstallImg2 = timeStamp + "." + getFileExt(contentUri);
-                   // Toast.makeText(this, "File Name" + strInstallImg2, Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(this, "File Name" + strInstallImg2, Toast.LENGTH_SHORT).show();
 
                     try {
                         fileinstallImg2 = FileUtli.from(this, contentUri);
@@ -3006,7 +3226,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                     Uri contentUri = data.getData();
                     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                     strWarrenty = timeStamp + "." + getFileExt(contentUri);
-                   // Toast.makeText(this, "File Name" + strWarrenty, Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(this, "File Name" + strWarrenty, Toast.LENGTH_SHORT).show();
 
                     try {
                         fileWarrentyCard = FileUtli.from(this, contentUri);
@@ -3110,7 +3330,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                     Uri contentUri = data.getData();
                     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                     strsparefile1 = timeStamp + "." + getFileExt(contentUri);
-                   // Toast.makeText(this, "File Name" + strsparefile1, Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(this, "File Name" + strsparefile1, Toast.LENGTH_SHORT).show();
 
                     try {
                         spareFile1 = FileUtli.from(this, contentUri);
@@ -3161,7 +3381,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                     Uri contentUri = data.getData();
                     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                     strsparefile2 = timeStamp + "." + getFileExt(contentUri);
-                   // Toast.makeText(this, "File Name" + strsparefile2, Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(this, "File Name" + strsparefile2, Toast.LENGTH_SHORT).show();
 
                     try {
                         spareFile2 = FileUtli.from(this, contentUri);
@@ -3213,7 +3433,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                     Uri contentUri = data.getData();
                     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                     strsparefile3 = timeStamp + "." + getFileExt(contentUri);
-                   // Toast.makeText(this, "File Name" + strsparefile3, Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(this, "File Name" + strsparefile3, Toast.LENGTH_SHORT).show();
 
                     try {
                         spareFile3 = FileUtli.from(this, contentUri);
@@ -3265,7 +3485,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                     Uri contentUri = data.getData();
                     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                     strCustomerPo = timeStamp + "." + getFileExt(contentUri);
-                   // Toast.makeText(this, "File Name" + strCustomerPo, Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(this, "File Name" + strCustomerPo, Toast.LENGTH_SHORT).show();
 
                     try {
                         fileCustomerPO = FileUtli.from(this, contentUri);
@@ -3316,7 +3536,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                     Uri contentUri = data.getData();
                     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                     strWayBill = timeStamp + "." + getFileExt(contentUri);
-                   // Toast.makeText(this, "File Name" + strWayBill, Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(this, "File Name" + strWayBill, Toast.LENGTH_SHORT).show();
 
                     try {
                         fileWaybill = FileUtli.from(this, contentUri);
@@ -3418,7 +3638,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                     Uri contentUri = data.getData();
                     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                     strPMReportAttach = timeStamp + "." + getFileExt(contentUri);
-                   // Toast.makeText(this, "File Name" + strPMReportAttach, Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(this, "File Name" + strPMReportAttach, Toast.LENGTH_SHORT).show();
 
                     try {
                         filePMReportAttach = FileUtli.from(this, contentUri);
@@ -3469,7 +3689,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                     Uri contentUri = data.getData();
                     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                     strPMReportAttach2 = timeStamp + "." + getFileExt(contentUri);
-                   // Toast.makeText(this, "File Name" + strPMReportAttach2, Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(this, "File Name" + strPMReportAttach2, Toast.LENGTH_SHORT).show();
 
                     try {
                         filePMReportAttach2 = FileUtli.from(this, contentUri);
@@ -3521,7 +3741,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                     Uri contentUri = data.getData();
                     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                     strPMReportAttach3 = timeStamp + "." + getFileExt(contentUri);
-                   // Toast.makeText(this, "File Name" + strPMReportAttach3, Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(this, "File Name" + strPMReportAttach3, Toast.LENGTH_SHORT).show();
 
                     try {
                         filePMReportAttach3 = FileUtli.from(this, contentUri);
@@ -3572,7 +3792,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                     Uri contentUri = data.getData();
                     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                     strPMReportAttach4 = timeStamp + "." + getFileExt(contentUri);
-                   // Toast.makeText(this, "File Name" + strPMReportAttach4, Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(this, "File Name" + strPMReportAttach4, Toast.LENGTH_SHORT).show();
 
                     try {
                         filePMReportAttach4 = FileUtli.from(this, contentUri);
