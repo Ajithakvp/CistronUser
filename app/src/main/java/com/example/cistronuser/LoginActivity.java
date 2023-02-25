@@ -39,6 +39,7 @@ import com.example.cistronuser.API.Interface.LoginInterFace;
 import com.example.cistronuser.API.Model.LoginuserModel;
 import com.example.cistronuser.Activity.DashboardActivity;
 import com.example.cistronuser.Common.ConnectionRecevier;
+import com.example.cistronuser.Common.LocationBackgroundService;
 import com.example.cistronuser.Common.PreferenceManager;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.material.textfield.TextInputEditText;
@@ -69,6 +70,12 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
     double Latitude;
     double Longtitude;
     ArrayList<LoginuserModel> loginuserModel = new ArrayList<>();
+
+
+    // BackgroundLocation
+    LocationBroadcastReceiver receiver;
+    Double lat,longitude;
+    String Address;
 
 
     //FingerPrint
@@ -106,6 +113,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
 
 
         //*****  Location ******//
+        receiver = new LocationBroadcastReceiver();
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationEnabled();
         getLocation();
@@ -321,8 +329,10 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
                        intent.putExtra("DOJ",response.body().getDoj());
                        intent.putExtra("DOB",response.body().getDob());
                        intent.putExtra("Photo",response.body().getPhoto());
+                       startBackgroundService();
                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                        startActivity(intent);
+
                    }
 
                }catch (Exception e){
@@ -339,6 +349,13 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
         });
 
 
+    }
+
+    private void startBackgroundService() {
+        IntentFilter filter = new IntentFilter("Location");
+        registerReceiver(receiver, filter);
+        Intent intent = new Intent(LoginActivity.this, LocationBackgroundService.class);
+        startService(intent);
     }
 
 
@@ -386,5 +403,17 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
     @Override
     public void onProviderDisabled(@NonNull String provider) {
         LocationListener.super.onProviderDisabled(provider);
+    }
+
+    public class LocationBroadcastReceiver extends BroadcastReceiver{
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals("Location")) {
+
+                 lat = intent.getDoubleExtra("latitude", 0f);
+                 longitude = intent.getDoubleExtra("longitude", 0f);
+                 Address = intent.getStringExtra("Address");
+            }
+        }
     }
 }

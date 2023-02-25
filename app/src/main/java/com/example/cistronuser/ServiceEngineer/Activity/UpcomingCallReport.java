@@ -5,7 +5,6 @@ import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 import static okhttp3.RequestBody.create;
 
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -19,12 +18,16 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
+import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -59,6 +62,7 @@ import com.example.cistronuser.API.Interface.ConsumeCusSpareSubmitInterface;
 import com.example.cistronuser.API.Interface.ConsumeSpareSubmitInterface;
 import com.example.cistronuser.API.Interface.EscalatePaymentSubmitInterface;
 import com.example.cistronuser.API.Interface.InstallamentEscalatedSubmitInterface;
+import com.example.cistronuser.API.Interface.LocationTrackerCallReportInterface;
 import com.example.cistronuser.API.Interface.ServiceSpareRequestInterface;
 import com.example.cistronuser.API.Interface.SupplyEscalatedSubmitedInterface;
 import com.example.cistronuser.API.Interface.UpcomingCallReportInterface;
@@ -72,6 +76,7 @@ import com.example.cistronuser.API.Model.ConsumerCustSpareRecordModel;
 import com.example.cistronuser.API.Model.CustomerPoResponseModel;
 import com.example.cistronuser.API.Model.CustomerPoSpareRecordModel;
 import com.example.cistronuser.API.Model.InstallamentModel;
+import com.example.cistronuser.API.Model.LocationTrackerCallReportModel;
 import com.example.cistronuser.API.Model.ServiceSpareRequestModel;
 import com.example.cistronuser.API.Model.SpareInwardRecordModel;
 import com.example.cistronuser.API.Model.SpareRequestsRecordModel;
@@ -90,6 +95,7 @@ import com.example.cistronuser.API.Response.ConsumeSpareSubmitResponse;
 import com.example.cistronuser.API.Response.ConsumerCusSpareSubmitResponse;
 import com.example.cistronuser.API.Response.EscalatePaymentSubmitResponse;
 import com.example.cistronuser.API.Response.InstallamentEscalatedSubmitResponse;
+import com.example.cistronuser.API.Response.LocationTrackerCallReportResponse;
 import com.example.cistronuser.API.Response.ServiceSpareRequestResponse;
 import com.example.cistronuser.API.Response.SupplyEscalatedSubmitedResponse;
 import com.example.cistronuser.API.Response.UpcomingCallReportResponse;
@@ -273,6 +279,8 @@ public class UpcomingCallReport extends AppCompatActivity {
     String filepath, FileStoreName;
 
 
+
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -432,11 +440,17 @@ public class UpcomingCallReport extends AppCompatActivity {
         // *********** Current Date End **********//
 
 
+
+
+
         //********Customer Detalils ******************//
         final ProgressDialog progressDialog = new ProgressDialog(this, R.style.ProgressBarDialog);
         progressDialog.setMessage("Call Report...");
         progressDialog.setCancelable(false);
         progressDialog.show();
+
+
+
         UpcomingCallReportInterface upcomingCallReportInterface = APIClient.getClient().create(UpcomingCallReportInterface.class);
         upcomingCallReportInterface.CallUpcomingCallReport("callReporting", id, PreferenceManager.getEmpID(this)).enqueue(new Callback<UpcomingCallReportResponse>() {
             @Override
@@ -473,6 +487,8 @@ public class UpcomingCallReport extends AppCompatActivity {
                         bp_install = response.body().getUpcomingCallReportModel().getCallInfoModel().getLogistics_bp_installr();
                         cft = response.body().getUpcomingCallReportModel().getCallInfoModel().getCft();
                         SelectSubComplaintID = response.body().getUpcomingCallReportModel().getSubComplaintCategory();
+
+
 
 
                         // ***********  Customer PO  *********** //
@@ -658,24 +674,27 @@ public class UpcomingCallReport extends AppCompatActivity {
                     }
 
                 } catch (Exception e) {
-
+                    e.printStackTrace();
+                    Log.e(TAG, "onFailure: c "+e.getMessage() );
                 }
 
             }
 
             @Override
             public void onFailure(Call<UpcomingCallReportResponse> call, Throwable t) {
-
+                Log.e(TAG, "onFailure: s "+t.getMessage() );
             }
         });
         //********Customer Detalils End ******************//
 
-
         // ************ File Access Permission ***********//
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, PackageManager.PERMISSION_GRANTED);
         filepath = Environment.getExternalStoragePublicDirectory(DIRECTORY_DOWNLOADS) + "/";
-        FileStoreName = id + ".txt";
+        FileStoreName = id+"-"+s+ ".txt";
+        CalltempReadData();
+
         // ************ File Access Permission End ***********//
+
 
         // *********** Temp Store **********//
 
@@ -814,14 +833,6 @@ public class UpcomingCallReport extends AppCompatActivity {
 
             }
         });
-
-
-        try {
-
-            CalltempReadData();
-        } catch (Exception e) {
-            Log.e(TAG, "Exception: " + e.getMessage());
-        }
 
 
         // *********** Temp Store End **********//
@@ -2244,42 +2255,49 @@ public class UpcomingCallReport extends AppCompatActivity {
 
     }
 
+
+
     private void CalltempReadData() {
-        FileReader fr = null;
-        File readfile = new File(getCacheDir(), FileStoreName);
+
+        File readfile = new File(filepath, FileStoreName);
         // Log.e(TAG, "CalltempStore: read "+readfile );
         try {
-
-            fr = new FileReader(readfile);
+            FileReader fr = new FileReader(readfile);
             BufferedReader br = new BufferedReader(fr);
-            String line;
+            String line = null;
             while ((line = br.readLine()) != null) {
                 String[] Wd = line.trim().split(":");
-                Log.e(TAG, "CalltempReadData:  " + Wd.length);
-                if (Wd[0].trim().equals("Name")) {
-                    edName.setText(Wd[1]);
+                if (Wd.length == 2) {
+                    if (Wd[0].trim().equals("WorkDone")) {
+                        edWorkdone.setText(Wd[1]);
+                    }
+
+                    if (Wd[0].trim().equals("Mobile")) {
+                        edMobile.setText(Wd[1]);
+                    }
+
+                    if (Wd[0].trim().equals("Name")) {
+                        edName.setText(Wd[1]);
+                    }
+
+                    if (Wd[0].trim().equals("EngAdvice")) {
+                        edEngineerAdvice.setText(Wd[1]);
+                    }
+                    if (Wd[0].trim().equals("Pending")) {
+                        edPendingReason.setText(Wd[1]);
+                    }
+                    if (Wd[0].trim().equals("Reason")) {
+                        edReason.setText(Wd[1]);
+                    }
+
+                    if (Wd[0].trim().equals("Spare amt")) {
+                        edSpareAmt.setText(Wd[1]);
+                    }
+                    if (Wd[0].trim().equals("Service Amt")) {
+                        edSaleORserviceAmt.setText(Wd[1]);
+                    }
                 }
-                if (Wd[0].trim().equals("Mobile")) {
-                    edMobile.setText(Wd[1]);
-                }
-                if (Wd[0].trim().equals("WorkDone")) {
-                    edWorkdone.setText(Wd[1]);
-                }
-                if (Wd[0].trim().equals("EngAdvice")) {
-                    edEngineerAdvice.setText(Wd[1]);
-                }
-                if (Wd[0].trim().equals("Reason")) {
-                    edReason.setText(Wd[1]);
-                }
-                if (Wd[0].trim().equals("Pending")) {
-                    edPendingReason.setText(Wd[1]);
-                }
-                if (Wd[0].trim().equals("Spare amt")) {
-                    edSpareAmt.setText(Wd[1]);
-                }
-                if (Wd[0].trim().equals("Service Amt")) {
-                    edSaleORserviceAmt.setText(Wd[1]);
-                }
+
 
             }
         } catch (FileNotFoundException e) {
@@ -2305,7 +2323,7 @@ public class UpcomingCallReport extends AppCompatActivity {
         String TempStore = "WorkDone" + ":" + WorkD + "\n" + "Mobile" + ":" + Mob + "\n" + "Name" + ":" + Name + "\n" + "EngAdvice" + ":" + EngAdv + "\n" + "Pending" + ":" + Pending +
                 "\n" + "Reason" + ":" + Reason + "\n" + "Spare amt" + ":" + SpareAmt + "\n" + "Service Amt" + ":" + ServiceAmt + "\n";
 
-        File file = new File(getCacheDir(), FileStoreName);
+        File file = new File(filepath, FileStoreName);
 
         try {
             FileOutputStream fos = new FileOutputStream(file);
@@ -3847,5 +3865,9 @@ public class UpcomingCallReport extends AppCompatActivity {
         MimeTypeMap mime = MimeTypeMap.getSingleton();
         return mime.getExtensionFromMimeType(c.getType(contentUri));
     }
+
+
+
+
 
 }

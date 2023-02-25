@@ -32,6 +32,17 @@ public class DashboardCallCountResponse {
     @SerializedName("returnReqPending")
     private String returnReqPending;
 
+    @SerializedName("todayCalls")
+    private String todayCalls;
+
+    public String getTodayCalls() {
+        return todayCalls;
+    }
+
+    public void setTodayCalls(String todayCalls) {
+        this.todayCalls = todayCalls;
+    }
+
     public String getAction() {
         return action;
     }

@@ -2,14 +2,9 @@ package com.example.cistronuser.Activity;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.ActivityOptions;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -18,17 +13,14 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.text.format.Formatter;
 import android.text.method.LinkMovementMethod;
 import android.util.Base64;
 import android.util.Log;
@@ -42,36 +34,37 @@ import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.cistronuser.API.APIClient;
-import com.example.cistronuser.API.Interface.CallReportIngCheckInterface;
 import com.example.cistronuser.API.Interface.ChangePasswordInterface;
 import com.example.cistronuser.API.Interface.CompOffApprovalCountInterface;
 import com.example.cistronuser.API.Interface.DashboardCallCountInterface;
 import com.example.cistronuser.API.Interface.ExpenseCountInterface;
 import com.example.cistronuser.API.Interface.LeaveApprovelCountInterface;
+import com.example.cistronuser.API.Interface.LocationTrackerCallReportInterface;
 import com.example.cistronuser.API.Interface.LogoutInterFace;
 import com.example.cistronuser.API.Interface.SalesQuoteApprovalCountInterFace;
+import com.example.cistronuser.API.Model.LocationTrackerCallReportModel;
 import com.example.cistronuser.API.Model.LoginuserModel;
-import com.example.cistronuser.API.Response.CallReportIngCheckResponse;
 import com.example.cistronuser.API.Response.ChangePasswordResponse;
 import com.example.cistronuser.API.Response.CompOffCountResponse;
 import com.example.cistronuser.API.Response.DashboardCallCountResponse;
 import com.example.cistronuser.API.Response.LeaveApprovelCountResponse;
+import com.example.cistronuser.API.Response.LocationTrackerCallReportResponse;
 import com.example.cistronuser.API.Response.LogoutResponse;
 import com.example.cistronuser.API.Response.SalesQuoteApprovalCountResponse;
 import com.example.cistronuser.API.Response.WaitingExpenseCountInterface;
 import com.example.cistronuser.Common.ConnectionRecevier;
+import com.example.cistronuser.Common.LocationBackgroundService;
 import com.example.cistronuser.Common.PreferenceManager;
 import com.example.cistronuser.LoginActivity;
-import com.example.cistronuser.MainActivity;
 import com.example.cistronuser.R;
 import com.example.cistronuser.Report.Activity.AttendanceReports;
 import com.example.cistronuser.Report.Activity.ExpenseReportWM;
 import com.example.cistronuser.Report.Activity.LeaveReport;
 import com.example.cistronuser.Report.Activity.SalesQuoteReport;
 import com.example.cistronuser.Report.Activity.VisitEntryReport;
-import com.example.cistronuser.SalesAndservice.Activity.FinalizeNow;
 import com.example.cistronuser.SalesAndservice.Activity.SalesQuote;
 import com.example.cistronuser.SalesAndservice.Activity.VisitEntry;
+import com.example.cistronuser.ServiceEngineer.Activity.CurrentCallActivity;
 import com.example.cistronuser.ServiceEngineer.Activity.PendicallActivity;
 import com.example.cistronuser.ServiceEngineer.Activity.ReturnReqPendingCoActivity;
 import com.example.cistronuser.ServiceEngineer.Activity.SpareInwardActivity;
@@ -83,9 +76,7 @@ import com.example.cistronuser.WaitingforApprovel.Activity.LeaveRequest;
 import com.example.cistronuser.WaitingforApprovel.Activity.SalesQuoteApproval;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.concurrent.TimeUnit;
+import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
@@ -126,8 +117,8 @@ public class DashboardActivity extends Activity {
     RelativeLayout rlAdmin, rlWaitingApproval, rlVisitEntryReportLayout, rlWaitingSalesQuoteApprovalRequest;
 
     //Service
-    RelativeLayout rlUpcomingCallLayout, rlPendingingCallLayout, rlSpareRequestPendingCoLayout, rlSpareInwardLayout,rlReturnReqPendingCoLayout;
-    TextView tvSpareInwardCount, tvSpareRequestPendingCoCount,tvReturnReqPendingCoCount;
+    RelativeLayout rlUpcomingCallLayout, rlPendingingCallLayout, rlCurrentCallLayout, rlSpareRequestPendingCoLayout, rlSpareInwardLayout, rlReturnReqPendingCoLayout;
+    TextView tvSpareInwardCount, tvSpareRequestPendingCoCount, tvReturnReqPendingCoCount, tvCurrentCallCount;
     //Report
     RelativeLayout rlExpenseReport, rlrlAttendaceReport, rlrlLeaveReport, rlService, rlWaitingLeaveRequest, rlWaitingCompOFfRequest, rlQuoteReport;
     TextView tvwaitingCountExpense, tvCountLeaveReq, tvCountCompOffReq, tvWaitingCountSalesQuote, tvUpcomingCallCount, tvPendingCallCount;
@@ -135,49 +126,13 @@ public class DashboardActivity extends Activity {
     Context context;
 
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
+    // Background Location
 
-        //LeaveApprovalCount
-        CallLeaveApprovalCount();
-
-        //ExpenseCount
-        CallExpenseCount();
-
-        //CompoffCount
-        CallCompoffCount();
-
-        //SalesQuoteCount
-        CallSalesQuoteCount();
-
-        //UpcomingCall and Pendingcall Count
-        CallUpComPendingCount();
-
-    }
+    LocationBroadcastReceiver receiver;
+    ArrayList<LocationTrackerCallReportModel> locationTrackerCallReportModels = new ArrayList<>();
+    Double lat, longg, str;
 
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        //LeaveApprovalCount
-        CallLeaveApprovalCount();
-
-        //ExpenseCount
-        CallExpenseCount();
-
-        //CompoffCount
-        CallCompoffCount();
-
-        //SalesQuoteCount
-        CallSalesQuoteCount();
-
-        //UpcomingCall and Pendingcall Count
-        CallUpComPendingCount();
-
-
-    }
 
 
     @SuppressLint("MissingInflatedId")
@@ -220,8 +175,10 @@ public class DashboardActivity extends Activity {
         rlSpareInwardLayout = findViewById(R.id.rlSpareInwardLayout);
         tvSpareRequestPendingCoCount = findViewById(R.id.tvSpareRequestPendingCoCount);
         tvSpareInwardCount = findViewById(R.id.tvSpareInwardCount);
-        tvReturnReqPendingCoCount=findViewById(R.id.tvReturnReqPendingCoCount);
-        rlReturnReqPendingCoLayout=findViewById(R.id.rlReturnReqPendingCoLayout);
+        tvReturnReqPendingCoCount = findViewById(R.id.tvReturnReqPendingCoCount);
+        rlReturnReqPendingCoLayout = findViewById(R.id.rlReturnReqPendingCoLayout);
+        rlCurrentCallLayout = findViewById(R.id.rlCurrentCallLayout);
+        tvCurrentCallCount = findViewById(R.id.tvCurrentCallCount);
 
 
         rlVisitEntryReportLayout = findViewById(R.id.rlVisitEntryReportLayout);
@@ -229,6 +186,10 @@ public class DashboardActivity extends Activity {
         cvQuote = findViewById(R.id.cvQuote);
         llview3 = findViewById(R.id.llview3);
 
+        //******************* get Location background ******************//
+        receiver = new LocationBroadcastReceiver();
+        startBackgroundService();
+        //******************* get Location background end ******************//
 
         tvProfilename.setText(PreferenceManager.getEmpName(this));
 
@@ -244,7 +205,7 @@ public class DashboardActivity extends Activity {
                 rlVisitEntryReportLayout.setVisibility(View.VISIBLE);
                 break;
             case "admin":
-               rlService.setVisibility(View.VISIBLE);
+                rlService.setVisibility(View.VISIBLE);
                 rlWaitingApproval.setVisibility(View.VISIBLE);
                 rlVisitEntryReportLayout.setVisibility(View.VISIBLE);
                 break;
@@ -255,6 +216,8 @@ public class DashboardActivity extends Activity {
                 break;
 
         }
+
+
 
         String company = PreferenceManager.getEmpCompany(this).toLowerCase();
         switch (company) {
@@ -336,6 +299,8 @@ public class DashboardActivity extends Activity {
                                         finish();
                                         Intent intent = new Intent(DashboardActivity.this, LoginActivity.class);
                                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        Intent intent1 = new Intent(DashboardActivity.this, LocationBackgroundService.class);
+                                        stopService(intent1);
                                         startActivity(intent);
                                         progressDialog.dismiss();
                                     }
@@ -524,13 +489,26 @@ public class DashboardActivity extends Activity {
                         tvSpareInwardCount.setText(response.body().getSparesInward());
                         tvSpareRequestPendingCoCount.setText(response.body().getSpareReqPending());
                         tvReturnReqPendingCoCount.setText(response.body().getReturnReqPending());
+                        tvCurrentCallCount.setText(response.body().getTodayCalls());
+
+                        rlCurrentCallLayout.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (response.body().getTodayCalls().trim().equals("0")) {
+                                    Toast.makeText(context, "No Today Calls ", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Intent intent = new Intent(DashboardActivity.this, CurrentCallActivity.class);
+                                    startActivity(intent);
+                                }
+                            }
+                        });
 
 
                         rlUpcomingCallLayout.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 if (response.body().getUpcomingCalls().trim().equals("0")) {
-                                    Toast.makeText(context, "No  Upcoming Call ", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, "No  Upcoming Calls ", Toast.LENGTH_SHORT).show();
                                 } else {
                                     Intent intent = new Intent(DashboardActivity.this, UpComingCallActivity.class);
                                     startActivity(intent);
@@ -543,7 +521,7 @@ public class DashboardActivity extends Activity {
                             public void onClick(View v) {
 
                                 if (response.body().getPendingCalls().trim().equals("0")) {
-                                    Toast.makeText(context, "No Pending Call ", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, "No Pending Calls ", Toast.LENGTH_SHORT).show();
                                 } else {
                                     Intent intent = new Intent(DashboardActivity.this, PendicallActivity.class);
                                     startActivity(intent);
@@ -951,6 +929,77 @@ public class DashboardActivity extends Activity {
         unregBroadcast();
     }
 
+    private void CallCheckLocation() {
+
+        LocationTrackerCallReportInterface locationTrackerCallReportInterface = APIClient.getClient().create(LocationTrackerCallReportInterface.class);
+        locationTrackerCallReportInterface.CallReport("getTodaysWork", PreferenceManager.getEmpID(DashboardActivity.this)).enqueue(new Callback<LocationTrackerCallReportResponse>() {
+            @Override
+            public void onResponse(Call<LocationTrackerCallReportResponse> call, Response<LocationTrackerCallReportResponse> response) {
+                try {
+                    if (response.isSuccessful()) {
+
+                        locationTrackerCallReportModels = response.body().getLocationTrackerCallReportModels();
+
+                        for (int i = 0; i < locationTrackerCallReportModels.size(); i++) {
+
+
+                            Location locationA = new Location("Location A");
+                            Location locationB = new Location("Location B");
+                            locationA.setLatitude(Double.parseDouble(String.valueOf(lat)));
+                            locationA.setLongitude(Double.parseDouble(String.valueOf(longg)));
+                            locationB.setLatitude(Double.parseDouble(String.valueOf(locationTrackerCallReportModels.get(i).getLat())));
+                            locationB.setLongitude(Double.parseDouble(String.valueOf(locationTrackerCallReportModels.get(i).getLng())));
+
+                            str = Double.valueOf(locationA.distanceTo(locationB) / 1000);
+                            // Log.e(TAG, "onResponse: " + str);
+
+                            if (str <= 1.0) {
+                                Toast.makeText(DashboardActivity.this, "Location Reached", Toast.LENGTH_SHORT).show();
+                                AlertDialog.Builder builder = new AlertDialog.Builder(DashboardActivity.this, R.style.AlertDialogCustom);
+                                builder.setCancelable(false);
+                                builder.setMessage("Your Location is reached ! " + "\n" + locationTrackerCallReportModels.get(i).getHospName());
+                                builder.setTitle("Location !");
+                                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                        dialog.dismiss();
+
+
+                                    }
+                                });
+                                AlertDialog alertDialog = builder.create();
+                                alertDialog.show();
+
+                                break;
+                            } else {
+
+                                Log.e(TAG, "onResponse: not reached");
+                            }
+                        }
+
+
+                    }
+
+
+                } catch (Exception e) {
+
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<LocationTrackerCallReportResponse> call, Throwable t) {
+                Log.e(TAG, "onFailure: " + t.getMessage());
+
+
+            }
+        });
+
+
+    }
+
 
     @Override
     public void onBackPressed() {
@@ -959,6 +1008,9 @@ public class DashboardActivity extends Activity {
         alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+
+                Intent intent = new Intent(DashboardActivity.this, LocationBackgroundService.class);
+                stopService(intent);
                 finish();
             }
         });
@@ -971,6 +1023,86 @@ public class DashboardActivity extends Activity {
         });
 
         alertDialog.show();
+
+    }
+
+
+    private void startBackgroundService() {
+        IntentFilter filter = new IntentFilter("Location");
+        registerReceiver(receiver, filter);
+        Intent intent = new Intent(DashboardActivity.this, LocationBackgroundService.class);
+        startService(intent);
+        CallCheckLocation();
+    }
+
+    public class LocationBroadcastReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals("Location")) {
+
+                lat = intent.getDoubleExtra("latitude", 0f);
+                longg = intent.getDoubleExtra("longitude", 0f);
+                String Address = intent.getStringExtra("Address");
+            }
+        }
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        //background Location
+        startBackgroundService();
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        //background Location
+        startBackgroundService();
+
+        //LeaveApprovalCount
+        CallLeaveApprovalCount();
+
+        //ExpenseCount
+        CallExpenseCount();
+
+        //CompoffCount
+        CallCompoffCount();
+
+        //SalesQuoteCount
+        CallSalesQuoteCount();
+
+        //UpcomingCall and Pendingcall Count
+        CallUpComPendingCount();
+
+
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+
+        //LeaveApprovalCount
+        CallLeaveApprovalCount();
+
+        //ExpenseCount
+        CallExpenseCount();
+
+        //CompoffCount
+        CallCompoffCount();
+
+        //SalesQuoteCount
+        CallSalesQuoteCount();
+
+        //UpcomingCall and Pendingcall Count
+        CallUpComPendingCount();
+
 
     }
 

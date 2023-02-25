@@ -2147,6 +2147,7 @@
                         android:layout_marginBottom="30dp"
                         android:background="@drawable/size"
                         android:backgroundTint="#6495ED"
+                        android:visibility="gone"
                         android:fontFamily="@font/bold"
                         android:gravity="center"
                         android:text="Submit"
