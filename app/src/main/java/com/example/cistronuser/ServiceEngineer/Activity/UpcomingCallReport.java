@@ -102,6 +102,7 @@ import com.example.cistronuser.API.Response.UpcomingCallReportResponse;
 import com.example.cistronuser.API.Response.YesDoYouConsumeSpareResponse;
 import com.example.cistronuser.Activity.DashboardActivity;
 import com.example.cistronuser.Common.FileUtli;
+import com.example.cistronuser.Common.LocationBackgroundService;
 import com.example.cistronuser.Common.PreferenceManager;
 import com.example.cistronuser.R;
 import com.example.cistronuser.ServiceEngineer.Adapter.ConsumeCusSpareYesAdapter;
@@ -279,6 +280,10 @@ public class UpcomingCallReport extends AppCompatActivity {
     String filepath, FileStoreName;
 
 
+    //Background
+    LocationBroadcastReceiver receiver;
+    ArrayList<LocationTrackerCallReportModel> locationTrackerCallReportModels = new ArrayList<>();
+    Double lat, longg, str;
 
 
     @SuppressLint("MissingInflatedId")
@@ -440,7 +445,10 @@ public class UpcomingCallReport extends AppCompatActivity {
         // *********** Current Date End **********//
 
 
-
+        //******************* get Location background ******************//
+        receiver =new LocationBroadcastReceiver();
+        startBackgroundService();
+        //******************* get Location background end ******************//
 
 
         //********Customer Detalils ******************//
@@ -3866,7 +3874,81 @@ public class UpcomingCallReport extends AppCompatActivity {
         return mime.getExtensionFromMimeType(c.getType(contentUri));
     }
 
+    private void startBackgroundService() {
+        IntentFilter filter = new IntentFilter("Location");
+        registerReceiver(receiver, filter);
+        Intent intent = new Intent(UpcomingCallReport.this, LocationBackgroundService.class);
+        startService(intent);
 
+    }
+
+    public class LocationBroadcastReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals("Location")) {
+
+                lat = intent.getDoubleExtra("latitude", 0f);
+                longg = intent.getDoubleExtra("longitude", 0f);
+                String Address = intent.getStringExtra("Address");
+            }
+            CallCheckLocation();
+        }
+    }
+
+
+    private void CallCheckLocation() {
+
+        LocationTrackerCallReportInterface locationTrackerCallReportInterface = APIClient.getClient().create(LocationTrackerCallReportInterface.class);
+        locationTrackerCallReportInterface.CallReport("getTodaysWork", PreferenceManager.getEmpID(UpcomingCallReport.this)).enqueue(new Callback<LocationTrackerCallReportResponse>() {
+            @Override
+            public void onResponse(Call<LocationTrackerCallReportResponse> call, Response<LocationTrackerCallReportResponse> response) {
+                try {
+                    if (response.isSuccessful()) {
+
+                        locationTrackerCallReportModels = response.body().getLocationTrackerCallReportModels();
+
+                        for (int i = 0; i < locationTrackerCallReportModels.size(); i++) {
+
+
+                            Location locationA = new Location("Location A");
+                            Location locationB = new Location("Location B");
+                            locationA.setLatitude(Double.parseDouble(String.valueOf(lat)));
+                            locationA.setLongitude(Double.parseDouble(String.valueOf(longg)));
+                            locationB.setLatitude(Double.parseDouble(String.valueOf(locationTrackerCallReportModels.get(i).getLat())));
+                            locationB.setLongitude(Double.parseDouble(String.valueOf(locationTrackerCallReportModels.get(i).getLng())));
+
+                            str = Double.valueOf(locationA.distanceTo(locationB) / 1000);
+                            // Log.e(TAG, "onResponse: " + str);
+
+                            if (str <= 1.0) {
+                                tvSubmit.setVisibility(View.VISIBLE);
+                                break;
+                            } else {
+                                tvSubmit.setVisibility(View.GONE);
+                            }
+                        }
+
+
+                    }
+
+
+                } catch (Exception e) {
+
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<LocationTrackerCallReportResponse> call, Throwable t) {
+                Log.e(TAG, "onFailure: " + t.getMessage());
+
+
+            }
+        });
+
+
+    }
 
 
 

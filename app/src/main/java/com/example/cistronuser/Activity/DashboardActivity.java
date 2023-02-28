@@ -1,10 +1,17 @@
 package com.example.cistronuser.Activity;
 
+import static android.app.Notification.EXTRA_NOTIFICATION_ID;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -14,7 +21,9 @@ import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
+import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
+import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -77,6 +86,7 @@ import com.example.cistronuser.WaitingforApprovel.Activity.SalesQuoteApproval;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
@@ -133,13 +143,16 @@ public class DashboardActivity extends Activity {
     Double lat, longg, str;
 
 
-
-
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+
+        //******************* get Location background ******************//
+        receiver = new LocationBroadcastReceiver();
+        startBackgroundService();
+        //******************* get Location background end ******************//
 
 
         cvLeave = findViewById(R.id.cvLeave);
@@ -186,10 +199,6 @@ public class DashboardActivity extends Activity {
         cvQuote = findViewById(R.id.cvQuote);
         llview3 = findViewById(R.id.llview3);
 
-        //******************* get Location background ******************//
-        receiver = new LocationBroadcastReceiver();
-        startBackgroundService();
-        //******************* get Location background end ******************//
 
         tvProfilename.setText(PreferenceManager.getEmpName(this));
 
@@ -216,7 +225,6 @@ public class DashboardActivity extends Activity {
                 break;
 
         }
-
 
 
         String company = PreferenceManager.getEmpCompany(this).toLowerCase();
@@ -476,6 +484,7 @@ public class DashboardActivity extends Activity {
 
 
     }
+
 
     private void CallUpComPendingCount() {
         DashboardCallCountInterface dashboardCallCountInterface = APIClient.getClient().create(DashboardCallCountInterface.class);
@@ -954,10 +963,28 @@ public class DashboardActivity extends Activity {
                             // Log.e(TAG, "onResponse: " + str);
 
                             if (str <= 1.0) {
-                                Toast.makeText(DashboardActivity.this, "Location Reached", Toast.LENGTH_SHORT).show();
+
+                                // ******************* Top Notfication ***************** //
+                                Notification newMessageNotification = null;
+                                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                                    newMessageNotification = new Notification.Builder(context, "Cistron")
+                                            .setSmallIcon(R.drawable.cis_logo_login)
+                                            .setContentTitle("Your Location is Reached")
+                                            .setContentText(locationTrackerCallReportModels.get(i).getHospName())
+                                            .setAutoCancel(true)
+                                            .build();
+                                }
+
+                                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(DashboardActivity.this);
+                                notificationManager.notify(1, newMessageNotification);
+
+                                // ******************* Top Notfication End ***************** //
+
+
+                                //Toast.makeText(DashboardActivity.this, "Location Reached", Toast.LENGTH_SHORT).show();
                                 AlertDialog.Builder builder = new AlertDialog.Builder(DashboardActivity.this, R.style.AlertDialogCustom);
                                 builder.setCancelable(false);
-                                builder.setMessage("Your Location is reached ! " + "\n" + locationTrackerCallReportModels.get(i).getHospName());
+                                builder.setMessage("Your Location is reached ! " + "\n" + "\n" + locationTrackerCallReportModels.get(i).getHospName());
                                 builder.setTitle("Location !");
                                 builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                     @Override
@@ -1028,42 +1055,25 @@ public class DashboardActivity extends Activity {
 
 
     private void startBackgroundService() {
+
         IntentFilter filter = new IntentFilter("Location");
         registerReceiver(receiver, filter);
         Intent intent = new Intent(DashboardActivity.this, LocationBackgroundService.class);
-        startService(intent);
         CallCheckLocation();
+        startService(intent);
+
     }
-
-    public class LocationBroadcastReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals("Location")) {
-
-                lat = intent.getDoubleExtra("latitude", 0f);
-                longg = intent.getDoubleExtra("longitude", 0f);
-                String Address = intent.getStringExtra("Address");
-            }
-        }
-    }
-
 
     @Override
     protected void onStart() {
         super.onStart();
-
-        //background Location
         startBackgroundService();
-
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        //background Location
-        startBackgroundService();
 
         //LeaveApprovalCount
         CallLeaveApprovalCount();
@@ -1079,8 +1089,6 @@ public class DashboardActivity extends Activity {
 
         //UpcomingCall and Pendingcall Count
         CallUpComPendingCount();
-
-
     }
 
     @Override
@@ -1103,7 +1111,20 @@ public class DashboardActivity extends Activity {
         //UpcomingCall and Pendingcall Count
         CallUpComPendingCount();
 
+    }
 
+    public class LocationBroadcastReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals("Location")) {
+
+                lat = intent.getDoubleExtra("latitude", 0f);
+                longg = intent.getDoubleExtra("longitude", 0f);
+                String Address = intent.getStringExtra("Address");
+
+
+            }
+        }
     }
 
 }
