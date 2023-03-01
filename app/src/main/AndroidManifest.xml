@@ -20,6 +20,9 @@
         android:name="android.permission.START_FOREGROUND_SERVICES_FROM_BACKGROUND"
         tools:ignore="ProtectedPermissions" />
 
+
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM"/>
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -245,7 +248,14 @@
             android:name=".Common.LocationBackgroundService"
             android:enabled="true"
             android:exported="false"
-            android:foregroundServiceType="location"></service>
+            android:foregroundServiceType="location">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </service>
+
+        <service android:name=".Common.NotificationBroadCast"
+            tools:ignore="Instantiatable" />
 
         <uses-library
             android:name="org.apache.http.legacy"

@@ -604,7 +604,7 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
 
     private void CallHospitalUpdateView() {
 
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Sales Quote...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -654,7 +654,7 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
     }
 
     private void CallSalesQuoteSubmitted(String join, double latitude, double longtitude) {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Sales Quote...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -711,6 +711,7 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
 
             @Override
             public void onFailure(Call<SalesQuoteSubmitedResponse> call, Throwable t) {
+                progressDialog.dismiss();
 
             }
         });
@@ -751,7 +752,7 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
 
 
     private void CallPreview(String join) {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this, R.style.ProgressBarDialog);
         progressDialog.setMessage("Preview...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -778,13 +779,13 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
 
             @Override
             public void onFailure(Call<SalesQuoteAddResponse> call, Throwable t) {
-
+                progressDialog.dismiss();
             }
         });
     }
 
     private void CallProduct(String categoryID) {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -824,7 +825,7 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
     }
 
     private void CallCategory() {
-        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
+        final ProgressDialog progressDialog = new ProgressDialog(this, R.style.ProgressBarDialog);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -857,7 +858,7 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
 
 
     private void CallChefDoc(String hospitalID) {
-        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
+        final ProgressDialog progressDialog = new ProgressDialog(this, R.style.ProgressBarDialog);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -893,7 +894,7 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
     }
 
     private void callHospital(String state, String district) {
-        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
+        final ProgressDialog progressDialog = new ProgressDialog(this, R.style.ProgressBarDialog);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -932,7 +933,7 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
     }
 
     private void CallState() {
-        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
+        final ProgressDialog progressDialog = new ProgressDialog(this, R.style.ProgressBarDialog);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -968,7 +969,7 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
 
     private void callDistrict(String state) {
 
-        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
+        final ProgressDialog progressDialog = new ProgressDialog(this, R.style.ProgressBarDialog);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();

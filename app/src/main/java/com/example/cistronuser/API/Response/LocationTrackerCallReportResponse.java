@@ -14,7 +14,7 @@ public class LocationTrackerCallReportResponse {
     @SerializedName("response")
     private String response;
 
-    @SerializedName("locations")
+    @SerializedName("callInfo")
     private ArrayList<LocationTrackerCallReportModel>locationTrackerCallReportModels=new ArrayList<>();
 
     public String getResponse() {

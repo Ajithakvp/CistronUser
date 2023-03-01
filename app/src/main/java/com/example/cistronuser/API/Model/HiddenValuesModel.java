@@ -11,6 +11,9 @@ public class HiddenValuesModel {
     //      "jsonPartIds": "",
     //      "chk1": 1
 
+    //"lat": "17.39912050",
+    //      "lng": "78.44600410",
+
     @SerializedName("hpidd")
     private String hpidd;
 
@@ -25,6 +28,29 @@ public class HiddenValuesModel {
 
     @SerializedName("jsonPartIds")
     private String jsonPartIds;
+
+    @SerializedName("lat")
+    private String lat;
+
+    @SerializedName("lng")
+    private String lng;
+
+
+    public String getLat() {
+        return lat;
+    }
+
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
+
+    public String getLng() {
+        return lng;
+    }
+
+    public void setLng(String lng) {
+        this.lng = lng;
+    }
 
     public String getJsonPartIds() {
         return jsonPartIds;

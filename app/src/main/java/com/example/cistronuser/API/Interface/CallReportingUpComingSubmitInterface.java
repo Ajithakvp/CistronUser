@@ -72,7 +72,10 @@ public interface CallReportingUpComingSubmitInterface {
                                                                @Query("wb")String wb,
                                                                @Query("lr")String lr,
                                                                @Query("sr")String sr,
-                                                               @Query("pm")String pm);
+                                                               @Query("pm")String pm,
+                                                               @Query("lat") Double lat,
+                                                               @Query("lng") Double lng,
+                                                               @Query("address") String address);
 
 
 

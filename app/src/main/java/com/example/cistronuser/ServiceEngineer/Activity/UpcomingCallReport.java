@@ -284,6 +284,8 @@ public class UpcomingCallReport extends AppCompatActivity {
     LocationBroadcastReceiver receiver;
     ArrayList<LocationTrackerCallReportModel> locationTrackerCallReportModels = new ArrayList<>();
     Double lat, longg, str;
+    String Address;
+    String RespLatitude, RespLongtitude;
 
 
     @SuppressLint("MissingInflatedId")
@@ -446,7 +448,7 @@ public class UpcomingCallReport extends AppCompatActivity {
 
 
         //******************* get Location background ******************//
-        receiver =new LocationBroadcastReceiver();
+        receiver = new LocationBroadcastReceiver();
         startBackgroundService();
         //******************* get Location background end ******************//
 
@@ -456,7 +458,6 @@ public class UpcomingCallReport extends AppCompatActivity {
         progressDialog.setMessage("Call Report...");
         progressDialog.setCancelable(false);
         progressDialog.show();
-
 
 
         UpcomingCallReportInterface upcomingCallReportInterface = APIClient.getClient().create(UpcomingCallReportInterface.class);
@@ -489,14 +490,14 @@ public class UpcomingCallReport extends AppCompatActivity {
                         hpidd = response.body().getUpcomingCallReportModel().getHiddenValuesModel().getHpidd();
                         pdtidd = response.body().getUpcomingCallReportModel().getHiddenValuesModel().getPdtidd();
                         chk1 = response.body().getUpcomingCallReportModel().getHiddenValuesModel().getChk1();
+                        RespLatitude = response.body().getUpcomingCallReportModel().getHiddenValuesModel().getLat();
+                        RespLongtitude = response.body().getUpcomingCallReportModel().getHiddenValuesModel().getLng();
                         DoYouConsumerID = response.body().getUpcomingCallReportModel().getId();
                         PartID = response.body().getUpcomingCallReportModel().getHiddenValuesModel().getJsonPartIds();
                         bp_installr = response.body().getUpcomingCallReportModel().getCallInfoModel().getLogistics_bp_install();
                         bp_install = response.body().getUpcomingCallReportModel().getCallInfoModel().getLogistics_bp_installr();
                         cft = response.body().getUpcomingCallReportModel().getCallInfoModel().getCft();
                         SelectSubComplaintID = response.body().getUpcomingCallReportModel().getSubComplaintCategory();
-
-
 
 
                         // ***********  Customer PO  *********** //
@@ -683,14 +684,14 @@ public class UpcomingCallReport extends AppCompatActivity {
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Log.e(TAG, "onFailure: c "+e.getMessage() );
+                    Log.e(TAG, "onFailure: c " + e.getMessage());
                 }
 
             }
 
             @Override
             public void onFailure(Call<UpcomingCallReportResponse> call, Throwable t) {
-                Log.e(TAG, "onFailure: s "+t.getMessage() );
+                Log.e(TAG, "onFailure: s " + t.getMessage());
             }
         });
         //********Customer Detalils End ******************//
@@ -698,7 +699,7 @@ public class UpcomingCallReport extends AppCompatActivity {
         // ************ File Access Permission ***********//
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, PackageManager.PERMISSION_GRANTED);
         filepath = Environment.getExternalStoragePublicDirectory(DIRECTORY_DOWNLOADS) + "/";
-        FileStoreName = id+"-"+s+ ".txt";
+        FileStoreName = id + "-" + s + ".txt";
         CalltempReadData();
 
         // ************ File Access Permission End ***********//
@@ -2264,7 +2265,6 @@ public class UpcomingCallReport extends AppCompatActivity {
     }
 
 
-
     private void CalltempReadData() {
 
         File readfile = new File(filepath, FileStoreName);
@@ -2590,7 +2590,7 @@ public class UpcomingCallReport extends AppCompatActivity {
         CallReportingUpComingSubmitInterface callReportingUpComingSubmitInterface = APIClient.getClient().create(CallReportingUpComingSubmitInterface.class);
         callReportingUpComingSubmitInterface.callReportSubmit("callClose", PreferenceManager.getEmpID(UpcomingCallReport.this), id, LogsitId, CallTypePayoptionsID, ComplaintID, SubComplaintCatID, edTypeComplaintCat.getText().toString(), edTypeSubComplaintCat.getText().toString(), "Not Detect", CallAssignId, CallRegID, CallAssignId, pdtidd, hpidd, chk1, CusPoradiobID,
                 CallStatusID, tvPaymentafterDispatch.getText().toString(), tvRecvPaymentDispatch.getText().toString(), tvInstallDate.getText().toString(), bp_install, bp_installr, strInstallament, strInstallamentr, balinspayamt, cft, String.valueOf(rbconsumerSpareID), Spc, tvFollowUpDate.getText().toString(),
-                tvStartingTime.getText().toString(), tvEndTime.getText().toString(), edPendingReason.getText().toString(), edName.getText().toString(), edMobile.getText().toString(), String.valueOf(rbRecPendingID), tvDepositedDate.getText().toString(), edCheckUTRno.getText().toString(), String.valueOf(rbClosePayID), edSaleORserviceAmt.getText().toString(), edSpareAmt.getText().toString(), edWorkdone.getText().toString(), edEngineerAdvice.getText().toString(), String.valueOf(ratingBar.getRating()), String.valueOf(cbSetID), edReason.getText().toString(), Ps, Sq, Wb, Lr, Sr, Pm).enqueue(new Callback<CallReportingUpComingSubmitResponse>() {
+                tvStartingTime.getText().toString(), tvEndTime.getText().toString(), edPendingReason.getText().toString(), edName.getText().toString(), edMobile.getText().toString(), String.valueOf(rbRecPendingID), tvDepositedDate.getText().toString(), edCheckUTRno.getText().toString(), String.valueOf(rbClosePayID), edSaleORserviceAmt.getText().toString(), edSpareAmt.getText().toString(), edWorkdone.getText().toString(), edEngineerAdvice.getText().toString(), String.valueOf(ratingBar.getRating()), String.valueOf(cbSetID), edReason.getText().toString(), Ps, Sq, Wb, Lr, Sr, Pm,lat,longg,Address).enqueue(new Callback<CallReportingUpComingSubmitResponse>() {
             @Override
             public void onResponse(Call<CallReportingUpComingSubmitResponse> call, Response<CallReportingUpComingSubmitResponse> response) {
                 try {
@@ -3882,6 +3882,8 @@ public class UpcomingCallReport extends AppCompatActivity {
 
     }
 
+
+
     public class LocationBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -3889,67 +3891,40 @@ public class UpcomingCallReport extends AppCompatActivity {
 
                 lat = intent.getDoubleExtra("latitude", 0f);
                 longg = intent.getDoubleExtra("longitude", 0f);
-                String Address = intent.getStringExtra("Address");
+                 Address = intent.getStringExtra("Address");
             }
             CallCheckLocation();
         }
     }
 
-
     private void CallCheckLocation() {
 
-        LocationTrackerCallReportInterface locationTrackerCallReportInterface = APIClient.getClient().create(LocationTrackerCallReportInterface.class);
-        locationTrackerCallReportInterface.CallReport("getTodaysWork", PreferenceManager.getEmpID(UpcomingCallReport.this)).enqueue(new Callback<LocationTrackerCallReportResponse>() {
-            @Override
-            public void onResponse(Call<LocationTrackerCallReportResponse> call, Response<LocationTrackerCallReportResponse> response) {
-                try {
-                    if (response.isSuccessful()) {
+        try {
+            Location locationA = new Location("Location A");
+            Location locationB = new Location("Location B");
+            locationA.setLatitude(Double.parseDouble(String.valueOf(lat)));
+            locationA.setLongitude(Double.parseDouble(String.valueOf(longg)));
+            locationB.setLatitude(Double.parseDouble(String.valueOf(RespLatitude)));
+            locationB.setLongitude(Double.parseDouble(String.valueOf(RespLongtitude)));
 
-                        locationTrackerCallReportModels = response.body().getLocationTrackerCallReportModels();
+            str = Double.valueOf(locationA.distanceTo(locationB) / 1000);
+            Log.e(TAG, "onResponse: " + str);
 
-                        for (int i = 0; i < locationTrackerCallReportModels.size(); i++) {
+            if (str <= 1.0) {
+                tvSubmit.setVisibility(View.VISIBLE);
 
-
-                            Location locationA = new Location("Location A");
-                            Location locationB = new Location("Location B");
-                            locationA.setLatitude(Double.parseDouble(String.valueOf(lat)));
-                            locationA.setLongitude(Double.parseDouble(String.valueOf(longg)));
-                            locationB.setLatitude(Double.parseDouble(String.valueOf(locationTrackerCallReportModels.get(i).getLat())));
-                            locationB.setLongitude(Double.parseDouble(String.valueOf(locationTrackerCallReportModels.get(i).getLng())));
-
-                            str = Double.valueOf(locationA.distanceTo(locationB) / 1000);
-                            // Log.e(TAG, "onResponse: " + str);
-
-                            if (str <= 1.0) {
-                                tvSubmit.setVisibility(View.VISIBLE);
-                                break;
-                            } else {
-                                tvSubmit.setVisibility(View.GONE);
-                            }
-                        }
-
-
-                    }
-
-
-                } catch (Exception e) {
-
-
-                }
-
+            } else {
+                tvSubmit.setVisibility(View.GONE);
             }
 
-            @Override
-            public void onFailure(Call<LocationTrackerCallReportResponse> call, Throwable t) {
-                Log.e(TAG, "onFailure: " + t.getMessage());
+        }catch (Exception e){
+            Log.d(TAG, "CallCheckLocation: "+e.getMessage() );
+        }
 
 
-            }
-        });
 
 
     }
-
 
 
 }

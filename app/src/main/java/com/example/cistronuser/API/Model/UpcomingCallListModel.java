@@ -16,6 +16,9 @@ public class UpcomingCallListModel {
 //            "createdBy": "System Generated (e000)",
 //            "button": "13856~17289~24357~dashboard~105~up"
 
+    //lat": "17.43226600",
+    //      "lng": "78.55380110",
+
     @SerializedName("crId")
     private String crId;
 
@@ -48,6 +51,28 @@ public class UpcomingCallListModel {
 
     @SerializedName("mobile")
     private String mobile;
+
+    @SerializedName("lat")
+    private String lat;
+
+    @SerializedName("lng")
+    private String lng;
+
+    public String getLat() {
+        return lat;
+    }
+
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
+
+    public String getLng() {
+        return lng;
+    }
+
+    public void setLng(String lng) {
+        this.lng = lng;
+    }
 
     public String getMobile() {
         return mobile;

@@ -10,7 +10,7 @@ public interface LocationTrackerCallReportInterface {
 
     //https://cistronsystems.in/beta1/app/locationTracker.php?action=getTodaysWork&empid=e367
 
-    @GET("locationTracker.php")
+    @GET("service_engineers.php")
     Call<LocationTrackerCallReportResponse>CallReport(@Query("action")String action,@Query("empid")String empid);
 
 }

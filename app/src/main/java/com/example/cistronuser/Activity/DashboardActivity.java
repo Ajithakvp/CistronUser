@@ -51,8 +51,10 @@ import com.example.cistronuser.API.Interface.LeaveApprovelCountInterface;
 import com.example.cistronuser.API.Interface.LocationTrackerCallReportInterface;
 import com.example.cistronuser.API.Interface.LogoutInterFace;
 import com.example.cistronuser.API.Interface.SalesQuoteApprovalCountInterFace;
+import com.example.cistronuser.API.Interface.UpcomingCallListInterface;
 import com.example.cistronuser.API.Model.LocationTrackerCallReportModel;
 import com.example.cistronuser.API.Model.LoginuserModel;
+import com.example.cistronuser.API.Model.UpcomingCallListModel;
 import com.example.cistronuser.API.Response.ChangePasswordResponse;
 import com.example.cistronuser.API.Response.CompOffCountResponse;
 import com.example.cistronuser.API.Response.DashboardCallCountResponse;
@@ -60,6 +62,7 @@ import com.example.cistronuser.API.Response.LeaveApprovelCountResponse;
 import com.example.cistronuser.API.Response.LocationTrackerCallReportResponse;
 import com.example.cistronuser.API.Response.LogoutResponse;
 import com.example.cistronuser.API.Response.SalesQuoteApprovalCountResponse;
+import com.example.cistronuser.API.Response.UpcomingCallListResponse;
 import com.example.cistronuser.API.Response.WaitingExpenseCountInterface;
 import com.example.cistronuser.Common.ConnectionRecevier;
 import com.example.cistronuser.Common.LocationBackgroundService;
@@ -79,14 +82,18 @@ import com.example.cistronuser.ServiceEngineer.Activity.ReturnReqPendingCoActivi
 import com.example.cistronuser.ServiceEngineer.Activity.SpareInwardActivity;
 import com.example.cistronuser.ServiceEngineer.Activity.SpareReqPendingCOActivity;
 import com.example.cistronuser.ServiceEngineer.Activity.UpComingCallActivity;
+import com.example.cistronuser.ServiceEngineer.Activity.UpcomingCallReport;
 import com.example.cistronuser.WaitingforApprovel.Activity.CompOffRequest;
 import com.example.cistronuser.WaitingforApprovel.Activity.ExpensesReport;
 import com.example.cistronuser.WaitingforApprovel.Activity.LeaveRequest;
 import com.example.cistronuser.WaitingforApprovel.Activity.SalesQuoteApproval;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
@@ -139,7 +146,7 @@ public class DashboardActivity extends Activity {
     // Background Location
 
     LocationBroadcastReceiver receiver;
-    ArrayList<LocationTrackerCallReportModel> locationTrackerCallReportModels = new ArrayList<>();
+    ArrayList<UpcomingCallListModel> locationTrackerCallReportModels = new ArrayList<>();
     Double lat, longg, str;
 
 
@@ -939,91 +946,155 @@ public class DashboardActivity extends Activity {
     }
 
     private void CallCheckLocation() {
-
-        LocationTrackerCallReportInterface locationTrackerCallReportInterface = APIClient.getClient().create(LocationTrackerCallReportInterface.class);
-        locationTrackerCallReportInterface.CallReport("getTodaysWork", PreferenceManager.getEmpID(DashboardActivity.this)).enqueue(new Callback<LocationTrackerCallReportResponse>() {
+        UpcomingCallListInterface upcomingCallListInterface = APIClient.getClient().create(UpcomingCallListInterface.class);
+        upcomingCallListInterface.CallUpcomingCallReport("getCallsRecords", PreferenceManager.getEmpID(this), "today").enqueue(new Callback<UpcomingCallListResponse>() {
             @Override
-            public void onResponse(Call<LocationTrackerCallReportResponse> call, Response<LocationTrackerCallReportResponse> response) {
+            public void onResponse(Call<UpcomingCallListResponse> call, Response<UpcomingCallListResponse> response) {
                 try {
-                    if (response.isSuccessful()) {
+                    locationTrackerCallReportModels = response.body().getUpcomingCallListModels();
 
-                        locationTrackerCallReportModels = response.body().getLocationTrackerCallReportModels();
-
-                        for (int i = 0; i < locationTrackerCallReportModels.size(); i++) {
+                    for (int i = 0; i < locationTrackerCallReportModels.size(); i++) {
 
 
-                            Location locationA = new Location("Location A");
-                            Location locationB = new Location("Location B");
-                            locationA.setLatitude(Double.parseDouble(String.valueOf(lat)));
-                            locationA.setLongitude(Double.parseDouble(String.valueOf(longg)));
-                            locationB.setLatitude(Double.parseDouble(String.valueOf(locationTrackerCallReportModels.get(i).getLat())));
-                            locationB.setLongitude(Double.parseDouble(String.valueOf(locationTrackerCallReportModels.get(i).getLng())));
+                        Location locationA = new Location("Location A");
+                        Location locationB = new Location("Location B");
+                        locationA.setLatitude(Double.parseDouble(String.valueOf(lat)));
+                        locationA.setLongitude(Double.parseDouble(String.valueOf(longg)));
+                        locationB.setLatitude(Double.parseDouble(String.valueOf(locationTrackerCallReportModels.get(i).getLat())));
+                        locationB.setLongitude(Double.parseDouble(String.valueOf(locationTrackerCallReportModels.get(i).getLng())));
 
-                            str = Double.valueOf(locationA.distanceTo(locationB) / 1000);
-                            // Log.e(TAG, "onResponse: " + str);
+                        str = Double.valueOf(locationA.distanceTo(locationB) / 1000);
+                        // Log.e(TAG, "onResponse: " + str);
 
-                            if (str <= 1.0) {
+                        if (str <= 1.0) {
 
-                                // ******************* Top Notfication ***************** //
-                                Notification newMessageNotification = null;
-                                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                                    newMessageNotification = new Notification.Builder(context, "Cistron")
-                                            .setSmallIcon(R.drawable.cis_logo_login)
-                                            .setContentTitle("Your Location is Reached")
-                                            .setContentText(locationTrackerCallReportModels.get(i).getHospName())
-                                            .setAutoCancel(true)
-                                            .build();
-                                }
-
-                                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(DashboardActivity.this);
-                                notificationManager.notify(1, newMessageNotification);
-
-                                // ******************* Top Notfication End ***************** //
+                            String id = locationTrackerCallReportModels.get(i).getButton();
+                            String PM = locationTrackerCallReportModels.get(i).getIssue();
 
 
-                                //Toast.makeText(DashboardActivity.this, "Location Reached", Toast.LENGTH_SHORT).show();
-                                AlertDialog.Builder builder = new AlertDialog.Builder(DashboardActivity.this, R.style.AlertDialogCustom);
-                                builder.setCancelable(false);
-                                builder.setMessage("Your Location is reached ! " + "\n" + "\n" + locationTrackerCallReportModels.get(i).getHospName());
-                                builder.setTitle("Location !");
-                                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-
-                                        dialog.dismiss();
-
-
-                                    }
-                                });
-                                AlertDialog alertDialog = builder.create();
-                                alertDialog.show();
-
-                                break;
-                            } else {
-
-                                Log.e(TAG, "onResponse: not reached");
+                            // ******************* Top Notfication ***************** //
+                            Notification newMessageNotification = null;
+                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                                newMessageNotification = new Notification.Builder(context, "Cistron")
+                                        .setSmallIcon(R.drawable.cis_logo_login)
+                                        .setContentTitle("Your Location is Reached")
+                                        .setContentText(locationTrackerCallReportModels.get(i).getHospital())
+                                        .setAutoCancel(true)
+                                        .build();
                             }
+
+                            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(DashboardActivity.this);
+                            notificationManager.notify(1, newMessageNotification);
+
+                            // ******************* Top Notfication End ***************** //
+
+
+                            //Toast.makeText(DashboardActivity.this, "Location Reached", Toast.LENGTH_SHORT).show();
+                            AlertDialog.Builder builder = new AlertDialog.Builder(DashboardActivity.this, R.style.AlertDialogCustom);
+                            builder.setCancelable(false);
+                            builder.setMessage("Your Location is reached ! " + "\n" + "\n" + locationTrackerCallReportModels.get(i).getHospital());
+                            builder.setTitle("Location !");
+                            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    try {
+                                        Intent intent = new Intent(DashboardActivity.this, UpcomingCallReport.class);
+                                        intent.putExtra("id", id);
+                                        intent.putExtra("PM", PM);
+                                        startActivity(intent);
+                                        dialog.dismiss();
+                                    } catch (Exception e) {
+                                        Log.e(TAG, "onClick: " + e.getMessage());
+                                    }
+
+
+                                }
+                            });
+                            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+
+                            AlertDialog alertDialog = builder.create();
+                            alertDialog.show();
+
+                            break;
+                        } else {
+
+                            Log.e(TAG, "onResponse: not reached");
+                        }
+                    }
+
+
+
+                    // Time Check
+
+
+                    // String TimeCheck = response.body().getUpcomingCallListModels().get(0).getDate();
+                    // TimeCheck = TimeCheck.substring(11); 28-02-2023 10:00:00
+                    // Log.e(TAG, "onResponse: " + TimeCheck);
+                    String TimeCheck = "01-03-2023 17:00:00";
+
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault());
+                    String currentDateandTime = sdf.format(new Date());
+                    //Log.e(TAG, "onResponse: "+currentDateandTime );
+
+
+                    SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault());
+
+                    Date TimeDate ;
+                    Date CurrentTimeDate ;
+                    TimeDate = format.parse(TimeCheck);
+                    CurrentTimeDate = format.parse(currentDateandTime);
+
+
+
+                    long diff = TimeDate.getTime() - CurrentTimeDate.getTime();
+                    long diffSeconds = diff / 1000;
+                    long diffMinutes = diff / (60 * 1000);
+                    long diffHours = diff / (60 * 60 * 1000);
+                    // Log.e(TAG, "onResponse: check "+diff +"------"+diffHours );
+
+                    if (diffHours <= 1){
+
+                        Intent intent=new Intent(DashboardActivity.this, LocationBackgroundService.class);
+                        PendingIntent pendingIntent=PendingIntent.getBroadcast(DashboardActivity.this,1,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+                       long time=System.currentTimeMillis();
+                       long ten=1000*10;
+                        AlarmManager alarmManager=(AlarmManager)getSystemService(ALARM_SERVICE);
+                        alarmManager.set(AlarmManager.RTC_WAKEUP,time+ten,pendingIntent);
+                        // ******************* Top Notfication ***************** //
+                        Notification newMessageNotification = null;
+                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                            newMessageNotification = new Notification.Builder(context, "Cistron")
+                                    .setSmallIcon(R.drawable.cis_logo_login)
+                                    .setContentTitle("Your Location is Time Start")
+                                    .setContentText("time")
+                                    .setAutoCancel(true)
+                                    .build();
                         }
 
+                        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(DashboardActivity.this);
+                        notificationManager.notify(200, newMessageNotification);
 
+                        // ******************* Top Notfication End ***************** //
+                    }else {
+                        Log.e(TAG, "onResponse: else "+diffHours );
                     }
 
 
                 } catch (Exception e) {
 
-
                 }
-
             }
 
             @Override
-            public void onFailure(Call<LocationTrackerCallReportResponse> call, Throwable t) {
-                Log.e(TAG, "onFailure: " + t.getMessage());
-
+            public void onFailure(Call<UpcomingCallListResponse> call, Throwable t) {
 
             }
         });
-
 
     }
 
@@ -1121,6 +1192,7 @@ public class DashboardActivity extends Activity {
                 lat = intent.getDoubleExtra("latitude", 0f);
                 longg = intent.getDoubleExtra("longitude", 0f);
                 String Address = intent.getStringExtra("Address");
+
 
 
             }
