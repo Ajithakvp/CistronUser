@@ -111,7 +111,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:id="@+id/rlattendance"
-        android:visibility="gone"
+        android:visibility="visible"
         android:orientation="vertical">
 
         <RadioGroup
@@ -121,7 +121,6 @@
 
             <RadioButton
                 android:id="@+id/rbLocal"
-
                 android:fontFamily="@font/semibold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -148,20 +147,7 @@
                 android:layout_height="wrap_content"
                 android:text="Office Regular Work" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/placeLayout"
-                android:visibility="gone"
-                android:fontFamily="@font/semibold"
-                android:layout_width="match_parent"
-                app:errorEnabled="true"
-                android:layout_height="match_parent">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edtPlace"
-                    android:fontFamily="@font/semibold"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Place" />
-            </com.google.android.material.textfield.TextInputLayout>
+
 
             <RadioButton
                 android:id="@+id/rbTraining"
@@ -176,7 +162,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Meeting" />
+
+
         </RadioGroup>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/placeLayout"
+            android:visibility="gone"
+            android:fontFamily="@font/semibold"
+            android:layout_width="match_parent"
+            app:errorEnabled="true"
+            android:layout_height="match_parent">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtPlace"
+                android:fontFamily="@font/semibold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Place" />
+        </com.google.android.material.textfield.TextInputLayout>
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSubmit"
             android:fontFamily="@font/bold"

@@ -17,8 +17,7 @@ import java.util.ArrayList;
 public class PreferenceManager {
 
 
-
-    public static ArrayList<LoginuserModel>loginuserModels=new ArrayList<>();
+    public static ArrayList<LoginuserModel> loginuserModels = new ArrayList<>();
 
 
     public static void setLoggedStatus(Activity activity, boolean isLogged) {
@@ -34,24 +33,24 @@ public class PreferenceManager {
 
 
     }
-    public static void saveData(Activity activity,ArrayList<LoginuserModel>loginuserModels)
-    {
+
+    public static void saveData(Activity activity, ArrayList<LoginuserModel> loginuserModels) {
         SharedPreferences sharedPreferences = activity.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
         String json = gson.toJson(loginuserModels);
-        editor.putString("task list",json);
+        editor.putString("task list", json);
         editor.apply();
     }
 
 
-    public static ArrayList<LoginuserModel> loadData(Activity activity)
-    {
-        SharedPreferences sharedPreferences = activity.getSharedPreferences("SETTINGS",Context.MODE_PRIVATE);
+    public static ArrayList<LoginuserModel> loadData(Activity activity) {
+        SharedPreferences sharedPreferences = activity.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
         Gson gson = new Gson();
-        String json = sharedPreferences. getString("task list",null);
-        Type type = new TypeToken<ArrayList<LoginuserModel>>(){}.getType();
-        loginuserModels = gson.fromJson(json,type);
+        String json = sharedPreferences.getString("task list", null);
+        Type type = new TypeToken<ArrayList<LoginuserModel>>() {
+        }.getType();
+        loginuserModels = gson.fromJson(json, type);
         return loginuserModels;
     }
 
@@ -69,7 +68,6 @@ public class PreferenceManager {
     }
 
 
-
     //profile details
 
     //name
@@ -85,6 +83,7 @@ public class PreferenceManager {
         return preferences.getString("name", "");
 
     }
+
     //Mobile
     public static void setEmpMobile(Context context, String empid) {
         SharedPreferences preferences;
@@ -98,6 +97,7 @@ public class PreferenceManager {
         return preferences.getString("mobile", "");
 
     }
+
     //Email
     public static void setEmpemail(Context context, String empid) {
         SharedPreferences preferences;
@@ -154,6 +154,7 @@ public class PreferenceManager {
         return preferences.getString("designation", "");
 
     }
+
     //branch
     public static void setEmpbranch(Context context, String empid) {
         SharedPreferences preferences;
@@ -168,7 +169,7 @@ public class PreferenceManager {
 
     }
 
-//teamleader
+    //teamleader
     public static void setEmpteamleader(Context context, String empid) {
         SharedPreferences preferences;
         preferences = context.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
@@ -182,7 +183,6 @@ public class PreferenceManager {
 
 
     }
-
 
 
     //photo
@@ -219,6 +219,7 @@ public class PreferenceManager {
         preferences = activity.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
         preferences.edit().putString("company", company).apply();
     }
+
     public static String getEmpCompany(Context activity) {
         SharedPreferences preferences;
         preferences = activity.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
@@ -230,12 +231,12 @@ public class PreferenceManager {
         preferences = activity.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
         preferences.edit().putString("ismanger", manager).apply();
     }
+
     public static String get_ismanager(Context activity) {
         SharedPreferences preferences;
         preferences = activity.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
         return preferences.getString("ismanger", "");
     }
-
 
 
     //Service Engineer Call No
@@ -245,12 +246,12 @@ public class PreferenceManager {
         preferences = activity.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
         preferences.edit().putString("callNo", CallNo).apply();
     }
+
     public static String getCallNo(Context activity) {
         SharedPreferences preferences;
         preferences = activity.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
         return preferences.getString("callNo", "");
     }
-
 
 
     //Category
@@ -260,6 +261,7 @@ public class PreferenceManager {
         preferences = activity.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
         preferences.edit().putString("empid", Empid).apply();
     }
+
     public static String getLoginEmpID(Context activity) {
         SharedPreferences preferences;
         preferences = activity.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
@@ -271,6 +273,7 @@ public class PreferenceManager {
         preferences = activity.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
         preferences.edit().putString("pass", pwd).apply();
     }
+
     public static String getLoginPwd(Context activity) {
         SharedPreferences preferences;
         preferences = activity.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
@@ -278,11 +281,38 @@ public class PreferenceManager {
     }
 
 
+    // ************* Latitude Longitude *************** //
 
-    //get
+    public static void saveLat(Activity activity, String latitude) {
+        SharedPreferences preferences;
+        preferences = activity.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
+        preferences.edit().putString("lat", latitude).apply();
+    }
+
+    public static String getLat(Context activity) {
+        SharedPreferences preferences;
+        preferences = activity.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
+        return preferences.getString("lat", "");
+    }
 
 
-    public static void setUserModelData(Activity activity,LoginuserModel userModel) {
+    public static void saveLng(Activity activity, String longitude) {
+        SharedPreferences preferences;
+        preferences = activity.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
+        preferences.edit().putString("lng", longitude).apply();
+    }
+
+    public static String getLng(Context activity) {
+        SharedPreferences preferences;
+        preferences = activity.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
+        return preferences.getString("lng", "");
+    }
+
+
+    // ************* Latitude Longitude end *************** //
+
+
+    public static void setUserModelData(Activity activity, LoginuserModel userModel) {
         SharedPreferences preferences;
         Gson gson = new Gson();
         String json = gson.toJson(userModel);

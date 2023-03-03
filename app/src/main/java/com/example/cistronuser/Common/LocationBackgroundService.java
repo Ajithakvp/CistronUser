@@ -8,6 +8,8 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.Service;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -49,12 +51,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LocationBackgroundService extends Service {
+public class LocationBackgroundService extends Service  {
 
     FusedLocationProviderClient fusedLocationProviderClient;
     LocationCallback locationCallback;
-
-
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -65,6 +65,7 @@ public class LocationBackgroundService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         locationCallback = new LocationCallback() {
             @Override
@@ -173,4 +174,8 @@ public class LocationBackgroundService extends Service {
         }
         fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
     }
+
+
+
+
 }

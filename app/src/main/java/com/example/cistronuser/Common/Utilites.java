@@ -1,5 +1,12 @@
 package com.example.cistronuser.Common;
 
+import android.app.Notification;
+
+import androidx.core.app.NotificationManagerCompat;
+
+import com.example.cistronuser.Activity.DashboardActivity;
+import com.example.cistronuser.R;
+
 public class Utilites {
 
     // final Calendar c = Calendar.getInstance();
@@ -28,5 +35,25 @@ public class Utilites {
 
 
     // ********** Distance Notication Meter End  ********* //
+
+
+
+
+    // ******************* Top Notfication ***************** //
+//    Notification newMessageNotification = null;
+//                                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+//        newMessageNotification = new Notification.Builder(context, "Cistron")
+//                .setSmallIcon(R.drawable.cis_logo_login)
+//                .setContentTitle("Call Reporting Alert !")
+//                .setContentText("You have a scheduled appointment at " + Hosp[0] + "\n" + locationTrackerCallReportModels.get(i).getAddress() + "\n"
+//                        + "for " + locationTrackerCallReportModels.get(i).getDate())
+//                .setAutoCancel(true)
+//                .build();
+//    }
+//
+//    NotificationManagerCompat notificationManager = NotificationManagerCompat.from(DashboardActivity.this);
+//                                notificationManager.notify(1, newMessageNotification);
+
+    // ******************* Top Notfication End ***************** //
 
 }

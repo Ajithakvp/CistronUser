@@ -114,6 +114,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
 
         //*****  Location ******//
         receiver = new LocationBroadcastReceiver();
+        startBackgroundService();
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationEnabled();
         getLocation();

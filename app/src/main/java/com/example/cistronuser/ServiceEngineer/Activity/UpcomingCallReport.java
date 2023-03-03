@@ -62,7 +62,6 @@ import com.example.cistronuser.API.Interface.ConsumeCusSpareSubmitInterface;
 import com.example.cistronuser.API.Interface.ConsumeSpareSubmitInterface;
 import com.example.cistronuser.API.Interface.EscalatePaymentSubmitInterface;
 import com.example.cistronuser.API.Interface.InstallamentEscalatedSubmitInterface;
-import com.example.cistronuser.API.Interface.LocationTrackerCallReportInterface;
 import com.example.cistronuser.API.Interface.ServiceSpareRequestInterface;
 import com.example.cistronuser.API.Interface.SupplyEscalatedSubmitedInterface;
 import com.example.cistronuser.API.Interface.UpcomingCallReportInterface;
@@ -95,7 +94,6 @@ import com.example.cistronuser.API.Response.ConsumeSpareSubmitResponse;
 import com.example.cistronuser.API.Response.ConsumerCusSpareSubmitResponse;
 import com.example.cistronuser.API.Response.EscalatePaymentSubmitResponse;
 import com.example.cistronuser.API.Response.InstallamentEscalatedSubmitResponse;
-import com.example.cistronuser.API.Response.LocationTrackerCallReportResponse;
 import com.example.cistronuser.API.Response.ServiceSpareRequestResponse;
 import com.example.cistronuser.API.Response.SupplyEscalatedSubmitedResponse;
 import com.example.cistronuser.API.Response.UpcomingCallReportResponse;
@@ -680,6 +678,7 @@ public class UpcomingCallReport extends AppCompatActivity {
 
                         // ********** Escalate End ********** //
 
+
                     }
 
                 } catch (Exception e) {
@@ -695,7 +694,6 @@ public class UpcomingCallReport extends AppCompatActivity {
             }
         });
         //********Customer Detalils End ******************//
-
         // ************ File Access Permission ***********//
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, PackageManager.PERMISSION_GRANTED);
         filepath = Environment.getExternalStoragePublicDirectory(DIRECTORY_DOWNLOADS) + "/";
@@ -2590,7 +2588,7 @@ public class UpcomingCallReport extends AppCompatActivity {
         CallReportingUpComingSubmitInterface callReportingUpComingSubmitInterface = APIClient.getClient().create(CallReportingUpComingSubmitInterface.class);
         callReportingUpComingSubmitInterface.callReportSubmit("callClose", PreferenceManager.getEmpID(UpcomingCallReport.this), id, LogsitId, CallTypePayoptionsID, ComplaintID, SubComplaintCatID, edTypeComplaintCat.getText().toString(), edTypeSubComplaintCat.getText().toString(), "Not Detect", CallAssignId, CallRegID, CallAssignId, pdtidd, hpidd, chk1, CusPoradiobID,
                 CallStatusID, tvPaymentafterDispatch.getText().toString(), tvRecvPaymentDispatch.getText().toString(), tvInstallDate.getText().toString(), bp_install, bp_installr, strInstallament, strInstallamentr, balinspayamt, cft, String.valueOf(rbconsumerSpareID), Spc, tvFollowUpDate.getText().toString(),
-                tvStartingTime.getText().toString(), tvEndTime.getText().toString(), edPendingReason.getText().toString(), edName.getText().toString(), edMobile.getText().toString(), String.valueOf(rbRecPendingID), tvDepositedDate.getText().toString(), edCheckUTRno.getText().toString(), String.valueOf(rbClosePayID), edSaleORserviceAmt.getText().toString(), edSpareAmt.getText().toString(), edWorkdone.getText().toString(), edEngineerAdvice.getText().toString(), String.valueOf(ratingBar.getRating()), String.valueOf(cbSetID), edReason.getText().toString(), Ps, Sq, Wb, Lr, Sr, Pm,lat,longg,Address).enqueue(new Callback<CallReportingUpComingSubmitResponse>() {
+                tvStartingTime.getText().toString(), tvEndTime.getText().toString(), edPendingReason.getText().toString(), edName.getText().toString(), edMobile.getText().toString(), String.valueOf(rbRecPendingID), tvDepositedDate.getText().toString(), edCheckUTRno.getText().toString(), String.valueOf(rbClosePayID), edSaleORserviceAmt.getText().toString(), edSpareAmt.getText().toString(), edWorkdone.getText().toString(), edEngineerAdvice.getText().toString(), String.valueOf(ratingBar.getRating()), String.valueOf(cbSetID), edReason.getText().toString(), Ps, Sq, Wb, Lr, Sr, Pm, lat, longg, Address, Double.valueOf(PreferenceManager.getLat(UpcomingCallReport.this)), Double.valueOf(PreferenceManager.getLng(UpcomingCallReport.this))).enqueue(new Callback<CallReportingUpComingSubmitResponse>() {
             @Override
             public void onResponse(Call<CallReportingUpComingSubmitResponse> call, Response<CallReportingUpComingSubmitResponse> response) {
                 try {
@@ -2598,6 +2596,8 @@ public class UpcomingCallReport extends AppCompatActivity {
 
                         progressDialog.dismiss();
 
+                        PreferenceManager.saveLat(UpcomingCallReport.this, String.valueOf(lat));
+                        PreferenceManager.saveLng(UpcomingCallReport.this, String.valueOf(longg));
                         Intent intent = new Intent(UpcomingCallReport.this, DashboardActivity.class);
                         startActivity(intent);
                         finish();
@@ -3880,26 +3880,15 @@ public class UpcomingCallReport extends AppCompatActivity {
         Intent intent = new Intent(UpcomingCallReport.this, LocationBackgroundService.class);
         startService(intent);
 
-    }
 
-
-
-    public class LocationBroadcastReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals("Location")) {
-
-                lat = intent.getDoubleExtra("latitude", 0f);
-                longg = intent.getDoubleExtra("longitude", 0f);
-                 Address = intent.getStringExtra("Address");
-            }
-            CallCheckLocation();
-        }
     }
 
     private void CallCheckLocation() {
 
         try {
+
+           //  RespLatitude = "10.70427880";
+
             Location locationA = new Location("Location A");
             Location locationB = new Location("Location B");
             locationA.setLatitude(Double.parseDouble(String.valueOf(lat)));
@@ -3910,20 +3899,55 @@ public class UpcomingCallReport extends AppCompatActivity {
             str = Double.valueOf(locationA.distanceTo(locationB) / 1000);
             Log.e(TAG, "onResponse: " + str);
 
+
             if (str <= 1.0) {
                 tvSubmit.setVisibility(View.VISIBLE);
 
             } else {
+                AlertDialog.Builder builder = new AlertDialog.Builder(UpcomingCallReport.this, R.style.AlertDialogCustom);
+                builder.setTitle("Your location has not been reached.");
+                builder.setMessage("Are you at the right place ?");
+                builder.setCancelable(false);
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        tvSubmit.setVisibility(View.VISIBLE);
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        onBackPressed();
+                    }
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+                Intent intent = new Intent(UpcomingCallReport.this, LocationBackgroundService.class);
+                stopService(intent);
                 tvSubmit.setVisibility(View.GONE);
+
             }
 
-        }catch (Exception e){
-            Log.d(TAG, "CallCheckLocation: "+e.getMessage() );
+
+        } catch (Exception e) {
+            Log.d(TAG, "CallCheckLocation: " + e.getMessage());
         }
 
 
+    }
 
+    public class LocationBroadcastReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals("Location")) {
 
+                lat = intent.getDoubleExtra("latitude", 0f);
+                longg = intent.getDoubleExtra("longitude", 0f);
+                Address = intent.getStringExtra("Address");
+
+            }
+            CallCheckLocation();
+        }
     }
 
 

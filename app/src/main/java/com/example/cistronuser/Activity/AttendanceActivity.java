@@ -1,5 +1,6 @@
 package com.example.cistronuser.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -8,9 +9,14 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -28,14 +34,20 @@ import android.widget.Toast;
 import com.example.cistronuser.API.APIClient;
 import com.example.cistronuser.API.Interface.AttendanceInsert;
 import com.example.cistronuser.API.Interface.AttendanceMessage;
+import com.example.cistronuser.API.Interface.UserLocationLatLngInterface;
 import com.example.cistronuser.API.Model.AttendanceMessageModel;
 import com.example.cistronuser.API.Response.AttendanceResponse;
+import com.example.cistronuser.API.Response.UserLocationLatLngResponse;
 import com.example.cistronuser.Common.ConnectionRecevier;
+import com.example.cistronuser.Common.LocationBackgroundService;
 import com.example.cistronuser.Common.PreferenceManager;
 import com.example.cistronuser.R;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+
+import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -59,6 +71,10 @@ public class AttendanceActivity extends Activity {
     TextView tvMsg, tvcat;
     RelativeLayout rlmsg;
     LinearLayout rlattendance;
+
+    LocationBroadcastReceiver receiver;
+    double Latitude;
+    double Longtitude;
 
 
     @SuppressLint("MissingInflatedId")
@@ -88,6 +104,35 @@ public class AttendanceActivity extends Activity {
         broadcastReceiver = new ConnectionRecevier();
         registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 
+        //************* User Location Lat lng **************** //
+        receiver = new LocationBroadcastReceiver();
+        startBackgroundService();
+        UserLocationLatLngInterface userLocationLatLngInterface = APIClient.getClient().create(UserLocationLatLngInterface.class);
+        userLocationLatLngInterface.CallLatLng("getHomeLocation", PreferenceManager.getEmpID(this)).enqueue(new Callback<UserLocationLatLngResponse>() {
+            @Override
+            public void onResponse(Call<UserLocationLatLngResponse> call, Response<UserLocationLatLngResponse> response) {
+                try {
+                    if (response.isSuccessful()) {
+
+                        PreferenceManager.saveLat(AttendanceActivity.this, response.body().getLat());
+                        PreferenceManager.saveLng(AttendanceActivity.this, response.body().getLng());
+
+                    }
+
+                } catch (Exception e) {
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<UserLocationLatLngResponse> call, Throwable t) {
+
+            }
+        });
+
+        //************* User Location Lat lng end **************** //
+
         callAttendmsgAPI();
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,7 +150,7 @@ public class AttendanceActivity extends Activity {
                 if (rbGroup.getCheckedRadioButtonId() == -1) {
                     isfilled = false;
                     Toast.makeText(AttendanceActivity.this, "Please select Any one of the options ", Toast.LENGTH_SHORT).show();
-                } else if (rbRegular.isChecked()) {
+                } else if (rbRegular.isChecked() || rbExstation.isChecked() || rbLocal.isChecked() || rbOutstation.isChecked()) {
                     if (edtPlace.getText().toString().trim().equals("")) {
                         isfilled = false;
                         edtPlace.setError("Enter the place");
@@ -135,10 +180,17 @@ public class AttendanceActivity extends Activity {
 
                 switch (rb) {
                     case 0:
+
+                        // ***** Local ***** //
+
                         placeId = 1;
 
+                        if (PreferenceManager.getLat(AttendanceActivity.this).trim().equals("") && PreferenceManager.getLng(AttendanceActivity.this).trim().equals("")) {
+                            PreferenceManager.saveLat(AttendanceActivity.this, String.valueOf(Latitude));
+                            PreferenceManager.saveLng(AttendanceActivity.this, String.valueOf(Longtitude));
+                        }
 
-                        placeLayout.setVisibility(View.GONE);
+                        placeLayout.setVisibility(View.VISIBLE);
                         rbLocal.setTextColor(Color.RED);
                         rbTraining.setTextColor(Color.BLACK);
                         rbMeeting.setTextColor(Color.BLACK);
@@ -147,12 +199,13 @@ public class AttendanceActivity extends Activity {
                         rbOutstation.setTextColor(Color.BLACK);
                         break;
                     case 1:
+                        // ***** Out Station ***** //
 
-
-                        //Out Station
+                        PreferenceManager.saveLat(AttendanceActivity.this, String.valueOf(Latitude));
+                        PreferenceManager.saveLng(AttendanceActivity.this, String.valueOf(Longtitude));
                         placeId = 2;
 
-                        placeLayout.setVisibility(View.GONE);
+                        placeLayout.setVisibility(View.VISIBLE);
                         rbOutstation.setTextColor(Color.RED);
                         rbTraining.setTextColor(Color.BLACK);
                         rbMeeting.setTextColor(Color.BLACK);
@@ -161,11 +214,15 @@ public class AttendanceActivity extends Activity {
                         rbLocal.setTextColor(Color.BLACK);
                         break;
                     case 2:
+                        // *****  Ex station ***** //
 
-                        //Ex station
+                        PreferenceManager.saveLat(AttendanceActivity.this, String.valueOf(Latitude));
+                        PreferenceManager.saveLng(AttendanceActivity.this, String.valueOf(Longtitude));
+
+
                         placeId = 11;
 
-                        placeLayout.setVisibility(View.GONE);
+                        placeLayout.setVisibility(View.VISIBLE);
                         rbExstation.setTextColor(Color.RED);
                         rbTraining.setTextColor(Color.BLACK);
                         rbMeeting.setTextColor(Color.BLACK);
@@ -174,8 +231,12 @@ public class AttendanceActivity extends Activity {
                         rbOutstation.setTextColor(Color.BLACK);
                         break;
                     case 3:
+                        // ***** Office Regular ***** //
 
-                        //Office Regular
+                        PreferenceManager.saveLat(AttendanceActivity.this, String.valueOf(Latitude));
+                        PreferenceManager.saveLng(AttendanceActivity.this, String.valueOf(Longtitude));
+
+
                         placeId = 4;
 
                         placeLayout.setVisibility(View.VISIBLE);
@@ -187,9 +248,9 @@ public class AttendanceActivity extends Activity {
                         rbOutstation.setTextColor(Color.BLACK);
                         // Toast.makeText(AttendanceActivity.this, "Enter The Place", Toast.LENGTH_SHORT).show();
                         break;
-                    case 5:
+                    case 4:
 
-                        //Training
+                        // ***** Training ***** //
 
                         placeId = 5;
 
@@ -201,9 +262,9 @@ public class AttendanceActivity extends Activity {
                         rbExstation.setTextColor(Color.BLACK);
                         rbOutstation.setTextColor(Color.BLACK);
                         break;
-                    case 6:
+                    case 5:
 
-                        //Meeting
+                        // *******  Meeting ****** //
                         placeId = 6;
 
                         placeLayout.setVisibility(View.GONE);
@@ -222,7 +283,7 @@ public class AttendanceActivity extends Activity {
     }
 
     private void callAttendance() {
-        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
+        final ProgressDialog progressDialog = new ProgressDialog(this, R.style.ProgressBarDialog);
         progressDialog.setMessage("Attendance Submitting...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -254,7 +315,7 @@ public class AttendanceActivity extends Activity {
 
 
     private void callAttendmsgAPI() {
-        final ProgressDialog progressDialog = new ProgressDialog(this,R.style.ProgressBarDialog);
+        final ProgressDialog progressDialog = new ProgressDialog(this, R.style.ProgressBarDialog);
         progressDialog.setMessage("Please Wait...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -306,5 +367,26 @@ public class AttendanceActivity extends Activity {
         unregBroadcast();
     }
 
+    private void startBackgroundService() {
+
+        IntentFilter filter = new IntentFilter("Location");
+        registerReceiver(receiver, filter);
+        Intent intent = new Intent(AttendanceActivity.this, LocationBackgroundService.class);
+        startService(intent);
+
+    }
+
+    public class LocationBroadcastReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals("Location")) {
+
+                Latitude = intent.getDoubleExtra("latitude", 0f);
+                Longtitude = intent.getDoubleExtra("longitude", 0f);
+                // String Address = intent.getStringExtra("Address");
+
+            }
+        }
+    }
 
 }

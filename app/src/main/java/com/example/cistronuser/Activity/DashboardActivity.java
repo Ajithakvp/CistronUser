@@ -1,11 +1,8 @@
 package com.example.cistronuser.Activity;
 
-import static android.app.Notification.EXTRA_NOTIFICATION_ID;
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -13,6 +10,7 @@ import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.app.TaskStackBuilder;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -21,9 +19,7 @@ import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
-import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
-import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -48,22 +44,20 @@ import com.example.cistronuser.API.Interface.CompOffApprovalCountInterface;
 import com.example.cistronuser.API.Interface.DashboardCallCountInterface;
 import com.example.cistronuser.API.Interface.ExpenseCountInterface;
 import com.example.cistronuser.API.Interface.LeaveApprovelCountInterface;
-import com.example.cistronuser.API.Interface.LocationTrackerCallReportInterface;
 import com.example.cistronuser.API.Interface.LogoutInterFace;
 import com.example.cistronuser.API.Interface.SalesQuoteApprovalCountInterFace;
 import com.example.cistronuser.API.Interface.UpcomingCallListInterface;
-import com.example.cistronuser.API.Model.LocationTrackerCallReportModel;
 import com.example.cistronuser.API.Model.LoginuserModel;
 import com.example.cistronuser.API.Model.UpcomingCallListModel;
 import com.example.cistronuser.API.Response.ChangePasswordResponse;
 import com.example.cistronuser.API.Response.CompOffCountResponse;
 import com.example.cistronuser.API.Response.DashboardCallCountResponse;
 import com.example.cistronuser.API.Response.LeaveApprovelCountResponse;
-import com.example.cistronuser.API.Response.LocationTrackerCallReportResponse;
 import com.example.cistronuser.API.Response.LogoutResponse;
 import com.example.cistronuser.API.Response.SalesQuoteApprovalCountResponse;
 import com.example.cistronuser.API.Response.UpcomingCallListResponse;
 import com.example.cistronuser.API.Response.WaitingExpenseCountInterface;
+import com.example.cistronuser.Common.BroadCastReceiver;
 import com.example.cistronuser.Common.ConnectionRecevier;
 import com.example.cistronuser.Common.LocationBackgroundService;
 import com.example.cistronuser.Common.PreferenceManager;
@@ -89,9 +83,9 @@ import com.example.cistronuser.WaitingforApprovel.Activity.LeaveRequest;
 import com.example.cistronuser.WaitingforApprovel.Activity.SalesQuoteApproval;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -102,7 +96,8 @@ import retrofit2.Response;
 
 public class DashboardActivity extends Activity {
 
-
+    public static final String NOTIFICATION_CHANNEL_ID = "1";
+    private final static String default_notification_channel_id = "cistron";
     private static final String TAG = "DashBoard";
     //Internet
 
@@ -159,6 +154,8 @@ public class DashboardActivity extends Activity {
         //******************* get Location background ******************//
         receiver = new LocationBroadcastReceiver();
         startBackgroundService();
+        CallCheckLocation();
+
         //******************* get Location background end ******************//
 
 
@@ -953,7 +950,11 @@ public class DashboardActivity extends Activity {
                 try {
                     locationTrackerCallReportModels = response.body().getUpcomingCallListModels();
 
+
                     for (int i = 0; i < locationTrackerCallReportModels.size(); i++) {
+
+
+                        String[] Hosp = locationTrackerCallReportModels.get(i).getHospital().split("\\\\n");
 
 
                         Location locationA = new Location("Location A");
@@ -965,36 +966,17 @@ public class DashboardActivity extends Activity {
 
                         str = Double.valueOf(locationA.distanceTo(locationB) / 1000);
                         // Log.e(TAG, "onResponse: " + str);
-
                         if (str <= 1.0) {
-
+                            // ************** Location check  ************** //
                             String id = locationTrackerCallReportModels.get(i).getButton();
                             String PM = locationTrackerCallReportModels.get(i).getIssue();
-
-
-                            // ******************* Top Notfication ***************** //
-                            Notification newMessageNotification = null;
-                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                                newMessageNotification = new Notification.Builder(context, "Cistron")
-                                        .setSmallIcon(R.drawable.cis_logo_login)
-                                        .setContentTitle("Your Location is Reached")
-                                        .setContentText(locationTrackerCallReportModels.get(i).getHospital())
-                                        .setAutoCancel(true)
-                                        .build();
-                            }
-
-                            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(DashboardActivity.this);
-                            notificationManager.notify(1, newMessageNotification);
-
-                            // ******************* Top Notfication End ***************** //
-
-
+                            //Log.e(TAG, "onResponse: " + Hosp[0]);
                             //Toast.makeText(DashboardActivity.this, "Location Reached", Toast.LENGTH_SHORT).show();
                             AlertDialog.Builder builder = new AlertDialog.Builder(DashboardActivity.this, R.style.AlertDialogCustom);
                             builder.setCancelable(false);
-                            builder.setMessage("Your Location is reached ! " + "\n" + "\n" + locationTrackerCallReportModels.get(i).getHospital());
-                            builder.setTitle("Location !");
-                            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            builder.setMessage(Hosp[0] + "\n" + locationTrackerCallReportModels.get(i).getAddress());
+                            builder.setTitle("Your location has been reached.");
+                            builder.setPositiveButton("Call Report", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     try {
@@ -1020,70 +1002,114 @@ public class DashboardActivity extends Activity {
                             AlertDialog alertDialog = builder.create();
                             alertDialog.show();
 
+                            // ************** Time Check ************** //
+
+                            // String TimeCheck = response.body().getUpcomingCallListModels().get(i).getDate();
+                            // TimeCheck = TimeCheck.substring(11); 28-02-2023 10:00:00
+                            // Log.e(TAG, "onResponse: " + TimeCheck);
+                            String TimeCheck = "03-03-2023 11:00:00";
+
+                            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault());
+                            String currentDateandTime = sdf.format(new Date());
+                            //Log.e(TAG, "onResponse: "+currentDateandTime );
+
+
+                            SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault());
+
+                            Date TimeDate = null;
+                            Date CurrentTimeDate = null;
+                            try {
+                                TimeDate = format.parse(TimeCheck);
+                                CurrentTimeDate = format.parse(currentDateandTime);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+
+
+
+                            long diff = TimeDate.getTime() - CurrentTimeDate.getTime();
+                            long diffSeconds = diff / 1000;
+                            long diffMinutes = diff / (60 * 1000);
+                            long diffHours = diff / (60 * 60 * 1000);
+                            Log.e(TAG, "onResponse: check " + diffHours + "---" + diffMinutes);
+
+                            if (diffHours <= 1) {
+                                Log.e(TAG, "TimeCheck: in " + diffMinutes);
+
+                                scheduleNotification(getNotification("You have a scheduled appointment at " + Hosp[0] + "\n" + locationTrackerCallReportModels.get(i).getAddress() + "\n"
+                                        + "for " + locationTrackerCallReportModels.get(i).getDate(), "Call Close Notification !"));
+
+                                break;
+                            } else {
+                                Log.e(TAG, "TimeCheck: out " + diffMinutes);
+                            }
+                            // ************** Time Check End ************** //
+
+
+
                             break;
                         } else {
 
                             Log.e(TAG, "onResponse: not reached");
-                        }
-                    }
+
+
+                            // ************** Time Check ************** //
+
+                            // String TimeCheck = response.body().getUpcomingCallListModels().get(i).getDate();
+                            // TimeCheck = TimeCheck.substring(11); 28-02-2023 10:00:00
+                            // Log.e(TAG, "onResponse: " + TimeCheck);
+                            String TimeCheck = "03-03-2023 11:00:00";
+
+                            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault());
+                            String currentDateandTime = sdf.format(new Date());
+                            //Log.e(TAG, "onResponse: "+currentDateandTime );
+
+
+                            SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault());
+
+                            Date TimeDate = null;
+                            Date CurrentTimeDate = null;
+                            try {
+                                TimeDate = format.parse(TimeCheck);
+                                CurrentTimeDate = format.parse(currentDateandTime);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
 
 
 
-                    // Time Check
+                            long diff = TimeDate.getTime() - CurrentTimeDate.getTime();
+                            long diffSeconds = diff / 1000;
+                            long diffMinutes = diff / (60 * 1000);
+                            long diffHours = diff / (60 * 60 * 1000);
+                            Log.e(TAG, "onResponse: check " + diffHours + "---" + diffMinutes);
 
+                            if (diffHours <= 1) {
+                                Log.e(TAG, "TimeCheck: in " + diffMinutes);
 
-                    // String TimeCheck = response.body().getUpcomingCallListModels().get(0).getDate();
-                    // TimeCheck = TimeCheck.substring(11); 28-02-2023 10:00:00
-                    // Log.e(TAG, "onResponse: " + TimeCheck);
-                    String TimeCheck = "01-03-2023 17:00:00";
+                                scheduleNotification(getNotification("You have a scheduled appointment at " + Hosp[0] + "\n" + locationTrackerCallReportModels.get(i).getAddress() + "\n"
+                                        + "for " + locationTrackerCallReportModels.get(i).getDate(), "Call Close Notification !"));
 
-                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault());
-                    String currentDateandTime = sdf.format(new Date());
-                    //Log.e(TAG, "onResponse: "+currentDateandTime );
-
-
-                    SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault());
-
-                    Date TimeDate ;
-                    Date CurrentTimeDate ;
-                    TimeDate = format.parse(TimeCheck);
-                    CurrentTimeDate = format.parse(currentDateandTime);
-
-
-
-                    long diff = TimeDate.getTime() - CurrentTimeDate.getTime();
-                    long diffSeconds = diff / 1000;
-                    long diffMinutes = diff / (60 * 1000);
-                    long diffHours = diff / (60 * 60 * 1000);
-                    // Log.e(TAG, "onResponse: check "+diff +"------"+diffHours );
-
-                    if (diffHours <= 1){
-
-                        Intent intent=new Intent(DashboardActivity.this, LocationBackgroundService.class);
-                        PendingIntent pendingIntent=PendingIntent.getBroadcast(DashboardActivity.this,1,intent,PendingIntent.FLAG_UPDATE_CURRENT);
-                       long time=System.currentTimeMillis();
-                       long ten=1000*10;
-                        AlarmManager alarmManager=(AlarmManager)getSystemService(ALARM_SERVICE);
-                        alarmManager.set(AlarmManager.RTC_WAKEUP,time+ten,pendingIntent);
-                        // ******************* Top Notfication ***************** //
-                        Notification newMessageNotification = null;
-                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                            newMessageNotification = new Notification.Builder(context, "Cistron")
-                                    .setSmallIcon(R.drawable.cis_logo_login)
-                                    .setContentTitle("Your Location is Time Start")
-                                    .setContentText("time")
-                                    .setAutoCancel(true)
-                                    .build();
+                                break;
+                            } else {
+                                Log.e(TAG, "TimeCheck: out " + diffMinutes);
+                            }
+                            // ************** Time Check End ************** //
                         }
 
-                        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(DashboardActivity.this);
-                        notificationManager.notify(200, newMessageNotification);
 
-                        // ******************* Top Notfication End ***************** //
-                    }else {
-                        Log.e(TAG, "onResponse: else "+diffHours );
+                        // ************** Location check End ************** //
+
+
+
+
+
+
+
+
+
+
                     }
-
 
                 } catch (Exception e) {
 
@@ -1130,7 +1156,6 @@ public class DashboardActivity extends Activity {
         IntentFilter filter = new IntentFilter("Location");
         registerReceiver(receiver, filter);
         Intent intent = new Intent(DashboardActivity.this, LocationBackgroundService.class);
-        CallCheckLocation();
         startService(intent);
 
     }
@@ -1138,7 +1163,8 @@ public class DashboardActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
-        startBackgroundService();
+        CallCheckLocation();
+
     }
 
     @Override
@@ -1184,6 +1210,33 @@ public class DashboardActivity extends Activity {
 
     }
 
+    private void scheduleNotification(Notification notification) {
+
+        Intent notificationIntent = new Intent(this, BroadCastReceiver.class);
+        notificationIntent.putExtra(BroadCastReceiver.NOTIFICATION_ID, 1);
+        notificationIntent.putExtra(BroadCastReceiver.NOTIFICATION, notification);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, notificationIntent, PendingIntent.FLAG_IMMUTABLE);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        assert alarmManager != null;
+        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, 1000, pendingIntent);
+    }
+
+    private Notification getNotification(String content, String Title) {
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, default_notification_channel_id);
+        Intent resultIntent = new Intent(DashboardActivity.this, CurrentCallActivity.class);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(DashboardActivity.this);
+        stackBuilder.addNextIntentWithParentStack(resultIntent);
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+        builder.setContentTitle(Title);
+        builder.setContentText(content);
+        builder.setSmallIcon(R.drawable.cis_icon);
+        builder.setAutoCancel(true);
+        builder.setContentIntent(resultPendingIntent);
+        builder.setChannelId(NOTIFICATION_CHANNEL_ID);
+        return builder.build();
+    }
+
     public class LocationBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -1191,7 +1244,7 @@ public class DashboardActivity extends Activity {
 
                 lat = intent.getDoubleExtra("latitude", 0f);
                 longg = intent.getDoubleExtra("longitude", 0f);
-                String Address = intent.getStringExtra("Address");
+                // String Address = intent.getStringExtra("Address");
 
 
 
