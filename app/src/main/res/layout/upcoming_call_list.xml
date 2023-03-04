@@ -286,6 +286,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="30dp"
                     android:gravity="center"
+                    android:visibility="visible"
                     android:textAlignment="center"
                     android:background="@drawable/edittext"
                     android:backgroundTint="@color/mdtp_red"
@@ -293,6 +294,21 @@
                     android:fontFamily="@font/bold"
                     android:text="Call Report"
                     android:textColor="@color/white"
+                    android:textSize="16dp" />
+
+
+                <TextView
+                    android:id="@+id/tvIssue4hr"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvCallCreateBy"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/semibold"
+                    android:text="You can only close the call within 4 hours of the assigned time. please contact your system administrator."
+                    android:textColor="@color/Radio"
                     android:textSize="16dp" />
 
 

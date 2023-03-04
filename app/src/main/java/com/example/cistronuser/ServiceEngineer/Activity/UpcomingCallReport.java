@@ -2125,14 +2125,6 @@ public class UpcomingCallReport extends AppCompatActivity {
                     } else if (spCallStatus.getSelectedItem().equals("Closed") && rbGrp1.getCheckedRadioButtonId() == -1) {
                         Toast.makeText(UpcomingCallReport.this, "Please select a Received pending service payment", Toast.LENGTH_SHORT).show();
 
-                    } else if (spCallStatus.getSelectedItem().equals("Closed") && edSaleORserviceAmt.getText().toString().trim().length() == 0) {
-                        edSaleORserviceAmt.setError("Please Enter the Amount");
-                        edSaleORserviceAmt.requestFocus();
-
-                    } else if (spCallStatus.getSelectedItem().equals("Closed") && edSpareAmt.getText().toString().trim().length() == 0) {
-                        edSpareAmt.setError("Please Enter the Spare Amount");
-                        edSpareAmt.requestFocus();
-
                     } else if (rbPOaymentNo.isChecked() && rbGrp2.getCheckedRadioButtonId() == -1) {
                         Toast.makeText(UpcomingCallReport.this, "Please select close the call without getting payment", Toast.LENGTH_SHORT).show();
                         rbGrp2.requestFocus();
@@ -3930,7 +3922,7 @@ public class UpcomingCallReport extends AppCompatActivity {
 
 
         } catch (Exception e) {
-            Log.d(TAG, "CallCheckLocation: " + e.getMessage());
+          //  Log.d(TAG, "CallCheckLocation: " + e.getMessage());
         }
 
 
@@ -3946,7 +3938,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                 Address = intent.getStringExtra("Address");
 
             }
-            CallCheckLocation();
+            //E378  CallCheckLocation();
         }
     }
 

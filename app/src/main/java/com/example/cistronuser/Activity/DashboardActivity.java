@@ -154,7 +154,7 @@ public class DashboardActivity extends Activity {
         //******************* get Location background ******************//
         receiver = new LocationBroadcastReceiver();
         startBackgroundService();
-        CallCheckLocation();
+        //E378 CallCheckLocation();
 
         //******************* get Location background end ******************//
 
@@ -1004,10 +1004,10 @@ public class DashboardActivity extends Activity {
 
                             // ************** Time Check ************** //
 
-                            // String TimeCheck = response.body().getUpcomingCallListModels().get(i).getDate();
+                             String TimeCheck = response.body().getUpcomingCallListModels().get(i).getDate();
                             // TimeCheck = TimeCheck.substring(11); 28-02-2023 10:00:00
                             // Log.e(TAG, "onResponse: " + TimeCheck);
-                            String TimeCheck = "03-03-2023 11:00:00";
+                           // String TimeCheck = "03-03-2023 11:00:00";
 
                             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault());
                             String currentDateandTime = sdf.format(new Date());
@@ -1055,10 +1055,10 @@ public class DashboardActivity extends Activity {
 
                             // ************** Time Check ************** //
 
-                            // String TimeCheck = response.body().getUpcomingCallListModels().get(i).getDate();
+                             String TimeCheck = response.body().getUpcomingCallListModels().get(i).getDate();
                             // TimeCheck = TimeCheck.substring(11); 28-02-2023 10:00:00
                             // Log.e(TAG, "onResponse: " + TimeCheck);
-                            String TimeCheck = "03-03-2023 11:00:00";
+                            //String TimeCheck = "03-03-2023 11:00:00";
 
                             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault());
                             String currentDateandTime = sdf.format(new Date());
@@ -1157,15 +1157,16 @@ public class DashboardActivity extends Activity {
         registerReceiver(receiver, filter);
         Intent intent = new Intent(DashboardActivity.this, LocationBackgroundService.class);
         startService(intent);
+        //E378   CallCheckLocation();
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        CallCheckLocation();
-
-    }
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        CallCheckLocation();
+//
+//    }
 
     @Override
     protected void onResume() {
@@ -1245,7 +1246,6 @@ public class DashboardActivity extends Activity {
                 lat = intent.getDoubleExtra("latitude", 0f);
                 longg = intent.getDoubleExtra("longitude", 0f);
                 // String Address = intent.getStringExtra("Address");
-
 
 
             }
