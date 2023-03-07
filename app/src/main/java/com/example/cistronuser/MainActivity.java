@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     // Version Before = "cistron 1.1";
     String AppVersion = "cistron 1.3"; //change expense and biometric Version "cistron 1.1"
                                        //Add Service Engineering Report Version "cistron 1.2"
-                                       //leave date change correction and  add todaycalls Model "cistron 1.3"
+                                       //leave date change correction and  add todaycalls  "cistron 1.3"
 
     TextView tvVersion;
 

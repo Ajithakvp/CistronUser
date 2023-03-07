@@ -1172,6 +1172,200 @@
 
 
 
+                        <!-- Return pending -->
+
+                        <RelativeLayout
+                            android:id="@+id/rlReturnToPendingCoLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:visibility="visible"
+                            android:layout_below="@id/rlReturnReqPendingCoLayout"
+                            android:layout_marginTop="20dp"
+                            android:background="@drawable/cardview"
+                            android:backgroundTint="#6495ED">
+
+                            <ImageView
+                                android:id="@+id/ivReturnToPendingCo"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="30dp"
+                                android:src="@drawable/returntopending"
+                                android:tint="@color/white"
+                                tools:ignore="UseAppTint" />
+
+                            <TextView
+                                android:id="@+id/tvReturnToPendingCo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="20dp"
+                                android:layout_toRightOf="@+id/ivReturnToPendingCo"
+                                android:fontFamily="@font/semibold"
+                                android:text="Return To Pending "
+                                android:textColor="@color/white"
+                                android:textSize="18dp" />
+
+
+                            <TextView
+                                android:id="@+id/tvReturnToPendingCoStart"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="10dp"
+                                android:layout_toRightOf="@+id/tvReturnToPendingCo"
+                                android:fontFamily="@font/semibold"
+                                android:text="("
+                                android:textColor="#C0C0C0"
+                                android:textSize="18dp" />
+
+                            <TextView
+                                android:id="@+id/tvReturnToPendingCoCount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="10dp"
+                                android:layout_toRightOf="@+id/tvReturnToPendingCoStart"
+                                android:fontFamily="@font/bold"
+                                android:textColor="#FF0000"
+                                android:textSize="18dp" />
+
+                            <TextView
+                                android:id="@+id/tvReturnToPendingCoEnd"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="10dp"
+                                android:layout_toRightOf="@+id/tvReturnToPendingCoCount"
+                                android:fontFamily="@font/semibold"
+                                android:text=")"
+                                android:textColor="#C0C0C0"
+                                android:textSize="18dp" />
+
+
+                        </RelativeLayout>
+
+
+
+                        <!-- My Stock -->
+
+                        <RelativeLayout
+                            android:id="@+id/rlMyStockLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:visibility="visible"
+                            android:layout_below="@id/rlReturnToPendingCoLayout"
+                            android:layout_marginTop="20dp"
+                            android:background="@drawable/cardview"
+                            android:backgroundTint="#6495ED">
+
+                            <ImageView
+                                android:id="@+id/ivMyStock"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="30dp"
+                                android:src="@drawable/my_stock"
+                                android:tint="@color/white"
+                                tools:ignore="UseAppTint" />
+
+                            <TextView
+                                android:id="@+id/tvMyStock"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="20dp"
+                                android:layout_toRightOf="@+id/ivMyStock"
+                                android:fontFamily="@font/semibold"
+                                android:text="My Stock "
+                                android:textColor="@color/white"
+                                android:textSize="18dp" />
+
+
+                            <TextView
+                                android:id="@+id/tvMyStockStart"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="10dp"
+                                android:layout_toRightOf="@+id/tvMyStock"
+                                android:fontFamily="@font/semibold"
+                                android:text="("
+                                android:textColor="#C0C0C0"
+                                android:textSize="18dp" />
+
+                            <TextView
+                                android:id="@+id/tvMyStockCount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="10dp"
+                                android:layout_toRightOf="@+id/tvMyStockStart"
+                                android:fontFamily="@font/bold"
+                                android:textColor="#FF0000"
+                                android:textSize="18dp" />
+
+                            <TextView
+                                android:id="@+id/tvMyStockEnd"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="10dp"
+                                android:layout_toRightOf="@+id/tvMyStockCount"
+                                android:fontFamily="@font/semibold"
+                                android:text=")"
+                                android:textColor="#C0C0C0"
+                                android:textSize="18dp" />
+
+
+                        </RelativeLayout>
+
+
+
+                        <!-- Create Spare Req -->
+
+                        <RelativeLayout
+                            android:id="@+id/rlCreateSpareReqLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:visibility="visible"
+                            android:layout_below="@id/rlMyStockLayout"
+                            android:layout_marginTop="20dp"
+                            android:background="@drawable/cardview"
+                            android:backgroundTint="#6495ED">
+
+                            <ImageView
+                                android:id="@+id/ivCreateSpareReq"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="30dp"
+                                android:src="@drawable/createreq"
+                                android:tint="@color/white"
+                                tools:ignore="UseAppTint" />
+
+                            <TextView
+                                android:id="@+id/tvCreateSpareReq"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="20dp"
+                                android:layout_toRightOf="@+id/ivCreateSpareReq"
+                                android:fontFamily="@font/semibold"
+                                android:text="Create Spare Request "
+                                android:textColor="@color/white"
+                                android:textSize="18dp" />
+
+
+
+                        </RelativeLayout>
+
+
+
+
+
+
+
 
 
                     </RelativeLayout>

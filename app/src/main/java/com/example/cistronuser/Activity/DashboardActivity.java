@@ -70,8 +70,11 @@ import com.example.cistronuser.Report.Activity.SalesQuoteReport;
 import com.example.cistronuser.Report.Activity.VisitEntryReport;
 import com.example.cistronuser.SalesAndservice.Activity.SalesQuote;
 import com.example.cistronuser.SalesAndservice.Activity.VisitEntry;
+import com.example.cistronuser.ServiceEngineer.Activity.CreateSpareReqActivity;
 import com.example.cistronuser.ServiceEngineer.Activity.CurrentCallActivity;
+import com.example.cistronuser.ServiceEngineer.Activity.MyStockActivity;
 import com.example.cistronuser.ServiceEngineer.Activity.PendicallActivity;
+import com.example.cistronuser.ServiceEngineer.Activity.RequestToPendingActivity;
 import com.example.cistronuser.ServiceEngineer.Activity.ReturnReqPendingCoActivity;
 import com.example.cistronuser.ServiceEngineer.Activity.SpareInwardActivity;
 import com.example.cistronuser.ServiceEngineer.Activity.SpareReqPendingCOActivity;
@@ -129,8 +132,9 @@ public class DashboardActivity extends Activity {
     RelativeLayout rlAdmin, rlWaitingApproval, rlVisitEntryReportLayout, rlWaitingSalesQuoteApprovalRequest;
 
     //Service
-    RelativeLayout rlUpcomingCallLayout, rlPendingingCallLayout, rlCurrentCallLayout, rlSpareRequestPendingCoLayout, rlSpareInwardLayout, rlReturnReqPendingCoLayout;
-    TextView tvSpareInwardCount, tvSpareRequestPendingCoCount, tvReturnReqPendingCoCount, tvCurrentCallCount;
+    RelativeLayout rlUpcomingCallLayout, rlPendingingCallLayout, rlCurrentCallLayout,
+            rlReturnToPendingCoLayout,rlMyStockLayout,rlCreateSpareReqLayout,rlSpareRequestPendingCoLayout, rlSpareInwardLayout, rlReturnReqPendingCoLayout;
+    TextView tvSpareInwardCount,tvMyStockCount,tvReturnToPendingCoCount, tvSpareRequestPendingCoCount, tvReturnReqPendingCoCount, tvCurrentCallCount;
     //Report
     RelativeLayout rlExpenseReport, rlrlAttendaceReport, rlrlLeaveReport, rlService, rlWaitingLeaveRequest, rlWaitingCompOFfRequest, rlQuoteReport;
     TextView tvwaitingCountExpense, tvCountLeaveReq, tvCountCompOffReq, tvWaitingCountSalesQuote, tvUpcomingCallCount, tvPendingCallCount;
@@ -196,6 +200,11 @@ public class DashboardActivity extends Activity {
         rlReturnReqPendingCoLayout = findViewById(R.id.rlReturnReqPendingCoLayout);
         rlCurrentCallLayout = findViewById(R.id.rlCurrentCallLayout);
         tvCurrentCallCount = findViewById(R.id.tvCurrentCallCount);
+        rlCreateSpareReqLayout=findViewById(R.id.rlCreateSpareReqLayout);
+        rlReturnToPendingCoLayout=findViewById(R.id.rlReturnToPendingCoLayout);
+        tvReturnToPendingCoCount=findViewById(R.id.tvReturnToPendingCoCount);
+        rlMyStockLayout=findViewById(R.id.rlMyStockLayout);
+        tvMyStockCount=findViewById(R.id.tvMyStockCount);
 
 
         rlVisitEntryReportLayout = findViewById(R.id.rlVisitEntryReportLayout);
@@ -469,6 +478,34 @@ public class DashboardActivity extends Activity {
                 startActivity(intent);
             }
         });
+
+        rlReturnToPendingCoLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DashboardActivity.this, RequestToPendingActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        rlCreateSpareReqLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(DashboardActivity.this, CreateSpareReqActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+        rlMyStockLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DashboardActivity.this, MyStockActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
 
 
         //LeaveApprovalCount
