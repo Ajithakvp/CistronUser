@@ -417,4 +417,10 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
             }
         }
     }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }

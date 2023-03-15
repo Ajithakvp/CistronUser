@@ -6,25 +6,26 @@
     android:layout_height="match_parent">
 
 
-    <com.airbnb.lottie.LottieAnimationView
+    <ImageView
         android:id="@+id/lvcis"
-        android:layout_width="match_parent"
+        android:layout_width="100dp"
+        android:layout_marginTop="330dp"
         android:layout_height="100dp"
-        android:layout_centerInParent="true"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        />
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/cis_logo_login" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="375dp"
         android:layout_below="@id/lvcis"
         android:layout_centerHorizontal="true"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/semibold"
+        android:fontFamily="@font/godfont"
+        android:gravity="center"
         android:textColor="@color/Burgundy"
+        android:lines="1"
         android:textSize="20dp"
-        android:layout_marginTop="15dp"
-        android:text="Cistron Systems Private Ltd."
+        android:layout_marginTop="25dp"
+        android:text="Cistron Systems Private Limited"
         />
 
 

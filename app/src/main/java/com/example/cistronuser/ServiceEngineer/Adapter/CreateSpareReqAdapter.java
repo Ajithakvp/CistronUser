@@ -15,6 +15,7 @@ public class CreateSpareReqAdapter extends RecyclerView.Adapter<CreateSpareReqAd
     public CreateSpareReqAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.create_spare_req_adapter, parent, false);
         return new CreateSpareReqAdapter.ViewHolder(itemView);
+
     }
 
     @Override

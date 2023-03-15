@@ -1,6 +1,5 @@
 package com.example.cistronuser;
 
-import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,7 +11,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.widget.TextView;
 
 import com.example.cistronuser.API.APIClient;
@@ -25,44 +23,30 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    //Current Version
-    // Version Before = "cistron 1.1";
-    String AppVersion = "cistron 1.3"; //change expense and biometric Version "cistron 1.1"
-                                       //Add Service Engineering Report Version "cistron 1.2"
-                                       //leave date change correction and  add todaycalls  "cistron 1.3"
+    // ********** Version Details ********** //
+    //Starting  Version "cistron 1.0"
+    //change expense and biometric Version "cistron 1.1"
+    //Add Service Engineering Report Version "cistron 1.2"
+    //leave date change correction and  add todaycalls  "cistron 1.3"
 
+
+    String AppVersion = "cistron 1.3";
     TextView tvVersion;
 
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        //*******APP Version***********//
-        CallApiVersionCheck();
-        /* **************App Version End************* */
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        //*******APP Version***********//
-        CallApiVersionCheck();
-        /* **************App Version End************* */
-    }
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.flashscreen);
+        setContentView(R.layout.activity_main);
         tvVersion = findViewById(R.id.tvVersion);
 
         tvVersion.setText(AppVersion);
 
 
-        //*******APP Version***********//
+        //************** APP Version *************//
         CallApiVersionCheck();
-        /* **************App Version End************* */
+        //************** App Version End *************//
 
 
     }
@@ -77,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                     if (response.body().getMessage().trim().equals(AppVersion)) {
                         CallLoginPage();
                     } else {
-                        AlertDialog.Builder update = new AlertDialog.Builder(MainActivity.this,R.style.AlertDialogCustom);
+                        AlertDialog.Builder update = new AlertDialog.Builder(MainActivity.this, R.style.AlertDialogCustom);
                         update.setCancelable(false);
                         update.setTitle("Update Required !");
                         update.setMessage("You must update to Continue");
@@ -112,9 +96,9 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void run() {
-                ActivityOptions options = ActivityOptions.makeCustomAnimation(MainActivity.this,R.anim.fadein, R.anim.fadeout);
+                ActivityOptions options = ActivityOptions.makeCustomAnimation(MainActivity.this, R.anim.base_slide_right_in, R.anim.base_slide_left_out);
                 Intent i = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(i,options.toBundle());
+                startActivity(i, options.toBundle());
 
 //                if (PreferenceManager.isLogged(MainActivity.this)){
 //
@@ -131,5 +115,22 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         }, 1000);
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //*******APP Version***********//
+        CallApiVersionCheck();
+        /* **************App Version End************* */
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        //*******APP Version***********//
+        CallApiVersionCheck();
+        /* **************App Version End************* */
     }
 }
