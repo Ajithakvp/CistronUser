@@ -74,7 +74,6 @@ import com.example.cistronuser.ServiceEngineer.Activity.CreateSpareReqActivity;
 import com.example.cistronuser.ServiceEngineer.Activity.CurrentCallActivity;
 import com.example.cistronuser.ServiceEngineer.Activity.MyStockActivity;
 import com.example.cistronuser.ServiceEngineer.Activity.PendicallActivity;
-import com.example.cistronuser.ServiceEngineer.Activity.RequestToPendingActivity;
 import com.example.cistronuser.ServiceEngineer.Activity.ReturnReqPendingCoActivity;
 import com.example.cistronuser.ServiceEngineer.Activity.SpareInwardActivity;
 import com.example.cistronuser.ServiceEngineer.Activity.SpareReqPendingCOActivity;
@@ -132,9 +131,15 @@ public class DashboardActivity extends Activity {
     RelativeLayout rlAdmin, rlWaitingApproval, rlVisitEntryReportLayout, rlWaitingSalesQuoteApprovalRequest;
 
     //Service
-    RelativeLayout rlUpcomingCallLayout, rlPendingingCallLayout, rlCurrentCallLayout,
-            rlReturnToPendingCoLayout,rlMyStockLayout,rlCreateSpareReqLayout,rlSpareRequestPendingCoLayout, rlSpareInwardLayout, rlReturnReqPendingCoLayout;
-    TextView tvSpareInwardCount,tvMyStockCount,tvReturnToPendingCoCount, tvSpareRequestPendingCoCount, tvReturnReqPendingCoCount, tvCurrentCallCount;
+    RelativeLayout rlUpcomingCallLayout, rlPendingingCallLayout, rlCurrentCallLayout
+            ,rlMyStockLayout,rlCreateSpareReqLayout,rlSpareRequestPendingCoLayout, rlSpareInwardLayout, rlReturnReqPendingCoLayout;
+    TextView tvSpareInwardCount,tvMyStockCount, tvSpareRequestPendingCoCount, tvReturnReqPendingCoCount, tvCurrentCallCount;
+
+    // Service Ui Change
+    RelativeLayout rlSpareLayout;
+    ImageView ivSpareUp,ivSpareDown;
+    boolean clickCheck=true;
+
     //Report
     RelativeLayout rlExpenseReport, rlrlAttendaceReport, rlrlLeaveReport, rlService, rlWaitingLeaveRequest, rlWaitingCompOFfRequest, rlQuoteReport;
     TextView tvwaitingCountExpense, tvCountLeaveReq, tvCountCompOffReq, tvWaitingCountSalesQuote, tvUpcomingCallCount, tvPendingCallCount;
@@ -201,10 +206,13 @@ public class DashboardActivity extends Activity {
         rlCurrentCallLayout = findViewById(R.id.rlCurrentCallLayout);
         tvCurrentCallCount = findViewById(R.id.tvCurrentCallCount);
         rlCreateSpareReqLayout=findViewById(R.id.rlCreateSpareReqLayout);
-        rlReturnToPendingCoLayout=findViewById(R.id.rlReturnToPendingCoLayout);
-        tvReturnToPendingCoCount=findViewById(R.id.tvReturnToPendingCoCount);
         rlMyStockLayout=findViewById(R.id.rlMyStockLayout);
         tvMyStockCount=findViewById(R.id.tvMyStockCount);
+
+        // Service Ui Change
+        rlSpareLayout=findViewById(R.id.rlSpareLayout);
+        ivSpareUp=findViewById(R.id.ivSpareUp);
+        ivSpareDown=findViewById(R.id.ivSpareDown);
 
 
         rlVisitEntryReportLayout = findViewById(R.id.rlVisitEntryReportLayout);
@@ -251,6 +259,35 @@ public class DashboardActivity extends Activity {
                 rlService.setVisibility(View.GONE);
                 break;
         }
+
+
+        // Service Ui Change
+        rlSpareLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (clickCheck==true){
+                    ivSpareDown.setVisibility(View.VISIBLE);
+                    ivSpareUp.setVisibility(View.GONE);
+                    rlCreateSpareReqLayout.setVisibility(View.VISIBLE);
+                    rlMyStockLayout.setVisibility(View.VISIBLE);
+                    rlReturnReqPendingCoLayout.setVisibility(View.VISIBLE);
+                    rlSpareRequestPendingCoLayout.setVisibility(View.VISIBLE);
+                    rlSpareInwardLayout.setVisibility(View.VISIBLE);
+                    clickCheck=false;
+                }else {
+                    ivSpareDown.setVisibility(View.GONE);
+                    ivSpareUp.setVisibility(View.VISIBLE);
+                    rlCreateSpareReqLayout.setVisibility(View.GONE);
+                    rlMyStockLayout.setVisibility(View.GONE);
+                    rlReturnReqPendingCoLayout.setVisibility(View.GONE);
+                    rlSpareRequestPendingCoLayout.setVisibility(View.GONE);
+                    rlSpareInwardLayout.setVisibility(View.GONE);
+                    clickCheck=true;
+                }
+
+            }
+        });
+
 
 //        CallReportIngCheckInterface callReportIngCheckInterface = APIClient.getClient().create(CallReportIngCheckInterface.class);
 //        callReportIngCheckInterface.CalLCheck("checkEmployee", PreferenceManager.getEmpID(this)).enqueue(new Callback<CallReportIngCheckResponse>() {
@@ -479,13 +516,7 @@ public class DashboardActivity extends Activity {
             }
         });
 
-        rlReturnToPendingCoLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(DashboardActivity.this, RequestToPendingActivity.class);
-                startActivity(intent);
-            }
-        });
+
 
         rlCreateSpareReqLayout.setOnClickListener(new View.OnClickListener() {
             @Override

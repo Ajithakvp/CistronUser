@@ -399,7 +399,6 @@ public class UpcomingCallReport extends AppCompatActivity {
         tvCustomerPOCount = findViewById(R.id.tvCustomerPOCount);
         tvCusPOFileInvoiceAttch = findViewById(R.id.tvCusPOFileInvoiceAttch);
         rvCustomerPO = findViewById(R.id.rvCustomerPO);
-
         // ***********  Customer PO End *********** //
 
         // *********** Yes OR No Payment Received *********** //
@@ -434,7 +433,6 @@ public class UpcomingCallReport extends AppCompatActivity {
             rlPMReport.setVisibility(View.VISIBLE);
         } else {
             rlPMReport.setVisibility(View.GONE);
-
         }
         // *********** GetString End **********//
 
@@ -677,8 +675,6 @@ public class UpcomingCallReport extends AppCompatActivity {
                         }
 
                         // ********** Escalate End ********** //
-
-
                     }
 
                 } catch (Exception e) {
@@ -3879,7 +3875,7 @@ public class UpcomingCallReport extends AppCompatActivity {
 
         try {
 
-           //  RespLatitude = "10.70427880";
+            //  RespLatitude = "10.70427880";
 
             Location locationA = new Location("Location A");
             Location locationB = new Location("Location B");
@@ -3922,7 +3918,7 @@ public class UpcomingCallReport extends AppCompatActivity {
 
 
         } catch (Exception e) {
-          //  Log.d(TAG, "CallCheckLocation: " + e.getMessage());
+            //  Log.d(TAG, "CallCheckLocation: " + e.getMessage());
         }
 
 

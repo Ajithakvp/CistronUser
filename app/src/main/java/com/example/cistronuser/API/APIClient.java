@@ -20,9 +20,11 @@ public class APIClient {
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder().connectTimeout(15, TimeUnit.MINUTES)
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(15, TimeUnit.MINUTES)
                 .readTimeout(5, TimeUnit.MINUTES)
-                .addInterceptor(interceptor).build();
+                .addInterceptor(interceptor)
+                .build();
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(LOGINURL)
