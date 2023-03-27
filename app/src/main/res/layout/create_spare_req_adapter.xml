@@ -8,23 +8,24 @@
         android:layout_height="wrap_content">
 
         <RadioButton
+            android:id="@+id/rbStock"
             android:layout_width="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="5dp"
             android:layout_height="wrap_content"
-            android:id="@+id/rbCreate"/>
+            android:layout_marginLeft="5dp"
+            android:buttonTint="@color/white"
+            android:layout_marginTop="5dp" />
 
         <TextView
+            android:id="@+id/tvReq"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:textColor="@color/Burgundy"
-            android:textSize="16dp"
-            android:fontFamily="@font/latest"
             android:layout_marginTop="18dp"
-            android:layout_toRightOf="@id/rbCreate"
+            android:layout_toRightOf="@id/rbStock"
+            android:fontFamily="@font/latest"
             android:text="Anaesthesia machine"
-            android:id="@+id/tvReq"/>
+            android:textColor="@color/white"
+            android:textSize="17dp" />
 
 
     </RelativeLayout>

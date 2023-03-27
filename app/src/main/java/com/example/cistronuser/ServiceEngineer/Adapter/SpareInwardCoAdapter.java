@@ -23,18 +23,26 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cistronuser.API.APIClient;
+import com.example.cistronuser.API.Interface.AcceptSpareInwardInterFace;
 import com.example.cistronuser.API.Interface.SpareInwardViewCoInteface;
+import com.example.cistronuser.API.Interface.ViewSparesInwardDetailsInterface;
 import com.example.cistronuser.API.Model.SpareInwardCoModel;
 import com.example.cistronuser.API.Model.SpareInwardViewCoModel;
 import com.example.cistronuser.API.Model.TransportModel;
+import com.example.cistronuser.API.Response.AcceptSpareInwardResponse;
 import com.example.cistronuser.API.Response.SpareInwardViewCoResponse;
+import com.example.cistronuser.API.Response.ViewSparesInwardDetailsResponse;
+import com.example.cistronuser.Activity.DashboardActivity;
+import com.example.cistronuser.Common.PreferenceManager;
 import com.example.cistronuser.R;
+import com.example.cistronuser.SalesAndservice.Activity.VisitEntry;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
@@ -55,7 +63,7 @@ public class SpareInwardCoAdapter extends RecyclerView.Adapter<SpareInwardCoAdap
     //View
     RelativeLayout rlInvoice,rlCusPo;
     CheckBox cbDcView,cbInVoiceView,cbCusPOeView,cbModeOfTransport,cbDate;
-    TextView tvDcView,tvInVoiceView,tvCusPOView,tvDate,tvAccept,tvTime;
+    TextView tvDcView,tvInVoiceView,tvCusPOView,tvDate,tvAccept,tvTime,tvDc;
     EditText edDcView,edInVoiceView,edICusPOView,edRefNo;
     Spinner spModeOfTransport;
     ImageView ivViewClose;
@@ -64,6 +72,7 @@ public class SpareInwardCoAdapter extends RecyclerView.Adapter<SpareInwardCoAdap
     ArrayList<TransportModel>transportModels=new ArrayList<>();
     ArrayList<String>strTransport=new ArrayList<>();
     String TransportID;
+
 
     //SpareinwardViewRecycleView
     TextView tvCr, tvHospital, tvProduct, tvCallType;
@@ -166,7 +175,9 @@ public class SpareInwardCoAdapter extends RecyclerView.Adapter<SpareInwardCoAdap
                 ivViewClose=bottomSheetDialog.findViewById(R.id.ivViewClose);
                 tvAccept=bottomSheetDialog.findViewById(R.id.tvAccept);
                 tvTime=bottomSheetDialog.findViewById(R.id.tvTime);
+                tvDc=bottomSheetDialog.findViewById(R.id.tvDc);
 
+                CallViewList(spareInwardCoModels.get(position).getReqid(),spareInwardCoModels.get(position).getOpt());
 
                 // ************** Transport SPinner ************* //
                 transportAdapter=new ArrayAdapter(activity,R.layout.spinner_item,strTransport);
@@ -194,12 +205,34 @@ public class SpareInwardCoAdapter extends RecyclerView.Adapter<SpareInwardCoAdap
                     }
                 });
 
+                tvCusPOView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        CallViewFile(cusPoView);
+                    }
+                });
 
+                tvInVoiceView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        CallViewFile(inVoiceView);
+                    }
+                });
 
                 ivViewClose.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         bottomSheetDialog.dismiss();
+                    }
+                });
+
+
+
+                tvAccept.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        CallAccept(bottomSheetDialog,spareInwardCoModels.get(position).getReqid(),spareInwardCoModels.get(position).getOpt());
                     }
                 });
 
@@ -304,6 +337,179 @@ public class SpareInwardCoAdapter extends RecyclerView.Adapter<SpareInwardCoAdap
 
             @Override
             public void onFailure(Call<SpareInwardViewCoResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+
+    private void CallViewList(String reqId, String opt) {
+        final ProgressDialog progressDialog = new ProgressDialog(activity, R.style.ProgressBarDialog);
+        progressDialog.setMessage("Please Wait...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        ViewSparesInwardDetailsInterface viewSparesInwardDetailsInterface = APIClient.getClient().create(ViewSparesInwardDetailsInterface.class);
+        viewSparesInwardDetailsInterface.CallviewSparesInwardDetail("viewSparesInwardDetail", opt, reqId).enqueue(new Callback<ViewSparesInwardDetailsResponse>() {
+            @Override
+            public void onResponse(Call<ViewSparesInwardDetailsResponse> call, Response<ViewSparesInwardDetailsResponse> response) {
+                try {
+                    if (response.isSuccessful()) {
+                        progressDialog.dismiss();
+
+                        if (response.body().getChkDc().trim().equals("1")) {
+                            cbDcView.setChecked(true);
+
+
+                        } else {
+                            cbDcView.setChecked(false);
+
+                        }
+
+                        if (response.body().getChkInv().trim().equals("1")) {
+                            cbInVoiceView.setChecked(true);
+                            rlInvoice.setVisibility(View.VISIBLE);
+                        } else {
+                            cbInVoiceView.setChecked(false);
+                            rlInvoice.setVisibility(View.GONE);
+                        }
+
+                        if (response.body().getChkPo().trim().equals("1")) {
+                            cbCusPOeView.setChecked(true);
+                            rlCusPo.setVisibility(View.VISIBLE);
+                        } else {
+                            cbCusPOeView.setChecked(false);
+                            rlCusPo.setVisibility(View.GONE);
+
+                        }
+
+                        if (response.body().getChkTransport().trim().equals("1")) {
+                            cbModeOfTransport.setChecked(true);
+                        } else {
+                            cbModeOfTransport.setChecked(false);
+                        }
+
+                        if (response.body().getAllocateDt().trim().equals("0000-00-00")) {
+                            cbDate.setChecked(false);
+                        } else {
+                            cbDate.setChecked(true);
+                        }
+
+                        if (response.body().getDcNo().trim().equals("")) {
+                            tvDcView.setVisibility(View.GONE);
+                        } else {
+                            tvDcView.setVisibility(View.VISIBLE);
+                        }
+
+                        if (response.body().getDcAttach().trim().equals("")) {
+                            tvDc.setVisibility(View.GONE);
+                            cbDcView.setVisibility(View.GONE);
+                            edDcView.setVisibility(View.GONE);
+                        } else {
+                            tvDc.setVisibility(View.VISIBLE);
+                            cbDcView.setVisibility(View.VISIBLE);
+                            edDcView.setVisibility(View.VISIBLE);
+                        }
+
+                        if (response.body().getPoAttch().trim().equals("")) {
+                            tvCusPOView.setVisibility(View.GONE);
+                        } else {
+                            tvCusPOView.setVisibility(View.VISIBLE);
+                        }
+
+                        if (response.body().getInvAttch().trim().equals("")) {
+                            tvInVoiceView.setVisibility(View.GONE);
+                        } else {
+                            tvInVoiceView.setVisibility(View.VISIBLE);
+                        }
+
+
+                        dcView = response.body().getDcAttach();
+                        cusPoView = response.body().getPoAttch();
+                        inVoiceView = response.body().getInvAttch();
+                        edDcView.setText(response.body().getDcNo());
+                        edICusPOView.setText(response.body().getPoNo());
+                        edInVoiceView.setText(response.body().getInvNo());
+                        edRefNo.setText(response.body().getRefNo());
+
+
+                        // ************** Transport SPinner ************* //
+                        strTransport.clear();
+
+                        transportModels = response.body().getTransportModels();
+                        for (int i = 0; i < transportModels.size(); i++) {
+                            strTransport.add(transportModels.get(i).getText());
+                            if (transportModels.get(i).getSelected().trim().equals("1")) {
+                                spModeOfTransport.setSelection(i);
+                            }
+                        }
+                        transportAdapter.notifyDataSetChanged();
+
+                        // ************** Transport SPinner End ************* //
+
+
+                    }
+
+                } catch (Exception e) {
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ViewSparesInwardDetailsResponse> call, Throwable t) {
+                progressDialog.dismiss();
+
+            }
+        });
+    }
+
+    private void CallViewFile(String view) {
+
+        Uri uri=Uri.parse(view);
+        Intent intent=new Intent(Intent.ACTION_VIEW,uri);
+        activity.startActivity(intent);
+
+    }
+
+
+    private void CallAccept(BottomSheetDialog bottomSheetDialog, String reqId, String opt) {
+
+        final ProgressDialog progressDialog = new ProgressDialog(activity, R.style.ProgressBarDialog);
+        progressDialog.setMessage("Please Wait...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        int cbc_no=cbDcView.isChecked() ? 1 : 0;
+        int cinv_no=cbInVoiceView.isChecked() ? 1 : 0;
+        int cpo_no=cbCusPOeView.isChecked() ? 1 : 0;
+        int ctransporttype=cbModeOfTransport.isChecked() ? 1 : 0;
+        int cdated=cbDate.isChecked() ? 1 : 0;
+
+        AcceptSpareInwardInterFace acceptSpareInwardInterFace=APIClient.getClient().create(AcceptSpareInwardInterFace.class);
+        acceptSpareInwardInterFace.CallAccept("acceptSparesInward", String.valueOf(cbc_no),edDcView.getText().toString(), String.valueOf(cinv_no),edInVoiceView.getText().toString(), String.valueOf(cpo_no),edICusPOView.getText().toString(), String.valueOf(ctransporttype),TransportID, edRefNo.getText().toString(), String.valueOf(cdated),tvDate.getText().toString(),tvTime.getText().toString(),reqId, PreferenceManager.getEmpID(activity),opt).enqueue(new Callback<AcceptSpareInwardResponse>() {
+            @Override
+            public void onResponse(Call<AcceptSpareInwardResponse> call, Response<AcceptSpareInwardResponse> response) {
+                try{
+                    if (response.isSuccessful()){
+                        progressDialog.dismiss();
+                        bottomSheetDialog.dismiss();
+                        activity.overridePendingTransition(0, 0);
+                        activity.overridePendingTransition(0, 0);
+                        Intent intent1 = new Intent(activity, DashboardActivity.class);
+                        intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        activity.startActivity(intent1);
+                        Toast.makeText(activity, "Accepted", Toast.LENGTH_SHORT).show();
+
+
+                    }
+
+                }catch (Exception e){
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AcceptSpareInwardResponse> call, Throwable t) {
+                progressDialog.dismiss();
 
             }
         });

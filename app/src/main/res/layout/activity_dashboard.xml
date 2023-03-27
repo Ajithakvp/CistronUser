@@ -980,7 +980,7 @@
                                     android:layout_height="40dp"
                                     android:layout_centerVertical="true"
                                     android:layout_marginLeft="25dp"
-                                    android:src="@drawable/engineer"
+                                    android:src="@drawable/spare"
                                     android:tint="@color/white"
                                     tools:ignore="UseAppTint" />
 
@@ -992,7 +992,7 @@
                                     android:layout_marginLeft="20dp"
                                     android:layout_toRightOf="@+id/ivSpare"
                                     android:fontFamily="@font/semibold"
-                                    android:text=" Spare Details "
+                                    android:text=" Spare Details   "
                                     android:textColor="@color/white"
                                     android:textSize="18dp" />
 
@@ -1006,8 +1006,10 @@
                                     android:layout_marginLeft="25dp"
                                     android:layout_marginRight="25dp"
                                     android:minWidth="70dp"
-                                    android:src="@drawable/spareleft"
-                                    android:visibility="visible" />
+                                    android:src="@drawable/left"
+                                    android:tint="@color/white"
+                                    android:visibility="visible"
+                                    tools:ignore="UseAppTint"/>
 
 
                                 <ImageView
@@ -1019,10 +1021,10 @@
                                     android:layout_marginLeft="25dp"
                                     android:layout_marginRight="25dp"
                                     android:minWidth="70dp"
-                                    android:src="@drawable/sparedown"
+                                    android:src="@drawable/down"
+                                    android:tint="@color/white"
                                     android:visibility="gone"
-
-                                    />
+                                    tools:ignore="UseAppTint" />
 
 
                             </RelativeLayout>

@@ -12,6 +12,8 @@ public class DashboardCallCountResponse {
     //  "sparesInward": 108,
     //  "returnReqPending": 10
 
+    //mystock
+
 
     @SerializedName("action")
     private String action;
@@ -34,6 +36,17 @@ public class DashboardCallCountResponse {
 
     @SerializedName("todayCalls")
     private String todayCalls;
+
+    @SerializedName("mystock")
+    private String mystock;
+
+    public String getMystock() {
+        return mystock;
+    }
+
+    public void setMystock(String mystock) {
+        this.mystock = mystock;
+    }
 
     public String getTodayCalls() {
         return todayCalls;

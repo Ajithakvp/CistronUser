@@ -86,11 +86,23 @@ public class LocationBackgroundService extends Service  {
                     Double Latitude = addresses.get(0).getLatitude();
                     Double Longtitude = addresses.get(0).getLongitude();
                     String AddressLine = addresses.get(0).getAddressLine(0);
+                    String pincode = addresses.get(0).getPostalCode();
+                    String city = addresses.get(0).getLocality();
+                    String state = addresses.get(0).getAdminArea();
+                    String countrycode = addresses.get(0).getCountryCode();
+                    String url = addresses.get(0).getUrl();
+
+
 
                     Intent intent = new Intent("Location");
                     intent.putExtra("latitude", Latitude);
                     intent.putExtra("longitude", Longtitude);
                     intent.putExtra("Address", AddressLine);
+                    intent.putExtra("pincode", pincode);
+                    intent.putExtra("city", city);
+                    intent.putExtra("state", state);
+                    intent.putExtra("countrycode", countrycode);
+                    intent.putExtra("url", url);
                     sendBroadcast(intent);
 
                 } catch (IOException e) {

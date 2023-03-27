@@ -123,12 +123,16 @@
                 android:id="@+id/rbLocal"
                 android:fontFamily="@font/semibold"
                 android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:layout_height="wrap_content"
                 android:text="Local" />
 
             <RadioButton
                 android:id="@+id/rbOutstation"
                 android:fontFamily="@font/semibold"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Out Station" />
@@ -136,6 +140,8 @@
             <RadioButton
                 android:id="@+id/rbExstation"
                 android:fontFamily="@font/semibold"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Ex Station" />
@@ -144,6 +150,8 @@
                 android:id="@+id/rbRegular"
                 android:fontFamily="@font/semibold"
                 android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:layout_height="wrap_content"
                 android:text="Office Regular Work" />
 
@@ -152,6 +160,8 @@
             <RadioButton
                 android:id="@+id/rbTraining"
                 android:fontFamily="@font/semibold"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Training" />
@@ -160,6 +170,8 @@
                 android:id="@+id/rbMeeting"
                 android:fontFamily="@font/semibold"
                 android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:layout_height="wrap_content"
                 android:text="Meeting" />
 

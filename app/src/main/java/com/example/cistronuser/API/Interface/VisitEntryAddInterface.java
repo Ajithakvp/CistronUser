@@ -12,6 +12,19 @@ public interface VisitEntryAddInterface {
     // &hospital=15154&doctor=0&product=8&comment=comment&ipaddress=&date=&empid=e367
 
     @GET("visit_entry.php")
-    Call<VisitEntryAddResponse> CallAddVisitEntry(@Query("action")String action,@Query("hospital")String hospital,@Query("doctor")String doctor,@Query("product")String product,
-                                                  @Query("comment")String comment,@Query("ipaddress")String ipaddress,@Query("date")String date,@Query("empid")String empid);
+    Call<VisitEntryAddResponse> CallAddVisitEntry(@Query("action")String action,
+                                                  @Query("hospital")String hospital,
+                                                  @Query("doctor")String doctor,
+                                                  @Query("product")String product,
+                                                  @Query("comment")String comment,
+                                                  @Query("ipaddress")String ipaddress,
+                                                  @Query("date")String date,
+                                                  @Query("empid")String empid,
+                                                  @Query("lat") Double lat,
+                                                  @Query("lng") Double lng,
+                                                  @Query("address") String address,
+                                                  @Query("state") String  state,
+                                                  @Query("city") String city,
+                                                  @Query("countrycode") String countrycode,
+                                                  @Query("pincode") String pincode);
 }

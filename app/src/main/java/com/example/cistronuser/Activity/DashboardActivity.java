@@ -154,6 +154,7 @@ public class DashboardActivity extends Activity {
     Double lat, longg, str;
 
 
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -228,25 +229,24 @@ public class DashboardActivity extends Activity {
 
         String user = PreferenceManager.getEmpuser(this);
 
+
         switch (user) {
-            case "user":
-                rlService.setVisibility(View.GONE);
-                rlWaitingApproval.setVisibility(View.GONE);
-                rlVisitEntryReportLayout.setVisibility(View.VISIBLE);
-                break;
-            case "admin":
-                rlService.setVisibility(View.VISIBLE);
-                rlWaitingApproval.setVisibility(View.VISIBLE);
-                rlVisitEntryReportLayout.setVisibility(View.VISIBLE);
-                break;
-            case "service engineer":
-                rlService.setVisibility(View.VISIBLE);
-                rlWaitingApproval.setVisibility(View.GONE);
-                rlVisitEntryReportLayout.setVisibility(View.VISIBLE);
-                break;
-
-        }
-
+                case "user":
+                    rlService.setVisibility(View.GONE);
+                    rlWaitingApproval.setVisibility(View.GONE);
+                    rlVisitEntryReportLayout.setVisibility(View.VISIBLE);
+                    break;
+                case "admin":
+                    rlService.setVisibility(View.VISIBLE);
+                    rlWaitingApproval.setVisibility(View.VISIBLE);
+                    rlVisitEntryReportLayout.setVisibility(View.VISIBLE);
+                    break;
+                case "service engineer":
+                    rlService.setVisibility(View.VISIBLE);
+                    rlWaitingApproval.setVisibility(View.GONE);
+                    rlVisitEntryReportLayout.setVisibility(View.VISIBLE);
+                    break;
+            }
 
         String company = PreferenceManager.getEmpCompany(this).toLowerCase();
         switch (company) {
@@ -571,6 +571,7 @@ public class DashboardActivity extends Activity {
                         tvSpareRequestPendingCoCount.setText(response.body().getSpareReqPending());
                         tvReturnReqPendingCoCount.setText(response.body().getReturnReqPending());
                         tvCurrentCallCount.setText(response.body().getTodayCalls());
+                        tvMyStockCount.setText(response.body().getMystock());
 
                         rlCurrentCallLayout.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -1009,7 +1010,6 @@ public class DashboardActivity extends Activity {
         super.onDestroy();
         unregBroadcast();
     }
-
     private void CallCheckLocation() {
         UpcomingCallListInterface upcomingCallListInterface = APIClient.getClient().create(UpcomingCallListInterface.class);
         upcomingCallListInterface.CallUpcomingCallReport("getCallsRecords", PreferenceManager.getEmpID(this), "today").enqueue(new Callback<UpcomingCallListResponse>() {
@@ -1118,7 +1118,7 @@ public class DashboardActivity extends Activity {
                             break;
                         } else {
 
-                            Log.e(TAG, "onResponse: not reached");
+                           // Log.e(TAG, "onResponse: not reached");
 
 
                             // ************** Time Check ************** //
@@ -1150,30 +1150,23 @@ public class DashboardActivity extends Activity {
                             long diffSeconds = diff / 1000;
                             long diffMinutes = diff / (60 * 1000);
                             long diffHours = diff / (60 * 60 * 1000);
-                            Log.e(TAG, "onResponse: check " + diffHours + "---" + diffMinutes);
+                            //Log.e(TAG, "onResponse: check " + diffHours + "---" + diffMinutes);
 
                             if (diffHours <= 1) {
-                                Log.e(TAG, "TimeCheck: in " + diffMinutes);
+                              //  Log.e(TAG, "TimeCheck: in " + diffMinutes);
 
                                 scheduleNotification(getNotification("You have a scheduled appointment at " + Hosp[0] + "\n" + locationTrackerCallReportModels.get(i).getAddress() + "\n"
                                         + "for " + locationTrackerCallReportModels.get(i).getDate(), "Call Close Notification !"));
 
                                 break;
                             } else {
-                                Log.e(TAG, "TimeCheck: out " + diffMinutes);
+                               // Log.e(TAG, "TimeCheck: out " + diffMinutes);
                             }
                             // ************** Time Check End ************** //
                         }
 
 
                         // ************** Location check End ************** //
-
-
-
-
-
-
-
 
 
 
@@ -1229,12 +1222,7 @@ public class DashboardActivity extends Activity {
 
     }
 
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        CallCheckLocation();
-//
-//    }
+
 
     @Override
     protected void onResume() {

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/Cistronbasecolor"
   >
 
     <RelativeLayout
@@ -33,7 +34,20 @@
             android:backgroundTint="@color/white"
             android:src="@drawable/ic_baseline_arrow_left_24"
             android:tint="@color/white"
-            tools:ignore="UseAppTint"  />
+            tools:ignore="UseAppTint" />
+
+        <ImageView
+            android:id="@+id/ivList"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="5dp"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@id/tvHeader"
+            android:backgroundTint="@color/white"
+            android:src="@drawable/ic_baseline_list_alt_24"
+            android:tint="@color/white"
+            tools:ignore="UseAppTint" />
 
 
         <ImageView
@@ -53,13 +67,7 @@
 
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/rlcard"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:background="@drawable/card_design"
-        android:backgroundTint="@color/Cistronbasecolor"
-        android:layout_below="@+id/rltoolbar" />
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -69,7 +77,7 @@
         android:layout_below="@id/rltoolbar"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="15dp"
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="5dp"
         android:layout_height="wrap_content">
@@ -93,7 +101,7 @@
             android:hint=" Search "
             android:backgroundTint="@color/white"
             android:textColorHint="@color/Cistronbasecolor"
-            android:textColor="@color/whiteLite1"
+            android:textColor="@color/Cistronbasecolor"
             android:textSize="15dp"
             android:visibility="visible" />
     </RelativeLayout>
@@ -103,6 +111,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:layout_marginLeft="5dp"
+        android:visibility="visible"
+        android:layout_marginRight="5dp"
+        android:layout_below="@id/rlSearch"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvSearchCreateSpareReq"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:visibility="gone"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_below="@id/rlSearch"

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_backgroud"
+    android:backgroundTint="@color/Cistronbasecolor">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <RelativeLayout
+                android:id="@+id/rltoolbar"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/bottom_header">
+
+                <TextView
+                    android:id="@+id/tvHeader"
+                    style="@style/header"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:fontFamily="@font/bold"
+                    android:text="Spare Send Request List"
+                    android:textColor="@color/white"
+                    android:textSize="20dp" />
+
+
+                <ImageView
+                    android:id="@+id/ivBottomBack"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_centerInParent="true"
+                    android:layout_marginRight="35dp"
+                    android:layout_toLeftOf="@id/tvHeader"
+                    android:backgroundTint="@color/white"
+                    android:src="@drawable/ic_baseline_expand_circle_down_24"
+                    android:tint="@color/white"
+                    tools:ignore="UseAppTint" />
+
+
+            </RelativeLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvSendReqSpareList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rltoolbar"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp" />
+
+
+            <TextView
+                android:id="@+id/tvSubmitbtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="50dp"
+                android:layout_below="@id/rvSendReqSpareList"
+                android:layout_marginRight="60dp"
+                android:layout_marginLeft="60dp"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/dialog_backgroud"
+                android:backgroundTint="@color/white"
+                android:textColor="@color/Cistronbasecolor"
+                android:textSize="18dp"
+                android:gravity="center"
+                android:text="Submit"
+                android:fontFamily="@font/bold"/>
+
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</RelativeLayout>
