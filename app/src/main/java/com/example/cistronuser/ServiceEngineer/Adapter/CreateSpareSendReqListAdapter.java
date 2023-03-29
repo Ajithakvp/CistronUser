@@ -40,9 +40,14 @@ public class CreateSpareSendReqListAdapter extends RecyclerView.Adapter<CreateSp
     ArrayList<String> strPurpose = new ArrayList<>();
     ArrayAdapter adapter;
 
-    public CreateSpareSendReqListAdapter(ArrayList<CreateSparesendreqViewModel> createSparesendreqViewModels, Activity activity) {
+    PartId partId;
+    SeriesId seriesId;
+
+    public CreateSpareSendReqListAdapter(ArrayList<CreateSparesendreqViewModel> createSparesendreqViewModels, Activity activity, PartId partId, SeriesId seriesId) {
         this.createSparesendreqViewModels = createSparesendreqViewModels;
         this.activity = activity;
+        this.partId = partId;
+        this.seriesId = seriesId;
     }
 
     @NonNull
@@ -60,6 +65,11 @@ public class CreateSpareSendReqListAdapter extends RecyclerView.Adapter<CreateSp
         holder.tvCoOrdinatqty.setText(createSparesendreqViewModels.get(position).getCoord_qty());
         holder.tvStoreQty.setText(createSparesendreqViewModels.get(position).getQty());
         holder.tvUnitPrice.setText(createSparesendreqViewModels.get(position).getPrice());
+
+        CreateSparesendreqViewModel id=createSparesendreqViewModels.get(position);
+
+        seriesId.seriesid(id.getSeries());
+        partId.partid(id.getPart_id());
 
         if (createSparesendreqViewModels.get(position).getOpt().trim().equals("cis")) {
             holder.tvPartcisIdName.setVisibility(View.VISIBLE);
@@ -135,6 +145,14 @@ public class CreateSpareSendReqListAdapter extends RecyclerView.Adapter<CreateSp
     @Override
     public int getItemCount() {
         return createSparesendreqViewModels.size();
+    }
+
+    public interface SeriesId{
+        void seriesid(String strseriesid);
+    }
+
+    public interface PartId{
+        void partid(String reqid);
     }
 
 

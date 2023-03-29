@@ -11,6 +11,7 @@ public class MyStockSESearchModel {
     //      "price": "3201",
     //      "quantity": "1",
     //      "opt": "cspl"
+    //,series
 
     @SerializedName("label")
     private String label;
@@ -34,6 +35,17 @@ public class MyStockSESearchModel {
 
     @SerializedName("eng_qty")
     private String eng_qty;
+
+    @SerializedName("series")
+    private String series;
+
+    public String getSeries() {
+        return series;
+    }
+
+    public void setSeries(String series) {
+        this.series = series;
+    }
 
     public String getStore_qty() {
         return store_qty;

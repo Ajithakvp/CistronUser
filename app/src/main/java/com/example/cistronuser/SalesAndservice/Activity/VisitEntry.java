@@ -126,6 +126,8 @@ public class VisitEntry extends AppCompatActivity {
     Double lat, longg, str;
     String pincode, city, state, countrycode, Address;
 
+    String TestEmp;
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,6 +158,7 @@ public class VisitEntry extends AppCompatActivity {
         // ******** Background Location ******* //
         receiver = new LocationBroadcastReceiver();
         startLocation();
+        TestEmp=PreferenceManager.getEmpID(this);
         // ******** Background Location  End******* //
         //View List
 
@@ -789,7 +792,14 @@ public class VisitEntry extends AppCompatActivity {
 
             }
 
-            CallCheckLocation();
+            if (TestEmp.trim().equals("e411") || TestEmp.trim().equals("E411") || TestEmp.trim().equals("E410") || TestEmp.trim().equals("e410")){
+                CallCheckLocation();
+            }else {
+                tvAdd.setVisibility(View.VISIBLE);
+            }
+
+
+
         }
     }
 

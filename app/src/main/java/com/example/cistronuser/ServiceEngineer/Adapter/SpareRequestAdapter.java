@@ -134,10 +134,11 @@ public class SpareRequestAdapter extends RecyclerView.Adapter<SpareRequestAdapte
                                             if (response.isSuccessful()){
                                                 progressDialog.dismiss();
                                                // Toast.makeText(activity, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                                                activity.finish();
                                                 activity.overridePendingTransition(0, 0);
                                                 activity.startActivity(activity.getIntent());
                                                 activity.overridePendingTransition(0, 0);
+                                                activity.finish();
+                                                dialog.dismiss();
                                             }
 
                                         }catch (Exception e){
@@ -185,7 +186,7 @@ public class SpareRequestAdapter extends RecyclerView.Adapter<SpareRequestAdapte
                     if (response.isSuccessful()) {
                         progressDialog.dismiss();
 
-                        if (response.body().getCallType().trim().equals("Stock")) {
+                        if (response.body().getCallType().trim().equals("Stock") || response.body().getCallType().trim().equals("stock") ) {
                             rlCr.setVisibility(View.GONE);
                             rlDetails.setVisibility(View.GONE);
                         } else {

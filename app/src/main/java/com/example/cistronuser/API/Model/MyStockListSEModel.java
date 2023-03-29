@@ -13,6 +13,7 @@ public class MyStockListSEModel {
     //store_qty": "324.00",
     //      "coord_qty": "0",
     //      "eng_qty": "0"
+    //series
 
 
     @SerializedName("label")
@@ -42,6 +43,18 @@ public class MyStockListSEModel {
     @SerializedName("eng_qty")
     private String eng_qty;
 
+
+    @SerializedName("series")
+    private String series;
+
+
+    public String getSeries() {
+        return series;
+    }
+
+    public void setSeries(String series) {
+        this.series = series;
+    }
 
     public String getStore_qty() {
         return store_qty;

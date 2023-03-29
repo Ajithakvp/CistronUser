@@ -32,6 +32,7 @@ public class CreateSpareReqListAdapter extends RecyclerView.Adapter<CreateSpareR
     //Search
     ArrayList<MyStockListSEModel> tempMystockList = new ArrayList<>();
     ArrayList<String> strMyStockList = new ArrayList<>();
+
     public CreateSpareReqListAdapter(Activity activity, ArrayList<MyStockListSEModel> myStockListSEModels) {
         this.activity = activity;
         this.myStockListSEModels = myStockListSEModels;
@@ -55,6 +56,8 @@ public class CreateSpareReqListAdapter extends RecyclerView.Adapter<CreateSpareR
         holder.tvCoOrdinatqty.setText(myStockListSEModels.get(position).getCoord_qty());
         String Spareid = myStockListSEModels.get(position).getId();
         String opt = myStockListSEModels.get(position).getLabel();
+        String series = myStockListSEModels.get(position).getSeries();
+
 
         if (myStockListSEModels.get(position).getLabel().trim().equals("cis")) {
             holder.tvPartcisIdName.setVisibility(View.VISIBLE);
@@ -81,18 +84,18 @@ public class CreateSpareReqListAdapter extends RecyclerView.Adapter<CreateSpareR
                 progressDialog.setCancelable(false);
                 progressDialog.show();
                 CreateSpareSendReqInterface createSpareSendReqInterface = APIClient.getClient().create(CreateSpareSendReqInterface.class);
-                createSpareSendReqInterface.CalSend("addToSpareRequestsQueue", PreferenceManager.getEmpID(activity), Spareid, opt).enqueue(new Callback<CreateSpareSendReqResponse>() {
+                createSpareSendReqInterface.CalSend("addToSpareRequestsQueue", PreferenceManager.getEmpID(activity), Spareid, opt, series).enqueue(new Callback<CreateSpareSendReqResponse>() {
                     @Override
                     public void onResponse(Call<CreateSpareSendReqResponse> call, Response<CreateSpareSendReqResponse> response) {
                         try {
                             if (response.isSuccessful()) {
                                 progressDialog.dismiss();
-                                if (response.body().getStatus().trim().equals("1")){
+                                if (response.body().getStatus().trim().equals("1")) {
                                     Toast.makeText(activity, "Send", Toast.LENGTH_SHORT).show();
-                                }else {
-                                    AlertDialog.Builder builder=new AlertDialog.Builder(activity);
+                                } else {
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(activity,R.style.AlertDialogCustom);
                                     builder.setMessage(response.body().getMessage());
-                                    AlertDialog alertDialog=builder.create();
+                                    AlertDialog alertDialog = builder.create();
                                     alertDialog.show();
                                 }
                             }

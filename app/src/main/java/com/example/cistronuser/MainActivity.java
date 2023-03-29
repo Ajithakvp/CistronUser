@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     //change expense and biometric Version "cistron 1.1"
     //Add Service Engineering Report Version "cistron 1.2"
     //leave date change correction and  add todaycalls  "cistron 1.3"
-
+    // not in update 1.4 Attenance Table change , spareinward submiteed,add the My stock and create spare request ,visit entry lat lng check "cistron 1.4"
 
     String AppVersion = "cistron 1.3";
     TextView tvVersion;

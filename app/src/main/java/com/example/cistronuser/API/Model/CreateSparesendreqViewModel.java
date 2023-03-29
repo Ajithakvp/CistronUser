@@ -37,6 +37,28 @@ public class CreateSparesendreqViewModel {
     @SerializedName("price")
     private String price;
 
+    @SerializedName("series")
+    private String series;
+
+    @SerializedName("part_id")
+    private String part_id;
+
+    public String getPart_id() {
+        return part_id;
+    }
+
+    public void setPart_id(String part_id) {
+        this.part_id = part_id;
+    }
+
+    public String getSeries() {
+        return series;
+    }
+
+    public void setSeries(String series) {
+        this.series = series;
+    }
+
     @SerializedName("purpose")
     private ArrayList<CreateSparesendreqProposeViewModel>createSparesendreqProposeViewModels=new ArrayList<>();
 

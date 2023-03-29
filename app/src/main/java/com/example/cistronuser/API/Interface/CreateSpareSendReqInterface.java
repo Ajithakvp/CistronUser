@@ -10,8 +10,9 @@ public interface CreateSpareSendReqInterface {
     // http://192.168.29.173/beta1/app/service_engineers.php?action=addToSpareRequestsQueue&empid=e0006&spareId=&opt=cis/cspl
 
     @GET("service_engineers.php")
-    Call<CreateSpareSendReqResponse>CalSend(@Query("action")String action,
-                                            @Query("empid")String empid,
-                                            @Query("spareId")String spareId,
-                                            @Query("opt")String opt);
+    Call<CreateSpareSendReqResponse> CalSend(@Query("action") String action,
+                                             @Query("empid") String empid,
+                                             @Query("spareId") String spareId,
+                                             @Query("opt") String opt,
+                                             @Query("series") String series);
 }

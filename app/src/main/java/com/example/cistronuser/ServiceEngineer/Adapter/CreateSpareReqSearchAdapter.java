@@ -57,6 +57,7 @@ public class CreateSpareReqSearchAdapter extends RecyclerView.Adapter<CreateSpar
         holder.tvCoOrdinatqty.setText(myStockListSEModels.get(position).getCoord_qty());
         String Spareid = myStockListSEModels.get(position).getId();
         String opt = myStockListSEModels.get(position).getLabel();
+        String series=myStockListSEModels.get(position).getSeries();
 
         if (myStockListSEModels.get(position).getLabel().trim().equals("cis")) {
             holder.tvPartcisIdName.setVisibility(View.VISIBLE);
@@ -82,18 +83,18 @@ public class CreateSpareReqSearchAdapter extends RecyclerView.Adapter<CreateSpar
                 progressDialog.setCancelable(false);
                 progressDialog.show();
                 CreateSpareSendReqInterface createSpareSendReqInterface = APIClient.getClient().create(CreateSpareSendReqInterface.class);
-                createSpareSendReqInterface.CalSend("addToSpareRequestsQueue", PreferenceManager.getEmpID(activity), Spareid, opt).enqueue(new Callback<CreateSpareSendReqResponse>() {
+                createSpareSendReqInterface.CalSend("addToSpareRequestsQueue", PreferenceManager.getEmpID(activity), Spareid, opt,series).enqueue(new Callback<CreateSpareSendReqResponse>() {
                     @Override
                     public void onResponse(Call<CreateSpareSendReqResponse> call, Response<CreateSpareSendReqResponse> response) {
                         try {
                             if (response.isSuccessful()) {
                                 progressDialog.dismiss();
-                                if (response.body().getStatus().trim().equals("1")){
+                                if (response.body().getStatus().trim().equals("1")) {
                                     Toast.makeText(activity, "Send", Toast.LENGTH_SHORT).show();
-                                }else {
-                                    AlertDialog.Builder builder=new AlertDialog.Builder(activity);
+                                } else {
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(activity,R.style.AlertDialogCustom);
                                     builder.setMessage(response.body().getMessage());
-                                    AlertDialog alertDialog=builder.create();
+                                    AlertDialog alertDialog = builder.create();
                                     alertDialog.show();
                                 }
 
@@ -126,10 +127,8 @@ public class CreateSpareReqSearchAdapter extends RecyclerView.Adapter<CreateSpar
             myStockListSEModels.addAll(tempMystockList);
         } else {
             for (String searchedValue : strMyStockList) {
-
                 if (searchedValue.toLowerCase().contains(charText)) {
                     for (int i = 0; i < tempMystockList.size(); i++) {
-
                         if (tempMystockList.get(i).getName().equalsIgnoreCase(searchedValue)) {
                             myStockListSEModels.add(tempMystockList.get(i));
                             break;

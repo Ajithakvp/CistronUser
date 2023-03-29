@@ -7,13 +7,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
+
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -21,9 +23,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cistronuser.API.APIClient;
+import com.example.cistronuser.API.Interface.CreateSendSpareReqSubmitInterface;
 import com.example.cistronuser.API.Interface.CreateSparesendreqViewInterface;
 import com.example.cistronuser.API.Interface.MyStockSEInterface;
 import com.example.cistronuser.API.Interface.MyStockSESearchInteface;
+import com.example.cistronuser.API.Model.CreateSendSpareReqSubmitResponse;
 import com.example.cistronuser.API.Model.CreateSparesendreqViewModel;
 import com.example.cistronuser.API.Model.MyStockSEModel;
 import com.example.cistronuser.API.Model.MyStockSESearchModel;
@@ -35,7 +39,6 @@ import com.example.cistronuser.R;
 import com.example.cistronuser.ServiceEngineer.Adapter.CreateSpareReqAdapter;
 import com.example.cistronuser.ServiceEngineer.Adapter.CreateSpareReqSearchAdapter;
 import com.example.cistronuser.ServiceEngineer.Adapter.CreateSpareSendReqListAdapter;
-import com.example.cistronuser.ServiceEngineer.Adapter.MyStockSearchAdapter;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
@@ -145,13 +148,28 @@ public class CreateSpareReqActivity extends AppCompatActivity {
         rvSendReqSpareList=bottomSheetDialog.findViewById(R.id.rvSendReqSpareList);
         ivBottomBack=bottomSheetDialog.findViewById(R.id.ivBottomBack);
         TextView tvSubmitbtn=bottomSheetDialog.findViewById(R.id.tvSubmitbtn);
+        TextView tvNodata=bottomSheetDialog.findViewById(R.id.tvNodata);
 
         ArrayList<String>strQtyToReq=new ArrayList<>();
         ArrayList<String>strPurpose=new ArrayList<>();
+        ArrayList<String>strSeriesID=new ArrayList<>();
+        ArrayList<String>strPartID=new ArrayList<>();
 
 
-        CallSendReqList();
-        createSpareSendReqListAdapter=new CreateSpareSendReqListAdapter(createSparesendreqViewModels,this );
+        CallSendReqList(tvNodata,tvSubmitbtn);
+        createSpareSendReqListAdapter=new CreateSpareSendReqListAdapter(createSparesendreqViewModels, this, new CreateSpareSendReqListAdapter.PartId() {
+            @Override
+            public void partid(String reqid) {
+
+                strPartID.add(reqid.toString());
+
+            }
+        }, new CreateSpareSendReqListAdapter.SeriesId() {
+            @Override
+            public void seriesid(String strseriesid) {
+                strSeriesID.add(strseriesid);
+            }
+        });
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         rvSendReqSpareList.setLayoutManager(linearLayoutManager);
@@ -177,8 +195,51 @@ public class CreateSpareReqActivity extends AppCompatActivity {
                     strPurpose.add(spinner.getSelectedItem().toString());
                     strQtyToReq.add(edQtyReq.getText().toString());
                 }
+                final ProgressDialog progressDialog = new ProgressDialog(CreateSpareReqActivity.this, R.style.ProgressBarDialog);
+                progressDialog.setMessage("Please Wait...");
+                progressDialog.setCancelable(false);
+                progressDialog.show();
+                CreateSendSpareReqSubmitInterface createSendSpareReqSubmitInterface=APIClient.getClient().create(CreateSendSpareReqSubmitInterface.class);
+                createSendSpareReqSubmitInterface.CallSubmit("submitSpareRequestsQueue",PreferenceManager.getEmpID(CreateSpareReqActivity.this),strPartID,strQtyToReq,strSeriesID,strPurpose).enqueue(new Callback<CreateSendSpareReqSubmitResponse>() {
+                    @Override
+                    public void onResponse(Call<CreateSendSpareReqSubmitResponse> call, Response<CreateSendSpareReqSubmitResponse> response) {
+                        try {
+                            if (response.isSuccessful()){
+                                progressDialog.dismiss();
+                                if (response.body().getResult().trim().equals("1")){
+                                    AlertDialog.Builder builder=new AlertDialog.Builder(CreateSpareReqActivity.this,R.style.ProgressBarDialog);
+                                    builder.setCancelable(false);
+                                    builder.setMessage(response.body().getMessage());
+                                    builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                            bottomSheetDialog.dismiss();
+                                        }
+                                    });
+                                    AlertDialog alertDialog=builder.create();
+                                    alertDialog.show();
+                                }else {
+                                    AlertDialog.Builder builder=new AlertDialog.Builder(CreateSpareReqActivity.this,R.style.AlertDialogCustom);
+                                    builder.setMessage(response.body().getMessage());
+                                    AlertDialog alertDialog=builder.create();
+                                    alertDialog.show();
+                                }
+                            }
 
-                Log.e(TAG, "onClick: "+strQtyToReq+"\n"+strPurpose  );
+                        }catch (Exception e){
+                            progressDialog.dismiss();
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<CreateSendSpareReqSubmitResponse> call, Throwable t) {
+
+                        progressDialog.dismiss();
+                    }
+                });
             }
         });
 
@@ -186,24 +247,41 @@ public class CreateSpareReqActivity extends AppCompatActivity {
 
     }
 
-    private void CallSendReqList() {
+    private void CallSendReqList(TextView tvNodata, TextView tvSubmitbtn) {
+        final ProgressDialog progressDialog = new ProgressDialog(this, R.style.ProgressBarDialog);
+        progressDialog.setMessage("Please Wait...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
         CreateSparesendreqViewInterface createSparesendreqViewInterface=APIClient.getClient().create(CreateSparesendreqViewInterface.class);
         createSparesendreqViewInterface.CallSpareReq("viewSpareRequestQueue",PreferenceManager.getEmpID(this)).enqueue(new Callback<CreateSparesendreqViewResponse>() {
             @Override
             public void onResponse(Call<CreateSparesendreqViewResponse> call, Response<CreateSparesendreqViewResponse> response) {
                 try {
                     if (response.isSuccessful()){
-                        createSpareSendReqListAdapter.createSparesendreqViewModels=response.body().getCreateSparesendreqViewModels();
-                        createSpareSendReqListAdapter.notifyDataSetChanged();
+                        progressDialog.dismiss();
+                        if (response.body().getCreateSparesendreqViewModels().size()>0) {
+                            createSpareSendReqListAdapter.createSparesendreqViewModels = response.body().getCreateSparesendreqViewModels();
+                            createSpareSendReqListAdapter.notifyDataSetChanged();
+                            tvNodata.setVisibility(View.GONE);
+
+                        }else {
+
+                            rvSendReqSpareList.setVisibility(View.GONE);
+                            tvNodata.setVisibility(View.VISIBLE);
+                            tvSubmitbtn.setVisibility(View.GONE);
+
+                        }
                     }
 
                 }catch (Exception e){
+                    progressDialog.dismiss();
 
                 }
             }
 
             @Override
             public void onFailure(Call<CreateSparesendreqViewResponse> call, Throwable t) {
+                progressDialog.dismiss();
 
             }
         });

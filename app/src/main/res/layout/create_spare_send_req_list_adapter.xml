@@ -257,6 +257,7 @@
                     android:layout_marginRight="10dp"
                     android:layout_marginBottom="10dp"
                     android:layout_toRightOf="@id/tvMyQtyTag"
+                    android:inputType="number"
                     android:background="@drawable/edittext"
                     android:backgroundTint="@color/Cistronbasecolor"
                     android:fontFamily="@font/semibold"
