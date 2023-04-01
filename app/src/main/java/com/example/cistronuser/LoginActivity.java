@@ -297,7 +297,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
         progressDialog.show();
         //Log.e(TAG, "Login: "+latitude+"--"+longtitude+"--"+addressLine );
         LoginInterFace loginInterFace=APIClient.getClient().create(LoginInterFace.class);
-        loginInterFace.getUserLogin("login",edName.getText().toString(),edPass.getText().toString(),latitude,longtitude,addressLine,strDeviceName,ip).enqueue(new Callback<LoginuserModel>() {
+        loginInterFace.getUserLogin("login",edName.getText().toString(),edPass.getText().toString(),lat,longitude,Address,strDeviceName,ip).enqueue(new Callback<LoginuserModel>() {
             @Override
             public void onResponse(Call<LoginuserModel> call, Response<LoginuserModel> response) {
                try {
@@ -333,6 +333,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
                        startBackgroundService();
                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                        startActivity(intent);
+                       finish();
 
                    }
 

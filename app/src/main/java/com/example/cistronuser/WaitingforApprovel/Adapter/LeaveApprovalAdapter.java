@@ -124,10 +124,11 @@ public class LeaveApprovalAdapter extends RecyclerView.Adapter<LeaveApprovalAdap
                                 progressDialog.dismiss();
                                 if (response.body().getSuccess().trim().equals("1")){
                                     Toast.makeText(activity, response.body().getMessage() ,Toast.LENGTH_SHORT).show();
-                                    activity.finish();
+
                                     activity.overridePendingTransition(0, 0);
                                     activity.startActivity(activity.getIntent());
                                     activity.overridePendingTransition(0, 0);
+                                    activity.finish();
                                 }else {
                                     AlertDialog.Builder msg=new AlertDialog.Builder(activity,R.style.AlertDialogCustom);
                                     msg.setMessage(response.body().getMessage());
@@ -180,10 +181,11 @@ public class LeaveApprovalAdapter extends RecyclerView.Adapter<LeaveApprovalAdap
 
                                         if (response.body().getSuccess().trim().equals("1")){
                                             Toast.makeText(activity, response.body().getMessage() ,Toast.LENGTH_SHORT).show();
-                                            activity.finish();
+
                                             activity.overridePendingTransition(0, 0);
                                             activity.startActivity(activity.getIntent());
                                             activity.overridePendingTransition(0, 0);
+                                            activity.finish();
                                         }else {
 
                                             AlertDialog.Builder msg=new AlertDialog.Builder(activity,R.style.AlertDialogCustom);
@@ -255,10 +257,11 @@ public class LeaveApprovalAdapter extends RecyclerView.Adapter<LeaveApprovalAdap
 
                                         if (response.body().getSuccess().trim().equals("1")){
                                             Toast.makeText(activity, response.body().getMessage() ,Toast.LENGTH_SHORT).show();
-                                            activity.finish();
+
                                             activity.overridePendingTransition(0, 0);
                                             activity.startActivity(activity.getIntent());
                                             activity.overridePendingTransition(0, 0);
+                                            activity.finish();
                                         }else {
 
                                             AlertDialog.Builder msg=new AlertDialog.Builder(activity,R.style.AlertDialogCustom);

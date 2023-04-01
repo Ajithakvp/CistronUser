@@ -97,10 +97,10 @@ public class CompOffReqAdapter extends RecyclerView.Adapter<CompOffReqAdapter.Vi
 
                                         if (response.body().getSuccess().trim().equals("1")){
                                             Toast.makeText(activity, response.body().getMessage() ,Toast.LENGTH_SHORT).show();
-                                            activity.finish();
                                             activity.overridePendingTransition(0, 0);
                                             activity.startActivity(activity.getIntent());
                                             activity.overridePendingTransition(0, 0);
+                                            activity.finish();
                                         }else {
 
                                             AlertDialog.Builder msg=new AlertDialog.Builder(activity);
@@ -174,10 +174,10 @@ public class CompOffReqAdapter extends RecyclerView.Adapter<CompOffReqAdapter.Vi
 
                                         if (response.body().getSuccess().trim().equals("1")){
                                             Toast.makeText(activity, response.body().getMessage() ,Toast.LENGTH_SHORT).show();
-                                            activity.finish();
                                             activity.overridePendingTransition(0, 0);
                                             activity.startActivity(activity.getIntent());
                                             activity.overridePendingTransition(0, 0);
+                                            activity.finish();
                                         }else {
 
                                             AlertDialog.Builder msg=new AlertDialog.Builder(activity,R.style.AlertDialogCustom);
@@ -241,10 +241,11 @@ public class CompOffReqAdapter extends RecyclerView.Adapter<CompOffReqAdapter.Vi
 
                                 if (response.body().getSuccess().trim().equals("1")) {
                                     Toast.makeText(activity, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                                    activity.finish();
+
                                     activity.overridePendingTransition(0, 0);
                                     activity.startActivity(activity.getIntent());
                                     activity.overridePendingTransition(0, 0);
+                                    activity.finish();
                                 } else {
 
                                     AlertDialog.Builder msg = new AlertDialog.Builder(activity,R.style.AlertDialogCustom);

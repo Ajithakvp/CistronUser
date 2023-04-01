@@ -284,6 +284,8 @@ public class UpcomingCallReport extends AppCompatActivity {
     Double lat, longg, str;
     String Address ,pincode, city, state, countrycode;
     String RespLatitude, RespLongtitude;
+    String geoYes="no";
+
 
 
 
@@ -2578,7 +2580,7 @@ public class UpcomingCallReport extends AppCompatActivity {
         CallReportingUpComingSubmitInterface callReportingUpComingSubmitInterface = APIClient.getClient().create(CallReportingUpComingSubmitInterface.class);
         callReportingUpComingSubmitInterface.callReportSubmit("callClose", PreferenceManager.getEmpID(UpcomingCallReport.this), id, LogsitId, CallTypePayoptionsID, ComplaintID, SubComplaintCatID, edTypeComplaintCat.getText().toString(), edTypeSubComplaintCat.getText().toString(), "Not Detect", CallAssignId, CallRegID, CallAssignId, pdtidd, hpidd, chk1, CusPoradiobID,
                 CallStatusID, tvPaymentafterDispatch.getText().toString(), tvRecvPaymentDispatch.getText().toString(), tvInstallDate.getText().toString(), bp_install, bp_installr, strInstallament, strInstallamentr, balinspayamt, cft, String.valueOf(rbconsumerSpareID), Spc, tvFollowUpDate.getText().toString(),
-                tvStartingTime.getText().toString(), tvEndTime.getText().toString(), edPendingReason.getText().toString(), edName.getText().toString(), edMobile.getText().toString(), String.valueOf(rbRecPendingID), tvDepositedDate.getText().toString(), edCheckUTRno.getText().toString(), String.valueOf(rbClosePayID), edSaleORserviceAmt.getText().toString(), edSpareAmt.getText().toString(), edWorkdone.getText().toString(), edEngineerAdvice.getText().toString(), String.valueOf(ratingBar.getRating()), String.valueOf(cbSetID), edReason.getText().toString(), Ps, Sq, Wb, Lr, Sr, Pm, lat, longg, Address, Double.valueOf(PreferenceManager.getLat(UpcomingCallReport.this)), Double.valueOf(PreferenceManager.getLng(UpcomingCallReport.this)),state,city,countrycode,pincode).enqueue(new Callback<CallReportingUpComingSubmitResponse>() {
+                tvStartingTime.getText().toString(), tvEndTime.getText().toString(), edPendingReason.getText().toString(), edName.getText().toString(), edMobile.getText().toString(), String.valueOf(rbRecPendingID), tvDepositedDate.getText().toString(), edCheckUTRno.getText().toString(), String.valueOf(rbClosePayID), edSaleORserviceAmt.getText().toString(), edSpareAmt.getText().toString(), edWorkdone.getText().toString(), edEngineerAdvice.getText().toString(), String.valueOf(ratingBar.getRating()), String.valueOf(cbSetID), edReason.getText().toString(), Ps, Sq, Wb, Lr, Sr, Pm, lat, longg, Address, Double.valueOf(PreferenceManager.getLat(UpcomingCallReport.this)), Double.valueOf(PreferenceManager.getLng(UpcomingCallReport.this)),state,city,countrycode,pincode,geoYes).enqueue(new Callback<CallReportingUpComingSubmitResponse>() {
             @Override
             public void onResponse(Call<CallReportingUpComingSubmitResponse> call, Response<CallReportingUpComingSubmitResponse> response) {
                 try {
@@ -3902,6 +3904,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         tvSubmit.setVisibility(View.VISIBLE);
+                        geoYes="yes";
                     }
                 });
                 builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -3942,7 +3945,7 @@ public class UpcomingCallReport extends AppCompatActivity {
             }
 
 
-            //E378  CallCheckLocation();
+              CallCheckLocation();
         }
     }
 

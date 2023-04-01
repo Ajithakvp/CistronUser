@@ -318,10 +318,11 @@ public class ReportExpenseAdapter extends RecyclerView.Adapter<ReportExpenseAdap
                                             progressDialog.dismiss();
                                             Toast.makeText(activity, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                                             //bottomSheetDialog.dismiss();
-                                            activity.finish();
+
                                             activity.overridePendingTransition(0, 0);
                                             activity.startActivity(activity.getIntent());
                                             activity.overridePendingTransition(0, 0);
+                                            activity.finish();
                                         }
 
                                     } catch (Exception e) {

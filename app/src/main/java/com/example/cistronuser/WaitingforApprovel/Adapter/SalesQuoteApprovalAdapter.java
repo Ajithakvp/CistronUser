@@ -113,10 +113,11 @@ public class SalesQuoteApprovalAdapter extends RecyclerView.Adapter<SalesQuoteAp
                                         }else {
 
                                             Toast.makeText(activity, response.body().getMessage() ,Toast.LENGTH_SHORT).show();
-                                            activity.finish();
+
                                             activity.overridePendingTransition(0, 0);
                                             activity.startActivity(activity.getIntent());
                                             activity.overridePendingTransition(0, 0);
+                                            activity.finish();
 
 
                                         }

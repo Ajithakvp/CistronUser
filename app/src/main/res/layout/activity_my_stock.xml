@@ -93,8 +93,6 @@
             android:visibility="visible" />
     </RelativeLayout>
 
-
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvMystockList"
         android:layout_width="match_parent"
@@ -104,8 +102,7 @@
         android:layout_marginBottom="10dp"
         android:visibility="visible"
         android:layout_marginRight="5dp"
-        android:layout_below="@id/rlSearch"
-        />
+        android:layout_below="@id/rlSearch"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvMystockSearchList"

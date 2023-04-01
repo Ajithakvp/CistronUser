@@ -126,10 +126,10 @@ public class ApprovedAdapter extends RecyclerView.Adapter<ApprovedAdapter.ViewHo
                                     if (response.isSuccessful()){
                                         progressDialog.dismiss();
                                         Toast.makeText(activity, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                                        activity.finish();
                                         activity.overridePendingTransition(0, 0);
                                         activity.startActivity(activity.getIntent());
                                         activity.overridePendingTransition(0, 0);
+                                        activity.finish();
                                     }
 
                                 }catch (Exception e){

@@ -128,6 +128,8 @@ public class VisitEntry extends AppCompatActivity {
 
     String TestEmp;
 
+    String geoYes="no";
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -379,7 +381,7 @@ public class VisitEntry extends AppCompatActivity {
         progressDialog.setCancelable(false);
         progressDialog.show();
         VisitEntryAddInterface visitEntryAddInterface = APIClient.getClient().create(VisitEntryAddInterface.class);
-        visitEntryAddInterface.CallAddVisitEntry("addVisitEntry", hospitalID, chefDocID, productId, EdComment.getText().toString(), ip, tvDate.getText().toString(), PreferenceManager.getEmpID(this), lat, longg, Address, state, city, countrycode, pincode).enqueue(new Callback<VisitEntryAddResponse>() {
+        visitEntryAddInterface.CallAddVisitEntry("addVisitEntry", hospitalID, chefDocID, productId, EdComment.getText().toString(), ip, tvDate.getText().toString(), PreferenceManager.getEmpID(this), lat, longg, Address, state, city, countrycode, pincode,geoYes).enqueue(new Callback<VisitEntryAddResponse>() {
             @Override
             public void onResponse(Call<VisitEntryAddResponse> call, Response<VisitEntryAddResponse> response) {
                 try {
@@ -743,13 +745,14 @@ public class VisitEntry extends AppCompatActivity {
 
             } else {
                 AlertDialog.Builder builder = new AlertDialog.Builder(VisitEntry.this, R.style.AlertDialogCustom);
-                builder.setTitle("Your location has not been reached.");
-                builder.setMessage("Are you at the right place ?");
+                builder.setTitle("location not matched.");
+                builder.setMessage("The hospital location and your current location do not match. Are you in the proper location?");
                 builder.setCancelable(false);
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         tvAdd.setVisibility(View.VISIBLE);
+                        geoYes="yes";
                     }
                 });
                 builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -792,13 +795,13 @@ public class VisitEntry extends AppCompatActivity {
 
             }
 
-            if (TestEmp.trim().equals("e411") || TestEmp.trim().equals("E411") || TestEmp.trim().equals("E410") || TestEmp.trim().equals("e410")){
-                CallCheckLocation();
-            }else {
-                tvAdd.setVisibility(View.VISIBLE);
-            }
+//            if (TestEmp.trim().equals("e411") || TestEmp.trim().equals("E411") || TestEmp.trim().equals("E410") || TestEmp.trim().equals("e410")){
+//                CallCheckLocation();
+//            }else {
+//                tvAdd.setVisibility(View.VISIBLE);
+//            }
 
-
+            CallCheckLocation();
 
         }
     }

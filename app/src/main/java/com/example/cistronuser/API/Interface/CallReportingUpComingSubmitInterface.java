@@ -81,7 +81,8 @@ public interface CallReportingUpComingSubmitInterface {
                                                                @Query("state") String  state,
                                                                @Query("city") String city,
                                                                @Query("countrycode") String countrycode,
-                                                               @Query("pincode") String pincode);
+                                                               @Query("pincode") String pincode,
+                                                               @Query("updategeolocations") String updategeolocations);
 
 
 

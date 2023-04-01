@@ -90,10 +90,10 @@ public class VisitEntryAdapter extends RecyclerView.Adapter<VisitEntryAdapter.Vi
 
                                         if (response.body().getStatus().trim().equals("1")) {
                                             Toast.makeText(activity, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                                            activity.finish();
                                             activity.overridePendingTransition(0, 0);
                                             activity.startActivity(activity.getIntent());
                                             activity.overridePendingTransition(0, 0);
+                                            activity.finish();
                                         } else {
 
                                             AlertDialog.Builder msg = new AlertDialog.Builder(activity);

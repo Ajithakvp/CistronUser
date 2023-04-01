@@ -164,7 +164,7 @@ public class DashboardActivity extends Activity {
         //******************* get Location background ******************//
         receiver = new LocationBroadcastReceiver();
         startBackgroundService();
-        //E378 CallCheckLocation();
+        CallCheckLocation();
 
         //******************* get Location background end ******************//
 
@@ -361,6 +361,7 @@ public class DashboardActivity extends Activity {
                                         stopService(intent1);
                                         startActivity(intent);
                                         progressDialog.dismiss();
+                                        finish();
                                     }
 
                                 } catch (Exception e) {
@@ -1218,7 +1219,7 @@ public class DashboardActivity extends Activity {
         registerReceiver(receiver, filter);
         Intent intent = new Intent(DashboardActivity.this, LocationBackgroundService.class);
         startService(intent);
-        //E378   CallCheckLocation();
+       CallCheckLocation();
 
     }
 
