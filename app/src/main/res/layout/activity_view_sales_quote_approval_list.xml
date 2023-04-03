@@ -412,6 +412,7 @@
                             android:gravity="center_vertical"
                             android:hint="Qty"
                             android:paddingLeft="10dp"
+                            android:layout_marginBottom="10dp"
                             android:textColor="@color/black"
                             android:textSize="18dp"
                             android:visibility="visible" />

@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:cardCornerRadius="10dp">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:id="@+id/rlHeadertag"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/BrightOrange"
+                    android:minHeight="70dp">
+
+                    <TextView
+                        android:id="@+id/tvHospitalName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/openssansbold"
+                        android:text="Cistron Horizontal steam sterilizer"
+                        android:textColor="@color/white"
+                        android:textSize="18dp" />
+
+                    <TextView
+                        android:id="@+id/tvReport"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvHospitalName"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/edittext"
+                        android:fontFamily="@font/latest"
+                        android:gravity="center"
+                        android:minWidth="100dp"
+                        android:minHeight="40dp"
+                        android:text="Visit Entry"
+                        android:textColor="@color/BrightOrange"
+                        android:textSize="17dp" />
+
+
+                    <TextView
+                        android:id="@+id/tvStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvHospitalName"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_alignParentRight="true"
+                        android:background="@drawable/edittext"
+                        android:fontFamily="@font/latest"
+                        android:gravity="center"
+                        android:minWidth="100dp"
+                        android:minHeight="40dp"
+                        android:textColor="@color/Cistronbasecolor"
+                        android:textSize="17dp" />
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlCurrentAddressLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rlHeadertag"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/edittext"
+                    android:backgroundTint="@color/CreamWhite">
+
+
+                    <TextView
+                        android:id="@+id/tvCurrentAddressTag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/latest"
+                        android:text="Current Address :"
+                        android:textColor="@color/RoseRed"
+                        android:textSize="17dp" />
+
+
+                    <TextView
+                        android:id="@+id/tvCurrentAddress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvCurrentAddressTag"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:fontFamily="@font/openssanssemibold"
+                        android:gravity="center"
+                        android:text="No -12 Second Floor Krishna Complex Malayappa Nagar Thanjavur Main Road Trichy - 620010 Malayappa Nagar Tiruchirappalli Tamil Nadu 620010 India"
+                        android:textColor="@color/black"
+                        android:textSize="15dp" />
+
+
+                    <TextView
+                        android:id="@+id/tvLatitudeTag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvCurrentAddress"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/latest"
+                        android:text="latitude      :"
+                        android:textColor="@color/RoseRed"
+                        android:textSize="17dp" />
+
+
+                    <TextView
+                        android:id="@+id/tvLatitude"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvCurrentAddress"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_toRightOf="@+id/tvLatitudeTag"
+                        android:fontFamily="@font/openssanssemibold"
+                        android:gravity="center"
+                        android:text="10.804278799999999"
+                        android:textColor="@color/black"
+                        android:textSize="15dp" />
+
+                    <TextView
+                        android:id="@+id/tvLongtitudeTag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvLatitude"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/latest"
+                        android:text="Longitude :"
+                        android:textColor="@color/RoseRed"
+                        android:textSize="17dp" />
+
+
+                    <TextView
+                        android:id="@+id/tvLongtitude"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvLatitude"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_toRightOf="@+id/tvLongtitudeTag"
+                        android:fontFamily="@font/openssanssemibold"
+                        android:gravity="center"
+                        android:text="10.804278799999999"
+                        android:textColor="@color/black"
+                        android:textSize="15dp" />
+
+
+
+
+                </RelativeLayout>
+
+
+                <TextView
+                    android:id="@+id/tvDistanceTag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rlCurrentAddressLayout"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/latest"
+                    android:text="Distance    :"
+                    android:textColor="@color/RoseRed"
+                    android:textSize="17dp" />
+
+
+                <TextView
+                    android:id="@+id/tvDistance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/rlCurrentAddressLayout"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_toRightOf="@+id/tvDistanceTag"
+                    android:fontFamily="@font/openssanssemibold"
+                    android:gravity="center"
+                    android:text="1"
+                    android:textColor="@color/Cistronbasecolor"
+                    android:textSize="15dp" />
+
+
+                <RelativeLayout
+                    android:id="@+id/rlChangeAddressLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvDistance"
+                    android:background="@drawable/edittext"
+                    android:backgroundTint="@color/whiteLite4">
+
+                    <TextView
+                        android:id="@+id/tvChangeAddressTag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/latest"
+                        android:text="Change Address :"
+                        android:textColor="@color/RoseRed"
+                        android:textSize="17dp" />
+
+
+                    <TextView
+                        android:id="@+id/tvChangeAddress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvChangeAddressTag"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:fontFamily="@font/openssanssemibold"
+                        android:gravity="center"
+                        android:text="No -12 Second Floor Krishna Complex Malayappa Nagar Thanjavur Main Road Trichy - 620010 Malayappa Nagar Tiruchirappalli Tamil Nadu 620010 India"
+                        android:textColor="@color/black"
+                        android:textSize="15dp" />
+
+
+                    <TextView
+                        android:id="@+id/tvChangeLatitudeTag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvChangeAddress"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/latest"
+                        android:text="latitude      :"
+                        android:textColor="@color/RoseRed"
+                        android:textSize="17dp" />
+
+
+                    <TextView
+                        android:id="@+id/tvChangeLatitude"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvChangeAddress"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_toRightOf="@+id/tvChangeLatitudeTag"
+                        android:fontFamily="@font/openssanssemibold"
+                        android:gravity="center"
+                        android:text="10.804278799999999"
+                        android:textColor="@color/black"
+                        android:textSize="15dp" />
+
+                    <TextView
+                        android:id="@+id/tvChangeLongtitudeTag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvChangeLatitude"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/latest"
+                        android:text="Longitude :"
+                        android:textColor="@color/RoseRed"
+                        android:textSize="17dp" />
+
+
+                    <TextView
+                        android:id="@+id/tvChangeLongtitude"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvChangeLatitude"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_toRightOf="@+id/tvChangeLongtitudeTag"
+                        android:fontFamily="@font/openssanssemibold"
+                        android:gravity="center"
+                        android:text="10.804278799999999"
+                        android:textColor="@color/black"
+                        android:textSize="15dp" />
+
+
+
+
+
+                    <TextView
+                        android:id="@+id/tvReqbyempTag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvChangeLongtitude"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/latest"
+                        android:text="Request By Employee :"
+                        android:textColor="@color/RoseRed"
+                        android:textSize="17dp" />
+
+
+                    <TextView
+                        android:id="@+id/tvReqbyemp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvReqbyempTag"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:fontFamily="@font/openssanssemibold"
+                        android:gravity="center"
+                        android:text="Cistron systems pvt (E378)"
+                        android:textColor="@color/black"
+                        android:textSize="15dp" />
+
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rlChangeAddressLayout">
+
+
+                    <TextView
+                        android:id="@+id/tvbtnApproval"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="50dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/edittext"
+                        android:backgroundTint="@color/Cistronbasecolor"
+                        android:fontFamily="@font/roboblack"
+                        android:gravity="center"
+                        android:text="Approval"
+                        android:textColor="@color/white"
+                        android:textSize="17dp" />
+
+
+                    <TextView
+                        android:id="@+id/tvbtnRejected"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvbtnApproval"
+                        android:minHeight="50dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/edittext"
+                        android:backgroundTint="@color/Radio"
+                        android:fontFamily="@font/roboblack"
+                        android:gravity="center"
+                        android:text="Rejected"
+                        android:textColor="@color/white"
+                        android:textSize="17dp" />
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

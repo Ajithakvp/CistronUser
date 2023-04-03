@@ -13,6 +13,7 @@ public class DashboardCallCountResponse {
     //  "returnReqPending": 10
 
     //mystock
+    //geolocation
 
 
     @SerializedName("action")
@@ -39,6 +40,19 @@ public class DashboardCallCountResponse {
 
     @SerializedName("mystock")
     private String mystock;
+
+
+    @SerializedName("geolocation")
+    private String geolocation;
+
+
+    public String getGeolocation() {
+        return geolocation;
+    }
+
+    public void setGeolocation(String geolocation) {
+        this.geolocation = geolocation;
+    }
 
     public String getMystock() {
         return mystock;

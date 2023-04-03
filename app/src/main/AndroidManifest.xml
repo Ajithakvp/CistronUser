@@ -37,6 +37,13 @@
         tools:replace="android:allowBackup"
         tools:targetApi="31">
         <activity
+            android:name=".WaitingforApprovel.Activity.GeoLocationApprovalActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".ServiceEngineer.Activity.CreateSpareReqActivity"
             android:exported="false">
             <meta-data
@@ -45,13 +52,6 @@
         </activity>
         <activity
             android:name=".ServiceEngineer.Activity.MyStockActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".ServiceEngineer.Activity.RequestToPendingActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -227,10 +227,7 @@
         </activity>
         <activity
             android:name=".Activity.DashboardActivity"
-            android:excludeFromRecents="true"
-            android:exported="true"
-            android:launchMode="singleTask"
-            android:taskAffinity="">
+            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

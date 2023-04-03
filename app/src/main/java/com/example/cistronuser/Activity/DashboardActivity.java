@@ -81,6 +81,7 @@ import com.example.cistronuser.ServiceEngineer.Activity.UpComingCallActivity;
 import com.example.cistronuser.ServiceEngineer.Activity.UpcomingCallReport;
 import com.example.cistronuser.WaitingforApprovel.Activity.CompOffRequest;
 import com.example.cistronuser.WaitingforApprovel.Activity.ExpensesReport;
+import com.example.cistronuser.WaitingforApprovel.Activity.GeoLocationApprovalActivity;
 import com.example.cistronuser.WaitingforApprovel.Activity.LeaveRequest;
 import com.example.cistronuser.WaitingforApprovel.Activity.SalesQuoteApproval;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -127,8 +128,9 @@ public class DashboardActivity extends Activity {
 
 
     RelativeLayout rlWaitingExpense, rlSalesService;
-    //Admin Dashboard
-    RelativeLayout rlAdmin, rlWaitingApproval, rlVisitEntryReportLayout, rlWaitingSalesQuoteApprovalRequest;
+    //Admin Dashboard Approval
+    RelativeLayout rlAdmin, rlWaitingApproval, rlVisitEntryReportLayout, rlWaitingSalesQuoteApprovalRequest , rlGeoLocationApprovalLayout;
+    TextView tvGeoLocationApprovalCount;
 
     //Service
     RelativeLayout rlUpcomingCallLayout, rlPendingingCallLayout, rlCurrentCallLayout
@@ -154,20 +156,57 @@ public class DashboardActivity extends Activity {
     Double lat, longg, str;
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
+        //LeaveApprovalCount
+        CallLeaveApprovalCount();
+
+        //ExpenseCount
+        CallExpenseCount();
+
+        //CompoffCount
+        CallCompoffCount();
+
+        //SalesQuoteCount
+        CallSalesQuoteCount();
+
+        //UpcomingCall and Pendingcall Count
+        CallUpComPendingCount();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+
+        //LeaveApprovalCount
+        CallLeaveApprovalCount();
+
+        //ExpenseCount
+        CallExpenseCount();
+
+        //CompoffCount
+        CallCompoffCount();
+
+        //SalesQuoteCount
+        CallSalesQuoteCount();
+
+        //UpcomingCall and Pendingcall Count
+        CallUpComPendingCount();
+
+    }
+
+
+
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-
-        //******************* get Location background ******************//
-        receiver = new LocationBroadcastReceiver();
-        startBackgroundService();
-        CallCheckLocation();
-
-        //******************* get Location background end ******************//
-
 
         cvLeave = findViewById(R.id.cvLeave);
         cvExpense = findViewById(R.id.cvExpense);
@@ -194,6 +233,9 @@ public class DashboardActivity extends Activity {
         tvUpcomingCallCount = findViewById(R.id.tvUpcomingCallCount);
         tvPendingCallCount = findViewById(R.id.tvPendingCallCount);
         rlService = findViewById(R.id.rlService);
+
+        rlGeoLocationApprovalLayout=findViewById(R.id.rlGeoLocationApprovalLayout);
+        tvGeoLocationApprovalCount=findViewById(R.id.tvGeoLocationApprovalCount);
 
 
         rlUpcomingCallLayout = findViewById(R.id.rlUpcomingCallLayout);
@@ -289,6 +331,14 @@ public class DashboardActivity extends Activity {
         });
 
 
+        //******************* get Location background ******************//
+        receiver = new LocationBroadcastReceiver();
+        startBackgroundService();
+        CallCheckLocation();
+
+        //******************* get Location background end ******************//
+
+
 //        CallReportIngCheckInterface callReportIngCheckInterface = APIClient.getClient().create(CallReportIngCheckInterface.class);
 //        callReportIngCheckInterface.CalLCheck("checkEmployee", PreferenceManager.getEmpID(this)).enqueue(new Callback<CallReportIngCheckResponse>() {
 //            @Override
@@ -350,11 +400,8 @@ public class DashboardActivity extends Activity {
 
                                     if (response.isSuccessful()) {
 
-
-                                        // PreferenceManager.setLoggedStatus(DashboardActivity.this, false);
-
+                                        PreferenceManager.setLoggedStatus(DashboardActivity.this, false);
                                         PreferenceManager.setUserModelData(DashboardActivity.this, loginuserModel);
-                                        finish();
                                         Intent intent = new Intent(DashboardActivity.this, LoginActivity.class);
                                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                         Intent intent1 = new Intent(DashboardActivity.this, LocationBackgroundService.class);
@@ -540,6 +587,8 @@ public class DashboardActivity extends Activity {
 
 
 
+
+
         //LeaveApprovalCount
         CallLeaveApprovalCount();
 
@@ -573,6 +622,7 @@ public class DashboardActivity extends Activity {
                         tvReturnReqPendingCoCount.setText(response.body().getReturnReqPending());
                         tvCurrentCallCount.setText(response.body().getTodayCalls());
                         tvMyStockCount.setText(response.body().getMystock());
+                        tvGeoLocationApprovalCount.setText(response.body().getGeolocation());
 
                         rlCurrentCallLayout.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -650,6 +700,23 @@ public class DashboardActivity extends Activity {
                                     Intent intent = new Intent(DashboardActivity.this, ReturnReqPendingCoActivity.class);
                                     startActivity(intent);
                                 }
+                            }
+                        });
+
+
+                        rlGeoLocationApprovalLayout.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                if (response.body().getGeolocation().trim().equals("0")) {
+                                    Toast.makeText(context, "No Geo Location Approval ", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Intent intent = new Intent(DashboardActivity.this, GeoLocationApprovalActivity.class);
+                                    startActivity(intent);
+                                }
+
+
+
                             }
                         });
 
@@ -1225,48 +1292,6 @@ public class DashboardActivity extends Activity {
 
 
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-
-        //LeaveApprovalCount
-        CallLeaveApprovalCount();
-
-        //ExpenseCount
-        CallExpenseCount();
-
-        //CompoffCount
-        CallCompoffCount();
-
-        //SalesQuoteCount
-        CallSalesQuoteCount();
-
-        //UpcomingCall and Pendingcall Count
-        CallUpComPendingCount();
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-
-
-        //LeaveApprovalCount
-        CallLeaveApprovalCount();
-
-        //ExpenseCount
-        CallExpenseCount();
-
-        //CompoffCount
-        CallCompoffCount();
-
-        //SalesQuoteCount
-        CallSalesQuoteCount();
-
-        //UpcomingCall and Pendingcall Count
-        CallUpComPendingCount();
-
-    }
 
     private void scheduleNotification(Notification notification) {
 

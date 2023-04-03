@@ -303,6 +303,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
                try {
                    if (response.isSuccessful()){
                        progressDialog.dismiss();
+                       PreferenceManager.setLoggedStatus(LoginActivity.this,true);
                        PreferenceManager.saveLoginPwd(LoginActivity.this,edPass.getText().toString());
                        PreferenceManager.saveLoginEmpID(LoginActivity.this,edName.getText().toString());
                        PreferenceManager.saveData(LoginActivity.this,loginuserModel);
@@ -330,7 +331,6 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
                        intent.putExtra("DOJ",response.body().getDoj());
                        intent.putExtra("DOB",response.body().getDob());
                        intent.putExtra("Photo",response.body().getPhoto());
-                       startBackgroundService();
                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                        startActivity(intent);
                        finish();
@@ -420,8 +420,5 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
     }
 
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
+
 }

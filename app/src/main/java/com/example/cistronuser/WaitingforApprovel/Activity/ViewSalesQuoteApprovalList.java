@@ -213,7 +213,7 @@ public class ViewSalesQuoteApprovalList extends AppCompatActivity {
                         edMobile.setText(response.body().getSalesQuoteApprovalViewModel().getCon_no());
                         tvProduct.setText(response.body().getSalesQuoteApprovalViewModel().getProduct());
                         edQus.setText(response.body().getSalesQuoteApprovalViewModel().getPro_spec());
-                        tvQty.setText(response.body().getSalesQuoteApprovalViewModel().getQty());
+                        tvQty.setText("Qty : "+response.body().getSalesQuoteApprovalViewModel().getQty());
                         edOrderValue.setText(response.body().getSalesQuoteApprovalViewModel().getOrder_value());
                         edAdvanceValue.setText(response.body().getSalesQuoteApprovalViewModel().getAdvance_value());
                         edpaymentBforeDispatch.setText(response.body().getSalesQuoteApprovalViewModel().getBp_dispatch());

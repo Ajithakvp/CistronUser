@@ -9,6 +9,15 @@ import com.example.cistronuser.R;
 
 public class Utilites {
 
+
+
+    // Screen onPause close Tab
+
+    //  android:excludeFromRecents="true"
+    //            android:exported="true"
+    //            android:launchMode="singleTask"
+    //            android:taskAffinity=""
+
     // final Calendar c = Calendar.getInstance();
     //        c.set(Calendar.HOUR, c.get(Calendar.HOUR) - 1);
     //        int mHour = c.get(Calendar.HOUR);

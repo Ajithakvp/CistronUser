@@ -64,14 +64,16 @@
 
                 <TextView
                     android:id="@+id/tvWorkreport"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvDate"
+                    android:layout_below="@+id/tvWorkreportTag"
+                    android:layout_centerInParent="true"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginRight="10dp"
                     android:layout_marginBottom="5dp"
-                    android:layout_toRightOf="@id/tvWorkreportTag"
                     android:fontFamily="@font/semibold"
+                    android:gravity="center"
                     android:text="Report Details"
                     android:textColor="@color/black"
                     android:textSize="17dp" />
