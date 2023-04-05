@@ -236,6 +236,7 @@ public class VisitEntry extends AppCompatActivity {
                 Lng = visitEntryHospitalModels.get(position).getLng();
 
                 CallChefDoc(HospitalID);
+                CallCheckLocation();
             }
 
             @Override
@@ -737,7 +738,7 @@ public class VisitEntry extends AppCompatActivity {
             locationB.setLongitude(Double.parseDouble(String.valueOf(Lng)));
 
             str = Double.valueOf(locationA.distanceTo(locationB) / 1000);
-            Log.e(TAG, "onResponse: " + str);
+
 
 
             if (str <= 1.0) {
@@ -766,7 +767,7 @@ public class VisitEntry extends AppCompatActivity {
                 Intent intent = new Intent(VisitEntry.this, LocationBackgroundService.class);
                 stopService(intent);
                 tvAdd.setVisibility(View.GONE);
-
+                Log.e(TAG, "onResponse: " + str);
             }
 
 

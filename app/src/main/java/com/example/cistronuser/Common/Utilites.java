@@ -11,12 +11,19 @@ public class Utilites {
 
 
 
-    // Screen onPause close Tab
+    // ********** Toggle eye view visible or invisible  ********** //
+    // password visible
+    // edPassword.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+    // password invisible
+    // edPassword.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD | InputType.TYPE_CLASS_TEXT);
+    // ********** Toggle eye view visible or invisible end  ********** //
 
-    //  android:excludeFromRecents="true"
+    // *********** Screen onPause close Tab *********** //
+    //            android:excludeFromRecents="true"
     //            android:exported="true"
     //            android:launchMode="singleTask"
     //            android:taskAffinity=""
+    // *********** Screen onPause close Tab end *********** //
 
     // final Calendar c = Calendar.getInstance();
     //        c.set(Calendar.HOUR, c.get(Calendar.HOUR) - 1);
@@ -44,8 +51,6 @@ public class Utilites {
 
 
     // ********** Distance Notication Meter End  ********* //
-
-
 
 
     // ******************* Top Notfication ***************** //
