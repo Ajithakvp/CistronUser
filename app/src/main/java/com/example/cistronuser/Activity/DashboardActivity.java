@@ -67,6 +67,7 @@ import com.example.cistronuser.Report.Activity.AttendanceReports;
 import com.example.cistronuser.Report.Activity.ExpenseReportWM;
 import com.example.cistronuser.Report.Activity.LeaveReport;
 import com.example.cistronuser.Report.Activity.SalesQuoteReport;
+import com.example.cistronuser.Report.Activity.UserListActivity;
 import com.example.cistronuser.Report.Activity.VisitEntryReport;
 import com.example.cistronuser.SalesAndservice.Activity.SalesQuote;
 import com.example.cistronuser.SalesAndservice.Activity.VisitEntry;
@@ -143,7 +144,7 @@ public class DashboardActivity extends Activity {
     boolean clickCheck=true;
 
     //Report
-    RelativeLayout rlExpenseReport, rlrlAttendaceReport, rlrlLeaveReport, rlService, rlWaitingLeaveRequest, rlWaitingCompOFfRequest, rlQuoteReport;
+    RelativeLayout rlUserListLayout, rlExpenseReport, rlrlAttendaceReport, rlrlLeaveReport, rlService, rlWaitingLeaveRequest, rlWaitingCompOFfRequest, rlQuoteReport;
     TextView tvwaitingCountExpense, tvCountLeaveReq, tvCountCompOffReq, tvWaitingCountSalesQuote, tvUpcomingCallCount, tvPendingCallCount;
 
     Context context;
@@ -233,6 +234,7 @@ public class DashboardActivity extends Activity {
         tvUpcomingCallCount = findViewById(R.id.tvUpcomingCallCount);
         tvPendingCallCount = findViewById(R.id.tvPendingCallCount);
         rlService = findViewById(R.id.rlService);
+        rlUserListLayout=findViewById(R.id.rlUserListLayout);
 
         rlGeoLocationApprovalLayout=findViewById(R.id.rlGeoLocationApprovalLayout);
         tvGeoLocationApprovalCount=findViewById(R.id.tvGeoLocationApprovalCount);
@@ -277,16 +279,19 @@ public class DashboardActivity extends Activity {
                     rlService.setVisibility(View.GONE);
                     rlWaitingApproval.setVisibility(View.GONE);
                     rlVisitEntryReportLayout.setVisibility(View.VISIBLE);
+                    rlUserListLayout.setVisibility(View.GONE);
                     break;
                 case "admin":
                     rlService.setVisibility(View.VISIBLE);
                     rlWaitingApproval.setVisibility(View.VISIBLE);
                     rlVisitEntryReportLayout.setVisibility(View.VISIBLE);
+                    rlUserListLayout.setVisibility(View.VISIBLE);
                     break;
                 case "service engineer":
                     rlService.setVisibility(View.VISIBLE);
                     rlWaitingApproval.setVisibility(View.GONE);
                     rlVisitEntryReportLayout.setVisibility(View.VISIBLE);
+                    rlUserListLayout.setVisibility(View.GONE);
                     break;
             }
 
@@ -299,6 +304,7 @@ public class DashboardActivity extends Activity {
                 rlQuoteReport.setVisibility(View.GONE);
                 llview3.setVisibility(View.GONE);
                 rlService.setVisibility(View.GONE);
+                rlUserListLayout.setVisibility(View.GONE);
                 break;
         }
 
@@ -580,6 +586,14 @@ public class DashboardActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(DashboardActivity.this, MyStockActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        rlUserListLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DashboardActivity.this, UserListActivity.class);
                 startActivity(intent);
             }
         });

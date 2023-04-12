@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+        app:cardCornerRadius="20dp"
+        android:layout_height="wrap_content">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/ivProfile"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginBottom="10dp"
+                android:src="@drawable/user" />
+
+
+            <TextView
+                android:id="@+id/tvEmpName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/ivProfile"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:fontFamily="@font/roboblod"
+                android:textColor="@color/blue"
+                android:text="Name"
+                android:textSize="16dp"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:id="@+id/tvEmpIdTag"
+                android:layout_below="@id/tvEmpName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/ivProfile"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:fontFamily="@font/openssansextrabold"
+                android:text="Emp ID -"
+                android:textSize="16dp"
+                android:textColor="@color/Radio"
+                android:layout_marginTop="10dp"/>
+
+
+            <TextView
+                android:id="@+id/tvEmpId"
+                android:layout_below="@id/tvEmpName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/tvEmpIdTag"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:fontFamily="@font/openssansextrabold"
+                android:text="E378"
+                android:textSize="16dp"
+                android:textColor="@color/Radio"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:id="@+id/tvDesignation"
+                android:layout_width="wrap_content"
+                android:layout_below="@+id/tvEmpId"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/ivProfile"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="8dp"
+                android:fontFamily="@font/latest"
+                android:textColor="@color/DarkRed"
+                android:text="Designation"
+                android:textSize="16dp"
+                android:layout_marginTop="10dp"/>
+
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

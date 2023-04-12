@@ -1626,10 +1626,44 @@
 
 
                         <RelativeLayout
+                            android:id="@+id/rlUserListLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:visibility="gone"
+                            android:layout_below="@id/rlQuoteReport"
+                            android:layout_marginTop="20dp"
+                            android:background="@drawable/cardview"
+                            android:backgroundTint="#6495ED">
+
+                            <ImageView
+                                android:id="@+id/ivUserList"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="30dp"
+                                android:src="@drawable/userlisticon"
+                                android:tint="@color/white"
+                                tools:ignore="UseAppTint" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="20dp"
+                                android:layout_toRightOf="@+id/ivUserList"
+                                android:fontFamily="@font/semibold"
+                                android:text="User List"
+                                android:textColor="@color/white"
+                                android:textSize="18dp" />
+
+                        </RelativeLayout>
+
+
+                        <RelativeLayout
                             android:id="@+id/rlVisitEntryReportLayout"
                             android:layout_width="match_parent"
                             android:layout_height="60dp"
-                            android:layout_below="@id/rlQuoteReport"
+                            android:layout_below="@id/rlUserListLayout"
                             android:layout_marginTop="20dp"
                             android:layout_marginBottom="20dp"
                             android:background="@drawable/cardview"
