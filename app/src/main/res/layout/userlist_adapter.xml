@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cvView"
         android:layout_width="match_parent"
         android:layout_margin="10dp"
-        app:cardCornerRadius="20dp"
+        app:cardCornerRadius="15dp"
         android:layout_height="wrap_content">
 
 
@@ -70,6 +72,42 @@
                 android:layout_marginTop="10dp"/>
 
             <TextView
+                android:id="@+id/tvCistronCompany"
+                android:layout_below="@id/tvEmpName"
+                android:layout_width="wrap_content"
+                android:padding="8dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/dialog_backgroud"
+                android:backgroundTint="@color/Burgundy"
+                android:layout_toRightOf="@id/tvEmpId"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:fontFamily="@font/latest"
+                android:text="Cistron"
+                android:textSize="12dp"
+                android:visibility="gone"
+                android:textColor="@color/white"
+                android:layout_marginTop="5dp"/>
+
+            <TextView
+                android:id="@+id/tvSukCompany"
+                android:layout_below="@id/tvEmpName"
+                android:layout_width="wrap_content"
+                android:padding="8dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/dialog_backgroud"
+                android:backgroundTint="@color/Cistronbasecolor"
+                android:layout_toRightOf="@id/tvEmpId"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:visibility="gone"
+                android:fontFamily="@font/latest"
+                android:text="Sukimos"
+                android:textSize="12dp"
+                android:textColor="@color/white"
+                android:layout_marginTop="5dp"/>
+
+            <TextView
                 android:id="@+id/tvDesignation"
                 android:layout_width="wrap_content"
                 android:layout_below="@+id/tvEmpId"
@@ -82,6 +120,175 @@
                 android:text="Designation"
                 android:textSize="16dp"
                 android:layout_marginTop="10dp"/>
+
+            <RelativeLayout
+                android:id="@+id/rlDetails"
+                android:layout_marginTop="20dp"
+                android:visibility="gone"
+                android:background="@drawable/edittext"
+                android:layout_width="match_parent"
+                android:backgroundTint="@color/liteYellow"
+                android:layout_below="@+id/ivProfile"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tvEmailTag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="8dp"
+                    android:fontFamily="@font/roboblod"
+                    android:textColor="@color/Burgundy"
+                    android:text="Email  :"
+                    android:textSize="16dp"
+                    android:layout_marginTop="15dp"/>
+
+                <TextView
+                    android:id="@+id/tvEmail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_toRightOf="@id/tvEmailTag"
+                    android:layout_marginRight="8dp"
+                    android:fontFamily="@font/openssansbold"
+                    android:textColor="@color/blue"
+                    android:layout_toLeftOf="@id/ivMail"
+                    android:text="gomathi@cistronsystems.com"
+                    android:textSize="16dp"
+                    android:layout_marginTop="15dp"/>
+
+                <ImageView
+                    android:id="@+id/ivMail"
+                    android:layout_width="30dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/baseline_contact_mail_24"
+                    android:tint="@color/Burgundy"
+                    android:layout_height="30dp"
+                    tools:ignore="UseAppTint" />
+
+                <TextView
+                    android:id="@+id/tvMobileTag"
+                    android:layout_below="@id/tvEmail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="8dp"
+                    android:fontFamily="@font/roboblod"
+                    android:textColor="@color/Burgundy"
+                    android:text="Mobile  :"
+                    android:textSize="16dp"
+                    android:layout_marginTop="15dp"/>
+
+                <TextView
+                    android:id="@+id/tvMobile"
+                    android:layout_below="@id/tvEmail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_toRightOf="@id/tvMobileTag"
+                    android:layout_marginRight="8dp"
+                    android:fontFamily="@font/openssansbold"
+                    android:textColor="@color/blue"
+                    android:text="9876543210"
+                    android:textSize="16dp"
+                    android:layout_marginTop="15dp"/>
+                <ImageView
+                    android:id="@+id/ivCall"
+                    android:layout_width="30dp"
+                    android:layout_below="@id/tvEmail"
+                    android:layout_marginTop="12dp"
+                    android:layout_toRightOf="@id/tvMobile"
+                    android:src="@drawable/callicon"
+                    android:tint="@color/Burgundy"
+                    android:layout_height="30dp"
+                    tools:ignore="UseAppTint" />
+
+                <TextView
+                    android:id="@+id/tvDobTag"
+                    android:layout_below="@+id/ivCall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="8dp"
+                    android:fontFamily="@font/roboblod"
+                    android:textColor="@color/Burgundy"
+                    android:text="DOB  :"
+                    android:textSize="16dp"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:id="@+id/tvDob"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_below="@+id/ivCall"
+                    android:layout_toRightOf="@id/tvDobTag"
+                    android:layout_marginRight="8dp"
+                    android:fontFamily="@font/openssansbold"
+                    android:textColor="@color/blue"
+                    android:text="12-34-5678"
+                    android:textSize="16dp"
+                    android:layout_marginTop="10dp"/>
+                <TextView
+                    android:id="@+id/tvDojTag"
+                    android:layout_below="@+id/ivCall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/tvDob"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="8dp"
+                    android:fontFamily="@font/roboblod"
+                    android:textColor="@color/Burgundy"
+                    android:text="DOJ  :"
+                    android:textSize="16dp"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:id="@+id/tvDoj"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_below="@+id/ivCall"
+                    android:layout_toRightOf="@id/tvDojTag"
+                    android:layout_marginRight="8dp"
+                    android:fontFamily="@font/openssansbold"
+                    android:textColor="@color/blue"
+                    android:text="12-34-5678"
+                    android:textSize="16dp"
+                    android:layout_marginTop="10dp"/>
+
+
+                <TextView
+                    android:id="@+id/tvBranchTag"
+                    android:layout_below="@+id/tvDoj"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="8dp"
+                    android:fontFamily="@font/roboblod"
+                    android:textColor="@color/Burgundy"
+                    android:text="Branch  :"
+                    android:textSize="16dp"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:id="@+id/tvBranch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_below="@+id/tvDoj"
+                    android:layout_marginBottom="20dp"
+                    android:layout_toRightOf="@id/tvBranchTag"
+                    android:layout_marginRight="8dp"
+                    android:fontFamily="@font/openssansbold"
+                    android:textColor="@color/blue"
+                    android:text="Tamil Nadu"
+                    android:textSize="16dp"
+                    android:layout_marginTop="10dp"/>
+
+            </RelativeLayout>
 
 
         </RelativeLayout>

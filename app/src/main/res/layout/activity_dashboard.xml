@@ -1652,7 +1652,7 @@
                                 android:layout_marginLeft="20dp"
                                 android:layout_toRightOf="@+id/ivUserList"
                                 android:fontFamily="@font/semibold"
-                                android:text="User List"
+                                android:text="User Master"
                                 android:textColor="@color/white"
                                 android:textSize="18dp" />
 
