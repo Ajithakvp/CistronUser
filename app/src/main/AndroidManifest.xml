@@ -37,6 +37,9 @@
         tools:replace="android:allowBackup"
         tools:targetApi="31">
         <activity
+            android:name=".Report.Activity.HolidayActivity"
+            android:exported="false" />
+        <activity
             android:name=".Report.Activity.UserListActivity"
             android:exported="false" />
         <activity

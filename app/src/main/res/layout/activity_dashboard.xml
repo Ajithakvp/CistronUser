@@ -1526,6 +1526,7 @@
                         </RelativeLayout>
 
 
+
                         <RelativeLayout
                             android:id="@+id/rlrlAttendaceReport"
                             android:layout_width="match_parent"
@@ -1560,10 +1561,43 @@
 
 
                         <RelativeLayout
-                            android:id="@+id/rlrlLeaveReport"
+                            android:id="@+id/rlHolidaylayout"
                             android:layout_width="match_parent"
                             android:layout_height="60dp"
                             android:layout_below="@id/rlExpenseReport"
+                            android:layout_marginTop="20dp"
+                            android:background="@drawable/cardview"
+                            android:backgroundTint="#6495ED">
+
+                            <ImageView
+                                android:id="@+id/ivHolidayReport"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="30dp"
+                                android:src="@drawable/holiday"
+                                android:tint="@color/white"
+                                tools:ignore="UseAppTint" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="20dp"
+                                android:layout_toRightOf="@+id/ivHolidayReport"
+                                android:fontFamily="@font/semibold"
+                                android:text="Holiday List"
+                                android:textColor="@color/white"
+                                android:textSize="18dp" />
+
+                        </RelativeLayout>
+
+
+                        <RelativeLayout
+                            android:id="@+id/rlrlLeaveReport"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:layout_below="@id/rlHolidaylayout"
                             android:layout_marginTop="20dp"
                             android:background="@drawable/cardview"
                             android:backgroundTint="#6495ED">

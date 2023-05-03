@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvView"
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+        app:cardCornerRadius="15dp"
+        android:layout_height="wrap_content">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+
+
+
+            <TextView
+                android:id="@+id/tvEmpName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:fontFamily="@font/roboblod"
+                android:textColor="@color/blue"
+                android:text="Holiday"
+                android:textSize="16dp"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:id="@+id/tvEmpIdTag"
+                android:layout_below="@id/tvEmpName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:fontFamily="@font/openssansextrabold"
+                android:text="Date -"
+                android:textSize="16dp"
+                android:textColor="@color/Radio"
+                android:layout_marginTop="10dp"/>
+
+
+            <TextView
+                android:id="@+id/tvEmpId"
+                android:layout_below="@id/tvEmpName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/tvEmpIdTag"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="20dp"
+                android:fontFamily="@font/openssansextrabold"
+                android:text="12-34-5678"
+                android:textSize="16dp"
+                android:textColor="@color/Radio"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:id="@+id/tvTn"
+                android:layout_below="@id/tvEmpName"
+                android:layout_width="wrap_content"
+                android:padding="8dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/dialog_backgroud"
+                android:backgroundTint="@color/Burgundy"
+                android:layout_toRightOf="@id/tvEmpId"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:fontFamily="@font/latest"
+                android:text="Tamil Nadu"
+                android:textSize="12dp"
+                android:visibility="gone"
+                android:textColor="@color/white"
+                android:layout_marginTop="5dp"/>
+
+            <TextView
+                android:id="@+id/tvAPTS"
+                android:layout_below="@id/tvEmpName"
+                android:layout_width="wrap_content"
+                android:padding="8dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/dialog_backgroud"
+                android:backgroundTint="@color/Cistronbasecolor"
+                android:layout_toRightOf="@id/tvEmpId"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:visibility="gone"
+                android:fontFamily="@font/latest"
+                android:text="@string/APTS"
+                android:textSize="12dp"
+                android:textColor="@color/white"
+                android:layout_marginTop="5dp"/>
+            <TextView
+                android:id="@+id/tvOthers"
+                android:layout_below="@id/tvEmpName"
+                android:layout_width="wrap_content"
+                android:padding="8dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/dialog_backgroud"
+                android:backgroundTint="@color/darkGreen"
+                android:layout_toRightOf="@id/tvEmpId"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:visibility="gone"
+                android:fontFamily="@font/latest"
+                android:text="Others"
+                android:textSize="12dp"
+                android:textColor="@color/white"
+                android:layout_marginTop="5dp"/>
+
+
+
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>
