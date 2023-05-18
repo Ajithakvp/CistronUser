@@ -13,22 +13,18 @@
     <color name="Turquoise">#40E0D0</color>
     <color name="yellow">#C4B803</color>
     <color name="Ultramarine">#0437F2</color>
-
     <color name="Burgundy">#800020</color>
     <color name="DarkBrown">#5C4033</color>
     <color name="DarkRed">#8B0000</color>
     <color name="liteYellow">#F0E68C</color>
-
     <color name="Wheat">#F5DEB3</color>
     <color name="AshGray">#B2BEB5</color>
     <color name="bluegray">#7393B3</color>
     <color name="darkGreen">#023020</color>
-
     <color name="BrightOrange">#FFAC1C</color>
     <color name="GoldYellow">#FFC000</color>
     <color name="RoseRed">#C21E56</color>
     <color name="CreamWhite">#FFFDD0</color>
-
     <color name="whiteLite1">#FAF9F6</color>
     <color name="whiteLite2">#E2DFD2</color>
     <color name="mikwhite">#FEFCFF</color>
@@ -37,7 +33,6 @@
     <color name="GhostWhite">#F8F8FF</color>
     <color name="snow">#FFFAFA</color>
     <color name="gainsboro">#DCDCDC</color>
-
     <color name="OldLace">#FDF5E6</color>
     <color name="ivory">#FFFFF0</color>
     <color name="MistyRose">#FFE4E1</color>
@@ -48,5 +43,8 @@
     <color name="darkolivegreen">#556B2F</color>
     <color name="Cistronbasecolor">#6495ED</color>
     <color name="Maroon">#800000</color>
-
+    <color name="rosybrown">#BC8F8F</color>
+    <color name="beige">#F5F5DC</color>
+    <color name="lightyellow">#FFFFE0</color>
+    <color name="firebrick">#EE2C2C</color>
 </resources>

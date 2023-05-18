@@ -32,7 +32,7 @@ public class Utilites {
     //        String time= mHour+":"+mMinute ;
 
 
-    // ********** Distance Notication Meter  ********* //
+    // ********** Distance Notification Meter  ********* //
 
 //                        Location locationA = new Location("Location A");
 //                        Location locationB = new Location("Location B");
@@ -50,10 +50,10 @@ public class Utilites {
 //                        }
 
 
-    // ********** Distance Notication Meter End  ********* //
+    // ********** Distance Notification Meter End  ********* //
 
 
-    // ******************* Top Notfication ***************** //
+    // ******************* Top Notification ***************** //
 //    Notification newMessageNotification = null;
 //                                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
 //        newMessageNotification = new Notification.Builder(context, "Cistron")
@@ -68,6 +68,6 @@ public class Utilites {
 //    NotificationManagerCompat notificationManager = NotificationManagerCompat.from(DashboardActivity.this);
 //                                notificationManager.notify(1, newMessageNotification);
 
-    // ******************* Top Notfication End ***************** //
+    // ******************* Top Notification End ***************** //
 
 }
