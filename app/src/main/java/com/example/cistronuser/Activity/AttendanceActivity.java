@@ -116,7 +116,6 @@ public class AttendanceActivity extends Activity {
 
                         PreferenceManager.saveLat(AttendanceActivity.this, response.body().getLat());
                         PreferenceManager.saveLng(AttendanceActivity.this, response.body().getLng());
-
                     }
 
                 } catch (Exception e) {

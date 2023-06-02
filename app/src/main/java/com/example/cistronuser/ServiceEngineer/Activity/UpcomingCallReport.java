@@ -5,6 +5,7 @@ import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 import static okhttp3.RequestBody.create;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -179,7 +180,7 @@ public class UpcomingCallReport extends AppCompatActivity {
     RelativeLayout rlCustomerPO;
     TextView tvCustomerPOCount, tvCusPOFileInvoiceAttch;
     RecyclerView rvCustomerPO;
-    File fileCustomerPO;
+    File fileCustomerPO=null ;
     String strCustomerPo;
     CustomerPoAdapter customerPoAdapter;
     ArrayList<CustomerPoResponseModel> customerPoResponseModels = new ArrayList<>();
@@ -260,7 +261,7 @@ public class UpcomingCallReport extends AppCompatActivity {
     ConsumeSpareYesAdapter consumeSpareYesAdapter;
     ArrayList<ConsumeSpareRecordModel> consumeSpareRecordModels = new ArrayList<>();
     String DoYouConsumerID, PartID, ComplaintID, SubComplaintCatID, CallRegID, hpidd, pdtidd, chk1, bp_install, bp_installr;
-    String CallAssignId, CallStatusID, CallTypePayoptionsID, Spc, CusPoradiobID;
+    String CallAssignId, CallStatusID, CallTypePayoptionsID, Spc, CusPoradiobID="";
     //Validation
     String ComplaintValidRequired, CustomerVaild;
     int SpareDocVaild, TypeValid;
@@ -339,6 +340,7 @@ public class UpcomingCallReport extends AppCompatActivity {
         cbPMAttach = findViewById(R.id.cbPMAttach);
 
 
+
         // *********** Supply *****************//
         cvSupply = findViewById(R.id.cvSupply);
         tvPaymentafterDispatch = findViewById(R.id.tvPaymentafterDispatch);
@@ -399,6 +401,7 @@ public class UpcomingCallReport extends AppCompatActivity {
         // ***********  Spare Inward End *********** //
 
         // ***********  Customer PO *********** //
+
         rlCustomerPO = findViewById(R.id.rlCustomerPO);
         tvCustomerPOCount = findViewById(R.id.tvCustomerPOCount);
         tvCusPOFileInvoiceAttch = findViewById(R.id.tvCusPOFileInvoiceAttch);
@@ -928,6 +931,7 @@ public class UpcomingCallReport extends AppCompatActivity {
 
 
                 CusPoradiobID = s.toString();
+                Log.e(TAG, "onClick: "+CusPoradiobID );
 
                 rvCustomerPO.post(new Runnable() {
                     @Override
@@ -2048,8 +2052,10 @@ public class UpcomingCallReport extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
+                callCusPoFile();
                 try {
+
+
 
                     File file = new File(getCacheDir(), FileStoreName);
                     if (file.exists()) {
@@ -2181,7 +2187,8 @@ public class UpcomingCallReport extends AppCompatActivity {
                     } else {
 
 
-                        if (fileCustomerPO != null) {
+                        Log.e(TAG, "cus: "+fileCustomerPO.getName() );
+                        if (!fileCustomerPO.getName().equals("")) {
                             FileUploadCount++;
                             callCusPoFile();
                             Log.e(TAG, "onClick: 1 *" + (FileUploadCount));
@@ -2244,7 +2251,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                     }
 
                 } catch (Exception e) {
-                    Log.e(TAG, "onClick: " + e.getMessage());
+                    Log.e(TAG, "submit click: " + e.getMessage());
 
                 }
 
@@ -2577,10 +2584,45 @@ public class UpcomingCallReport extends AppCompatActivity {
         progressDialog.setMessage("Please Wait...");
         progressDialog.setCancelable(false);
         progressDialog.show();
+
+        Log.e(TAG, "CallReportSubmit: "+PreferenceManager.getLat(UpcomingCallReport.this) );
+        String homelat= PreferenceManager.getLat(UpcomingCallReport.this);
+        String homelng= PreferenceManager.getLng(UpcomingCallReport.this);
         CallReportingUpComingSubmitInterface callReportingUpComingSubmitInterface = APIClient.getClient().create(CallReportingUpComingSubmitInterface.class);
         callReportingUpComingSubmitInterface.callReportSubmit("callClose", PreferenceManager.getEmpID(UpcomingCallReport.this), id, LogsitId, CallTypePayoptionsID, ComplaintID, SubComplaintCatID, edTypeComplaintCat.getText().toString(), edTypeSubComplaintCat.getText().toString(), "Not Detect", CallAssignId, CallRegID, CallAssignId, pdtidd, hpidd, chk1, CusPoradiobID,
                 CallStatusID, tvPaymentafterDispatch.getText().toString(), tvRecvPaymentDispatch.getText().toString(), tvInstallDate.getText().toString(), bp_install, bp_installr, strInstallament, strInstallamentr, balinspayamt, cft, String.valueOf(rbconsumerSpareID), Spc, tvFollowUpDate.getText().toString(),
-                tvStartingTime.getText().toString(), tvEndTime.getText().toString(), edPendingReason.getText().toString(), edName.getText().toString(), edMobile.getText().toString(), String.valueOf(rbRecPendingID), tvDepositedDate.getText().toString(), edCheckUTRno.getText().toString(), String.valueOf(rbClosePayID), edSaleORserviceAmt.getText().toString(), edSpareAmt.getText().toString(), edWorkdone.getText().toString(), edEngineerAdvice.getText().toString(), String.valueOf(ratingBar.getRating()), String.valueOf(cbSetID), edReason.getText().toString(), Ps, Sq, Wb, Lr, Sr, Pm, lat, longg, Address, Double.valueOf(PreferenceManager.getLat(UpcomingCallReport.this)), Double.valueOf(PreferenceManager.getLng(UpcomingCallReport.this)),state,city,countrycode,pincode,geoYes).enqueue(new Callback<CallReportingUpComingSubmitResponse>() {
+                tvStartingTime.getText().toString(),
+                tvEndTime.getText().toString(),
+                edPendingReason.getText().toString(),
+                edName.getText().toString(),
+                edMobile.getText().toString(),
+                String.valueOf(rbRecPendingID),
+                tvDepositedDate.getText().toString(),
+                edCheckUTRno.getText().toString(),
+                String.valueOf(rbClosePayID),
+                edSaleORserviceAmt.getText().toString(),
+                edSpareAmt.getText().toString(),
+                edWorkdone.getText().toString(),
+                edEngineerAdvice.getText().toString(),
+                String.valueOf(ratingBar.getRating()),
+                String.valueOf(cbSetID),
+                edReason.getText().toString(),
+                Ps,
+                Sq,
+                Wb,
+                Lr,
+                Sr,
+                Pm,
+                lat,
+                longg,
+                Address,
+                homelat,
+                homelng,
+                state,
+                city,
+                countrycode,
+                pincode,
+                geoYes).enqueue(new Callback<CallReportingUpComingSubmitResponse>() {
             @Override
             public void onResponse(Call<CallReportingUpComingSubmitResponse> call, Response<CallReportingUpComingSubmitResponse> response) {
                 try {
@@ -2597,6 +2639,8 @@ public class UpcomingCallReport extends AppCompatActivity {
                     }
 
                 } catch (Exception e) {
+                    progressDialog.dismiss();
+                    Log.e(TAG, "over all submit: " + e.getMessage());
 
                 }
             }
@@ -2768,7 +2812,7 @@ public class UpcomingCallReport extends AppCompatActivity {
 
                         Sr = response.body().getSr();
                         FileUploadCount--;
-                        Log.e(TAG, "onResponse: " + (FileUploadCount));
+                        Log.e(TAG, ": " + (FileUploadCount));
                         if (FileUploadCount == 0) {
                             CallCloseFun();
                         }
@@ -2788,8 +2832,8 @@ public class UpcomingCallReport extends AppCompatActivity {
     }
 
     private void callCusPoFile() {
-        RequestBody action = RequestBody.create(MediaType.parse("text/plain"), "uploadInvoice");
         RequestBody sqid = RequestBody.create(MediaType.parse("text/plain"), CusPoradiobID);
+        RequestBody action = RequestBody.create(MediaType.parse("text/plain"), "uploadInvoice");
         RequestBody callassignid = RequestBody.create(MediaType.parse("text/plain"), CallAssignId);
         RequestBody cusinvoice = RequestBody.create(MediaType.parse("multipart/form-data"), fileCustomerPO);
         MultipartBody.Part filecusInvoice = MultipartBody.Part.createFormData("file_in4sc", fileCustomerPO.getName(), cusinvoice);
@@ -2802,7 +2846,7 @@ public class UpcomingCallReport extends AppCompatActivity {
 
                         Sq = response.body().getSq();
                         FileUploadCount--;
-                        Log.e(TAG, "onResponse: " + (FileUploadCount));
+                        Log.e(TAG, "cuspo: " + (FileUploadCount));
                         if (FileUploadCount == 0) {
                             CallCloseFun();
                         }
@@ -2812,7 +2856,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                     }
 
                 } catch (Exception e) {
-
+                    Log.e(TAG, "cuspo: " + e.getMessage());
                 }
             }
 
@@ -2853,7 +2897,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                 try {
                     if (response.isSuccessful()) {
                         FileUploadCount--;
-                        Log.e(TAG, "onResponse: " + (FileUploadCount));
+                        Log.e(TAG, "onResponse install: " + (FileUploadCount));
                         if (FileUploadCount == 0) {
                             CallCloseFun();
                         }

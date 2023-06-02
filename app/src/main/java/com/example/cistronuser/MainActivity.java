@@ -30,8 +30,9 @@ public class MainActivity extends AppCompatActivity {
     //leave date change correction and  add todaycalls  "cistron 1.3"
     /*(Attenance Table change , spareinward submiteed,add the My stock and create spare request ,visit entry lat lng check
     Geo Location Enable in visit entry and Call Report "cistron 1.4)" */
+    // Call Report Customer po non null option parsing checknnonnullparameter "cistron 1.5"
 
-    String AppVersion = "cistron 1.4";
+    String AppVersion = "cistron 1.5";
     TextView tvVersion;
 
 
