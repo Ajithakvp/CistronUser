@@ -135,7 +135,7 @@ import retrofit2.Response;
 
 public class UpcomingCallReport extends AppCompatActivity {
 
-    public static int FileUploadCount;
+    public static int FileUploadCount=0;
     ImageView ivBack;
     Spinner spCallType, spCallStatus;
     TextView tvCusInvoice, tvFollowUpDate, tvStartingTime, tvEndTime, tvserviceReportAttach, tvSubmit;
@@ -2052,10 +2052,7 @@ public class UpcomingCallReport extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                callCusPoFile();
                 try {
-
-
 
                     File file = new File(getCacheDir(), FileStoreName);
                     if (file.exists()) {
@@ -2183,12 +2180,9 @@ public class UpcomingCallReport extends AppCompatActivity {
 
                     } else if (ratingBar.getRating() == 0) {
                         Toast.makeText(UpcomingCallReport.this, "Please Select a Customer Review", Toast.LENGTH_SHORT).show();
-
                     } else {
-
-
-                        Log.e(TAG, "cus: "+fileCustomerPO.getName() );
-                        if (!fileCustomerPO.getName().equals("")) {
+                        Toast.makeText(UpcomingCallReport.this, "Please Wait", Toast.LENGTH_SHORT).show();
+                        if (fileCustomerPO !=null) {
                             FileUploadCount++;
                             callCusPoFile();
                             Log.e(TAG, "onClick: 1 *" + (FileUploadCount));
@@ -2736,7 +2730,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                     if (response.isSuccessful()) {
 
                         Lr = response.body().getLr();
-                        Log.e(TAG, "onResponse: " + (FileUploadCount));
+                        Log.e("LR", "onResponse: " + (FileUploadCount));
                         FileUploadCount--;
                         if (FileUploadCount == 0) {
                             CallCloseFun();

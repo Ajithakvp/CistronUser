@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     Geo Location Enable in visit entry and Call Report "cistron 1.4)" */
     // Call Report Customer po non null option parsing checknnonnullparameter "cistron 1.5"
 
-    String AppVersion = "cistron 1.5";
+    String AppVersion = "cistron 1.6";
     TextView tvVersion;
 
 
