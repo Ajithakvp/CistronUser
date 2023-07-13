@@ -31,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     /*(Attenance Table change , spareinward submiteed,add the My stock and create spare request ,visit entry lat lng check
     Geo Location Enable in visit entry and Call Report "cistron 1.4)" */
     // Call Report Customer po non null option parsing checknnonnullparameter "cistron 1.5"
+    // Call Report Customer po non null option parsing checknnonnullparameter function call "cistron 1.6"
+    // AM PM added Leave Form  "cistron 1.7"
 
     String AppVersion = "cistron 1.6";
     TextView tvVersion;

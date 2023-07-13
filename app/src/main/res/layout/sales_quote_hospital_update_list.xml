@@ -41,7 +41,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="10dp"
                         android:fontFamily="@font/bold"
-                        android:text="Velmurugan P(E367)"
+                        android:text="TestUser(e0007)"
                         android:textColor="@color/CreamWhite"
                         android:textSize="20dp" />
 

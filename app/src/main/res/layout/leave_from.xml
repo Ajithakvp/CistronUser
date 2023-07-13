@@ -332,6 +332,43 @@
             </RadioGroup>
         </LinearLayout>
 
+
+        <LinearLayout
+            android:id="@+id/rlHalfDay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rlday"
+            android:layout_marginLeft="3dp"
+            android:visibility="gone"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@id/tvLeaveTypeTag"
+            android:orientation="horizontal">
+
+            <RadioGroup
+                android:id="@+id/rbGroup4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rbAM"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/semibold"
+                    android:text="AM"
+                    android:visibility="visible" />
+
+                <RadioButton
+                    android:id="@+id/rbPM"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/semibold"
+                    android:text="PM"
+                    android:visibility="visible" />
+
+            </RadioGroup>
+        </LinearLayout>
+
         <Spinner
             android:id="@+id/tvDayType"
             android:layout_width="200dp"
@@ -351,7 +388,7 @@
             android:id="@+id/tvSubmit"
             android:layout_width="250dp"
             android:layout_height="50dp"
-            android:layout_below="@id/rlday"
+            android:layout_below="@id/rlHalfDay"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
             android:background="@drawable/size"
