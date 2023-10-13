@@ -22,14 +22,15 @@ public class SalesQuoteProductsAddonModel {
     @SerializedName("price")
     private String price;
 
-    private boolean isSelected;
+    private boolean isSelected=false;
+
 
     public boolean isSelected() {
         return isSelected;
     }
 
-    public void setSelected(boolean selected) {
-        isSelected = selected;
+    public void setSelected(boolean isSelected) {
+        this.isSelected = isSelected;
     }
 
     public String getAddonId() {

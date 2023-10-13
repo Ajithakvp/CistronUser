@@ -54,34 +54,131 @@ public class SalesQuoteAddonAdapter extends RecyclerView.Adapter<SalesQuoteAddon
 
         holder.tvAddon.setText(salesQuoteProductsAddonModels.get(position).getAddonName());
         SalesQuoteProductsAddonModel id = salesQuoteProductsAddonModels.get(position);
-        holder.checkbox.setChecked(salesQuoteProductsAddonModels.get(position).isSelected());
+
+
         holder.checkbox.setTag(salesQuoteProductsAddonModels.get(position));
+        holder.checkbox.setTag(position);
+
+        strCheckedproduct.clear();
 
 
         holder.checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                if (buttonView.isChecked()) {
 
+                if (holder.checkbox.isChecked()) {
+
+
+                    try {
+                        if (id.getAddonId().trim().equals("565")) {
+                            salesQuoteProductsAddonModels.get(2).setSelected(isChecked);
+                            if (salesQuoteProductsAddonModels.get(3).getAddonId().trim().equals("564")) {
+                                if (salesQuoteProductsAddonModels.get(3).isSelected() == false) {
+                                    salesQuoteProductsAddonModels.get(3).setSelected(isChecked);
+                                    notifyDataSetChanged();
+                                }
+                            }
+
+                        }
+                        if (id.getAddonId().trim().equals("645")) {
+                            salesQuoteProductsAddonModels.get(1).setSelected(isChecked);
+                            if (salesQuoteProductsAddonModels.get(3).getAddonId().trim().equals("564")) {
+                                if (salesQuoteProductsAddonModels.get(3).isSelected() == false) {
+                                    salesQuoteProductsAddonModels.get(3).setSelected(isChecked);
+                                    notifyDataSetChanged();
+                                }
+                            }
+
+                        }
+
+
+                    } catch (Exception e) {
+
+                    }
                     onItemClick.onItemCheck(id);
 
                     strCheckedproduct.add(id.getAddonId());
 
-
-
+//                    Toast.makeText(activity, " Test0- " + salesQuoteProductsAddonModels.get(0).isSelected() + " Test1- " + salesQuoteProductsAddonModels.get(1).isSelected() + " Test2- " + salesQuoteProductsAddonModels.get(2).isSelected() + " Test3- " + salesQuoteProductsAddonModels.get(3).isSelected(), Toast.LENGTH_LONG).show();
 
 
                 } else {
 
+                    try {
+                        if (id.getAddonId().trim().equals("565")) {
+                            salesQuoteProductsAddonModels.get(2).setSelected(isChecked);
+                            notifyDataSetChanged();
+
+                        }
+                        if (id.getAddonId().trim().equals("645")) {
+                            salesQuoteProductsAddonModels.get(1).setSelected(isChecked);
+                            notifyDataSetChanged();
+
+
+                        }
+
+
+                        if (id.getAddonId().trim().equals("564")) {
+
+                            if (salesQuoteProductsAddonModels.get(2).isSelected() == true || salesQuoteProductsAddonModels.get(1).isSelected() == true) {
+                                salesQuoteProductsAddonModels.get(3).setSelected(true);
+                                notifyDataSetChanged();
+                            } else {
+                                salesQuoteProductsAddonModels.get(3).setSelected(false);
+                                notifyDataSetChanged();
+                            }
+
+
+                        }
+
+
+                        if (id.getAddonId().trim().equals("565")) {
+                            salesQuoteProductsAddonModels.get(2).setSelected(isChecked);
+                            if (salesQuoteProductsAddonModels.get(1).isSelected() == false) {
+                                if (salesQuoteProductsAddonModels.get(3).getAddonId().trim().equals("564")) {
+                                    if (salesQuoteProductsAddonModels.get(3).isSelected() == true) {
+                                        salesQuoteProductsAddonModels.get(3).setSelected(isChecked);
+                                        notifyDataSetChanged();
+                                    }
+
+                                }
+                            }
+
+
+                        }
+                        if (id.getAddonId().trim().equals("645")) {
+                            salesQuoteProductsAddonModels.get(1).setSelected(isChecked);
+                            if (salesQuoteProductsAddonModels.get(2).isSelected() == false) {
+                                if (salesQuoteProductsAddonModels.get(3).getAddonId().trim().equals("564")) {
+                                    if (salesQuoteProductsAddonModels.get(3).isSelected() == true) {
+                                        salesQuoteProductsAddonModels.get(3).setSelected(isChecked);
+                                        notifyDataSetChanged();
+                                    }
+                                }
+                            }
+
+                        }
+
+
+                    } catch (Exception e) {
+
+                    }
+
+
                     onItemClick.onItemUncheck(id);
                     strCheckedproduct.remove(id.getAddonId());
+
+//                    Toast.makeText(activity, " Test0- " + salesQuoteProductsAddonModels.get(0).isSelected() + " Test1- " + salesQuoteProductsAddonModels.get(1).isSelected() + " Test2- " + salesQuoteProductsAddonModels.get(2).isSelected() + " Test3- " + salesQuoteProductsAddonModels.get(3).isSelected(), Toast.LENGTH_LONG).show();
+
 
                 }
 
 
             }
         });
+
+        holder.checkbox.setChecked(salesQuoteProductsAddonModels.get(position).isSelected());
 
 
     }

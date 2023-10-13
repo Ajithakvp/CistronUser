@@ -207,6 +207,7 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
         CharSequence SDate = DateFormat.format("yyyy-MM-dd ", Start.getTime());
         tvDate.setText(SDate);
 
+        strAddon.clear();
 
         //*********MailValidation**********//
         String emailPattern = "(([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)(\\s*(;|,)\\s*|\\s*$))*";
@@ -377,7 +378,6 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
                         android.text.TextUtils.join(",", strAddon);
                         AddOnprice.add(Integer.valueOf(item.getPrice()));
                         Product = Integer.parseInt(salesQuoteProductsModels.get(position).getPrice());
-
                         calcQuotePrice(AddOnprice, Product);
 
                     }
@@ -398,6 +398,7 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
                 linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
                 rvProducts.setLayoutManager(linearLayoutManager);
                 rvProducts.setAdapter(salesQuoteAddonAdapter);
+                salesQuoteAddonAdapter.notifyDataSetChanged();
 
 
                 if (salesQuoteProductsModels.get(position).getSalesQuoteProductsAddonModels().size() > 0) {
@@ -752,6 +753,8 @@ public class SalesQuote extends AppCompatActivity implements LocationListener {
 
 
     private void CallPreview(String join) {
+
+//        Toast.makeText(context, "Product--"+join, Toast.LENGTH_SHORT).show();
         final ProgressDialog progressDialog = new ProgressDialog(this, R.style.ProgressBarDialog);
         progressDialog.setMessage("Preview...");
         progressDialog.setCancelable(false);

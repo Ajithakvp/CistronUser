@@ -40,6 +40,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -180,6 +181,12 @@ public class LeaveActivity extends Activity {
     ArrayList<DateDisableModel> dateDisableModels = new ArrayList<>();
     String DisbleDate;
     int Disableyear, DisableMonth, DisableDay;
+
+    //AM(OR)PM
+    LinearLayout rlHalfDay;
+    RadioGroup rbGroup4;
+    RadioButton rbAM,rbPM;
+    String AMorPM;
 
 
     @SuppressLint("MissingInflatedId")
@@ -1028,6 +1035,10 @@ public class LeaveActivity extends Activity {
         rbHalfday = bottomSheetDialog.findViewById(R.id.rbHalfday);
         tvselectDate = bottomSheetDialog.findViewById(R.id.tvselectDate);
         TextView tvSubmit = bottomSheetDialog.findViewById(R.id.tvSubmit);
+        rbGroup4 = bottomSheetDialog.findViewById(R.id.rbGroup4);
+        rlHalfDay = bottomSheetDialog.findViewById(R.id.rlHalfDay);
+        rbAM = bottomSheetDialog.findViewById(R.id.rbAM);
+        rbPM = bottomSheetDialog.findViewById(R.id.rbPM);
 
 
         tvview = bottomSheetDialog.findViewById(R.id.tvview);
@@ -1060,6 +1071,26 @@ public class LeaveActivity extends Activity {
         typeAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
         tvLeaveType.setAdapter(typeAdapter);
 
+        rbGroup4.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                rbHalfday.setError(null);
+                View gb4 = rbGroup4.findViewById(checkedId);
+                int rb4 = rbGroup4.indexOfChild(gb4);
+                switch (rb4) {
+                    case 0:
+                        AMorPM="AM";
+                        break;
+
+                    case 1:
+
+                        AMorPM="PM";
+
+                        break;
+                }
+            }
+        });
+
         rbGroup3.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -1070,11 +1101,15 @@ public class LeaveActivity extends Activity {
                     case 0:
                         // Toast.makeText(LeaveActivity.this, "full day", Toast.LENGTH_SHORT).show();
                         day = 0;
+                        AMorPM="";
+                        rlHalfDay.setVisibility(View.GONE);
+
                         break;
 
                     case 1:
                         // Toast.makeText(LeaveActivity.this, "Half day", Toast.LENGTH_SHORT).show();
                         day = 1;
+                        rlHalfDay.setVisibility(View.VISIBLE);
                         break;
                 }
             }
@@ -1237,6 +1272,12 @@ public class LeaveActivity extends Activity {
                         Toast.makeText(LeaveActivity.this, "Select half day or full day", Toast.LENGTH_SHORT).show();
                         rbHalfday.requestFocus();
                         isfilled = false;
+                    }else if (day==1) {
+                        if (rbGroup4.getCheckedRadioButtonId() == -1) {
+                            Toast.makeText(LeaveActivity.this, "Select AM or PM", Toast.LENGTH_SHORT).show();
+                            rbPM.requestFocus();
+                            isfilled = false;
+                        }
                     }
                     if (isfilled) {
 
@@ -1291,6 +1332,7 @@ public class LeaveActivity extends Activity {
         MultipartBody.Part file = MultipartBody.Part.createFormData("file_in", filename.getName(), requestFile);
         RequestBody action = create(MediaType.parse("text/plain"), "applyLeave");
         RequestBody empid = create(MediaType.parse("text/plain"), PreferenceManager.getEmpID(this));
+        RequestBody AMPM = create(MediaType.parse("text/plain"),AMorPM);
         RequestBody code = create(MediaType.parse("text/plain"), String.valueOf(clmlpl));
         RequestBody reasonid = create(MediaType.parse("text/plain"), String.valueOf(reason));
         RequestBody date = create(MediaType.parse("text/plain"), tvDate.getText().toString());
@@ -1299,7 +1341,7 @@ public class LeaveActivity extends Activity {
         RequestBody COMPOFF = create(MediaType.parse("text/plain"), String.valueOf(compoff));
 
 
-        leaveSubmitForm.callLeaveformsubmitWithDocumentAPI(action, empid, code, reasonid, date, fhhd, LOP, COMPOFF, file).enqueue(new Callback<leavesubmitresponse>() {
+        leaveSubmitForm.callLeaveformsubmitWithDocumentAPI(action, empid,AMPM,code, reasonid, date, fhhd, LOP, COMPOFF, file).enqueue(new Callback<leavesubmitresponse>() {
             @Override
             public void onResponse(Call<leavesubmitresponse> call, Response<leavesubmitresponse> response) {
 
@@ -1331,7 +1373,6 @@ public class LeaveActivity extends Activity {
     }
 
     private void Callsubmit(BottomSheetDialog bottomSheetDialog) {
-
         final ProgressDialog progressDialog = new ProgressDialog(this, R.style.ProgressBarDialog);
         progressDialog.setMessage("Leave Request is processing...");
         progressDialog.setCancelable(false);
@@ -1345,7 +1386,7 @@ public class LeaveActivity extends Activity {
         else {
             clmlpl = rbLcl.isChecked() ? 1 : (rbMl.isChecked() ? 3 : (rbPl.isChecked() ? 2 : 0));
         }
-        leaveSubmitForm.callLeaveformsubmit("applyLeave", empid, clmlpl, reason, tvDate.getText().toString(), day, lop, compoff, String.valueOf(filename)).enqueue(new Callback<leavesubmitresponse>() {
+        leaveSubmitForm.callLeaveformsubmit("applyLeave", empid,AMorPM,clmlpl, reason, tvDate.getText().toString(), day, lop, compoff, String.valueOf(filename)).enqueue(new Callback<leavesubmitresponse>() {
             @Override
             public void onResponse(Call<leavesubmitresponse> call, Response<leavesubmitresponse> response) {
                 try {
@@ -1368,6 +1409,7 @@ public class LeaveActivity extends Activity {
 
             }
         });
+
     }
 
     private void Calltype() {
