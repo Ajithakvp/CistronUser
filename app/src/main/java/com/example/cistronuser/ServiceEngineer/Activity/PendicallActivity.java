@@ -43,6 +43,13 @@ public class PendicallActivity extends AppCompatActivity {
     UpcomingCallAdapter upcomingCallAdapter;
     ArrayList<UpcomingCallListModel> upcomingCallListModels=new ArrayList<>();
 
+
+    @Override
+    protected void onRestart() {
+        this.recreate();
+        super.onRestart();
+    }
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {

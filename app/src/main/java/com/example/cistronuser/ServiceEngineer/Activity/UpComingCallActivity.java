@@ -31,6 +31,12 @@ public class UpComingCallActivity extends AppCompatActivity {
     ArrayList<UpcomingCallListModel>upcomingCallListModels=new ArrayList<>();
 
     @Override
+    protected void onRestart() {
+        this.recreate();
+        super.onRestart();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_up_coming_call);
@@ -69,6 +75,8 @@ public class UpComingCallActivity extends AppCompatActivity {
                         progressDialog.dismiss();
                         upcomingCallAdapter.upcomingCallReportlistModels=response.body().getUpcomingCallListModels();
                         upcomingCallAdapter.notifyDataSetChanged();
+
+
                     }
 
                 }catch (Exception e){

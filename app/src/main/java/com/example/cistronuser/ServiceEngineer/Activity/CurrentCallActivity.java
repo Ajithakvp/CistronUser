@@ -38,11 +38,16 @@ public class CurrentCallActivity extends AppCompatActivity {
     RecyclerView rvTodayCall;
     ImageView ivBack;
 
+
+
     UpcomingCallAdapter upcomingCallAdapter;
     ArrayList<UpcomingCallListModel> upcomingCallListModels=new ArrayList<>();
 
-
-
+    @Override
+    protected void onRestart() {
+        this.recreate();
+        super.onRestart();
+    }
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -87,6 +92,8 @@ public class CurrentCallActivity extends AppCompatActivity {
                         progressDialog.dismiss();
                         upcomingCallAdapter.upcomingCallReportlistModels=response.body().getUpcomingCallListModels();
                         upcomingCallAdapter.notifyDataSetChanged();
+
+
                     }
 
                 }catch (Exception e){

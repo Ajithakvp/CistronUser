@@ -18,6 +18,8 @@ public class UpcomingCallListModel {
 
     //lat": "17.43226600",
     //      "lng": "78.55380110",
+    //      "checkApproval": "null",
+
 
     @SerializedName("crId")
     private String crId;
@@ -57,6 +59,17 @@ public class UpcomingCallListModel {
 
     @SerializedName("lng")
     private String lng;
+
+    @SerializedName("checkApproval")
+    private String checkApproval;
+
+    public String getCheckApproval() {
+        return checkApproval;
+    }
+
+    public void setCheckApproval(String checkApproval) {
+        this.checkApproval = checkApproval;
+    }
 
     public String getLat() {
         return lat;

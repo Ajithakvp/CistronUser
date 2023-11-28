@@ -33,9 +33,16 @@ public class MainActivity extends AppCompatActivity {
     // Call Report Customer po non null option parsing checknnonnullparameter "cistron 1.5"
     // Call Report Customer po non null option parsing checknnonnullparameter function call "cistron 1.6"
     // sales Quote Eto checkbox AM PM added Leave Form  "cistron 1.7"
+    //  CallClose submit location verify  "cistron 1.8"
+    //  CallClose  location verify  "cistron 1.9"
+    //  CallClose  location verify  please wait  "cistron 1.10"
+    //  Spare List inward outward "cistron 2.1"
 
 
-    String AppVersion = "cistron 1.7";
+
+
+
+    String AppVersion = "cistron 2.1";
     TextView tvVersion;
 
 

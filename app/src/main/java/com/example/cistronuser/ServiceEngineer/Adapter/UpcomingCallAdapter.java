@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -78,6 +79,22 @@ public class UpcomingCallAdapter extends RecyclerView.Adapter<UpcomingCallAdapte
 
 
 
+        try{
+            if(upcomingCallReportlistModels.get(position).getCheckApproval().trim().equals("0")){
+                holder.tvCallReportButton.setVisibility(View.GONE);
+                holder.tvCallReport.setVisibility(View.VISIBLE);
+            }else{
+                holder.tvCallReportButton.setVisibility(View.VISIBLE);
+                holder.tvCallReport.setVisibility(View.GONE);
+
+            }
+        }catch (Exception e){
+
+        }
+
+
+
+
         //E378 CallTimeCheck(TimeCheck,holder.tvCallReportButton,holder.tvIssue4hr);
 
         holder.ivCall.setOnClickListener(new View.OnClickListener() {
@@ -95,6 +112,7 @@ public class UpcomingCallAdapter extends RecyclerView.Adapter<UpcomingCallAdapte
             public void onClick(View v) {
                 Intent intent = new Intent(activity, UpcomingCallReport.class);
                 intent.putExtra("id", upcomingCallReportlistModels.get(position).getButton());
+                intent.putExtra("crid", upcomingCallReportlistModels.get(position).getCrId());
                 intent.putExtra("PM", upcomingCallReportlistModels.get(position).getIssue());
                 activity.startActivity(intent);
             }
@@ -213,6 +231,8 @@ public class UpcomingCallAdapter extends RecyclerView.Adapter<UpcomingCallAdapte
         });
     }
 
+
+
     @Override
     public int getItemCount() {
         return upcomingCallReportlistModels.size();
@@ -220,13 +240,13 @@ public class UpcomingCallAdapter extends RecyclerView.Adapter<UpcomingCallAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvIssue4hr, tvName, tvDate, tvContactDetails, tvLocation, tvProduct, tvCR, tvIssueDetails, tvCallCreateBy, tvMobileNo, tvCallReportButton;
+        TextView tvCallReport,tvIssue4hr, tvName, tvDate, tvContactDetails, tvLocation, tvProduct, tvCR, tvIssueDetails, tvCallCreateBy, tvMobileNo, tvCallReportButton;
 
         ImageView ivCall;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
+            tvCallReport = itemView.findViewById(R.id.tvCallReport);
             tvName = itemView.findViewById(R.id.tvName);
             tvDate = itemView.findViewById(R.id.tvDate);
             tvContactDetails = itemView.findViewById(R.id.tvContactDetails);

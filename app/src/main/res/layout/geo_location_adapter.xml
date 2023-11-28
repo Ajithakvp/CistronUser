@@ -186,7 +186,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/latest"
-                    android:text="Distance    :"
+                    android:text="Distance   (KM)    :"
                     android:textColor="@color/RoseRed"
                     android:textSize="17dp" />
 

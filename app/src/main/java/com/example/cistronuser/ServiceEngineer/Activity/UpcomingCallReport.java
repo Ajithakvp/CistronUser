@@ -5,7 +5,6 @@ import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 import static okhttp3.RequestBody.create;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -56,9 +55,11 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.cistronuser.API.APIClient;
+import com.example.cistronuser.API.Interface.CallGeoVerifyInterface;
 import com.example.cistronuser.API.Interface.CallReportComplaintSubCategoryInterface;
 import com.example.cistronuser.API.Interface.CallReportSubmitInterface;
 import com.example.cistronuser.API.Interface.CallReportingUpComingSubmitInterface;
+import com.example.cistronuser.API.Interface.CloseFromLocChk;
 import com.example.cistronuser.API.Interface.ConsumeCusSpareSubmitInterface;
 import com.example.cistronuser.API.Interface.ConsumeSpareSubmitInterface;
 import com.example.cistronuser.API.Interface.EscalatePaymentSubmitInterface;
@@ -81,6 +82,7 @@ import com.example.cistronuser.API.Model.ServiceSpareRequestModel;
 import com.example.cistronuser.API.Model.SpareInwardRecordModel;
 import com.example.cistronuser.API.Model.SpareRequestsRecordModel;
 import com.example.cistronuser.API.Model.SparesConsumedRecordModel;
+import com.example.cistronuser.API.Response.CallGeoVerifyResponse;
 import com.example.cistronuser.API.Response.CallPMReportsubmitResponse;
 import com.example.cistronuser.API.Response.CallReportAttachServiceResponse;
 import com.example.cistronuser.API.Response.CallReportComplaintSubCategoryResponse;
@@ -91,6 +93,7 @@ import com.example.cistronuser.API.Response.CallReportSubmitResponse;
 import com.example.cistronuser.API.Response.CallReportWayBillSubmitResponse;
 import com.example.cistronuser.API.Response.CallReportingUpComingSubmitResponse;
 import com.example.cistronuser.API.Response.CallReportsubmitCusInvoiceResponse;
+import com.example.cistronuser.API.Response.CloseFromLocChkResponse;
 import com.example.cistronuser.API.Response.ConsumeSpareSubmitResponse;
 import com.example.cistronuser.API.Response.ConsumerCusSpareSubmitResponse;
 import com.example.cistronuser.API.Response.EscalatePaymentSubmitResponse;
@@ -135,7 +138,7 @@ import retrofit2.Response;
 
 public class UpcomingCallReport extends AppCompatActivity {
 
-    public static int FileUploadCount=0;
+    public static int FileUploadCount = 0;
     ImageView ivBack;
     Spinner spCallType, spCallStatus;
     TextView tvCusInvoice, tvFollowUpDate, tvStartingTime, tvEndTime, tvserviceReportAttach, tvSubmit;
@@ -146,7 +149,7 @@ public class UpcomingCallReport extends AppCompatActivity {
     CheckBox cbAttach;
     RatingBar ratingBar;
     String cft;
-    String id, PM;
+    String id, PM, crid,closecrid;
     //Received pending sales payment
     RelativeLayout rlRevPaymentPending;
     RadioGroup rbGrp1;
@@ -180,7 +183,7 @@ public class UpcomingCallReport extends AppCompatActivity {
     RelativeLayout rlCustomerPO;
     TextView tvCustomerPOCount, tvCusPOFileInvoiceAttch;
     RecyclerView rvCustomerPO;
-    File fileCustomerPO=null ;
+    File fileCustomerPO = null;
     String strCustomerPo;
     CustomerPoAdapter customerPoAdapter;
     ArrayList<CustomerPoResponseModel> customerPoResponseModels = new ArrayList<>();
@@ -261,7 +264,7 @@ public class UpcomingCallReport extends AppCompatActivity {
     ConsumeSpareYesAdapter consumeSpareYesAdapter;
     ArrayList<ConsumeSpareRecordModel> consumeSpareRecordModels = new ArrayList<>();
     String DoYouConsumerID, PartID, ComplaintID, SubComplaintCatID, CallRegID, hpidd, pdtidd, chk1, bp_install, bp_installr;
-    String CallAssignId, CallStatusID, CallTypePayoptionsID, Spc, CusPoradiobID="";
+    String CallAssignId, CallStatusID, CallTypePayoptionsID, Spc, CusPoradiobID = "";
     //Validation
     String ComplaintValidRequired, CustomerVaild;
     int SpareDocVaild, TypeValid;
@@ -283,12 +286,9 @@ public class UpcomingCallReport extends AppCompatActivity {
     LocationBroadcastReceiver receiver;
     ArrayList<LocationTrackerCallReportModel> locationTrackerCallReportModels = new ArrayList<>();
     Double lat, longg, str;
-    String Address ,pincode, city, state, countrycode;
+    String Address, pincode, city, state, countrycode;
     String RespLatitude, RespLongtitude;
-    String geoYes="no";
-
-
-
+    String geoYes = "no";
 
 
     @SuppressLint("MissingInflatedId")
@@ -338,7 +338,6 @@ public class UpcomingCallReport extends AppCompatActivity {
         tvPMReportAttach4 = findViewById(R.id.tvPMReportAttach4);
         rlPMReport = findViewById(R.id.rlPMReport);
         cbPMAttach = findViewById(R.id.cbPMAttach);
-
 
 
         // *********** Supply *****************//
@@ -433,6 +432,7 @@ public class UpcomingCallReport extends AppCompatActivity {
 
         // *********** GetString **********//
         id = getIntent().getStringExtra("id");
+        crid = getIntent().getStringExtra("crid");
         PM = getIntent().getStringExtra("PM");
         strRating = String.valueOf(ratingBar.getRating());
 
@@ -705,6 +705,32 @@ public class UpcomingCallReport extends AppCompatActivity {
 
         // ************ File Access Permission End ***********//
 
+        // ************ ClosecrntLocation  ***********//
+        CloseFromLocChk closeFromLocChk=APIClient.getClient().create(CloseFromLocChk.class);
+        closeFromLocChk.callverify(crid).enqueue(new Callback<CloseFromLocChkResponse>() {
+            @Override
+            public void onResponse(Call<CloseFromLocChkResponse> call, Response<CloseFromLocChkResponse> response) {
+
+                try {
+                    if (response.isSuccessful()){
+                        closecrid=response.body().getResponse();
+                    }
+
+                }catch (Exception e){
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<CloseFromLocChkResponse> call, Throwable t) {
+
+            }
+        });
+
+
+        // ************ ClosecrntLocation End ***********//
+
 
         // *********** Temp Store **********//
 
@@ -931,7 +957,7 @@ public class UpcomingCallReport extends AppCompatActivity {
 
 
                 CusPoradiobID = s.toString();
-                Log.e(TAG, "onClick: "+CusPoradiobID );
+                Log.e(TAG, "onClick: " + CusPoradiobID);
 
                 rvCustomerPO.post(new Runnable() {
                     @Override
@@ -2181,8 +2207,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                     } else if (ratingBar.getRating() == 0) {
                         Toast.makeText(UpcomingCallReport.this, "Please Select a Customer Review", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(UpcomingCallReport.this, "Please Wait", Toast.LENGTH_SHORT).show();
-                        if (fileCustomerPO !=null) {
+                        if (fileCustomerPO != null) {
                             FileUploadCount++;
                             callCusPoFile();
                             Log.e(TAG, "onClick: 1 *" + (FileUploadCount));
@@ -2339,7 +2364,10 @@ public class UpcomingCallReport extends AppCompatActivity {
     }
 
     private void CallPMOptional2Report() {
-
+        final ProgressDialog progressDialog = new ProgressDialog(this, R.style.ProgressBarDialog);
+        progressDialog.setMessage("Please Wait...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
         RequestBody action = RequestBody.create(MediaType.parse("text/plain"), "uploadPMReport");
         RequestBody callassignid = RequestBody.create(MediaType.parse("text/plain"), CallAssignId);
         RequestBody empid = RequestBody.create(MediaType.parse("text/plain"), PreferenceManager.getEmpID(this));
@@ -2358,6 +2386,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                 try {
 
                     if (response.isSuccessful()) {
+                        progressDialog.dismiss();
                         Pm = response.body().getPm();
                         FileUploadCount--;
                         Log.e(TAG, "onResponse: " + (FileUploadCount));
@@ -2366,20 +2395,23 @@ public class UpcomingCallReport extends AppCompatActivity {
                         }
                     }
                 } catch (Exception e) {
-
+                    progressDialog.dismiss();
                 }
             }
 
             @Override
             public void onFailure(Call<CallPMReportsubmitResponse> call, Throwable t) {
-
+                progressDialog.dismiss();
             }
         });
 
     }
 
     private void CallPMOptional1Report() {
-
+        final ProgressDialog progressDialog = new ProgressDialog(this, R.style.ProgressBarDialog);
+        progressDialog.setMessage("Please Wait...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
         RequestBody action = RequestBody.create(MediaType.parse("text/plain"), "uploadPMReport");
         RequestBody callassignid = RequestBody.create(MediaType.parse("text/plain"), CallAssignId);
         RequestBody empid = RequestBody.create(MediaType.parse("text/plain"), PreferenceManager.getEmpID(this));
@@ -2399,6 +2431,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                 try {
 
                     if (response.isSuccessful()) {
+                        progressDialog.dismiss();
                         Pm = response.body().getPm();
 
                         FileUploadCount--;
@@ -2408,20 +2441,23 @@ public class UpcomingCallReport extends AppCompatActivity {
                         }
                     }
                 } catch (Exception e) {
-
+                    progressDialog.dismiss();
                 }
             }
 
             @Override
             public void onFailure(Call<CallPMReportsubmitResponse> call, Throwable t) {
-
+                progressDialog.dismiss();
             }
         });
     }
 
 
     private void CallPMComplsory() {
-
+        final ProgressDialog progressDialog = new ProgressDialog(this, R.style.ProgressBarDialog);
+        progressDialog.setMessage("Please Wait...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
         RequestBody action = RequestBody.create(MediaType.parse("text/plain"), "uploadPMReport");
         RequestBody callassignid = RequestBody.create(MediaType.parse("text/plain"), CallAssignId);
         RequestBody empid = RequestBody.create(MediaType.parse("text/plain"), PreferenceManager.getEmpID(this));
@@ -2437,6 +2473,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                 try {
 
                     if (response.isSuccessful()) {
+                        progressDialog.dismiss();
                         Pm = response.body().getPm();
                         Log.e(TAG, "onResponse: " + (FileUploadCount));
                         FileUploadCount--;
@@ -2445,18 +2482,23 @@ public class UpcomingCallReport extends AppCompatActivity {
                         }
                     }
                 } catch (Exception e) {
-
+                    progressDialog.dismiss();
                 }
             }
 
             @Override
             public void onFailure(Call<CallPMReportsubmitResponse> call, Throwable t) {
-
+                progressDialog.dismiss();
             }
         });
     }
 
     private void CallPMReport() {
+
+        final ProgressDialog progressDialog = new ProgressDialog(this, R.style.ProgressBarDialog);
+        progressDialog.setMessage("Please Wait...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
 
         RequestBody action = RequestBody.create(MediaType.parse("text/plain"), "uploadPMReport");
         RequestBody callassignid = RequestBody.create(MediaType.parse("text/plain"), CallAssignId);
@@ -2477,7 +2519,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                 try {
 
                     if (response.isSuccessful()) {
-
+                        progressDialog.dismiss();
                         Pm = response.body().getPm();
                         Log.e(TAG, "onResponse: " + (FileUploadCount));
                         FileUploadCount--;
@@ -2486,19 +2528,23 @@ public class UpcomingCallReport extends AppCompatActivity {
                         }
                     }
                 } catch (Exception e) {
-
+                    progressDialog.dismiss();
                 }
             }
 
             @Override
             public void onFailure(Call<CallPMReportsubmitResponse> call, Throwable t) {
-
+                progressDialog.dismiss();
             }
         });
     }
 
     private void CallServiceReport() {
 
+        final ProgressDialog progressDialog = new ProgressDialog(this, R.style.ProgressBarDialog);
+        progressDialog.setMessage("Please Wait...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
         // callClose.php?action=uploadServiceReport&call_status&callassignid=&empid=&fileName=serviceReport
 
         RequestBody action = RequestBody.create(MediaType.parse("text/plain"), "uploadServiceReport");
@@ -2517,6 +2563,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                 try {
 
                     if (response.isSuccessful()) {
+                        progressDialog.dismiss();
                         FileUploadCount--;
                         Log.e(TAG, "onResponse: " + (FileUploadCount));
                         if (FileUploadCount == 0) {
@@ -2524,13 +2571,13 @@ public class UpcomingCallReport extends AppCompatActivity {
                         }
                     }
                 } catch (Exception e) {
-
+                    progressDialog.dismiss();
                 }
             }
 
             @Override
             public void onFailure(Call<CallReportAttachServiceResponse> call, Throwable t) {
-
+                progressDialog.dismiss();
             }
         });
 
@@ -2538,7 +2585,10 @@ public class UpcomingCallReport extends AppCompatActivity {
 
     private void CallFileWayBill() {
         //#API: callClose.php?action=uploadWayBill&call_status=1&pay_option=8&callassignid=&empid=&fileName=file_inwb
-
+        final ProgressDialog progressDialog = new ProgressDialog(this, R.style.ProgressBarDialog);
+        progressDialog.setMessage("Please Wait...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
         RequestBody action = RequestBody.create(MediaType.parse("text/plain"), "uploadWayBill");
         RequestBody call_status = RequestBody.create(MediaType.parse("text/plain"), CallStatusID);
         RequestBody pay_option = RequestBody.create(MediaType.parse("text/plain"), CallTypePayoptionsID);
@@ -2552,6 +2602,7 @@ public class UpcomingCallReport extends AppCompatActivity {
             public void onResponse(Call<CallReportWayBillSubmitResponse> call, Response<CallReportWayBillSubmitResponse> response) {
                 try {
                     if (response.isSuccessful()) {
+                        progressDialog.dismiss();
                         Wb = response.body().getWb();
                         FileUploadCount--;
                         Log.e(TAG, "onResponse: " + (FileUploadCount));
@@ -2562,26 +2613,23 @@ public class UpcomingCallReport extends AppCompatActivity {
                     }
 
                 } catch (Exception e) {
-
+                    progressDialog.dismiss();
                 }
             }
 
             @Override
             public void onFailure(Call<CallReportWayBillSubmitResponse> call, Throwable t) {
-
+                progressDialog.dismiss();
             }
         });
     }
 
-    private void CallReportSubmit() {
-        final ProgressDialog progressDialog = new ProgressDialog(this, R.style.ProgressBarDialog);
-        progressDialog.setMessage("Please Wait...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
+    private void CallReportSubmit(ProgressDialog progressDialog) {
 
-        Log.e(TAG, "CallReportSubmit: "+PreferenceManager.getLat(UpcomingCallReport.this) );
-        String homelat= PreferenceManager.getLat(UpcomingCallReport.this);
-        String homelng= PreferenceManager.getLng(UpcomingCallReport.this);
+
+        Log.e(TAG, "CallReportSubmit: " + PreferenceManager.getLat(UpcomingCallReport.this));
+        String homelat = PreferenceManager.getLat(UpcomingCallReport.this);
+        String homelng = PreferenceManager.getLng(UpcomingCallReport.this);
         CallReportingUpComingSubmitInterface callReportingUpComingSubmitInterface = APIClient.getClient().create(CallReportingUpComingSubmitInterface.class);
         callReportingUpComingSubmitInterface.callReportSubmit("callClose", PreferenceManager.getEmpID(UpcomingCallReport.this), id, LogsitId, CallTypePayoptionsID, ComplaintID, SubComplaintCatID, edTypeComplaintCat.getText().toString(), edTypeSubComplaintCat.getText().toString(), "Not Detect", CallAssignId, CallRegID, CallAssignId, pdtidd, hpidd, chk1, CusPoradiobID,
                 CallStatusID, tvPaymentafterDispatch.getText().toString(), tvRecvPaymentDispatch.getText().toString(), tvInstallDate.getText().toString(), bp_install, bp_installr, strInstallament, strInstallamentr, balinspayamt, cft, String.valueOf(rbconsumerSpareID), Spc, tvFollowUpDate.getText().toString(),
@@ -2622,13 +2670,14 @@ public class UpcomingCallReport extends AppCompatActivity {
                 try {
                     if (response.isSuccessful()) {
 
-                        progressDialog.dismiss();
+
 
                         PreferenceManager.saveLat(UpcomingCallReport.this, String.valueOf(lat));
                         PreferenceManager.saveLng(UpcomingCallReport.this, String.valueOf(longg));
                         Intent intent = new Intent(UpcomingCallReport.this, DashboardActivity.class);
                         startActivity(intent);
                         finish();
+                        progressDialog.dismiss();
 
                     }
 
@@ -2715,6 +2764,10 @@ public class UpcomingCallReport extends AppCompatActivity {
     }
 
     private void callFileLR() {
+        final ProgressDialog progressDialog = new ProgressDialog(this, R.style.ProgressBarDialog);
+        progressDialog.setMessage("Please Wait...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
         RequestBody action = RequestBody.create(MediaType.parse("text/plain"), "uploadLR");
         RequestBody call_status = RequestBody.create(MediaType.parse("text/plain"), CallStatusID);
         RequestBody pay_option = RequestBody.create(MediaType.parse("text/plain"), CallTypePayoptionsID);
@@ -2728,7 +2781,7 @@ public class UpcomingCallReport extends AppCompatActivity {
             public void onResponse(Call<CallReportServiceSubmitResponse> call, Response<CallReportServiceSubmitResponse> response) {
                 try {
                     if (response.isSuccessful()) {
-
+                        progressDialog.dismiss();
                         Lr = response.body().getLr();
                         Log.e("LR", "onResponse: " + (FileUploadCount));
                         FileUploadCount--;
@@ -2739,19 +2792,22 @@ public class UpcomingCallReport extends AppCompatActivity {
                     }
 
                 } catch (Exception e) {
-
+                    progressDialog.dismiss();
                 }
             }
 
             @Override
             public void onFailure(Call<CallReportServiceSubmitResponse> call, Throwable t) {
-
+                progressDialog.dismiss();
             }
         });
     }
 
     private void callcusInvoice() {
-
+        final ProgressDialog progressDialog = new ProgressDialog(this, R.style.ProgressBarDialog);
+        progressDialog.setMessage("Please Wait...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
         RequestBody action = RequestBody.create(MediaType.parse("text/plain"), "uploadCustomerInvoice");
         RequestBody pay_option = RequestBody.create(MediaType.parse("text/plain"), CallTypePayoptionsID);
         RequestBody callassignid = RequestBody.create(MediaType.parse("text/plain"), CallAssignId);
@@ -2764,6 +2820,8 @@ public class UpcomingCallReport extends AppCompatActivity {
                 try {
                     if (response.isSuccessful()) {
 
+                        progressDialog.dismiss();
+
                         Ps = response.body().getPs();
                         FileUploadCount--;
                         Log.e(TAG, "onResponse: " + (FileUploadCount));
@@ -2774,7 +2832,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                     }
 
                 } catch (Exception e) {
-
+                    progressDialog.dismiss();
                 }
             }
 
@@ -2787,6 +2845,10 @@ public class UpcomingCallReport extends AppCompatActivity {
     }
 
     private void callspareConsumedFile() {
+        final ProgressDialog progressDialog = new ProgressDialog(this, R.style.ProgressBarDialog);
+        progressDialog.setMessage("Please Wait...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
         RequestBody action = RequestBody.create(MediaType.parse("text/plain"), "uploadDCForSparesConsumed");
         RequestBody spc = RequestBody.create(MediaType.parse("text/plain"), Spc);
         RequestBody call_status = RequestBody.create(MediaType.parse("text/plain"), CallStatusID);
@@ -2803,7 +2865,7 @@ public class UpcomingCallReport extends AppCompatActivity {
             public void onResponse(Call<CallReportSpareConsumedSubmitResponse> call, Response<CallReportSpareConsumedSubmitResponse> response) {
                 try {
                     if (response.isSuccessful()) {
-
+                        progressDialog.dismiss();
                         Sr = response.body().getSr();
                         FileUploadCount--;
                         Log.e(TAG, ": " + (FileUploadCount));
@@ -2814,18 +2876,23 @@ public class UpcomingCallReport extends AppCompatActivity {
                     }
 
                 } catch (Exception e) {
-
+                    progressDialog.dismiss();
                 }
             }
 
             @Override
             public void onFailure(Call<CallReportSpareConsumedSubmitResponse> call, Throwable t) {
+                progressDialog.dismiss();
 
             }
         });
     }
 
     private void callCusPoFile() {
+        final ProgressDialog progressDialog = new ProgressDialog(this, R.style.ProgressBarDialog);
+        progressDialog.setMessage("Please Wait...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
         RequestBody sqid = RequestBody.create(MediaType.parse("text/plain"), CusPoradiobID);
         RequestBody action = RequestBody.create(MediaType.parse("text/plain"), "uploadInvoice");
         RequestBody callassignid = RequestBody.create(MediaType.parse("text/plain"), CallAssignId);
@@ -2838,6 +2905,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                 try {
                     if (response.isSuccessful()) {
 
+                        progressDialog.dismiss();
                         Sq = response.body().getSq();
                         FileUploadCount--;
                         Log.e(TAG, "cuspo: " + (FileUploadCount));
@@ -2851,22 +2919,33 @@ public class UpcomingCallReport extends AppCompatActivity {
 
                 } catch (Exception e) {
                     Log.e(TAG, "cuspo: " + e.getMessage());
+                    progressDialog.dismiss();
                 }
             }
 
             @Override
             public void onFailure(Call<CallReportSubmitCusPoRespones> call, Throwable t) {
+                progressDialog.dismiss();
 
             }
         });
     }
 
     private void CallCloseFun() {
-        CallReportSubmit();
+        final ProgressDialog progressDialog = new ProgressDialog(this, R.style.ProgressBarDialog);
+        progressDialog.setMessage("Please Wait...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        CallReportSubmit(progressDialog);
         Log.e(TAG, "onClick: 0");
     }
 
     private void CallInstallImg() {
+        final ProgressDialog progressDialog = new ProgressDialog(this, R.style.ProgressBarDialog);
+        progressDialog.setMessage("Please Wait...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
 
         RequestBody action = RequestBody.create(MediaType.parse("text/plain"), "uploadInstallationImages");
         RequestBody call_status = RequestBody.create(MediaType.parse("text/plain"), CallStatusID);
@@ -2890,6 +2969,7 @@ public class UpcomingCallReport extends AppCompatActivity {
             public void onResponse(Call<CallReportSubmitResponse> call, Response<CallReportSubmitResponse> response) {
                 try {
                     if (response.isSuccessful()) {
+                        progressDialog.dismiss();
                         FileUploadCount--;
                         Log.e(TAG, "onResponse install: " + (FileUploadCount));
                         if (FileUploadCount == 0) {
@@ -2901,12 +2981,14 @@ public class UpcomingCallReport extends AppCompatActivity {
 
                 } catch (Exception e) {
 
+                    progressDialog.dismiss();
+
                 }
             }
 
             @Override
             public void onFailure(Call<CallReportSubmitResponse> call, Throwable t) {
-
+                progressDialog.dismiss();
             }
         });
 
@@ -3927,30 +4009,47 @@ public class UpcomingCallReport extends AppCompatActivity {
             locationB.setLongitude(Double.parseDouble(String.valueOf(RespLongtitude)));
 
             str = Double.valueOf(locationA.distanceTo(locationB) / 1000);
-            Log.e(TAG, "onResponse: " + str);
+            Log.e(TAG, "lat: " + lat + "longg: " + longg + "RespLatitude: " + RespLatitude + "RespLongtitude: " + RespLongtitude + "distance: " + str);
 
-
-            if (str <= 1.0) {
+            if (crid.trim().equals(closecrid)) {
                 tvSubmit.setVisibility(View.VISIBLE);
-
+                Log.e(TAG, "CallCheckLocation: "+crid+"---"+closecrid );
+//                Toast.makeText(this, "CallCheckLocation"+crid+"---"+closecrid, Toast.LENGTH_LONG).show();
+            }else if (str <= 1.0) {
+                tvSubmit.setVisibility(View.VISIBLE);
             } else {
                 AlertDialog.Builder builder = new AlertDialog.Builder(UpcomingCallReport.this, R.style.AlertDialogCustom);
                 builder.setTitle("Your location has not been reached.");
-                builder.setMessage("Are you at the right place ?");
+                builder.setMessage("Press 'Only spare' for spare-related activities. \n\nPress 'OK' to send a location approval request to the coordinator,");
                 builder.setCancelable(false);
-                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        tvSubmit.setVisibility(View.VISIBLE);
-                        geoYes="yes";
+//                        tvSubmit.setVisibility(View.VISIBLE);
+                        try {
+                            geoYes = "yes";
+                            CallGeoVerify(geoYes, str);
+                            onBackPressed();
+                            finish();
+
+
+                        } catch (Exception e) {
+
+                        }
+
+
                     }
                 });
-                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+
+                builder.setNegativeButton("Only Spare", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        onBackPressed();
+                        tvSubmit.setVisibility(View.GONE);
+
+
                     }
                 });
+
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
                 Intent intent = new Intent(UpcomingCallReport.this, LocationBackgroundService.class);
@@ -3964,6 +4063,23 @@ public class UpcomingCallReport extends AppCompatActivity {
             //  Log.d(TAG, "CallCheckLocation: " + e.getMessage());
         }
 
+
+    }
+
+    private void CallGeoVerify(String geoYes, Double str) {
+        CallGeoVerifyInterface callGeoVerifyInterface = APIClient.getClient().create(CallGeoVerifyInterface.class);
+        callGeoVerifyInterface.CallGeoverify("verifygeo", hpidd, lat, longg, Address, city, state, countrycode, pincode, PreferenceManager.getEmpID(this), crid, CallAssignId, str, geoYes).enqueue(new Callback<CallGeoVerifyResponse>() {
+            @Override
+            public void onResponse(Call<CallGeoVerifyResponse> call, Response<CallGeoVerifyResponse> response) {
+
+
+            }
+
+            @Override
+            public void onFailure(Call<CallGeoVerifyResponse> call, Throwable t) {
+
+            }
+        });
 
     }
 
@@ -3983,7 +4099,7 @@ public class UpcomingCallReport extends AppCompatActivity {
             }
 
 
-              CallCheckLocation();
+            CallCheckLocation();
         }
     }
 

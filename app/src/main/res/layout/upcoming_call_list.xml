@@ -297,6 +297,26 @@
                     android:textSize="16dp" />
 
 
+
+                <TextView
+                    android:id="@+id/tvCallReport"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_below="@id/tvCallCreateBy"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="30dp"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    android:textAlignment="center"
+                    android:background="@drawable/edittext"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/bold"
+                    android:text="Waiting For Coordinator Approval"
+                    android:textColor="@color/Radio"
+                    android:textSize="16dp" />
+
+
                 <TextView
                     android:id="@+id/tvIssue4hr"
                     android:layout_width="match_parent"

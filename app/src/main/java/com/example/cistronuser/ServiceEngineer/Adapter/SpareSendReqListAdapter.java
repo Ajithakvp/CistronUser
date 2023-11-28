@@ -108,7 +108,7 @@ public class SpareSendReqListAdapter extends RecyclerView.Adapter<SpareSendReqLi
                 if (searchedValue.toLowerCase().contains(charText)) {
                     for (int i = 0; i < tempserviceList.size(); i++) {
 
-                        if (tempserviceList.get(i).getPartName().equalsIgnoreCase(searchedValue)) {
+                        if (tempserviceList.get(i).getPartName().equalsIgnoreCase(searchedValue) || tempserviceList.get(i).getPartNo().equalsIgnoreCase(searchedValue) ) {
                             serviceSpareListModels.add(tempserviceList.get(i));
                             break;
                         }
@@ -127,6 +127,8 @@ public class SpareSendReqListAdapter extends RecyclerView.Adapter<SpareSendReqLi
         strSpareList.clear();
         for (int i = 0; i < tempserviceList.size(); i++) {
             strSpareList.add(tempserviceList.get(i).getPartName());
+            strSpareList.add(tempserviceList.get(i).getPartNo());
+
         }
         notifyDataSetChanged();
 
