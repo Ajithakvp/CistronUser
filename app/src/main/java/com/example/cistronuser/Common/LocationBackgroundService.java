@@ -92,7 +92,7 @@ public class LocationBackgroundService extends Service  {
                     String countrycode = addresses.get(0).getCountryCode();
                     String url = addresses.get(0).getUrl();
 
-
+                    Log.e(TAG, "onLocationResult: " + Latitude);
 
                     Intent intent = new Intent("Location");
                     intent.putExtra("latitude", Latitude);

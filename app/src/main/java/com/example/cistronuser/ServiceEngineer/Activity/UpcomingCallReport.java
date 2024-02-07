@@ -291,6 +291,8 @@ public class UpcomingCallReport extends AppCompatActivity {
     String geoYes = "no";
 
 
+
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -1757,7 +1759,7 @@ public class UpcomingCallReport extends AppCompatActivity {
                         progressDialog.setCancelable(false);
                         progressDialog.show();
                         InstallamentEscalatedSubmitInterface installamentEscalatedSubmitInterface = APIClient.getClient().create(InstallamentEscalatedSubmitInterface.class);
-                        installamentEscalatedSubmitInterface.CallSubmit("onInstallmentEscalate", PreferenceManager.getEmpID(UpcomingCallReport.this), LogsitId, bp_installmentTot, bp_installmentrTot, tm, strInstallament).enqueue(new Callback<InstallamentEscalatedSubmitResponse>() {
+                        installamentEscalatedSubmitInterface.CallSubmit("onInstallmentEscalate", PreferenceManager.getEmpID(UpcomingCallReport.this), LogsitId, bp_installmentTot, bp_installmentrTot, tm, strInstallamentr).enqueue(new Callback<InstallamentEscalatedSubmitResponse>() {
                             @Override
                             public void onResponse(Call<InstallamentEscalatedSubmitResponse> call, Response<InstallamentEscalatedSubmitResponse> response) {
                                 try {
@@ -3992,7 +3994,7 @@ public class UpcomingCallReport extends AppCompatActivity {
         Intent intent = new Intent(UpcomingCallReport.this, LocationBackgroundService.class);
         startService(intent);
 
-
+        Log.e(TAG, "startBackgroundService: "+filter );
     }
 
     private void CallCheckLocation() {
@@ -4095,6 +4097,8 @@ public class UpcomingCallReport extends AppCompatActivity {
                 city = intent.getStringExtra("city");
                 state = intent.getStringExtra("state");
                 countrycode = intent.getStringExtra("countrycode");
+
+                Log.e(TAG, "onReceive: "+lat);
 
             }
 

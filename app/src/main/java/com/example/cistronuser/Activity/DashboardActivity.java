@@ -43,6 +43,7 @@ import com.example.cistronuser.API.Interface.ChangePasswordInterface;
 import com.example.cistronuser.API.Interface.CompOffApprovalCountInterface;
 import com.example.cistronuser.API.Interface.DashboardCallCountInterface;
 import com.example.cistronuser.API.Interface.ExpenseCountInterface;
+import com.example.cistronuser.API.Interface.FeedbackCountInterface;
 import com.example.cistronuser.API.Interface.LeaveApprovelCountInterface;
 import com.example.cistronuser.API.Interface.LogoutInterFace;
 import com.example.cistronuser.API.Interface.SalesQuoteApprovalCountInterFace;
@@ -52,6 +53,7 @@ import com.example.cistronuser.API.Model.UpcomingCallListModel;
 import com.example.cistronuser.API.Response.ChangePasswordResponse;
 import com.example.cistronuser.API.Response.CompOffCountResponse;
 import com.example.cistronuser.API.Response.DashboardCallCountResponse;
+import com.example.cistronuser.API.Response.FeedbackCountResponse;
 import com.example.cistronuser.API.Response.LeaveApprovelCountResponse;
 import com.example.cistronuser.API.Response.LogoutResponse;
 import com.example.cistronuser.API.Response.SalesQuoteApprovalCountResponse;
@@ -76,6 +78,7 @@ import com.example.cistronuser.ServiceEngineer.Activity.CreateSpareReqActivity;
 import com.example.cistronuser.ServiceEngineer.Activity.CurrentCallActivity;
 import com.example.cistronuser.ServiceEngineer.Activity.MyStockActivity;
 import com.example.cistronuser.ServiceEngineer.Activity.PendicallActivity;
+import com.example.cistronuser.ServiceEngineer.Activity.Pendingcall_Feedback;
 import com.example.cistronuser.ServiceEngineer.Activity.ReturnReqPendingCoActivity;
 import com.example.cistronuser.ServiceEngineer.Activity.SpareInwardActivity;
 import com.example.cistronuser.ServiceEngineer.Activity.SpareReqPendingCOActivity;
@@ -135,9 +138,9 @@ public class DashboardActivity extends Activity {
     TextView tvGeoLocationApprovalCount;
 
     //Service
-    RelativeLayout rlUpcomingCallLayout, rlPendingingCallLayout, rlCurrentCallLayout
+    RelativeLayout rlPendingingCallfbLayout, rlUpcomingCallLayout, rlPendingingCallLayout, rlCurrentCallLayout
             ,rlMyStockLayout,rlCreateSpareReqLayout,rlSpareRequestPendingCoLayout, rlSpareInwardLayout, rlReturnReqPendingCoLayout;
-    TextView tvSpareInwardCount,tvMyStockCount, tvSpareRequestPendingCoCount, tvReturnReqPendingCoCount, tvCurrentCallCount;
+    TextView tvPendingCallfbCount,tvSpareInwardCount,tvMyStockCount, tvSpareRequestPendingCoCount, tvReturnReqPendingCoCount, tvCurrentCallCount;
 
     // Service Ui Change
     RelativeLayout rlSpareLayout;
@@ -177,6 +180,11 @@ public class DashboardActivity extends Activity {
 
         //UpcomingCall and Pendingcall Count
         CallUpComPendingCount();
+
+        //Feedback Count
+        callFeedbackcount();
+
+
     }
 
     @Override
@@ -198,6 +206,9 @@ public class DashboardActivity extends Activity {
 
         //UpcomingCall and Pendingcall Count
         CallUpComPendingCount();
+
+        //Feedback Count
+        callFeedbackcount();
 
     }
 
@@ -255,12 +266,13 @@ public class DashboardActivity extends Activity {
         rlCreateSpareReqLayout=findViewById(R.id.rlCreateSpareReqLayout);
         rlMyStockLayout=findViewById(R.id.rlMyStockLayout);
         tvMyStockCount=findViewById(R.id.tvMyStockCount);
+        rlPendingingCallfbLayout=findViewById(R.id.rlPendingingCallfbLayout);
+        tvPendingCallfbCount=findViewById(R.id.tvPendingCallfbCount);
 
         // Service Ui Change
         rlSpareLayout=findViewById(R.id.rlSpareLayout);
         ivSpareUp=findViewById(R.id.ivSpareUp);
         ivSpareDown=findViewById(R.id.ivSpareDown);
-
 
         rlVisitEntryReportLayout = findViewById(R.id.rlVisitEntryReportLayout);
         cvVisitEntry = findViewById(R.id.cvVisitEntry);
@@ -620,6 +632,7 @@ public class DashboardActivity extends Activity {
 
 
 
+
         //LeaveApprovalCount
         CallLeaveApprovalCount();
 
@@ -635,7 +648,48 @@ public class DashboardActivity extends Activity {
         //UpcomingCall and Pendingcall Count
         CallUpComPendingCount();
 
+        //Feedback Count
+        callFeedbackcount();
 
+    }
+
+    private void callFeedbackcount() {
+        FeedbackCountInterface feedbackCountInterface=APIClient.getClient().create(FeedbackCountInterface.class);
+        feedbackCountInterface.callCount("reportcount",PreferenceManager.getEmpID(this)).enqueue(new Callback<FeedbackCountResponse>() {
+            @Override
+            public void onResponse(Call<FeedbackCountResponse> call, Response<FeedbackCountResponse> response) {
+                if (response.isSuccessful()){
+
+                    tvPendingCallfbCount.setText(response.body().getResponse());
+
+                    if(response.body().getResponse().trim().equals("0")){
+                        rlPendingingCallfbLayout.setVisibility(View.GONE);
+                    }else{
+                        rlPendingingCallfbLayout.setVisibility(View.VISIBLE);
+                    }
+
+                    rlPendingingCallfbLayout.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if(response.body().getResponse().trim().equals(0) || response.body().getResponse().trim().equals("0") || response.body().getResponse().trim().equals("")){
+                                Toast.makeText(context, "No Pending Call Feedback", Toast.LENGTH_SHORT).show();
+
+                            }else{
+                                Intent intent = new Intent(DashboardActivity.this, Pendingcall_Feedback.class);
+                                startActivity(intent);
+                            }
+                        }
+                    });
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<FeedbackCountResponse> call, Throwable t) {
+
+            }
+        });
     }
 
 

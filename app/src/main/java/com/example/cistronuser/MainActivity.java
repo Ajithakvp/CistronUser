@@ -37,12 +37,15 @@ public class MainActivity extends AppCompatActivity {
     //  CallClose  location verify  "cistron 1.9"
     //  CallClose  location verify  please wait  "cistron 1.10"
     //  Spare List inward outward "cistron 2.1"
+    //  Spare List partno searched "cistron 2.2"
+    //  Customer feedback Upload "cistron 2.3"
 
 
 
 
 
-    String AppVersion = "cistron 2.1";
+
+    String AppVersion = "cistron 2.3";
     TextView tvVersion;
 
 

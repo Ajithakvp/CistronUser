@@ -17,5 +17,5 @@ public interface InstallamentEscalatedSubmitInterface {
     Call<InstallamentEscalatedSubmitResponse>CallSubmit(@Query("action")String action,@Query("empid")String empid,
                                                         @Query("logisticsId")String logisticsId,@Query("bp_installmentTot")String bp_installmentTot,
                                                         @Query("bp_installmentrTot")String bp_installmentrTot,@Query("tm")String tm,
-                                                        @Query("installmentAMt[]") ArrayList<String> installmentAMt);
+                                                        @Query("installmentAMtr[]") ArrayList<String> installmentAMt);
 }

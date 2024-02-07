@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_margin="5dp"
+            android:background="@color/beige"
+            app:cardCornerRadius="20dp"
+            android:layout_height="wrap_content">
+            <RelativeLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <RelativeLayout
+                android:id="@+id/rlhospital"
+                android:layout_width="match_parent"
+                android:background="#CD5C5C"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tvHospital"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:fontFamily="@font/openssansbold"
+                    android:textSize="14dp"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="ABC HOSPITAL\nNo:1,Annamalai nagar main road, near karur bypass road\nTrichy\nTiruchirappalli - 620001\nTAMIL NADU."/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_below="@id/rlhospital"
+                android:layout_width="match_parent"
+                android:background="@color/gainsboro"
+                android:layout_height="wrap_content">
+
+
+
+                <TextView
+                    android:id="@+id/tvdateTag"
+                    android:layout_width="70dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:fontFamily="@font/openssanssemibold"
+                    android:textSize="14dp"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="left"
+                    android:text="Date        -"
+                    android:textColor="@color/DarkBrown"
+                    android:layout_height="wrap_content"
+                    />
+                <TextView
+                    android:id="@+id/tvdate"
+                    android:layout_width="290dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_toRightOf="@id/tvdateTag"
+                    android:layout_marginBottom="5dp"
+                    android:fontFamily="@font/openssanssemibold"
+                    android:textSize="14dp"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:text="2024-02-01"
+                    android:textColor="@color/DarkBrown"
+                    android:layout_height="wrap_content"
+                    />
+
+
+
+                <TextView
+                    android:id="@+id/tvserialTag"
+                    android:layout_width="70dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@id/tvdate"
+                    android:layout_marginBottom="5dp"
+                    android:fontFamily="@font/openssanssemibold"
+                    android:textSize="14dp"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="left"
+                    android:text="Serial No -"
+                    android:textColor="@color/DarkBrown"
+                    android:layout_height="wrap_content"
+                    />
+                <TextView
+                    android:id="@+id/tvserial"
+                    android:layout_width="290dp"
+                    android:layout_below="@id/tvdate"
+                    android:layout_marginTop="5dp"
+                    android:layout_toRightOf="@id/tvProductTag"
+                    android:layout_marginBottom="5dp"
+                    android:fontFamily="@font/openssanssemibold"
+                    android:textSize="14dp"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:text="146"
+                    android:textColor="@color/DarkBrown"
+                    android:layout_height="wrap_content"
+                    />
+
+                <TextView
+                    android:id="@+id/tvProductTag"
+                    android:layout_width="70dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@+id/tvserial"
+                    android:layout_marginBottom="5dp"
+                    android:fontFamily="@font/openssanssemibold"
+                    android:textSize="14dp"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="left"
+                    android:text="Product   -"
+                    android:textColor="@color/DarkBrown"
+                    android:layout_height="wrap_content"
+                    />
+                <TextView
+                    android:id="@+id/tvProduct"
+                    android:layout_width="290dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@+id/tvserial"
+                    android:layout_toRightOf="@id/tvProductTag"
+                    android:layout_marginBottom="5dp"
+                    android:fontFamily="@font/openssanssemibold"
+                    android:textSize="14dp"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:text="ETO STERILIZER (Cartridge Model - Auto) - 12x12x48 - 108 Lts"
+                    android:textColor="@color/DarkBrown"
+                    android:layout_height="wrap_content"
+                    />
+
+
+                <TextView
+                    android:id="@+id/tvempTag"
+                    android:layout_width="70dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@id/tvProduct"
+                    android:layout_marginBottom="5dp"
+                    android:fontFamily="@font/openssanssemibold"
+                    android:textSize="14dp"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="left"
+                    android:text="Engineer -"
+                    android:textColor="@color/DarkBrown"
+                    android:layout_height="wrap_content"
+                    />
+                <TextView
+                    android:id="@+id/tvempid"
+                    android:layout_width="290dp"
+                    android:layout_below="@id/tvProduct"
+                    android:layout_marginTop="5dp"
+                    android:layout_toRightOf="@id/tvempTag"
+                    android:layout_marginBottom="5dp"
+                    android:fontFamily="@font/openssanssemibold"
+                    android:textSize="14dp"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:text="Cistron (E0003)"
+                    android:textColor="@color/DarkBrown"
+                    android:layout_height="wrap_content"
+                    />
+
+                <RelativeLayout
+                    android:id="@+id/rldownload"
+                    android:layout_below="@id/tvempid"
+                    android:layout_width="150dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_alignParentStart="true"
+                    android:background="@drawable/cardview"
+                    android:backgroundTint="#CD5C5C"
+                    android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/tvDownloadTag"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:fontFamily="@font/openssanssemibold"
+                    android:textSize="12dp"
+                    android:gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:text="Download PDF"
+                    android:textColor="@color/white"
+                    android:layout_height="40dp"
+                    />
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_centerInParent="true"
+                        android:layout_marginLeft="5dp"
+                        android:tint="@color/white"
+                        android:layout_marginRight="5dp"
+                        android:layout_toRightOf="@id/tvDownloadTag"
+                        android:src="@drawable/pdffile"
+                        tools:ignore="UseAppTint" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/rluploadpdf"
+                    android:layout_below="@id/tvempid"
+                    android:layout_width="150dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/cardview"
+                    android:backgroundTint="#4876FF"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/tvuploadTag"
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:fontFamily="@font/openssanssemibold"
+                        android:textSize="12dp"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center"
+                        android:text="   Upload PDF "
+                        android:textColor="@color/white"
+                        android:layout_height="40dp"
+                        />
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginRight="5dp"
+                        android:tint="@color/white"
+                        android:src="@drawable/ic_baseline_upload_24"
+                        android:layout_marginLeft="5dp"
+                        android:layout_centerInParent="true"
+                        android:layout_toRightOf="@id/tvuploadTag"
+                        tools:ignore="UseAppTint" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            </RelativeLayout>
+
+
+
+        </androidx.cardview.widget.CardView>
+
+
+
+</RelativeLayout>

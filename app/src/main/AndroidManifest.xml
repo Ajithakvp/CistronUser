@@ -37,6 +37,12 @@
         tools:replace="android:allowBackup"
         tools:targetApi="31">
         <activity
+            android:name=".ServiceEngineer.Activity.Fileupload_fb"
+            android:exported="false" />
+        <activity
+            android:name=".ServiceEngineer.Activity.Pendingcall_Feedback"
+            android:exported="false" />
+        <activity
             android:name=".Report.Activity.HolidayActivity"
             android:exported="false" />
         <activity
