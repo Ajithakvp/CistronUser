@@ -18,15 +18,26 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.Uri;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -43,22 +54,30 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cistronuser.API.APIClient;
+import com.example.cistronuser.API.Interface.Accept_policy_otp_interface;
 import com.example.cistronuser.API.Interface.AttachRemoveInterface;
 import com.example.cistronuser.API.Interface.DeletedAPIInterface;
 import com.example.cistronuser.API.Interface.ExpenseInterface;
 import com.example.cistronuser.API.Interface.ExpensePolicyInterface;
 import com.example.cistronuser.API.Interface.LeavePolicyInterface;
+import com.example.cistronuser.API.Interface.Policy_otp_send_interface;
 import com.example.cistronuser.API.Interface.SelectWeekDateInterface;
+import com.example.cistronuser.API.Interface.Sign_policy_upload_Interface;
+import com.example.cistronuser.API.Interface.Verfiy_otp_policy_interface;
 import com.example.cistronuser.API.Interface.ViewExpenseListInterface;
 import com.example.cistronuser.API.Interface.WeeklySubmitExpensesInterface;
 import com.example.cistronuser.API.Model.SelecteddtExpenses;
 import com.example.cistronuser.API.Model.WeeklyExpensesModel;
+import com.example.cistronuser.API.Response.Accept_policy_otp_Response;
 import com.example.cistronuser.API.Response.AttachRemoveResponse;
 import com.example.cistronuser.API.Response.ExpensePolicyResponse;
 import com.example.cistronuser.API.Response.ExpenseResponse;
 import com.example.cistronuser.API.Response.LeaveDetailsResponse;
 import com.example.cistronuser.API.Response.LeavePolicyResponse;
+import com.example.cistronuser.API.Response.Policy_otp_send_Response;
 import com.example.cistronuser.API.Response.SelectWeekResponse;
+import com.example.cistronuser.API.Response.Sign_policy_upload_Response;
+import com.example.cistronuser.API.Response.Verfiy_otp_policy_Response;
 import com.example.cistronuser.API.Response.ViewExpenseResponse;
 import com.example.cistronuser.API.Response.WeeklySubmitExpensesResponse;
 import com.example.cistronuser.API.Response.response;
@@ -68,14 +87,24 @@ import com.example.cistronuser.Common.FileUtli;
 import com.example.cistronuser.Common.PreferenceManager;
 import com.example.cistronuser.Common.WebviewPage;
 import com.example.cistronuser.R;
+import com.github.gcacace.signaturepad.views.SignaturePad;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -139,6 +168,15 @@ public class ExpensesActivity extends Activity {
     ImageView ivWeekPreview;
     TextView tvGrandsumDocTag;
     String WeekBaseurl, Filename_r;
+
+    //Time count
+    CountDownTimer countDownTimer;
+    TextView countOTPtimer_text, tvResendOTP;
+    RelativeLayout rlsign_otp;
+    TextView clear_button, save_button, tvverifyotp, tvsubmitpolicy;
+    Context context;
+    private FusedLocationProviderClient fusedLocationClient;
+    String state ,city ,postalCode , countryCode,country ;
 
 
     @SuppressLint("MissingInflatedId")
@@ -693,12 +731,187 @@ public class ExpensesActivity extends Activity {
                             Button button = dialog.findViewById(R.id.btSubmit);
                             Button btClose = dialog.findViewById(R.id.btClose);
 
+                            SignaturePad signaturePad = dialog.findViewById(R.id.signature_pad);
+                            clear_button = dialog.findViewById(R.id.clear_button);
+                            save_button = dialog.findViewById(R.id.save_button);
+                            rlsign_otp = dialog.findViewById(R.id.rlsign_otp);
+                            countOTPtimer_text = dialog.findViewById(R.id.timer_text);
+                            tvResendOTP = dialog.findViewById(R.id.tvResendOTP);
+                            tvverifyotp = dialog.findViewById(R.id.tvverifyotp);
+                            tvsubmitpolicy = dialog.findViewById(R.id.tvsubmitpolicy);
+                            EditText editText1 = dialog.findViewById(R.id.editText1);
+                            EditText editText2 = dialog.findViewById(R.id.editText2);
+                            EditText editText3 = dialog.findViewById(R.id.editText3);
+                            EditText editText4 = dialog.findViewById(R.id.editText4);
+                            EditText editText5 = dialog.findViewById(R.id.editText5);
 
                             rlmsg.setVisibility(View.GONE);
+                            clear_button.setVisibility(View.GONE);
+                            save_button.setVisibility(View.GONE);
+
+                            if (response.body().getPolicy().trim().equals("Please Contact your admin")) {
+                                checkBox.setVisibility(View.GONE);
+                            } else {
+                                checkBox.setVisibility(View.VISIBLE);
+
+                            }
+
+                            //*****  Ip Address ******//
+                            context = getApplicationContext();
+                            WifiManager wifiMan = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+                            WifiInfo wifiInf = wifiMan.getConnectionInfo();
+                            int ipAddress = wifiInf.getIpAddress();
+                            String ip = String.format("%d.%d.%d.%d", (ipAddress & 0xff), (ipAddress >> 8 & 0xff), (ipAddress >> 16 & 0xff), (ipAddress >> 24 & 0xff));
+                            //  Log.e(TAG, "onCreate: "+ip );
+                            //*****  Ip Address End ******//
 
 
-                            checkboxtextview.setText(response.body().getPolicy());
-                            //tvHeader.setText(response.body().getCategory());
+                            //****************location ****************//
+                            // Initialize FusedLocationProviderClient
+                            fusedLocationClient = LocationServices.getFusedLocationProviderClient(ExpensesActivity.this);
+                            getCurrentLocation();
+
+
+
+                            String msgpolicy=response.body().getPolicy().trim().replaceAll("&amp;"," & ");
+                            checkboxtextview.setText(msgpolicy);
+                            tvHeader.setText(response.body().getTitle());
+
+
+                            signaturePad.setOnSignedListener(new SignaturePad.OnSignedListener() {
+                                @Override
+                                public void onStartSigning() {
+                                    // Called when the user starts signing
+                                }
+
+                                @Override
+                                public void onSigned() {
+                                    // Called when the user finishes signing
+                                    clear_button.setVisibility(View.VISIBLE);
+                                    save_button.setVisibility(View.VISIBLE);
+
+                                }
+
+                                @Override
+                                public void onClear() {
+                                    // Called when the pad is cleared
+                                    clear_button.setVisibility(View.GONE);
+                                    save_button.setVisibility(View.GONE);
+
+                                }
+                            });
+
+
+                            clear_button.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    signaturePad.clear();
+                                }
+                            });
+
+                            save_button.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Bitmap signatureBitmap = signaturePad.getSignatureBitmap();
+                                    saveSignatureToDownloads(ExpensesActivity.this, signatureBitmap, "signature11.png", response.body().getPolicy_ref());
+
+
+                                }
+                            });
+
+                            tvResendOTP.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                    try {
+                                        editText1.setText("");
+                                        editText2.setText("");
+                                        editText3.setText("");
+                                        editText4.setText("");
+                                        editText5.setText("");
+
+                                        generateOTP(response.body().getPolicy_ref());
+                                    } catch (Exception e) {
+                                    }
+                                }
+                            });
+
+                            tvsubmitpolicy.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    callacceptpolicy(ip,response.body().getPolicy_ref(),dialog);
+                                }
+                            });
+
+                            tvverifyotp.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                    String chk1 = editText1.getText().toString().trim();
+                                    String chk2 = editText2.getText().toString().trim();
+                                    String chk3 = editText3.getText().toString().trim();
+                                    String chk4 = editText4.getText().toString().trim();
+                                    String chk5 = editText5.getText().toString().trim();
+
+                                    String otpcheck = chk1.toString() + chk2.toString() + chk3.toString() + chk4.toString() + chk5.toString();
+
+
+                                    if(otpcheck.trim().equals("")){
+                                        Toast.makeText(context, "Please enter the otp", Toast.LENGTH_SHORT).show();
+                                    }else {
+
+                                        final ProgressDialog progressDialog = new ProgressDialog(ExpensesActivity.this, R.style.ProgressBarDialog);
+                                        progressDialog.setMessage("Please Wait...");
+                                        progressDialog.setCancelable(false);
+                                        progressDialog.show();
+                                        Verfiy_otp_policy_interface verfiyOtpPolicyInterface = APIClient.getClient().create(Verfiy_otp_policy_interface.class);
+                                        verfiyOtpPolicyInterface.verfotp(otpcheck.toString(), PreferenceManager.getEmpID(ExpensesActivity.this), response.body().getPolicy_ref()).enqueue(new Callback<Verfiy_otp_policy_Response>() {
+                                            @Override
+                                            public void onResponse(Call<Verfiy_otp_policy_Response> call, Response<Verfiy_otp_policy_Response> response) {
+
+                                                try {
+
+
+                                                    if (response.isSuccessful()) {
+                                                        progressDialog.dismiss();
+                                                        if (response.body().getResponse().trim().equals("1")) {
+                                                            Toast.makeText(ExpensesActivity.this, "OTP is Matched", Toast.LENGTH_SHORT).show();
+                                                            tvverifyotp.setVisibility(View.GONE);
+                                                            tvsubmitpolicy.setVisibility(View.VISIBLE);
+                                                            tvResendOTP.setVisibility(View.GONE);
+                                                            countOTPtimer_text.setVisibility(View.GONE);
+
+
+                                                        } else {
+                                                            Toast.makeText(ExpensesActivity.this, "OTP is not Match", Toast.LENGTH_SHORT).show();
+                                                            tvverifyotp.setVisibility(View.VISIBLE);
+                                                            tvsubmitpolicy.setVisibility(View.GONE);
+                                                        }
+                                                    } else {
+                                                        progressDialog.dismiss();
+
+                                                        tvverifyotp.setVisibility(View.VISIBLE);
+                                                        tvsubmitpolicy.setVisibility(View.GONE);
+                                                    }
+                                                } catch (Exception e) {
+                                                    progressDialog.dismiss();
+
+                                                }
+
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call<Verfiy_otp_policy_Response> call, Throwable t) {
+                                                progressDialog.dismiss();
+
+                                                tvverifyotp.setVisibility(View.VISIBLE);
+                                                tvsubmitpolicy.setVisibility(View.GONE);
+
+                                            }
+                                        });
+                                    }
+                                }
+                            });
 
 
                             checkBox.setOnClickListener(new View.OnClickListener() {
@@ -708,28 +921,32 @@ public class ExpensesActivity extends Activity {
 
                                     if (checked) {
 
-                                        button.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-                                                ExpensePolicyInterface expensePolicyaccpted = APIClient.getClient().create(ExpensePolicyInterface.class);
-                                                expensePolicyaccpted.CallPolicyExpenses("acceptExpPolicy", PreferenceManager.getEmpID(ExpensesActivity.this)).enqueue(new Callback<ExpensePolicyResponse>() {
-                                                    @Override
-                                                    public void onResponse(Call<ExpensePolicyResponse> call, Response<ExpensePolicyResponse> response) {
-                                                        if (response.isSuccessful()) {
-                                                            dialog.dismiss();
-                                                            rlExpenseLayout.setVisibility(View.VISIBLE);
-                                                            Toast.makeText(ExpensesActivity.this, "Accepted", Toast.LENGTH_SHORT).show();
-                                                        }
-                                                    }
-
-                                                    @Override
-                                                    public void onFailure(Call<ExpensePolicyResponse> call, Throwable t) {
-
-                                                    }
-                                                });
-
-                                            }
-                                        });
+                                        try {
+                                            generateOTP(response.body().getPolicy_ref());
+                                        } catch (Exception e) {
+                                        }
+//                                        button.setOnClickListener(new View.OnClickListener() {
+//                                            @Override
+//                                            public void onClick(View v) {
+//                                                ExpensePolicyInterface expensePolicyaccpted = APIClient.getClient().create(ExpensePolicyInterface.class);
+//                                                expensePolicyaccpted.CallPolicyExpenses("acceptExpPolicy", PreferenceManager.getEmpID(ExpensesActivity.this)).enqueue(new Callback<ExpensePolicyResponse>() {
+//                                                    @Override
+//                                                    public void onResponse(Call<ExpensePolicyResponse> call, Response<ExpensePolicyResponse> response) {
+//                                                        if (response.isSuccessful()) {
+//                                                            dialog.dismiss();
+//                                                            rlExpenseLayout.setVisibility(View.VISIBLE);
+//                                                            Toast.makeText(ExpensesActivity.this, "Accepted", Toast.LENGTH_SHORT).show();
+//                                                        }
+//                                                    }
+//
+//                                                    @Override
+//                                                    public void onFailure(Call<ExpensePolicyResponse> call, Throwable t) {
+//
+//                                                    }
+//                                                });
+//
+//                                            }
+//                                        });
 
                                     } else {
                                         Toast.makeText(ExpensesActivity.this, "Policy Check", Toast.LENGTH_SHORT).show();
@@ -741,13 +958,13 @@ public class ExpensesActivity extends Activity {
 
                             dialog.show();
 
-                            btClose.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    dialog.dismiss();
-                                    onBackPressed();
-                                }
-                            });
+//                            btClose.setOnClickListener(new View.OnClickListener() {
+//                                @Override
+//                                public void onClick(View v) {
+//                                    dialog.dismiss();
+//                                    onBackPressed();
+//                                }
+//                            });
 
 
                         } else if (response.body().getMessage().trim().equals("accepted")) {
@@ -770,6 +987,295 @@ public class ExpensesActivity extends Activity {
             }
         });
 
+    }
+
+    private void callacceptpolicy(String ip, String policy, Dialog dialog) {
+        final ProgressDialog progressDialog = new ProgressDialog(this, R.style.ProgressBarDialog);
+        progressDialog.setMessage("Please Wait...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        Accept_policy_otp_interface acceptPolicyOtpInterface=APIClient.getClient().create(Accept_policy_otp_interface.class);
+        acceptPolicyOtpInterface.accptotp(ip,PreferenceManager.getEmpID(this),policy,state,countryCode,city,country,postalCode).enqueue(new Callback<Accept_policy_otp_Response>() {
+            @Override
+            public void onResponse(Call<Accept_policy_otp_Response> call, Response<Accept_policy_otp_Response> response) {
+                try {
+                    if(response.isSuccessful()){
+                        progressDialog.dismiss();
+                        if(response.body().getResponse().trim().equals("1")){
+                            Toast.makeText(context, "Policy accepted", Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
+                        }else if(response.body().getResponse().trim().equals("2")){
+                            Toast.makeText(context, "Please write your sign.", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(context, "Please Contact your Admin", Toast.LENGTH_SHORT).show();
+                        }
+                    }else{
+                        progressDialog.dismiss();
+
+                        Toast.makeText(context, "Please Contact your Admin", Toast.LENGTH_SHORT).show();
+
+                    }
+
+                }catch (Exception e){
+                    progressDialog.dismiss();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Accept_policy_otp_Response> call, Throwable t) {
+                progressDialog.dismiss();
+
+            }
+        });
+
+    }
+
+    private void getCurrentLocation() {
+        try {
+            // Request location updates
+            fusedLocationClient.getLastLocation()
+                    .addOnCompleteListener(new OnCompleteListener<Location>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Location> task) {
+                            if (task.isSuccessful() && task.getResult() != null) {
+                                Location location = task.getResult();
+                                Log.d(TAG, "Location: " + location.getLatitude() + ", " + location.getLongitude());
+
+                                // Use Places API to get address details
+                                getAddressFromLocation(location);
+                            } else {
+                                Log.w(TAG, "getLastLocation:exception", task.getException());
+                                Toast.makeText(ExpensesActivity.this, "Unable to get location", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+        } catch (SecurityException e) {
+            Log.e(TAG, "getCurrentLocation: security exception", e);
+            e.printStackTrace();
+        }
+    }
+
+    private void getAddressFromLocation(Location location) {
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        try {
+            List<Address> addresses = geocoder.getFromLocation(
+                    location.getLatitude(),
+                    location.getLongitude(),
+                    1);
+
+            if (!addresses.isEmpty()) {
+                Address address = addresses.get(0);
+                state = address.getAdminArea(); // State
+                city = address.getLocality(); // City
+                postalCode = address.getPostalCode(); // Postal code
+                countryCode = address.getCountryCode(); // Country code
+                country=address.getCountryName();
+
+                // Display or use these values as needed
+//                Toast.makeText(LeaveActivity.this,
+//                        "State: " + state + "\n" +
+//                                "City: " + city + "\n" +
+//                                "Postal Code: " + postalCode + "\n" +
+//                                "Country Code: " + countryCode,
+//                        Toast.LENGTH_LONG).show();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void generateOTP(String policy) {
+        final ProgressDialog progressDialog = new ProgressDialog(this, R.style.ProgressBarDialog);
+        progressDialog.setMessage("Please Wait...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        Policy_otp_send_interface policyOtpSendInterface = APIClient.getClient().create(Policy_otp_send_interface.class);
+        policyOtpSendInterface.sendotp(PreferenceManager.getEmpemail(this), PreferenceManager.getEmpID(this), policy).enqueue(new Callback<Policy_otp_send_Response>() {
+            @Override
+            public void onResponse(Call<Policy_otp_send_Response> call, Response<Policy_otp_send_Response> response) {
+                try {
+                    if (response.isSuccessful()) {
+
+                        if (response.body().getResponse().trim().equals("1")) {
+
+                            startTimer(120); // 120 seconds = 2 minutes
+                            rlsign_otp.setVisibility(View.VISIBLE);
+                            progressDialog.dismiss();
+
+
+                        } else {
+                            rlsign_otp.setVisibility(View.GONE);
+                            progressDialog.dismiss();
+                            Toast.makeText(ExpensesActivity.this, "Please Contact your admin.", Toast.LENGTH_LONG).show();
+                        }
+
+                    }
+
+                } catch (Exception e) {
+                    progressDialog.dismiss();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Policy_otp_send_Response> call, Throwable t) {
+                progressDialog.dismiss();
+
+            }
+        });
+    }
+
+
+    private void startTimer(int seconds) {
+        countOTPtimer_text.setVisibility(View.VISIBLE);
+        tvResendOTP.setVisibility(View.GONE);
+        tvverifyotp.setVisibility(View.VISIBLE);
+
+
+        countDownTimer = new CountDownTimer(seconds * 1000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                int secondsLeft = (int) (millisUntilFinished / 1000);
+                countOTPtimer_text.setText("OTP Time : " + secondsLeft + " seconds");
+            }
+
+            @Override
+            public void onFinish() {
+                countOTPtimer_text.setVisibility(View.GONE);
+                tvResendOTP.setVisibility(View.VISIBLE);
+                tvverifyotp.setVisibility(View.GONE);
+            }
+        }.start();
+    }
+
+
+
+    private void saveSignatureToDownloads(Context context, Bitmap bitmap, String fileName, String policy) {
+        // Check if the external storage is writable
+        String folderName = "MySignatures"; // Optional: Create a folder name within Downloads
+
+
+        // Get the Downloads directory
+        File downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+
+        // Optional: Create a subdirectory within Downloads
+        File folder = new File(downloadsDir, folderName);
+        if (!folder.exists()) {
+            folder.mkdirs(); // Create the directory if it does not exist
+        }
+
+        // Save the bitmap to a file
+        File file = new File(folder, fileName);
+        try {
+            OutputStream stream = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            stream.flush();
+            stream.close();
+
+            // Insert the image into the MediaStore
+            insertImageIntoMediaStore(context.getContentResolver(), file.getAbsolutePath(), fileName);
+
+            //Toast.makeText(context, "Signature saved to Downloads folder", Toast.LENGTH_SHORT).show();
+
+            // After saving locally, send the signature to server
+            sendSignatureToServer(file, policy);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(context, "Failed to save signature", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void insertImageIntoMediaStore(ContentResolver resolver, String imagePath, String imageName) {
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Images.Media.TITLE, imageName);
+        values.put(MediaStore.Images.Media.DISPLAY_NAME, imageName);
+        values.put(MediaStore.Images.Media.MIME_TYPE, "image/png");
+        values.put(MediaStore.Images.Media.DATE_ADDED, System.currentTimeMillis() / 1000);
+        values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis());
+
+        // Insert into MediaStore without setting _data
+        Uri uri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+        if (uri == null) {
+            Log.e("TAG", "Failed to insert image into MediaStore");
+            return;
+        }
+
+        try {
+            // Open an OutputStream to write data into the newly inserted image file
+            OutputStream outputStream = resolver.openOutputStream(uri);
+            if (outputStream != null) {
+                // Write the image data from the file into the OutputStream
+                File imageFile = new File(imagePath);
+                byte[] buffer = new byte[1024];
+                int bytesRead;
+                FileInputStream inputStream = new FileInputStream(imageFile);
+                while ((bytesRead = inputStream.read(buffer)) != -1) {
+                    outputStream.write(buffer, 0, bytesRead);
+                }
+                inputStream.close();
+                outputStream.close();
+            } else {
+                Log.e("TAG", "Failed to open OutputStream for MediaStore image URI");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.e("TAG", "IOException while writing image data to MediaStore");
+        }
+    }
+
+
+    private void sendSignatureToServer(File signatureFile, String policy) {
+        final ProgressDialog progressDialog = new ProgressDialog(this, R.style.ProgressBarDialog);
+        progressDialog.setMessage("Sign Uploading Please Wait...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        RequestBody requestFile = create(MediaType.parse("multipart/form-data"), signatureFile);
+        MultipartBody.Part file = MultipartBody.Part.createFormData("filename", signatureFile.getName(), requestFile);
+        RequestBody empid = create(MediaType.parse("text/plain"), PreferenceManager.getEmpID(this));
+        RequestBody policytitle = create(MediaType.parse("text/plain"), policy);
+        Sign_policy_upload_Interface signPolicyUploadInterface = APIClient.getClient().create(Sign_policy_upload_Interface.class);
+        signPolicyUploadInterface.upload(empid, policytitle, file).enqueue(new Callback<Sign_policy_upload_Response>() {
+            @Override
+            public void onResponse(Call<Sign_policy_upload_Response> call, Response<Sign_policy_upload_Response> response) {
+                try {
+                    if (response.isSuccessful()) {
+                        progressDialog.dismiss();
+                        if (response.body().getResponse().trim().equals("1")) {
+                            Toast.makeText(ExpensesActivity.this, "Sign Uploaded", Toast.LENGTH_SHORT).show();
+                            save_button.setVisibility(View.GONE);
+                        } else {
+                            Toast.makeText(ExpensesActivity.this, "Please Contact your admin", Toast.LENGTH_SHORT).show();
+                            save_button.setVisibility(View.VISIBLE);
+
+                        }
+
+                    } else {
+                        Toast.makeText(ExpensesActivity.this, "Please Contact your admin", Toast.LENGTH_SHORT).show();
+                        save_button.setVisibility(View.VISIBLE);
+
+                        progressDialog.dismiss();
+
+                    }
+
+                } catch (Exception e) {
+                    Toast.makeText(ExpensesActivity.this, "Please Contact your admin", Toast.LENGTH_SHORT).show();
+                    save_button.setVisibility(View.VISIBLE);
+
+                    progressDialog.dismiss();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Sign_policy_upload_Response> call, Throwable t) {
+                Toast.makeText(ExpensesActivity.this, "Please Contact your admin", Toast.LENGTH_SHORT).show();
+
+                progressDialog.dismiss();
+
+            }
+        });
     }
 
     private void callcheckWeekList() {
@@ -1966,5 +2472,9 @@ public class ExpensesActivity extends Activity {
 
         super.onDestroy();
         unregBroadcast();
+
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
     }
 }

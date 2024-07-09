@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:cardCornerRadius="10dp">
+        <RelativeLayout
+            android:id="@+id/rlview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:id="@+id/rlheadser"
+                android:background="@color/Cistronbasecolor"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tvserNoTag"
+                    android:layout_margin="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14dp"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/openssansbold"
+                    android:text="SERNO : "/>
+                <TextView
+                    android:id="@+id/tvserNo"
+                    android:layout_margin="8dp"
+                    android:layout_toRightOf="@id/tvserNoTag"
+                    android:layout_width="wrap_content"
+                    android:textSize="14dp"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/openssansbold"
+                    android:layout_height="wrap_content"
+                    android:text="2024041811RE261176"/>
+
+
+            </RelativeLayout>
+            <TextView
+                android:id="@+id/tvreturndateTag"
+                android:layout_below="@id/rlheadser"
+                android:layout_width="100dp"
+                android:layout_margin="8dp"
+                android:text="Returned Date : "
+                android:fontFamily="@font/openssanssemibold"
+                android:textColor="@color/Cistronbasecolor"
+                android:textSize="12dp"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/tvreturndate"
+                android:layout_below="@id/rlheadser"
+                android:layout_width="wrap_content"
+                android:layout_margin="8dp"
+                android:text="Returned Date : "
+                android:layout_toRightOf="@+id/tvreturndateTag"
+                android:fontFamily="@font/openssansreqular"
+                android:textColor="@color/DarkBrown"
+                android:textSize="12dp"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/tvreturnbyTag"
+                android:layout_below="@id/tvreturndate"
+                android:layout_width="100dp"
+                android:layout_margin="8dp"
+                android:text="Returned To      : "
+                android:fontFamily="@font/openssanssemibold"
+                android:textColor="@color/Cistronbasecolor"
+                android:textSize="12dp"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/tvreturnby"
+                android:layout_below="@id/tvreturndate"
+                android:layout_width="wrap_content"
+                android:layout_margin="8dp"
+                android:text="Returned Date : "
+                android:layout_toRightOf="@+id/tvreturnbyTag"
+                android:fontFamily="@font/openssansreqular"
+                android:textColor="@color/DarkBrown"
+                android:textSize="12dp"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/tvView"
+                android:layout_below="@id/tvreturnby"
+                android:layout_width="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_margin="8dp"
+                android:text="View \u27A0  "
+                android:fontFamily="@font/openssanssemibold"
+                android:textColor="@color/Cistronbasecolor"
+                android:textSize="16dp"
+                android:layout_height="wrap_content"/>
+
+
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+
+</RelativeLayout>

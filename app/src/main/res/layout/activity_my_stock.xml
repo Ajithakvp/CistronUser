@@ -38,7 +38,7 @@
 
 
         <ImageView
-            android:id="@+id/ivMore"
+            android:id="@+id/ivlist"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_centerInParent="true"
@@ -115,6 +115,54 @@
         android:visibility="gone"
         android:layout_below="@id/rlSearch"
         />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/conmove"
+        android:layout_width="match_parent"
+
+        android:layout_height="match_parent">
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/add_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/white"
+            android:text="View"
+            app:icon="@drawable/ic_baseline_list_alt_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabswap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:backgroundTint="@color/white"
+            app:fabSize="normal"
+            app:layout_constraintBottom_toTopOf="@+id/add_fab"
+            app:layout_constraintEnd_toEndOf="@+id/add_fab"
+            app:srcCompat="@drawable/swap" />
+
+        <TextView
+            android:id="@+id/tvswapview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/openssansbold"
+            android:textSize="16dp"
+            android:textColor="@color/gray80"
+            android:text="Swap List"
+            app:layout_constraintBottom_toBottomOf="@+id/fabswap"
+            app:layout_constraintEnd_toStartOf="@+id/fabswap"
+            app:layout_constraintTop_toTopOf="@+id/fabswap" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </RelativeLayout>

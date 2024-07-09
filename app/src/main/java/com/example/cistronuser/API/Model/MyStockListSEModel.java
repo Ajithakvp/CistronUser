@@ -14,6 +14,7 @@ public class MyStockListSEModel {
     //      "coord_qty": "0",
     //      "eng_qty": "0"
     //series
+    //   //      "s": "2"
 
 
     @SerializedName("label")
@@ -47,6 +48,8 @@ public class MyStockListSEModel {
     @SerializedName("series")
     private String series;
 
+    @SerializedName("s")
+    private String s;
 
     public String getSeries() {
         return series;
@@ -126,5 +129,13 @@ public class MyStockListSEModel {
 
     public void setQuantity(String quantity) {
         this.quantity = quantity;
+    }
+
+    public String getS() {
+        return s;
+    }
+
+    public void setS(String s) {
+        this.s = s;
     }
 }

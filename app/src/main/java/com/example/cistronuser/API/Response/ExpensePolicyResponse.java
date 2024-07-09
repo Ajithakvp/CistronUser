@@ -20,8 +20,19 @@ public class ExpensePolicyResponse
     @SerializedName("title")
     private String title;
 
+    @SerializedName("policy_ref")
+    private String policy_ref;
+
     @SerializedName("policy")
     private String policy;
+
+    public String getPolicy_ref() {
+        return policy_ref;
+    }
+
+    public void setPolicy_ref(String policy_ref) {
+        this.policy_ref = policy_ref;
+    }
 
     public String getCategory() {
         return category;

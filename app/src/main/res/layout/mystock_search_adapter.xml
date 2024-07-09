@@ -223,6 +223,35 @@
                     android:textSize="16dp" />
 
 
+                <TextView
+                    android:id="@+id/tvswapTag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvUnitPrice"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="25dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/openssansbold"
+                    android:text="Swap Spare"
+                    android:textColor="@color/gray80"
+                    android:textSize="16dp" />
+
+
+                <ImageView
+                    android:id="@+id/ivswapspare"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:tint="@color/DarkRed"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/tvswapTag"
+                    android:layout_marginRight="35dp"
+                    android:src="@drawable/swap"
+
+                    tools:ignore="UseAppTint" />
+
+
             </RelativeLayout>
 
 

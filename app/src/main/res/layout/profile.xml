@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/dialog_backgroud"
     android:layout_height="wrap_content">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:id="@+id/rlpolicy"
-        android:layout_margin="10dp"
         android:visibility="visible"
         android:layout_height="wrap_content">
 
@@ -20,18 +25,12 @@
         android:layout_marginEnd="10dp"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
-        android:fontFamily="@font/bold"
-        android:text=" Policy"
+        android:fontFamily="@font/openssansbold"
+        android:text=" Leave Policy"
         android:textColor="@color/Radio"
-        android:textSize="25dp" />
+        android:textSize="20dp" />
 
-    <CheckBox
-        android:id="@+id/cbname"
-        android:layout_below="@+id/tvHeader"
-        android:layout_marginLeft="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
+
 
     <TextView
         android:id="@+id/tvmsg"
@@ -42,14 +41,272 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:fontFamily="@font/latest"
+        android:fontFamily="@font/openssansreqular"
         android:textColor="@color/black"
-        android:layout_toRightOf="@id/cbname"
         android:text="name"
-        android:textSize="20dp" />
+        android:textSize="15dp" />
+
+        <CheckBox
+            android:id="@+id/cbname"
+            android:layout_below="@+id/tvmsg"
+            android:layout_marginLeft="10dp"
+            android:visibility="visible"
+            android:text="Agree"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+        <RelativeLayout
+            android:id="@+id/rlsign_otp"
+            android:layout_width="match_parent"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"
+            android:layout_below="@+id/cbname"
+            android:layout_height="wrap_content">
 
 
 
+
+        <RelativeLayout
+            android:id="@+id/rlsign"
+            android:layout_width="match_parent"
+            android:layout_marginTop="8dp"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Signature :"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:fontFamily="@font/openssansbold"
+                android:id="@+id/tvsignhead"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(*)"
+                android:layout_toRightOf="@id/tvsignhead"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/Radio"
+                android:textSize="13dp"
+                android:fontFamily="@font/openssansreqular"
+                android:id="@+id/tvsignheadrig"
+                />
+
+       <androidx.cardview.widget.CardView
+           android:layout_below="@+id/tvsignheadrig"
+           android:layout_marginTop="25dp"
+           android:id="@+id/cvsign"
+
+           android:layout_width="match_parent"
+           app:cardCornerRadius="10dp"
+           android:layout_height="wrap_content">
+
+        <com.github.gcacace.signaturepad.views.SignaturePad
+            android:id="@+id/signature_pad"
+            android:layout_width="match_parent"
+            android:backgroundTint="@color/AshGray"
+            android:layout_height="400dp"
+            android:background="@android:color/white"/>
+       </androidx.cardview.widget.CardView>
+
+        <LinearLayout
+            android:layout_below="@+id/cvsign"
+            android:id="@+id/buttons_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/clear_button"
+                android:layout_width="30dp"
+                android:background="@drawable/edittext"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:backgroundTint="@color/Radio"
+                android:layout_height="40dp"
+                android:textColor="@color/white"
+                android:layout_weight="1"
+                android:text="Clear" />
+
+            <TextView
+                android:id="@+id/save_button"
+                android:layout_width="30dp"
+                android:background="@drawable/edittext"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:backgroundTint="@color/Cistronbasecolor"
+                android:layout_height="40dp"
+                android:textColor="@color/white"
+                android:layout_weight="1"
+                android:text="Save" />
+        </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_below="@+id/rlsign"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="OTP :"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:fontFamily="@font/openssansbold"
+                android:id="@+id/tvotphead"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(An OTP will be sent to your email . Please check your inbox.)"
+                android:layout_toRightOf="@id/tvotphead"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/Radio"
+                android:textSize="13dp"
+                android:fontFamily="@font/openssansreqular"
+                android:id="@+id/tvotpheadrig"
+                />
+
+            <LinearLayout
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/tvotpheadrig"
+                android:orientation="vertical"
+                android:gravity="center">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Enter OTP"
+                android:textSize="24dp"
+                android:fontFamily="@font/openssansbold"
+                android:layout_marginBottom="16dp"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="16dp">
+
+                <EditText
+                    android:id="@+id/editText1"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:maxLength="1"
+                    android:inputType="number"
+                    android:gravity="center"
+                    android:textSize="24sp"
+                    android:background="@drawable/otp_design"
+                    android:layout_marginEnd="8dp"/>
+
+                <EditText
+                    android:id="@+id/editText2"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:maxLength="1"
+                    android:inputType="number"
+                    android:gravity="center"
+                    android:textSize="24sp"
+                    android:background="@drawable/otp_design"
+                    android:layout_marginEnd="8dp"/>
+
+                <EditText
+                    android:id="@+id/editText3"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:maxLength="1"
+                    android:inputType="number"
+                    android:gravity="center"
+                    android:textSize="24sp"
+                    android:background="@drawable/otp_design"
+                    android:layout_marginEnd="8dp"/>
+
+                <EditText
+                    android:id="@+id/editText4"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:maxLength="1"
+                    android:inputType="number"
+                    android:gravity="center"
+                    android:textSize="24sp"
+                    android:background="@drawable/otp_design"/>
+                <EditText
+                    android:id="@+id/editText5"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:maxLength="1"
+                    android:inputType="number"
+                    android:gravity="center"
+                    android:textSize="24sp"
+                    android:background="@drawable/otp_design"/>
+
+            </LinearLayout>
+
+                <TextView
+                    android:id="@+id/timer_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:textAlignment="center"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/tvResendOTP"
+                    android:layout_width="120dp"
+                    android:background="@drawable/edittext"
+                    android:layout_margin="10dp"
+                    android:visibility="gone"
+                    android:gravity="center"
+                    android:backgroundTint="@color/Cistronbasecolor"
+                    android:layout_height="40dp"
+                    android:textColor="@color/white"
+                    android:layout_weight="1"
+                    android:text="Resend OTP" />
+
+                <TextView
+                    android:id="@+id/tvverifyotp"
+                    android:layout_width="120dp"
+                    android:background="@drawable/edittext"
+                    android:layout_margin="10dp"
+                    android:gravity="center"
+                    android:backgroundTint="@color/DarkRed"
+                    android:layout_height="40dp"
+                    android:visibility="visible"
+                    android:textColor="@color/white"
+                    android:layout_weight="1"
+                    android:text="Verify OTP" />
+
+                <TextView
+                    android:id="@+id/tvsubmitpolicy"
+                    android:layout_width="120dp"
+                    android:background="@drawable/edittext"
+                    android:layout_margin="10dp"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    android:backgroundTint="@color/Cistronbasecolor"
+                    android:layout_height="40dp"
+                    android:textColor="@color/white"
+                    android:layout_weight="1"
+                    android:text="Submit" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        </RelativeLayout>
 
     <Button
         android:id="@+id/btSubmit"
@@ -58,7 +315,7 @@
         android:layout_below="@id/tvmsg"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="10dp"
-        android:visibility="visible"
+        android:visibility="gone"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/semibold"
         android:layout_marginEnd="10dp"
@@ -74,7 +331,7 @@
         android:layout_alignParentLeft="true"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:visibility="visible"
+        android:visibility="gone"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
         android:fontFamily="@font/semibold"
@@ -85,5 +342,6 @@
 
     </RelativeLayout>
 
+    </androidx.core.widget.NestedScrollView>
 
 </RelativeLayout>

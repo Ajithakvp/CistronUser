@@ -39,13 +39,15 @@ public class MainActivity extends AppCompatActivity {
     //  Spare List inward outward "cistron 2.1"
     //  Spare List partno searched "cistron 2.2"
     //  Customer feedback Upload "cistron 2.3"
+    //  swap inward ,swap outward , leave policy update 2.4"
 
 
 
 
 
 
-    String AppVersion = "cistron 2.3";
+
+    String AppVersion = "cistron 2.4";
     TextView tvVersion;
 
 

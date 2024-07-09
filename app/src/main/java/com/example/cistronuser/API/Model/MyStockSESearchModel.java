@@ -12,6 +12,7 @@ public class MyStockSESearchModel {
     //      "quantity": "1",
     //      "opt": "cspl"
     //,series
+    //      "s": "2"
 
     @SerializedName("label")
     private String label;
@@ -38,6 +39,9 @@ public class MyStockSESearchModel {
 
     @SerializedName("series")
     private String series;
+
+    @SerializedName("s")
+    private String s;
 
     public String getSeries() {
         return series;
@@ -125,5 +129,13 @@ public class MyStockSESearchModel {
 
     public void setOpt(String opt) {
         this.opt = opt;
+    }
+
+    public String getS() {
+        return s;
+    }
+
+    public void setS(String s) {
+        this.s = s;
     }
 }

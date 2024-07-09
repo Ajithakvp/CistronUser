@@ -58,7 +58,6 @@ public class WebviewPage extends AppCompatActivity {
 
             webview.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
             webview.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
-            webview.getSettings().setAppCacheEnabled(true);
             webview.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
             webview.getSettings().setDomStorageEnabled(true);
             webview.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);

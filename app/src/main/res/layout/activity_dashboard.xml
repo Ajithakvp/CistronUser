@@ -1374,6 +1374,7 @@
 
                             </RelativeLayout>
 
+<!--        Spare Inward-->
 
                             <RelativeLayout
                                 android:id="@+id/rlSpareInwardLayout"
@@ -1449,11 +1450,163 @@
                             </RelativeLayout>
 
 
+                            <!--        swap Inward-->
+
+                            <RelativeLayout
+                                android:id="@+id/rlSwapInwardLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="60dp"
+                                android:layout_below="@id/rlSpareInwardLayout"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="20dp"
+                                android:layout_marginRight="10dp"
+                                android:background="@drawable/cardview"
+                                android:backgroundTint="@color/white"
+                                android:visibility="gone">
+
+                                <ImageView
+                                    android:id="@+id/ivSwapInward"
+                                    android:layout_width="30dp"
+                                    android:layout_height="60dp"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="38dp"
+                                    android:src="@drawable/swap"
+                                    android:tint="@color/Cistronbasecolor"
+                                    tools:ignore="UseAppTint" />
+
+                                <TextView
+                                    android:id="@+id/tvSwapInward"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="17dp"
+                                    android:layout_toRightOf="@+id/ivSwapInward"
+                                    android:fontFamily="@font/semibold"
+                                    android:text="Swap Inward "
+                                    android:textColor="@color/Cistronbasecolor"
+                                    android:textSize="18dp" />
+
+
+                                <TextView
+                                    android:id="@+id/tvSwapInwardStart"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_toRightOf="@+id/tvSwapInward"
+                                    android:fontFamily="@font/semibold"
+                                    android:text="("
+                                    android:textColor="#C0C0C0"
+                                    android:textSize="18dp" />
+
+                                <TextView
+                                    android:id="@+id/tvSwapInwardCount"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_toRightOf="@+id/tvSwapInwardStart"
+                                    android:fontFamily="@font/bold"
+                                    android:textColor="#FF0000"
+                                    android:textSize="18dp" />
+
+                                <TextView
+                                    android:id="@+id/tvSwapInwardEnd"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_toRightOf="@+id/tvSwapInwardCount"
+                                    android:fontFamily="@font/semibold"
+                                    android:text=")"
+                                    android:textColor="#C0C0C0"
+                                    android:textSize="18dp" />
+
+
+                            </RelativeLayout>
+
+
+                            <!--        swap outward-->
+
+                            <RelativeLayout
+                                android:id="@+id/rlSwapOutwardLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="60dp"
+                                android:layout_below="@id/rlSwapInwardLayout"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="20dp"
+                                android:layout_marginRight="10dp"
+                                android:background="@drawable/cardview"
+                                android:backgroundTint="@color/white"
+                                android:visibility="gone">
+
+                                <ImageView
+                                    android:id="@+id/ivSwapOutward"
+                                    android:layout_width="30dp"
+                                    android:layout_height="60dp"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="38dp"
+                                    android:src="@drawable/swap"
+                                    android:tint="@color/Cistronbasecolor"
+                                    tools:ignore="UseAppTint" />
+
+                                <TextView
+                                    android:id="@+id/tvSwapOutward"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="17dp"
+                                    android:layout_toRightOf="@+id/ivSwapOutward"
+                                    android:fontFamily="@font/semibold"
+                                    android:text="Swap Outward "
+                                    android:textColor="@color/Cistronbasecolor"
+                                    android:textSize="18dp" />
+
+
+                                <TextView
+                                    android:id="@+id/tvSwapOutwardStart"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_toRightOf="@+id/tvSwapOutward"
+                                    android:fontFamily="@font/semibold"
+                                    android:text="("
+                                    android:textColor="#C0C0C0"
+                                    android:textSize="18dp" />
+
+                                <TextView
+                                    android:id="@+id/tvSwapOutwardCount"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_toRightOf="@+id/tvSwapOutwardStart"
+                                    android:fontFamily="@font/bold"
+                                    android:textColor="#FF0000"
+                                    android:textSize="18dp" />
+
+                                <TextView
+                                    android:id="@+id/tvSwapOutwardEnd"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_toRightOf="@+id/tvSwapOutwardCount"
+                                    android:fontFamily="@font/semibold"
+                                    android:text=")"
+                                    android:textColor="#C0C0C0"
+                                    android:textSize="18dp" />
+
+
+                            </RelativeLayout>
+
+
                             <RelativeLayout
                                 android:id="@+id/rlReturnReqPendingCoLayout"
                                 android:layout_width="match_parent"
                                 android:layout_height="60dp"
-                                android:layout_below="@id/rlSpareInwardLayout"
+                                android:layout_below="@id/rlSwapOutwardLayout"
                                 android:layout_marginLeft="10dp"
                                 android:layout_marginTop="20dp"
                                 android:layout_marginRight="10dp"

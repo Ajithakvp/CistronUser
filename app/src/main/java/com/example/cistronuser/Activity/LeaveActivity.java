@@ -3,11 +3,25 @@ package com.example.cistronuser.Activity;
 import static okhttp3.RequestBody.create;
 
 
+import com.example.cistronuser.API.Interface.Accept_policy_otp_interface;
 import com.example.cistronuser.API.Interface.DateDisableInterface;
+import com.example.cistronuser.API.Interface.Policy_otp_send_interface;
+import com.example.cistronuser.API.Interface.Sign_policy_upload_Interface;
+import com.example.cistronuser.API.Interface.Verfiy_otp_policy_interface;
 import com.example.cistronuser.API.Model.DateDisableModel;
+import com.example.cistronuser.API.Response.Accept_policy_otp_Response;
 import com.example.cistronuser.API.Response.DateDisableResponse;
+import com.example.cistronuser.API.Response.Policy_otp_send_Response;
+import com.example.cistronuser.API.Response.Sign_policy_upload_Response;
+import com.example.cistronuser.API.Response.Verfiy_otp_policy_Response;
+import com.github.gcacace.signaturepad.views.SignaturePad;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
+import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,24 +35,36 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.Uri;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -73,11 +99,16 @@ import com.example.cistronuser.R;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -185,8 +216,17 @@ public class LeaveActivity extends Activity {
     //AM(OR)PM
     LinearLayout rlHalfDay;
     RadioGroup rbGroup4;
-    RadioButton rbAM,rbPM;
+    RadioButton rbAM, rbPM;
     String AMorPM;
+
+    //Time count
+    CountDownTimer countDownTimer;
+    TextView countOTPtimer_text, tvResendOTP;
+    RelativeLayout rlsign_otp;
+    TextView clear_button, save_button, tvverifyotp, tvsubmitpolicy;
+    Context context;
+    private FusedLocationProviderClient fusedLocationClient;
+    String state ,city ,postalCode , countryCode,country ;
 
 
     @SuppressLint("MissingInflatedId")
@@ -795,6 +835,7 @@ public class LeaveActivity extends Activity {
                             final Dialog dialog = new Dialog(LeaveActivity.this);
                             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                             dialog.setCancelable(false);
                             dialog.setContentView(R.layout.profile);
                             tvmsg = dialog.findViewById(R.id.tvmsg);
@@ -802,16 +843,191 @@ public class LeaveActivity extends Activity {
                             CheckBox checkBox = dialog.findViewById(R.id.cbname);
                             Button button = dialog.findViewById(R.id.btSubmit);
                             Button btClose = dialog.findViewById(R.id.btClose);
-
+                            SignaturePad signaturePad = dialog.findViewById(R.id.signature_pad);
+                            clear_button = dialog.findViewById(R.id.clear_button);
+                            save_button = dialog.findViewById(R.id.save_button);
+                            rlsign_otp = dialog.findViewById(R.id.rlsign_otp);
+                            countOTPtimer_text = dialog.findViewById(R.id.timer_text);
+                            tvResendOTP = dialog.findViewById(R.id.tvResendOTP);
+                            tvverifyotp = dialog.findViewById(R.id.tvverifyotp);
+                            tvsubmitpolicy = dialog.findViewById(R.id.tvsubmitpolicy);
+                            EditText editText1 = dialog.findViewById(R.id.editText1);
+                            EditText editText2 = dialog.findViewById(R.id.editText2);
+                            EditText editText3 = dialog.findViewById(R.id.editText3);
+                            EditText editText4 = dialog.findViewById(R.id.editText4);
+                            EditText editText5 = dialog.findViewById(R.id.editText5);
 
                             rlmsg.setVisibility(View.GONE);
+                            clear_button.setVisibility(View.GONE);
+                            save_button.setVisibility(View.GONE);
                             rlcardatted.setVisibility(View.VISIBLE);
                             ivAdd.setVisibility(View.VISIBLE);
                             ivdetails.setVisibility(View.VISIBLE);
 
+                            if (response.body().getMessage().trim().equals("Please Contact your admin")) {
+                                checkBox.setVisibility(View.GONE);
+                            } else {
+                                checkBox.setVisibility(View.VISIBLE);
+
+                            }
+
+                            //*****  Ip Address ******//
+                            context = getApplicationContext();
+                            WifiManager wifiMan = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+                            WifiInfo wifiInf = wifiMan.getConnectionInfo();
+                            int ipAddress = wifiInf.getIpAddress();
+                            String ip = String.format("%d.%d.%d.%d", (ipAddress & 0xff), (ipAddress >> 8 & 0xff), (ipAddress >> 16 & 0xff), (ipAddress >> 24 & 0xff));
+                            //  Log.e(TAG, "onCreate: "+ip );
+                            //*****  Ip Address End ******//
+
+
+                            //****************location ****************//
+                            // Initialize FusedLocationProviderClient
+                            fusedLocationClient = LocationServices.getFusedLocationProviderClient(LeaveActivity.this);
+                            getCurrentLocation();
+
+
 
                             tvmsg.setText(response.body().getMessage());
-                            tvHeader.setText(response.body().getCategory());
+                            tvHeader.setText(response.body().getTitle());
+
+
+                            signaturePad.setOnSignedListener(new SignaturePad.OnSignedListener() {
+                                @Override
+                                public void onStartSigning() {
+                                    // Called when the user starts signing
+                                }
+
+                                @Override
+                                public void onSigned() {
+                                    // Called when the user finishes signing
+                                    clear_button.setVisibility(View.VISIBLE);
+                                    save_button.setVisibility(View.VISIBLE);
+
+                                }
+
+                                @Override
+                                public void onClear() {
+                                    // Called when the pad is cleared
+                                    clear_button.setVisibility(View.GONE);
+                                    save_button.setVisibility(View.GONE);
+
+                                }
+                            });
+
+
+                            clear_button.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    signaturePad.clear();
+                                }
+                            });
+
+                            save_button.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Bitmap signatureBitmap = signaturePad.getSignatureBitmap();
+                                    saveSignatureToDownloads(LeaveActivity.this, signatureBitmap, "signature11.png", response.body().getPolicy());
+
+
+                                }
+                            });
+
+                            tvResendOTP.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                    try {
+                                        editText1.setText("");
+                                        editText2.setText("");
+                                        editText3.setText("");
+                                        editText4.setText("");
+                                        editText5.setText("");
+
+                                        generateOTP(response.body().getPolicy());
+                                    } catch (Exception e) {
+                                    }
+                                }
+                            });
+
+                            tvsubmitpolicy.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    callacceptpolicy(ip,response.body().getPolicy(),dialog);
+                                }
+                            });
+
+                            tvverifyotp.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                    String chk1 = editText1.getText().toString().trim();
+                                    String chk2 = editText2.getText().toString().trim();
+                                    String chk3 = editText3.getText().toString().trim();
+                                    String chk4 = editText4.getText().toString().trim();
+                                    String chk5 = editText5.getText().toString().trim();
+
+                                    String otpcheck = chk1.toString() + chk2.toString() + chk3.toString() + chk4.toString() + chk5.toString();
+
+
+                                    if(otpcheck.trim().equals("")){
+                                        Toast.makeText(context, "Please enter the otp", Toast.LENGTH_SHORT).show();
+                                    }else {
+
+                                        final ProgressDialog progressDialog = new ProgressDialog(LeaveActivity.this, R.style.ProgressBarDialog);
+                                        progressDialog.setMessage("Please Wait...");
+                                        progressDialog.setCancelable(false);
+                                        progressDialog.show();
+                                        Verfiy_otp_policy_interface verfiyOtpPolicyInterface = APIClient.getClient().create(Verfiy_otp_policy_interface.class);
+                                        verfiyOtpPolicyInterface.verfotp(otpcheck.toString(), PreferenceManager.getEmpID(LeaveActivity.this), response.body().getPolicy()).enqueue(new Callback<Verfiy_otp_policy_Response>() {
+                                            @Override
+                                            public void onResponse(Call<Verfiy_otp_policy_Response> call, Response<Verfiy_otp_policy_Response> response) {
+
+                                                try {
+
+
+                                                    if (response.isSuccessful()) {
+                                                        progressDialog.dismiss();
+                                                        if (response.body().getResponse().trim().equals("1")) {
+                                                            Toast.makeText(LeaveActivity.this, "OTP is Matched", Toast.LENGTH_SHORT).show();
+                                                            tvverifyotp.setVisibility(View.GONE);
+                                                            tvsubmitpolicy.setVisibility(View.VISIBLE);
+                                                            tvResendOTP.setVisibility(View.GONE);
+                                                            countOTPtimer_text.setVisibility(View.GONE);
+
+
+                                                        } else {
+                                                            Toast.makeText(LeaveActivity.this, "OTP is not Match", Toast.LENGTH_SHORT).show();
+                                                            tvverifyotp.setVisibility(View.VISIBLE);
+                                                            tvsubmitpolicy.setVisibility(View.GONE);
+                                                        }
+                                                    } else {
+                                                        progressDialog.dismiss();
+
+                                                        tvverifyotp.setVisibility(View.VISIBLE);
+                                                        tvsubmitpolicy.setVisibility(View.GONE);
+                                                    }
+                                                } catch (Exception e) {
+                                                    progressDialog.dismiss();
+
+                                                }
+
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call<Verfiy_otp_policy_Response> call, Throwable t) {
+                                                progressDialog.dismiss();
+
+                                                tvverifyotp.setVisibility(View.VISIBLE);
+                                                tvsubmitpolicy.setVisibility(View.GONE);
+
+                                            }
+                                        });
+                                    }
+                                }
+                            });
+
+                            // Initially disable buttons since there's no signature
 
                             checkBox.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -820,34 +1036,42 @@ public class LeaveActivity extends Activity {
 
                                     if (checked) {
 
-                                        button.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-                                                LeavePolicyInterface leavePolicyInterface = APIClient.getClient().create(LeavePolicyInterface.class);
-                                                leavePolicyInterface.callleavepolicy(empid, "confirmLeavePolicy").enqueue(new Callback<LeavePolicyResponse>() {
-                                                    @Override
-                                                    public void onResponse(Call<LeavePolicyResponse> call, Response<LeavePolicyResponse> response) {
-                                                        if (response.isSuccessful()) {
+                                        try {
+                                            generateOTP(response.body().getPolicy());
+                                        } catch (Exception e) {
+                                        }
 
-
-                                                            Toast.makeText(LeaveActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-
-                                                            dialog.dismiss();
-
-
-                                                        }
-                                                    }
-
-                                                    @Override
-                                                    public void onFailure(Call<LeavePolicyResponse> call, Throwable t) {
-
-                                                    }
-                                                });
-                                            }
-                                        });
+                                        //Remove this update
+//                                        button.setOnClickListener(new View.OnClickListener() {
+//                                            @Override
+//                                            public void onClick(View v) {
+//                                                LeavePolicyInterface leavePolicyInterface = APIClient.getClient().create(LeavePolicyInterface.class);
+//                                                leavePolicyInterface.callleavepolicy(empid, "confirmLeavePolicy").enqueue(new Callback<LeavePolicyResponse>() {
+//                                                    @Override
+//                                                    public void onResponse(Call<LeavePolicyResponse> call, Response<LeavePolicyResponse> response) {
+//                                                        if (response.isSuccessful()) {
+//
+//
+//                                                            Toast.makeText(LeaveActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+//
+//                                                            dialog.dismiss();
+//
+//
+//                                                        }
+//                                                    }
+//
+//                                                    @Override
+//                                                    public void onFailure(Call<LeavePolicyResponse> call, Throwable t) {
+//
+//                                                    }
+//                                                });
+//                                            }
+//                                        });
+                                        //Remove this update
 
                                     } else {
-                                        Toast.makeText(LeaveActivity.this, "Policy Check", Toast.LENGTH_SHORT).show();
+                                        rlsign_otp.setVisibility(View.GONE);
+//                                        Toast.makeText(LeaveActivity.this, "Read the policy", Toast.LENGTH_SHORT).show();
 
                                     }
                                 }
@@ -856,13 +1080,13 @@ public class LeaveActivity extends Activity {
 
                             dialog.show();
 
-                            btClose.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    dialog.dismiss();
-                                    onBackPressed();
-                                }
-                            });
+//                            btClose.setOnClickListener(new View.OnClickListener() {
+//                                @Override
+//                                public void onClick(View v) {
+//                                    dialog.dismiss();
+//                                    onBackPressed();
+//                                }
+//                            });
 //
                         } else if (response.body().getCategory().trim().equals("leave form")) {
                             //Toast.makeText(LeaveActivity.this, response.body().getCategory(), Toast.LENGTH_SHORT).show();
@@ -882,6 +1106,302 @@ public class LeaveActivity extends Activity {
 
             @Override
             public void onFailure(Call<LeavePolicyResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void callacceptpolicy(String ip, String policy, Dialog dialog) {
+        final ProgressDialog progressDialog = new ProgressDialog(this, R.style.ProgressBarDialog);
+        progressDialog.setMessage("Please Wait...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        Accept_policy_otp_interface acceptPolicyOtpInterface=APIClient.getClient().create(Accept_policy_otp_interface.class);
+        acceptPolicyOtpInterface.accptotp(ip,PreferenceManager.getEmpID(this),policy,state,countryCode,city,country,postalCode).enqueue(new Callback<Accept_policy_otp_Response>() {
+            @Override
+            public void onResponse(Call<Accept_policy_otp_Response> call, Response<Accept_policy_otp_Response> response) {
+                try {
+                    if(response.isSuccessful()){
+                        progressDialog.dismiss();
+                        if(response.body().getResponse().trim().equals("1")){
+                            Toast.makeText(context, "Policy accepted", Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
+                        }else if(response.body().getResponse().trim().equals("2")){
+                            Toast.makeText(context, "Please write your sign.", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(context, "Please Contact your Admin", Toast.LENGTH_SHORT).show();
+                        }
+                    }else{
+                        progressDialog.dismiss();
+
+                        Toast.makeText(context, "Please Contact your Admin", Toast.LENGTH_SHORT).show();
+
+                    }
+
+                }catch (Exception e){
+                    progressDialog.dismiss();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Accept_policy_otp_Response> call, Throwable t) {
+                progressDialog.dismiss();
+
+            }
+        });
+
+    }
+
+    private void getCurrentLocation() {
+        try {
+            // Request location updates
+            fusedLocationClient.getLastLocation()
+                    .addOnCompleteListener(new OnCompleteListener<Location>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Location> task) {
+                            if (task.isSuccessful() && task.getResult() != null) {
+                                Location location = task.getResult();
+                                Log.d(TAG, "Location: " + location.getLatitude() + ", " + location.getLongitude());
+
+                                // Use Places API to get address details
+                                getAddressFromLocation(location);
+                            } else {
+                                Log.w(TAG, "getLastLocation:exception", task.getException());
+                                Toast.makeText(LeaveActivity.this, "Unable to get location", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+        } catch (SecurityException e) {
+            Log.e(TAG, "getCurrentLocation: security exception", e);
+            e.printStackTrace();
+        }
+    }
+
+    private void getAddressFromLocation(Location location) {
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        try {
+            List<Address> addresses = geocoder.getFromLocation(
+                    location.getLatitude(),
+                    location.getLongitude(),
+                    1);
+
+            if (!addresses.isEmpty()) {
+                Address address = addresses.get(0);
+                 state = address.getAdminArea(); // State
+                 city = address.getLocality(); // City
+                 postalCode = address.getPostalCode(); // Postal code
+                 countryCode = address.getCountryCode(); // Country code
+                country=address.getCountryName();
+
+                // Display or use these values as needed
+//                Toast.makeText(LeaveActivity.this,
+//                        "State: " + state + "\n" +
+//                                "City: " + city + "\n" +
+//                                "Postal Code: " + postalCode + "\n" +
+//                                "Country Code: " + countryCode,
+//                        Toast.LENGTH_LONG).show();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void generateOTP(String policy) {
+        final ProgressDialog progressDialog = new ProgressDialog(this, R.style.ProgressBarDialog);
+        progressDialog.setMessage("Please Wait...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        Policy_otp_send_interface policyOtpSendInterface = APIClient.getClient().create(Policy_otp_send_interface.class);
+        policyOtpSendInterface.sendotp(PreferenceManager.getEmpemail(this), PreferenceManager.getEmpID(this), policy).enqueue(new Callback<Policy_otp_send_Response>() {
+            @Override
+            public void onResponse(Call<Policy_otp_send_Response> call, Response<Policy_otp_send_Response> response) {
+                try {
+                    if (response.isSuccessful()) {
+
+                        if (response.body().getResponse().trim().equals("1")) {
+
+                            startTimer(120); // 120 seconds = 2 minutes
+                            rlsign_otp.setVisibility(View.VISIBLE);
+                            progressDialog.dismiss();
+
+
+                        } else {
+                            rlsign_otp.setVisibility(View.GONE);
+                            progressDialog.dismiss();
+                            Toast.makeText(LeaveActivity.this, "Please Contact your admin.", Toast.LENGTH_LONG).show();
+                        }
+
+                    }
+
+                } catch (Exception e) {
+                    progressDialog.dismiss();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Policy_otp_send_Response> call, Throwable t) {
+                progressDialog.dismiss();
+
+            }
+        });
+    }
+
+
+    private void startTimer(int seconds) {
+        countOTPtimer_text.setVisibility(View.VISIBLE);
+        tvResendOTP.setVisibility(View.GONE);
+        tvverifyotp.setVisibility(View.VISIBLE);
+
+
+        countDownTimer = new CountDownTimer(seconds * 1000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                int secondsLeft = (int) (millisUntilFinished / 1000);
+                countOTPtimer_text.setText("OTP Time : " + secondsLeft + " seconds");
+            }
+
+            @Override
+            public void onFinish() {
+                countOTPtimer_text.setVisibility(View.GONE);
+                tvResendOTP.setVisibility(View.VISIBLE);
+                tvverifyotp.setVisibility(View.GONE);
+            }
+        }.start();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
+    }
+
+
+    private void saveSignatureToDownloads(Context context, Bitmap bitmap, String fileName, String policy) {
+        // Check if the external storage is writable
+        String folderName = "MySignatures"; // Optional: Create a folder name within Downloads
+
+
+        // Get the Downloads directory
+        File downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+
+        // Optional: Create a subdirectory within Downloads
+        File folder = new File(downloadsDir, folderName);
+        if (!folder.exists()) {
+            folder.mkdirs(); // Create the directory if it does not exist
+        }
+
+        // Save the bitmap to a file
+        File file = new File(folder, fileName);
+        try {
+            OutputStream stream = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            stream.flush();
+            stream.close();
+
+            // Insert the image into the MediaStore
+            insertImageIntoMediaStore(context.getContentResolver(), file.getAbsolutePath(), fileName);
+
+            //Toast.makeText(context, "Signature saved to Downloads folder", Toast.LENGTH_SHORT).show();
+
+            // After saving locally, send the signature to server
+            sendSignatureToServer(file, policy);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(context, "Failed to save signature", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void insertImageIntoMediaStore(ContentResolver resolver, String imagePath, String imageName) {
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Images.Media.TITLE, imageName);
+        values.put(MediaStore.Images.Media.DISPLAY_NAME, imageName);
+        values.put(MediaStore.Images.Media.MIME_TYPE, "image/png");
+        values.put(MediaStore.Images.Media.DATE_ADDED, System.currentTimeMillis() / 1000);
+        values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis());
+
+        // Insert into MediaStore without setting _data
+        Uri uri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+        if (uri == null) {
+            Log.e("TAG", "Failed to insert image into MediaStore");
+            return;
+        }
+
+        try {
+            // Open an OutputStream to write data into the newly inserted image file
+            OutputStream outputStream = resolver.openOutputStream(uri);
+            if (outputStream != null) {
+                // Write the image data from the file into the OutputStream
+                File imageFile = new File(imagePath);
+                byte[] buffer = new byte[1024];
+                int bytesRead;
+                FileInputStream inputStream = new FileInputStream(imageFile);
+                while ((bytesRead = inputStream.read(buffer)) != -1) {
+                    outputStream.write(buffer, 0, bytesRead);
+                }
+                inputStream.close();
+                outputStream.close();
+            } else {
+                Log.e("TAG", "Failed to open OutputStream for MediaStore image URI");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.e("TAG", "IOException while writing image data to MediaStore");
+        }
+    }
+
+
+    private void sendSignatureToServer(File signatureFile, String policy) {
+        final ProgressDialog progressDialog = new ProgressDialog(this, R.style.ProgressBarDialog);
+        progressDialog.setMessage("Sign Uploading Please Wait...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        RequestBody requestFile = create(MediaType.parse("multipart/form-data"), signatureFile);
+        MultipartBody.Part file = MultipartBody.Part.createFormData("filename", signatureFile.getName(), requestFile);
+        RequestBody empid = create(MediaType.parse("text/plain"), PreferenceManager.getEmpID(this));
+        RequestBody policytitle = create(MediaType.parse("text/plain"), policy);
+        Sign_policy_upload_Interface signPolicyUploadInterface = APIClient.getClient().create(Sign_policy_upload_Interface.class);
+        signPolicyUploadInterface.upload(empid, policytitle, file).enqueue(new Callback<Sign_policy_upload_Response>() {
+            @Override
+            public void onResponse(Call<Sign_policy_upload_Response> call, Response<Sign_policy_upload_Response> response) {
+                try {
+                    if (response.isSuccessful()) {
+                        progressDialog.dismiss();
+                        if (response.body().getResponse().trim().equals("1")) {
+                            Toast.makeText(LeaveActivity.this, "Sign Uploaded", Toast.LENGTH_SHORT).show();
+                            save_button.setVisibility(View.GONE);
+                        } else {
+                            Toast.makeText(LeaveActivity.this, "Please Contact your admin", Toast.LENGTH_SHORT).show();
+                            save_button.setVisibility(View.VISIBLE);
+
+                        }
+
+                    } else {
+                        Toast.makeText(LeaveActivity.this, "Please Contact your admin", Toast.LENGTH_SHORT).show();
+                        save_button.setVisibility(View.VISIBLE);
+
+                        progressDialog.dismiss();
+
+                    }
+
+                } catch (Exception e) {
+                    Toast.makeText(LeaveActivity.this, "Please Contact your admin", Toast.LENGTH_SHORT).show();
+                    save_button.setVisibility(View.VISIBLE);
+
+                    progressDialog.dismiss();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Sign_policy_upload_Response> call, Throwable t) {
+                Toast.makeText(LeaveActivity.this, "Please Contact your admin", Toast.LENGTH_SHORT).show();
+
+                progressDialog.dismiss();
 
             }
         });
@@ -1079,12 +1599,12 @@ public class LeaveActivity extends Activity {
                 int rb4 = rbGroup4.indexOfChild(gb4);
                 switch (rb4) {
                     case 0:
-                        AMorPM="AM";
+                        AMorPM = "AM";
                         break;
 
                     case 1:
 
-                        AMorPM="PM";
+                        AMorPM = "PM";
 
                         break;
                 }
@@ -1101,7 +1621,7 @@ public class LeaveActivity extends Activity {
                     case 0:
                         // Toast.makeText(LeaveActivity.this, "full day", Toast.LENGTH_SHORT).show();
                         day = 0;
-                        AMorPM="";
+                        AMorPM = "";
                         rlHalfDay.setVisibility(View.GONE);
 
                         break;
@@ -1201,7 +1721,7 @@ public class LeaveActivity extends Activity {
                             if (response.isSuccessful()) {
                                 progressDialog.dismiss();
                                 //Log.e(TAG, "onResponse: "+response.body().getDateDisableModels().size() );
-                                 callDate();
+                                callDate();
                                 //  date();
 
                                 if (response.body().getDateDisableModels().size() > 0) {
@@ -1222,7 +1742,7 @@ public class LeaveActivity extends Activity {
                                     }
 
                                 }
-                            }else {
+                            } else {
                                 progressDialog.dismiss();
                             }
 
@@ -1243,8 +1763,6 @@ public class LeaveActivity extends Activity {
 
                     }
                 });
-
-
 
 
             }
@@ -1272,7 +1790,7 @@ public class LeaveActivity extends Activity {
                         Toast.makeText(LeaveActivity.this, "Select half day or full day", Toast.LENGTH_SHORT).show();
                         rbHalfday.requestFocus();
                         isfilled = false;
-                    }else if (day==1) {
+                    } else if (day == 1) {
                         if (rbGroup4.getCheckedRadioButtonId() == -1) {
                             Toast.makeText(LeaveActivity.this, "Select AM or PM", Toast.LENGTH_SHORT).show();
                             rbPM.requestFocus();
@@ -1332,7 +1850,7 @@ public class LeaveActivity extends Activity {
         MultipartBody.Part file = MultipartBody.Part.createFormData("file_in", filename.getName(), requestFile);
         RequestBody action = create(MediaType.parse("text/plain"), "applyLeave");
         RequestBody empid = create(MediaType.parse("text/plain"), PreferenceManager.getEmpID(this));
-        RequestBody AMPM = create(MediaType.parse("text/plain"),AMorPM);
+        RequestBody AMPM = create(MediaType.parse("text/plain"), AMorPM);
         RequestBody code = create(MediaType.parse("text/plain"), String.valueOf(clmlpl));
         RequestBody reasonid = create(MediaType.parse("text/plain"), String.valueOf(reason));
         RequestBody date = create(MediaType.parse("text/plain"), tvDate.getText().toString());
@@ -1341,7 +1859,7 @@ public class LeaveActivity extends Activity {
         RequestBody COMPOFF = create(MediaType.parse("text/plain"), String.valueOf(compoff));
 
 
-        leaveSubmitForm.callLeaveformsubmitWithDocumentAPI(action, empid,AMPM,code, reasonid, date, fhhd, LOP, COMPOFF, file).enqueue(new Callback<leavesubmitresponse>() {
+        leaveSubmitForm.callLeaveformsubmitWithDocumentAPI(action, empid, AMPM, code, reasonid, date, fhhd, LOP, COMPOFF, file).enqueue(new Callback<leavesubmitresponse>() {
             @Override
             public void onResponse(Call<leavesubmitresponse> call, Response<leavesubmitresponse> response) {
 
@@ -1386,7 +1904,7 @@ public class LeaveActivity extends Activity {
         else {
             clmlpl = rbLcl.isChecked() ? 1 : (rbMl.isChecked() ? 3 : (rbPl.isChecked() ? 2 : 0));
         }
-        leaveSubmitForm.callLeaveformsubmit("applyLeave", empid,AMorPM,clmlpl, reason, tvDate.getText().toString(), day, lop, compoff, String.valueOf(filename)).enqueue(new Callback<leavesubmitresponse>() {
+        leaveSubmitForm.callLeaveformsubmit("applyLeave", empid, AMorPM, clmlpl, reason, tvDate.getText().toString(), day, lop, compoff, String.valueOf(filename)).enqueue(new Callback<leavesubmitresponse>() {
             @Override
             public void onResponse(Call<leavesubmitresponse> call, Response<leavesubmitresponse> response) {
                 try {
@@ -1668,8 +2186,6 @@ public class LeaveActivity extends Activity {
             }
 
         });
-
-
 
 
         datePickerDialog.show(getFragmentManager(), "Leave Date");

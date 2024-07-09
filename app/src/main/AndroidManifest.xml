@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.cistronuser">
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -22,7 +25,9 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+    <uses-permission
+        android:name="android.permission.USE_EXACT_ALARM"
+        tools:ignore="ExactAlarm" />
 
     <application
         android:allowBackup="true"
@@ -35,7 +40,13 @@
         android:theme="@style/Theme.CistronUser"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup"
-        tools:targetApi="31">
+        tools:targetApi="32">
+        <activity
+            android:name=".ServiceEngineer.Activity.SwapOutwardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ServiceEngineer.Activity.SwapInwardActivity"
+            android:exported="false" />
         <activity
             android:name=".ServiceEngineer.Activity.Fileupload_fb"
             android:exported="false" />

@@ -47,6 +47,7 @@ import com.example.cistronuser.API.Interface.FeedbackCountInterface;
 import com.example.cistronuser.API.Interface.LeaveApprovelCountInterface;
 import com.example.cistronuser.API.Interface.LogoutInterFace;
 import com.example.cistronuser.API.Interface.SalesQuoteApprovalCountInterFace;
+import com.example.cistronuser.API.Interface.SwapCountInterface;
 import com.example.cistronuser.API.Interface.UpcomingCallListInterface;
 import com.example.cistronuser.API.Model.LoginuserModel;
 import com.example.cistronuser.API.Model.UpcomingCallListModel;
@@ -57,6 +58,7 @@ import com.example.cistronuser.API.Response.FeedbackCountResponse;
 import com.example.cistronuser.API.Response.LeaveApprovelCountResponse;
 import com.example.cistronuser.API.Response.LogoutResponse;
 import com.example.cistronuser.API.Response.SalesQuoteApprovalCountResponse;
+import com.example.cistronuser.API.Response.SwapCountResponse;
 import com.example.cistronuser.API.Response.UpcomingCallListResponse;
 import com.example.cistronuser.API.Response.WaitingExpenseCountInterface;
 import com.example.cistronuser.Common.BroadCastReceiver;
@@ -82,6 +84,8 @@ import com.example.cistronuser.ServiceEngineer.Activity.Pendingcall_Feedback;
 import com.example.cistronuser.ServiceEngineer.Activity.ReturnReqPendingCoActivity;
 import com.example.cistronuser.ServiceEngineer.Activity.SpareInwardActivity;
 import com.example.cistronuser.ServiceEngineer.Activity.SpareReqPendingCOActivity;
+import com.example.cistronuser.ServiceEngineer.Activity.SwapInwardActivity;
+import com.example.cistronuser.ServiceEngineer.Activity.SwapOutwardActivity;
 import com.example.cistronuser.ServiceEngineer.Activity.UpComingCallActivity;
 import com.example.cistronuser.ServiceEngineer.Activity.UpcomingCallReport;
 import com.example.cistronuser.WaitingforApprovel.Activity.CompOffRequest;
@@ -139,7 +143,7 @@ public class DashboardActivity extends Activity {
 
     //Service
     RelativeLayout rlPendingingCallfbLayout, rlUpcomingCallLayout, rlPendingingCallLayout, rlCurrentCallLayout
-            ,rlMyStockLayout,rlCreateSpareReqLayout,rlSpareRequestPendingCoLayout, rlSpareInwardLayout, rlReturnReqPendingCoLayout;
+            ,rlMyStockLayout,rlCreateSpareReqLayout,rlSpareRequestPendingCoLayout, rlSpareInwardLayout, rlReturnReqPendingCoLayout,rlSwapInwardLayout,rlSwapOutwardLayout;
     TextView tvPendingCallfbCount,tvSpareInwardCount,tvMyStockCount, tvSpareRequestPendingCoCount, tvReturnReqPendingCoCount, tvCurrentCallCount;
 
     // Service Ui Change
@@ -149,7 +153,7 @@ public class DashboardActivity extends Activity {
 
     //Report
     RelativeLayout rlHolidaylayout, rlUserListLayout, rlExpenseReport, rlrlAttendaceReport, rlrlLeaveReport, rlService, rlWaitingLeaveRequest, rlWaitingCompOFfRequest, rlQuoteReport;
-    TextView tvwaitingCountExpense, tvCountLeaveReq, tvCountCompOffReq, tvWaitingCountSalesQuote, tvUpcomingCallCount, tvPendingCallCount;
+    TextView tvwaitingCountExpense, tvCountLeaveReq, tvCountCompOffReq, tvWaitingCountSalesQuote, tvUpcomingCallCount, tvPendingCallCount,tvSwapInwardCount,tvSwapOutwardCount;
 
     Context context;
 
@@ -184,6 +188,9 @@ public class DashboardActivity extends Activity {
         //Feedback Count
         callFeedbackcount();
 
+        //Swap count
+        CallswapCount();
+
 
     }
 
@@ -209,6 +216,9 @@ public class DashboardActivity extends Activity {
 
         //Feedback Count
         callFeedbackcount();
+
+        //Swap count
+        CallswapCount();
 
     }
 
@@ -273,6 +283,10 @@ public class DashboardActivity extends Activity {
         rlSpareLayout=findViewById(R.id.rlSpareLayout);
         ivSpareUp=findViewById(R.id.ivSpareUp);
         ivSpareDown=findViewById(R.id.ivSpareDown);
+        rlSwapInwardLayout=findViewById(R.id.rlSwapInwardLayout);
+        rlSwapOutwardLayout=findViewById(R.id.rlSwapOutwardLayout);
+        tvSwapInwardCount=findViewById(R.id.tvSwapInwardCount);
+        tvSwapOutwardCount=findViewById(R.id.tvSwapOutwardCount);
 
         rlVisitEntryReportLayout = findViewById(R.id.rlVisitEntryReportLayout);
         cvVisitEntry = findViewById(R.id.cvVisitEntry);
@@ -341,6 +355,8 @@ public class DashboardActivity extends Activity {
                     rlReturnReqPendingCoLayout.setVisibility(View.VISIBLE);
                     rlSpareRequestPendingCoLayout.setVisibility(View.VISIBLE);
                     rlSpareInwardLayout.setVisibility(View.VISIBLE);
+                    rlSwapInwardLayout.setVisibility(View.VISIBLE);
+                    rlSwapOutwardLayout.setVisibility(View.VISIBLE);
                     clickCheck=false;
                 }else {
                     ivSpareDown.setVisibility(View.GONE);
@@ -350,6 +366,9 @@ public class DashboardActivity extends Activity {
                     rlReturnReqPendingCoLayout.setVisibility(View.GONE);
                     rlSpareRequestPendingCoLayout.setVisibility(View.GONE);
                     rlSpareInwardLayout.setVisibility(View.GONE);
+                    rlSwapInwardLayout.setVisibility(View.GONE);
+                    rlSwapOutwardLayout.setVisibility(View.GONE);
+
                     clickCheck=true;
                 }
 
@@ -479,6 +498,8 @@ public class DashboardActivity extends Activity {
                 startActivity(expense);
             }
         });
+
+
 
         cvLeave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -626,6 +647,22 @@ public class DashboardActivity extends Activity {
             }
         });
 
+        rlSwapInwardLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DashboardActivity.this, SwapInwardActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        rlSwapOutwardLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(DashboardActivity.this, SwapOutwardActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
 
 
@@ -651,6 +688,62 @@ public class DashboardActivity extends Activity {
         //Feedback Count
         callFeedbackcount();
 
+
+        //Swap count
+        CallswapCount();
+
+    }
+
+    private void CallswapCount() {
+        SwapCountInterface swapCountInterface=APIClient.getClient().create(SwapCountInterface.class);
+        swapCountInterface.Count(PreferenceManager.getEmpID(DashboardActivity.this)).enqueue(new Callback<SwapCountResponse>() {
+            @Override
+            public void onResponse(Call<SwapCountResponse> call, Response<SwapCountResponse> response) {
+                try {
+                    if(response.isSuccessful()){
+                        tvSwapOutwardCount.setText(response.body().getSwapOutward_count());
+                        tvSwapInwardCount.setText(response.body().getSwapInward_count());
+
+                        rlSwapOutwardLayout.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                if(response.body().getSwapOutward_count().trim().equals("0")){
+                                    Toast.makeText(context, "No Swap Outward", Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Intent intent=new Intent(DashboardActivity.this, SwapOutwardActivity.class);
+                                    startActivity(intent);
+                                }
+                            }
+                        });
+
+
+                        rlSwapInwardLayout.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                if(response.body().getSwapInward_count().trim().equals("0")){
+                                    Toast.makeText(context, "No Swap Inward", Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Intent intent=new Intent(DashboardActivity.this, SwapInwardActivity.class);
+                                    startActivity(intent);
+                                }
+                            }
+                        });
+
+
+
+                    }
+
+                }catch (Exception e){
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<SwapCountResponse> call, Throwable t) {
+
+            }
+        });
     }
 
     private void callFeedbackcount() {
